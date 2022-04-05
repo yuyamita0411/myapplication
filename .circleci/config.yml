@@ -1,0 +1,84 @@
+version: 2
+jobs:
+  #ECRにイメージを送る
+  build_image:
+    docker:
+      - image: circleci/php:8.0.2-fpm
+    working_directory: ~/docker_environment/portfolio/gware
+    steps:
+      - checkout:
+      - setup_remote_docker
+      #composer関係
+      - run:
+          name: install composer
+          command: |
+            curl -sS https://getcomposer.org/installer | php
+            mv composer.phar /usr/local/bin/composer
+            cd /home/circleci/docker_environment/portfolio/gware/source
+            composer install -n --prefer-dist
+            composer update
+
+      - run: # artisan関係のコマンド
+          name: artisan commands
+          command: |
+            cd /home/circleci/docker_environment/portfolio/gware/source
+            php artisan key:generate
+            php artisan config:clear
+            php artisan cache:clear
+            chmod -R 777 .
+
+      - run:
+          name: install aws cli
+          command: |
+            curl "https://bootstrap.pypa.io/pip/2.7/get-pip.py" -o "get-pip.py"
+            sudo python get-pip.py
+            sudo pip install awscli
+      - run:
+          name: login ecr
+          command: |
+            $(aws ecr get-login --no-include-email --region ap-northeast-1)
+
+      #コンテナをビルドしてタグをつける → ECSへ送る
+      - run:
+          name: build container
+          command: |
+            docker build -t ${ECR_DOMAIN}:myapp-php-fpm -f ./docker/aws/php/Dockerfile .
+            docker build -t ${ECR_DOMAIN}:myapp-nginx -f ./docker/aws/nginx/Dockerfile .
+      - run:
+          name: push docker image
+          command: |
+            $(aws ecr get-login --no-include-email --region ap-northeast-1)
+            docker push ${ECR_DOMAIN}:myapp-php-fpm
+            docker push ${ECR_DOMAIN}:myapp-nginx
+  deploy:
+    docker:
+      - image: circleci/python:3.7
+    steps:
+      - run:
+          name: install aws cli
+          command: sudo pip install awscli
+      - run:
+          name: download jq
+          command: |
+            wget https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
+            mv jq-linux64 jq
+      - run:
+          name: login ecr
+          command: $(aws ecr get-login --no-include-email --region ap-northeast-1)
+      - run:
+          name: deploy
+          command: |
+            aws ecs describe-task-definition --task-definition webapp-nginx | jq '.taskDefinition | del (.taskDefinitionArn, .revision, .status, .requiresAttributes, .compatibilities, .registeredAt, .registeredBy)' > taskdefinition.json
+            aws ecs register-task-definition --family webapp-nginx --cli-input-json file://taskdefinition.json
+            aws ecs update-service --cluster groupware-ecs-cluster --service webapp-nginx --task-definition webapp-nginx
+      - run:
+          name: migration
+          command: |
+            aws ecs run-task --cluster groupware-ecs-cluster --task-definition webapp-nginx
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - build_image
+      - deploy

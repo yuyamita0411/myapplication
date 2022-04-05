@@ -1,0 +1,70 @@
+version: '3'
+services:
+  myapp_nginx:
+    build: ./docker/local/nginx
+    container_name: 'SslMyapp'
+    ports:
+      - '443:443'
+      - '80:80'
+    volumes:
+      - ./docker/local/ssl:/etc/nginx/ssl
+      - ./docker/local/nginx:/etc/nginx/conf.d
+      - ./source:/var/www/html/gware
+      - ./log:/var/log/nginx
+    links:
+      - webappservice
+    networks:
+        myapp_network:
+            ipv4_address: 188.39.0.2
+
+  webappservice:
+      restart: always
+      container_name: webappservice
+      build: ./docker/local/php
+      volumes:
+          - ./source:/var/www/html/gware
+      networks:
+          myapp_network:
+              ipv4_address: 188.39.0.3
+
+  myapp_mysql:
+      restart: always
+      container_name: myapp_mysql
+      build: ./docker/local/mysql
+      environment:
+          MYSQL_DATABASE: myapp_Database
+          MYSQL_ROOT_PASSWORD: myapp_Password
+          MYSQL_USER: myapp_User
+          MYSQL_PASSWORD: Password
+          TZ: Asia/Tokyo
+      ports:
+          - 3306:3306
+      networks:
+          myapp_network:
+              ipv4_address: 188.39.0.4
+
+  myapp_phpmyadmin:
+      restart: always
+      image: phpmyadmin/phpmyadmin
+      container_name: myapp_phpmyadmin
+      environment:
+          - PMA_ARBITRARY=1
+          - PMA_HOST=myapp_mysql
+          - PMA_USER=myapp_User
+          - PMA_PASSWORD=Password
+      links:
+          - myapp_mysql
+      ports:
+          - 7070:80
+
+      networks:
+          myapp_network:
+              ipv4_address: 188.39.0.5
+
+networks:
+    myapp_network:
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: 188.39.0.0/24
