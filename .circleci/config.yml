@@ -23,7 +23,6 @@ jobs:
           command: |
             cd /home/circleci/docker_environment/portfolio/gware/source
             php artisan key:generate
-            php artisan migrate:refresh --seed
             php artisan config:clear
             php artisan cache:clear
             chmod -R 777 .
