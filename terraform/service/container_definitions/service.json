@@ -2,8 +2,8 @@
     {
         "name": "webappservice",
         "image": "011066745250.dkr.ecr.ap-northeast-1.amazonaws.com/app:myapp-php-fpm",
-        "cpu": 250,
-        "memoryReservation": 500,
+        "cpu": 200,
+        "memoryReservation": 400,
         "essential": true,
         "portMappings": [
             {
