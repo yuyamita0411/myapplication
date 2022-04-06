@@ -14,4 +14,6 @@ ADD ./source /var/www/html/gware
 
 RUN chmod -R 777 /var/www/html/gware
 
+WORKDIR /var/www/html/gware
+
 RUN php artisan migrate:refresh --seed
