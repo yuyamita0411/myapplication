@@ -1,5 +1,5 @@
 resource "aws_lb_target_group" "http" {
-    name     = "sample-http"
+    name     = "gware-http"
     port     = 80
     protocol = "HTTP"
     vpc_id   = data.terraform_remote_state.vp.outputs.vpc_id

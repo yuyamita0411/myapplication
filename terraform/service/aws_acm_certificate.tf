@@ -1,6 +1,6 @@
 resource "aws_acm_certificate" "gwaretool" {
     domain_name               = "gwaretool.com"
-    subject_alternative_names = ["*.gwaretool.com"]
+    subject_alternative_names = []
     validation_method         = "DNS"
 }
 resource "aws_acm_certificate_validation" "gwaretool" {
