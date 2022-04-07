@@ -20,7 +20,7 @@ jobs:
             composer install -n --prefer-dist
             composer update
 
-            cp ~/docker_environment/portfolio/gware/source/.env /home/circleci/docker_environment/portfolio/gware/source/
+            echo ${LARAVEL_ENV_FILE} | base64 -di > .env
             ls -a /home/circleci/docker_environment/portfolio/gware/source
 
       - run:
