@@ -19,18 +19,6 @@ jobs:
             cd /home/circleci/docker_environment/portfolio/gware/source
             composer install -n --prefer-dist
             composer update
-
-      - run: # artisan関係のコマンド
-          name: artisan commands
-          command: |
-            docker build -t ${ECR_DOMAIN}:myapp-php-fpm -f ./docker/aws/php/Dockerfile .
-            docker build -t ${ECR_DOMAIN}:myapp-nginx -f ./docker/aws/nginx/Dockerfile .
-            docker container exec -it ${ECR_DOMAIN}:myapp-php-fpm /bin/bash
-            cd /var/www/html/gware
-            chmod -R 777 ./*
-            php artisan key:generate
-            php artisan config:clear
-            php artisan cache:clear
       - run:
           name: install aws cli
           command: |
@@ -41,6 +29,12 @@ jobs:
           name: login ecr
           command: |
             $(aws ecr get-login --no-include-email --region ap-northeast-1)
+      #コンテナをビルドしてタグをつける → ECSへ送る
+      - run:
+          name: build container
+          command: |
+            docker build -t ${ECR_DOMAIN}:myapp-php-fpm -f ./docker/aws/php/Dockerfile .
+            docker build -t ${ECR_DOMAIN}:myapp-nginx -f ./docker/aws/nginx/Dockerfile .
       - run:
           name: push docker image
           command: |
