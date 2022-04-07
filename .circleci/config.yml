@@ -19,6 +19,8 @@ jobs:
             cd /home/circleci/docker_environment/portfolio/gware/source
             composer install -n --prefer-dist
             composer update
+
+            cp ~/docker_environment/portfolio/gware/source/.env /home/circleci/docker_environment/portfolio/gware/source/
             ls -a /home/circleci/docker_environment/portfolio/gware/source
 
       - run:
