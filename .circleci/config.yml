@@ -19,11 +19,7 @@ jobs:
             cd /home/circleci/docker_environment/portfolio/gware/source
             composer install -n --prefer-dist
             composer update
-
-            chmod -R 777 ./*
-            php artisan key:generate
-            php artisan config:clear
-            php artisan cache:clear
+            ls -a /home/circleci/docker_environment/portfolio/gware/source
 
       - run:
           name: install aws cli
