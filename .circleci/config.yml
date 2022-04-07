@@ -21,8 +21,9 @@ jobs:
             composer update
 
             echo ${LARAVEL_ENV_FILE} | base64 -di > .env
-            ls -a /home/circleci/docker_environment/portfolio/gware/source
-
+            php artisan key:generate
+            php artisan config:clear
+            php artisan cache:clear
       - run:
           name: install aws cli
           command: |
