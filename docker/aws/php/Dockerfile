@@ -12,7 +12,7 @@ RUN mkdir -p /var/www/html/gware
 
 ADD ./source /var/www/html/gware
 
-RUN chmod -R 777 /var/www/html/gware
+RUN chmod -R 777 /var/www/html/gware/*
 
 RUN cd /var/www/html/gware
 RUN php artisan key:generate
