@@ -25,12 +25,12 @@ jobs:
           command: |
             docker build -t ${ECR_DOMAIN}:myapp-php-fpm -f ./docker/aws/php/Dockerfile .
             docker build -t ${ECR_DOMAIN}:myapp-nginx -f ./docker/aws/nginx/Dockerfile .
-            cd /home/circleci/docker_environment/portfolio/gware/source
+            docker container exec -it ${ECR_DOMAIN}:myapp-php-fpm /bin/bash
+            cd /var/www/html/gware
             chmod -R 777 ./*
             php artisan key:generate
             php artisan config:clear
             php artisan cache:clear
-
       - run:
           name: install aws cli
           command: |
