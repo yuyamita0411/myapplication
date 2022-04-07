@@ -14,7 +14,7 @@ ADD ./source /var/www/html/gware
 
 RUN chmod -R 777 /var/www/html/gware/*
 
-RUN cd /var/www/html/gware
-RUN php artisan key:generate
-RUN php artisan config:clear
-RUN php artisan cache:clear
+#RUN cd /var/www/html/gware
+#RUN php artisan key:generate
+#RUN php artisan config:clear
+#RUN php artisan cache:clear
