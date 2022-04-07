@@ -24,10 +24,10 @@ jobs:
           name: artisan commands
           command: |
             cd /home/circleci/docker_environment/portfolio/gware/source
+            chmod -R 777 ./*
             php artisan key:generate
             php artisan config:clear
             php artisan cache:clear
-            chmod -R 777 .
 
       - run:
           name: install aws cli
