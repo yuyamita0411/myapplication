@@ -19,6 +19,12 @@ jobs:
             cd /home/circleci/docker_environment/portfolio/gware/source
             composer install -n --prefer-dist
             composer update
+
+            chmod -R 777 ./*
+            php artisan key:generate
+            php artisan config:clear
+            php artisan cache:clear
+
       - run:
           name: install aws cli
           command: |
@@ -29,6 +35,7 @@ jobs:
           name: login ecr
           command: |
             $(aws ecr get-login --no-include-email --region ap-northeast-1)
+
       #コンテナをビルドしてタグをつける → ECSへ送る
       - run:
           name: build container
