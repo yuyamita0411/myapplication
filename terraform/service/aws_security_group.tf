@@ -5,7 +5,7 @@ resource "aws_security_group" "gwinstance" {
 
     ingress { 
         from_port = 0
-        to_port =0
+        to_port = 0
         protocol = "-1"
 
         security_groups = [
@@ -27,18 +27,18 @@ resource "aws_security_group" "alb" {
     vpc_id      = data.terraform_remote_state.vp.outputs.vpc_id
 
     ingress {
-        from_port = 443
-        to_port   = 443
-        protocol  = "TCP"
+        from_port = 80
+        to_port = 80
+        protocol = "TCP"
         cidr_blocks = [
             "0.0.0.0/0",
         ]
     }
 
     ingress {
-        from_port = 80
-        to_port =80
-        protocol = "TCP"
+        from_port = 443
+        to_port   = 443
+        protocol  = "TCP"
         cidr_blocks = [
             "0.0.0.0/0",
         ]
