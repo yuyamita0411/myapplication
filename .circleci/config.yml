@@ -23,6 +23,8 @@ jobs:
             php artisan key:generate
             php artisan config:clear
             php artisan cache:clear
+            php artisan route:clear
+            php artisan view:clear
       - run:
           name: install aws cli
           command: |
