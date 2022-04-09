@@ -14,7 +14,7 @@
                     type="image"
                     value="検索"
                     class="searchicon"
-                    src="{{ asset('asset/SearchGlassIcon.png') }}"
+                    src="{{ asset('secure_asset/SearchGlassIcon.png') }}"
                 >
             </div>
         </form>
@@ -42,7 +42,7 @@
                                 <div class="buttonicon tooltip-top p-2 float-right" data-tooltip="グループを編集する">
                                     <div class="w-100 font-weight-bold cursor br-50 bg-white">
                                         <img
-                                        src="{{ asset('asset/EditAreaShowIcon.png') }}"
+                                        src="{{ asset('secure_asset/EditAreaShowIcon.png') }}"
                                         id="EditButton-{{$GInfoVal->id}}"
                                         class="d-inline-block w-100 p-2"
                                         >
@@ -52,7 +52,7 @@
                                 <div class="buttonicon tooltip-top p-2 float-right" data-tooltip="グループを削除する">
                                     <div class="w-100 font-weight-bold cursor br-50 bg-white">
                                         <img
-                                        src="{{ asset('asset/TrashIcon.png') }}"
+                                        src="{{ asset('secure_asset/TrashIcon.png') }}"
                                         id="ModalOpenButton-{{$GInfoVal->id}}"
                                         class="d-inline-block w-100 p-2"
                                         >
@@ -93,7 +93,7 @@
             document.getElementById("EditMdMn").removeAttribute("style");
             document.getElementById("commonmodal").action = "{{ route('groupinfo.add.user') }}";
 
-            commonloadMotion('FirstHTML', "{{ asset('asset/loadingicon.png') }}");
+            commonloadMotion('FirstHTML', "{{ asset('secure_asset/loadingicon.png') }}");
             document.getElementById('FirstTitle').innerText = 'グループの編集';
             document.getElementById('SecondTitle').innerText = '完了';
             document.getElementById('SecondMsg').innerText = '完了';
@@ -139,7 +139,7 @@
 //生成された要素に対してinputイベントを発火する
     window.addEventListener('input', (el) => {
         if (el.target.id.match(/addgroupmember/)) {
-            commonloadMotion('SearchResultArea', "{{ asset('asset/loadingicon.png') }}");
+            commonloadMotion('SearchResultArea', "{{ asset('secure_asset/loadingicon.png') }}");
             ajax.method1(
                 "{{route('groupinfo.search')}}",
                 'POST',

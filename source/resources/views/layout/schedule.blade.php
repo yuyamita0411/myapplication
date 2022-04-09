@@ -76,7 +76,7 @@
     window.addEventListener('load', (e) => {
         var dateobj = param.GetUrlParamObj();
         var appenddate = new Date();
-        commonloadMotion('ScheduleLoadingArea', "{{ asset('asset/loadingicon.png') }}");
+        commonloadMotion('ScheduleLoadingArea', "{{ asset('secure_asset/loadingicon.png') }}");
         if(dateobj.year && dateobj.month && dateobj.day){
             appenddate = `${dateobj.year}/${dateobj.month}/${dateobj.day}`;
         }
@@ -134,7 +134,7 @@
             <p class="col-12">${e.target.dataset.setscheduleinfo}</p>
             <div class="col-12 d-flex">
                 <img
-                src="{{ asset('asset/timeicon.png') }}"
+                src="{{ asset('secure_asset/timeicon.png') }}"
                 class="searchicon cursor p-1 mr-3 tooltip-top"
                 data-tooltip="時刻を設定する"
                 >
@@ -435,7 +435,7 @@
     const RebaseCalender = (val) => {
         document.getElementById('ScheduleLoadingArea').classList.remove('loadinghidden');
         document.getElementById('ScheduleLoadingArea').classList.add('loadingshow');
-        commonloadMotion('ScheduleLoadingArea', "{{ asset('asset/loadingicon.png') }}");
+        commonloadMotion('ScheduleLoadingArea', "{{ asset('secure_asset/loadingicon.png') }}");
         var startdaynow = document.getElementById('CFirstDate').dataset.cstartdate;
         var Dobj = new Date(new Date(startdaynow).setDate(new Date(startdaynow).getDate() + val));
         var startdateappend = `${Dobj.getFullYear()}/${Dobj.getMonth()+1}/${Dobj.getDate()}`;
@@ -504,7 +504,7 @@
                 <input type="hidden" name="mainid" value="${Res[0].scheduleid}">
                 <input type="hidden" name="starttime" value="${Res[0].starttime.split(' ')[0]}">
                 <div class="col-12 d-flex">
-                    <img src="{{ asset('asset/timeicon.png') }}" class="searchicon cursor p-1 mr-3 tooltip-top" data-tooltip="時刻を設定する">
+                    <img src="{{ asset('secure_asset/timeicon.png') }}" class="searchicon cursor p-1 mr-3 tooltip-top" data-tooltip="時刻を設定する">
                     <div class="w-100 text-center pr-2 position-relative">
                         <div id="starthour" class="starthour buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor">${sh}</div>
                         <div id="starthourmenu" class="position-absolute bg-white menuhide gridinside"></div>

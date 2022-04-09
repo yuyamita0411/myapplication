@@ -2,7 +2,7 @@
 @section('content')
     <div class="pt-3 pb-3 w-100">
         <div id="AddressArea" class="gridinside pt-3 pb-3 bg-white position-relative">
-            <img src="{{ asset('asset/clipicon.png') }}" class="clipicon position-absolute">
+            <img src="{{ asset('secure_asset/clipicon.png') }}" class="clipicon position-absolute">
             <div class="col-12 p-2">
             @foreach($taskobj as $key => $value)
                 <h4>{{$value->taskname}}</h4>
@@ -13,28 +13,28 @@
             <div class="d-inline-block w-100 position-relative">
                 <div class="col-12 col-md-6 float-left p-2">
                     <div class="float-left cursor">
-                        <img class="d-inline-block searchicon" src="{{ asset('asset/personicon.png') }}">
+                        <img class="d-inline-block searchicon" src="{{ asset('secure_asset/personicon.png') }}">
                         担当者
                     </div>
                     <span class="d-inline-block float-left w-100" style="margin-top:4px;">{{$val->username}}</span>
                 </div>
                 <div class="col-12 col-md-6 float-left p-2">
                     <div class="float-left cursor">
-                        <img class="d-inline-block searchicon" src="{{ asset('asset/groupicon.png') }}">
+                        <img class="d-inline-block searchicon" src="{{ asset('secure_asset/groupicon.png') }}">
                         グループ名
                     </div>
                     <span class="d-inline-block float-left w-100" style="margin-top:4px;">{{$val->groupname}}</span>
                 </div>
                 <div class="col-12 col-md-6 float-left p-2">
                     <div class="float-left cursor">
-                        <img class="d-inline-block searchicon" src="{{ asset('asset/deadlineicon.png') }}">
+                        <img class="d-inline-block searchicon" src="{{ asset('secure_asset/deadlineicon.png') }}">
                         締切
                     </div>
                     <span class="d-inline-block float-left w-100" style="margin-top:4px;">{{date('Y-m-d',  strtotime($val->deadline))}}</span>
                 </div>
                 <div class="col-12 col-md-6 float-left p-2">
                     <div class="float-left cursor">
-                        <img class="d-inline-block searchicon" src="{{ asset('asset/statusicon.png') }}">
+                        <img class="d-inline-block searchicon" src="{{ asset('secure_asset/statusicon.png') }}">
                         ステータス
                     </div>
                     <span class="d-inline-block float-left w-100" style="margin-top:4px;">{{$val->status}}</span>
@@ -73,7 +73,7 @@
                         </div>
                         @endforeach
                     </div>
-                    <img id="commentbutton" class="d-inline-block searchicon float-right cursor" src="{{ asset('asset/addcomments.png') }}">
+                    <img id="commentbutton" class="d-inline-block searchicon float-right cursor" src="{{ asset('secure_asset/addcomments.png') }}">
                 </div>
             </div>
         </div>
@@ -112,7 +112,7 @@ import {Validation} from '../../js/validation.js'
     const ajax = new Ajax();
     const SearchArea = document.getElementById('TaskCommentSearchArea');
     SearchArea.addEventListener('input', (e) => {
-        commonloadMotion('CommentDisplayArea', "{{ asset('asset/loadingicon.png') }}");
+        commonloadMotion('CommentDisplayArea', "{{ asset('secure_asset/loadingicon.png') }}");
 
         ajax.method1(
             "{{ route('taskdetail.searchcomments', ['id' => $id]) }}",

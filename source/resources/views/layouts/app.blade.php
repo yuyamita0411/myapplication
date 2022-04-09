@@ -19,17 +19,17 @@
                 <div class="d-inline-block w-100 pr-1 pl-1 pt-1 pb-1 pr-md-3 pl-md-3">
                     <div class="d-inline-block float-left font-weight-bold pt-1 pb-1 pl-4 pl-md-0">
                         <span class="mr-2">
-                            <img src="{{ asset('asset/logo.png') }}" class="accounticon">
+                            <img src="{{ asset('secure_asset/logo.png') }}" class="accounticon">
                         </span>
                         <a href="/" class="logoinnertxt d-none d-md-inline-block">{{env('APP_NAME')}}</a>
                     </div>
                     <div id="AccountArea" class="AccountArea cursor d-inline-block float-right font-weight-bold pt-1 pb-1 pl-3 pr-3 text-white">
                         <span class="mr-2">
-                            <img src="{{ asset('asset/accounticon.png') }}" class="accountpersonicon">
+                            <img src="{{ asset('secure_asset/accounticon.png') }}" class="accountpersonicon">
                         </span>
                         <span id="greetingbar" class="greeting font-weight-normal text-white" data-idnow="{{$commondata['useridnow']}}">ようこそ</span>{{Auth::user()->name}}様
                         <span class="ml-2">
-                            <img src="{{ asset('asset/accountarrow.png') }}" id="accountrotateicon" class="accounticon">
+                            <img src="{{ asset('secure_asset/accountarrow.png') }}" id="accountrotateicon" class="accounticon">
                         </span>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                         col-6 col-md-12 mt-md-2 mb-md-2 text-center"
                         data-tooltip="ダッシュボード"
                         >
-                        <img src="{{ asset('asset/homeicon.png') }}" class="sidebaricon p-2">
+                        <img src="{{ asset('secure_asset/homeicon.png') }}" class="sidebaricon p-2">
                     </a>
                     @foreach($commondata['LinkInfoArr'][Auth::getUser()->type] as $LinkInfos)
                     <a href="{{ $LinkInfos['link'] }}"
@@ -156,7 +156,7 @@
                             <div class="buttonarea d-flex m-auto">
                                 <div id="commonmodalclosebutton" class="buttonicon margin-right-two p-2">
                                     <div class="w-100 d-inline-block text-center text-white font-weight-bold cursor br-50 bordergray bg-white">
-                                        <img src="{{ asset('asset/modalclosebutton.png') }}" class="d-inline-block w-100 p-2">
+                                        <img src="{{ asset('secure_asset/modalclosebutton.png') }}" class="d-inline-block w-100 p-2">
                                     </div>
                                 </div>
                                 <div id="EditMdTo2" class="buttonicon p-2">
@@ -174,7 +174,7 @@
                             <div class="">
                                 <div id="modalfinishbutton" class="buttonicon p-2 m-auto">
                                     <div class="w-100 d-inline-block text-center text-white font-weight-bold cursor br-50 bordergray bg-white">
-                                        <img src="{{ asset('asset/modalclosebutton.png') }}" class="d-inline-block w-100 p-2">
+                                        <img src="{{ asset('secure_asset/modalclosebutton.png') }}" class="d-inline-block w-100 p-2">
                                     </div>
                                 </div>
                             </div>
@@ -490,7 +490,7 @@
             if (el.target.id.match(/CreateSearchUser/)) {
                 document.getElementById('CreateGroupMemberResult').innerHTML = `
                     <div class="w-100 d-inline-block text-center position-relative" style="top:5rem;">
-                        <img id="loadingicon" src="{{ asset('asset/loadingicon.png') }}" class="col-2 m-auto d-block">
+                        <img id="loadingicon" src="{{ asset('secure_asset/loadingicon.png') }}" class="col-2 m-auto d-block">
                         <p class="mt-3">Loading</p>
                     </div>
                 `;
