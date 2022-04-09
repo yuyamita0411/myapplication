@@ -13,3 +13,19 @@ resource "aws_lb_target_group" "http" {
         unhealthy_threshold = 3
     }
 }
+
+resource "aws_lb_target_group" "https" {
+    name     = "gware-https"
+    port     = 443
+    protocol = "HTTPS"
+    vpc_id   = data.terraform_remote_state.vp.outputs.vpc_id
+    health_check {
+        interval = 30
+        path = "/health_check"
+        port = 443
+        protocol = "HTTPS"
+        timeout = 10
+        healthy_threshold = 3
+        unhealthy_threshold = 3
+    }
+}
