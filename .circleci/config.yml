@@ -19,7 +19,6 @@ jobs:
             cd /home/circleci/docker_environment/portfolio/gware/source
             composer install -n --prefer-dist
             composer update
-
             echo ${LARAVEL_ENV_FILE} | base64 -di > .env
             php artisan key:generate
             php artisan config:clear
