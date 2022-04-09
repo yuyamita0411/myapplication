@@ -5,6 +5,7 @@ resource "aws_lb_listener" "http" {
 
     default_action {
         type = "redirect"
+        target_group_arn = aws_lb_target_group.http.arn
 
         redirect {
             port        = "443"
@@ -12,6 +13,7 @@ resource "aws_lb_listener" "http" {
             status_code = "HTTP_301"
         }
     }
+
 }
 
 resource "aws_lb_listener" "https" {
