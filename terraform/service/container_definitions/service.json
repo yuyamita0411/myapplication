@@ -32,12 +32,6 @@
                 "containerPort": 80
             }
         ],
-        "dependsOn": [
-            {
-                "containerName": "webappservice",
-                "condition": "START"
-            }
-        ],
         "links": [
           "webappservice"
         ],

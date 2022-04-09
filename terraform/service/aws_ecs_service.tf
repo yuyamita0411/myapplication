@@ -2,7 +2,8 @@ resource "aws_ecs_service" "webapp-nginx" {
     name            = "webapp-nginx"
     cluster         = aws_ecs_cluster.groupware-ecs-cluster.id
     task_definition = aws_ecs_task_definition.webapp-task.arn
-    desired_count   = 1
+    desired_count   = 2
+    health_check_grace_period_seconds = 3600
     launch_type     = "EC2"
 
     load_balancer {
