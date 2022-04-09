@@ -3,8 +3,8 @@
     {
       "name": "webappservice",
       "image": "011066745250.dkr.ecr.ap-northeast-1.amazonaws.com/app:myapp-php-fpm",
-      "cpu": 200,
-      "memoryReservation": 50,
+      "cpu": 150,
+      "memoryReservation": 250,
       "portMappings": [
         {
           "containerPort": 8080,
@@ -29,7 +29,7 @@
       "name": "webapp-nginx",
       "image": "011066745250.dkr.ecr.ap-northeast-1.amazonaws.com/app:myapp-nginx",
       "cpu": 200,
-      "memoryReservation": 50,
+      "memoryReservation": 128,
       "links": [
         "webappservice"
       ],
