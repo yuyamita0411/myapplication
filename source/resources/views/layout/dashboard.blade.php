@@ -17,7 +17,7 @@
             </article>
         </div>
         <div class="gridinside w-100 bg-white p-3">
-            <img src="{{ asset('asset/clipicon.png') }}" class="clipicon position-absolute">
+            <img src="{{ secure_asset('asset/clipicon.png') }}" class="clipicon position-absolute">
             <div id="notificationarea"></div>
 
             <div class="d-inline-block w-100 mt-3">
@@ -59,7 +59,7 @@
     });
 
     const rebaseNotification = (PageNow) => {
-        commonloadMotion('notificationarea', "{{ asset('asset/loadingicon.png') }}");
+        commonloadMotion('notificationarea', "{{ secure_asset('asset/loadingicon.png') }}");
         ajax.method1(
             "{{route('dashboard.notification')}}",
             'POST',
@@ -68,7 +68,7 @@
             },
             (Res) => {
                 console.log(Res);
-                commonloadMotion('notificationarea', "{{ asset('asset/loadingicon.png') }}");
+                commonloadMotion('notificationarea', "{{ secure_asset('asset/loadingicon.png') }}");
                 var innerhtml = '';
                 document.getElementById('notificationarea').innerHTML = '';
                 for(var key in Res){

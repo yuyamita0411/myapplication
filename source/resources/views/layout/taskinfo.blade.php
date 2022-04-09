@@ -39,7 +39,7 @@
             </div>
             <div class="float-right float-lg-left d-inline-block pl-2">
                 <img
-                src="{{ asset('secure_asset/modalclosebutton.png') }}"
+                src="{{ secure_asset('asset/modalclosebutton.png') }}"
                 id="delete_date_area"
                 class="searchicon cursor mt-1 p-1 tooltip-top"
                 data-tooltip="入力を取り消す"
@@ -61,7 +61,7 @@
                 type="image"
                 value="検索"
                 class="searchicon"
-                src="{{ asset('secure_asset/SearchGlassIcon.png') }}"
+                src="{{ secure_asset('asset/SearchGlassIcon.png') }}"
             >
         </div>
     </form>
@@ -114,7 +114,7 @@
                             @foreach($grouparr as $eacharrkey => $eacharrval)
                             @if($eacharrval['labelname'] == 'USERID')
                             <div class="searchicon tooptip-top float-right cursor" data-tooltip="担当者にメッセージを送る">
-                                <img src="{{ asset('secure_asset/mailsendicon.png') }}" id="SendMsgUserButton-{{$eacharrval['value']}}" class="d-inline-block w-100">
+                                <img src="{{ secure_asset('asset/mailsendicon.png') }}" id="SendMsgUserButton-{{$eacharrval['value']}}" class="d-inline-block w-100">
                             </div>
                             @endif
                             @endforeach

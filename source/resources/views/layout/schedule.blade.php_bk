@@ -3,7 +3,7 @@
 <div class="d-inline-block w-100 mb-3">
     <div class="notificationarea pt-3 m-auto">
         <div class="w-100 d-inline-block text-center">
-            <h3 class="notificationtitle font-weight-bold pt-4 pb-2 mb-0 m-auto"><img class="iconimg d-inline-block" src="{{ asset('secure_asset/makedocument.png') }}" onclick="clicktest()"> 予定一覧</h3>
+            <h3 class="notificationtitle font-weight-bold pt-4 pb-2 mb-0 m-auto"><img class="iconimg d-inline-block" src="{{ secure_asset('asset/makedocument.png') }}" onclick="clicktest()"> 予定一覧</h3>
         </div>
         <div class=" shadowgrid col-md-12 m-auto pl-0 pr-0 position-relative">
             <div class="w-100 d-inline-block p-3">
@@ -15,7 +15,7 @@
                                 <div class="d-inline-block w-100 pt-2 pb-2">
                                     <div id="prev" class="buttonicon cursor">
                                         <div class="w-100 d-inline-block text-center text-white font-weight-bold cursor br-50 bg-white">
-                                            <img src="{{ asset('secure_asset/backtoprev.png') }}" class="d-inline-block w-100 p-2">
+                                            <img src="{{ secure_asset('asset/backtoprev.png') }}" class="d-inline-block w-100 p-2">
                                         </div>
                                     </div>
                                     <h3 class="d-inline-block pt-2 pb-2 pr-2 pl-2 mb-0 bg-white">
@@ -25,7 +25,7 @@
                                     </h3>
                                     <div id="next" class="buttonicon cursor">
                                         <div class="w-100 d-inline-block text-center text-white font-weight-bold cursor br-50 bg-white">
-                                            <img src="{{ asset('secure_asset/gonext.png') }}" class="d-inline-block w-100 p-2">
+                                            <img src="{{ secure_asset('asset/gonext.png') }}" class="d-inline-block w-100 p-2">
                                         </div>
                                     </div>
                                 </div>
@@ -55,7 +55,7 @@
                     <div class="buttonarea m-auto text-center">
                         <div class="buttonicon p-2 d-inline-block">
                             <a class="w-100 d-inline-block b-none text-white text-center font-weight-bold cursor br-50 bordergray bg-white" href="{{ route('dashboard') }}">
-                                <img class="d-inline-block w-100 p-2" src="{{ asset('secure_asset/homeicon.png') }}">
+                                <img class="d-inline-block w-100 p-2" src="{{ secure_asset('asset/homeicon.png') }}">
                             </a>
                         </div>
                     </div>
@@ -147,7 +147,7 @@ function createProcess(year, month) {
                             <div class="w-100 d-inline-block b-none text-white text-center font-weight-bold cursor br-50 line-3rem">
                                 <div class="w-100 d-inline-block text-center text-white font-weight-bold cursor br-50">
                                     <div class="w-100 d-inline-block b-none text-white text-center font-weight-bold cursor br-50 line-3rem">
-                                        <img class="d-inline-block w-100" src="{{ asset('secure_asset/EditAreaShowIcon.png') }}">
+                                        <img class="d-inline-block w-100" src="{{ secure_asset('asset/EditAreaShowIcon.png') }}">
                                     </div>
                                 </div>
                             </div>
@@ -165,7 +165,7 @@ function createProcess(year, month) {
                             <div class="w-100 d-inline-block b-none text-white text-center font-weight-bold cursor br-50 line-3rem">
                                 <div class="w-100 d-inline-block text-center text-white font-weight-bold cursor br-50">
                                     <div class="w-100 d-inline-block b-none text-white text-center font-weight-bold cursor br-50 line-3rem">
-                                        <img class="d-inline-block w-100" src="{{ asset('secure_asset/EditAreaShowIcon.png') }}">
+                                        <img class="d-inline-block w-100" src="{{ secure_asset('asset/EditAreaShowIcon.png') }}">
                                     </div>
                                 </div>
                             </div>

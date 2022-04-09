@@ -6,10 +6,10 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{ env('APP_NAME') }}</title>
         <!-- Scripts -->
-        <script src="{{ asset('js/design.js') }}"></script>
+        <script src="{{ secure_asset('js/design.js') }}"></script>
         <!-- Styles -->
-        <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+        <link href="{{ secure_asset('css/bootstrap.css') }}" rel="stylesheet">
+        <link href="{{ secure_asset('css/style.css') }}" rel="stylesheet">
 
         <!-- Global site tag (gtag.js) - Google Analytics -->
     </head>

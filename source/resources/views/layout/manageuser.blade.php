@@ -52,7 +52,7 @@
                                                 <div class="bg-check shadowgrid w-100 d-inline-block pt-5 pb-5">
                                                     <div class="w-100 d-inline-block text-center">
                                                         <h3 class="notificationtitle font-weight-bold pt-4 pb-2 mb-0 m-auto">
-                                                            <img src="{{ asset('secure_asset/FileStatus.png') }}" class="iconimg d-inline-block">
+                                                            <img src="{{ secure_asset('asset/FileStatus.png') }}" class="iconimg d-inline-block">
                                                         </h3>
                                                     </div>
                                                     <div class="w-100 d-inline-block text-center">
@@ -66,7 +66,7 @@
                                                         <div class="w-100 d-inline-block">
                                                             <div class="tabledivwrapper w-100 d-inline-block mb-1">
                                                                 <div class="tablediv tabledivleft col-12 col-md-6 float-md-left d-inline-block pl-2">
-                                                                    <img src="{{ asset('secure_asset/FileIcon.png') }}" class="w-auto h-100 p-2 iconimg d-inline-block">
+                                                                    <img src="{{ secure_asset('asset/FileIcon.png') }}" class="w-auto h-100 p-2 iconimg d-inline-block">
                                                                 </div>
                                                                 <div class="tablediv bg-white  col-12 col-md-6 float-md-right d-inline-block pl-2 pr-2 pr-2">
                                                                     <label id="UploadCsvLabelcsv" for="UploadCsvcaluclate" class="cursor w-100">ファイルを選択</label>
@@ -94,7 +94,7 @@
                             <div class="buttonarea d-flex m-auto">
                                 <div class="buttonicon margin-right-two p-2">
                                     <div class="w-100 d-inline-block text-center text-white font-weight-bold cursor br-50 bordergray bg-white">
-                                        <img src="{{ asset('secure_asset/modalclosebutton.png') }}" id="csvmodalclosebutton" class="d-inline-block w-100 p-2">
+                                        <img src="{{ secure_asset('asset/modalclosebutton.png') }}" id="csvmodalclosebutton" class="d-inline-block w-100 p-2">
                                     </div>
                                 </div>
                                 <div id="CsvMdTo2" class="buttonicon p-2">
@@ -143,7 +143,7 @@
     });
 
     document.getElementById('CsvMdTo2').addEventListener('click', () => {
-        commonloadMotion('loadingstatus', "{{ asset('secure_asset/loadingicon.png') }}");
+        commonloadMotion('loadingstatus', "{{ secure_asset('asset/loadingicon.png') }}");
         ReturnExcelJson((Obj) => {
             var date = '';
             var tell = '';
