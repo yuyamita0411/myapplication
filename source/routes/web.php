@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*Route::get('/', function () {
+Route::get('/', function () {
     return redirect('login');
-});*/
+});
 //404の時
 /*Route::fallback(function(){
     return redirect(route('dashboard'));
