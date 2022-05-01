@@ -24,7 +24,7 @@ resource "aws_lb_target_group" "https" {
         interval = 30
         path = "/"
         port = 443
-        protocol = "HTTP"
+        protocol = "HTTPS"
         timeout = 10
         healthy_threshold = 2
         unhealthy_threshold = 2
