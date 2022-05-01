@@ -1,7 +1,7 @@
 terraform {
     backend "s3" {
         bucket = "gwbucket"
-        key    = "gwareterraform/ecr/terraform.tfstate"
+        key    = "gware/terraform/ecr/terraform.tfstate"
         region = "ap-northeast-1"
     } 
 }
