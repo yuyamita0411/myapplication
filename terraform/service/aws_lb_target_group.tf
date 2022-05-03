@@ -5,7 +5,7 @@ resource "aws_lb_target_group" "http" {
     vpc_id   = data.terraform_remote_state.vp.outputs.vpc_id
     health_check {
         interval = 30
-        path = "/index.php"
+        path = "/index.php/login"
         port = 80
         protocol = "HTTP"
         timeout = 10
