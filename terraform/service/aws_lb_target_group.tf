@@ -9,8 +9,8 @@ resource "aws_lb_target_group" "http" {
         port = 80
         protocol = "HTTP"
         timeout = 10
-        healthy_threshold = 2
-        unhealthy_threshold = 2
-        matcher = "200,302"
+        healthy_threshold = 3
+        unhealthy_threshold = 3
+        matcher = "200-302"
     }
 }
