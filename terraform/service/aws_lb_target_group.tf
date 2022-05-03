@@ -11,6 +11,6 @@ resource "aws_lb_target_group" "http" {
         timeout = 10
         healthy_threshold = 2
         unhealthy_threshold = 2
-        matcher = "200-302"
+        matcher = "200,302"
     }
 }
