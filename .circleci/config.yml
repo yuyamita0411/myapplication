@@ -14,6 +14,7 @@ jobs:
       - run:
           name: install composer
           command: |
+            docker-php-ext-install pdo_mysql
             curl -sS https://getcomposer.org/installer | php
             mv composer.phar /usr/local/bin/composer
             cd /home/circleci/docker_environment/portfolio/gware/source
