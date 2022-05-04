@@ -9,3 +9,4 @@ terraform/vpc/.terraform/providers/registry.terraform.io/hashicorp/aws/4.8.0/dar
 source/.env
 log/access.log
 log/error.log
+.key_pair/*

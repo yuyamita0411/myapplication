@@ -7,6 +7,11 @@ resource "aws_instance" "gwinstance" {
     user_data = file("./user_data.sh")
     associate_public_ip_address = true
 
+    key_name = aws_key_pair.key_pair.id
+    tags = {
+        Name = "GwareKey"
+    }
+
     vpc_security_group_ids = [
         "${aws_security_group.gwinstance.id}",
     ]

@@ -1,56 +1,5 @@
 version: 2
 jobs:
-
-  #ECRにイメージを送る
-  initial:
-    docker:
-      - image: circleci/php:8.0.2-fpm
-    working_directory: ~/docker_environment/portfolio/gware
-    resource_class: xlarge
-
-    steps:
-      - checkout:
-      - setup_remote_docker
-      #composer関係
-      - run:
-          name: install composer
-          command: |
-            curl -sS https://getcomposer.org/installer | php
-            mv composer.phar /usr/local/bin/composer
-            cd /home/circleci/docker_environment/portfolio/gware/source
-            composer install -n --prefer-dist
-            composer update
-            echo ${LARAVEL_ENV_FILE} | base64 -di > .env
-            php artisan key:generate
-            php artisan config:clear
-            php artisan cache:clear
-            php artisan route:clear
-            php artisan view:clear
-      - run:
-          name: install aws cli
-          command: |
-            curl "https://bootstrap.pypa.io/pip/2.7/get-pip.py" -o "get-pip.py"
-            sudo python get-pip.py
-            sudo pip install awscli
-      - run:
-          name: login ecr
-          command: |
-            $(aws ecr get-login --no-include-email --region ap-northeast-1)
-
-      #コンテナをビルドしてタグをつける → ECSへ送る
-      - run:
-          name: build container
-          command: |
-            docker build -t ${ECR_DOMAIN}:myapp-php-fpm -f ./docker/aws/php/Dockerfile .
-            docker build -t ${ECR_DOMAIN}:myapp-nginx -f ./docker/aws/nginx/Dockerfile .
-            docker container ls
-      - run:
-          name: push docker image
-          command: |
-            $(aws ecr get-login --no-include-email --region ap-northeast-1)
-            docker push ${ECR_DOMAIN}:myapp-php-fpm
-            docker push ${ECR_DOMAIN}:myapp-nginx
-
   #ECRにイメージを送る
   build_image:
     docker:
@@ -132,14 +81,5 @@ workflows:
   version: 2
   test:
     jobs:
-      - initial:
-          filters:
-            branches:
-              only:
-                - initial
-      - build_image:
-          filters:
-            branches:
-              ignore:
-                - initial
+      - build_image
       - deploy
