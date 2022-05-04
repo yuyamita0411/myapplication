@@ -14,6 +14,7 @@ jobs:
       - run:
           name: install composer
           command: |
+            chmod -R 777 /usr/src
             docker-php-ext-install pdo_mysql
             curl -sS https://getcomposer.org/installer | php
             mv composer.phar /usr/local/bin/composer
