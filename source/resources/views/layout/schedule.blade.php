@@ -61,7 +61,7 @@
     import {Param} from '../js/param.js';
     import {Ajax} from '../js/Ajax.js';
     import {commonloadMotion} from '../js/modal.js';
-    import {Render} from '../js/Render.js';
+    import {Render} from '../js/render.js';
     import {PageNation} from '../js/Pagenation.js';
     const ajax = new Ajax();
     const schedule = new Schedule();
