@@ -190,7 +190,7 @@
         import {ModalCommonMotion} from '../../js/modal.js'
         import {Validation} from '../../js/validation.js'
         import {Ajax} from '../js/Ajax.js';
-        import {Render} from '../js/Render.js';
+        import {Render} from '../js/render.js';
         /*ハンバーガーメニュー*/
         (() => {
             if(!document.getElementById('hbwrapper')) return;
