@@ -15,7 +15,6 @@ class RedirectToHttps
         }
         return $next($request);
     }
-
     //Webサーバー毎にキーと値で判別
     public function is_ssl()
     {
