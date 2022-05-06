@@ -10,3 +10,5 @@ source/.env
 log/access.log
 log/error.log
 .key_pair/*
+Frontend/ssl/*
+docker/aws/ssl/*

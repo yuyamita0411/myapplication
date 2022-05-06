@@ -1,65 +1,100 @@
 version: '3'
 services:
-  myapp_nginx:
-    build: ./docker/local/nginx
-    container_name: 'SslMyapp'
-    ports:
-      - '443:443'
-      - '80:80'
-    volumes:
-      - ./docker/local/ssl:/etc/nginx/ssl
-      - ./docker/local/nginx:/etc/nginx/conf.d
-      - ./source:/var/www/html/gware
-      - ./log:/var/log/nginx
-    links:
-      - webappservice
-    networks:
-        myapp_network:
-            ipv4_address: 188.39.0.2
+    web_api:
+        restart: always
+        container_name: web_api
+        build: ./api_setting/setting/php
+        volumes:
+            - ./api_source:/var/www/html/gware
+        networks:
+            myapp_network:
+                ipv4_address: 188.39.0.2
 
-  webappservice:
-      restart: always
-      container_name: webappservice
-      build: ./docker/local/php
-      volumes:
-          - ./source:/var/www/html/gware
-      networks:
-          myapp_network:
-              ipv4_address: 188.39.0.3
+    web_api_nginx:
+        build: ./api_setting/setting/nginx
+        container_name: 'SslMyapp'
+        ports:
+            - '8081:443'
+            - '8082:80'
+        volumes:
+            - ./api_setting/setting/ssl:/etc/nginx/ssl
+            - ./api_setting/setting/nginx:/etc/nginx/conf.d
+            - ./api_source:/var/www/html/gware
+            - ./api_setting/setting/log:/var/log/nginx
+        links:
+            - web_api
+        networks:
+            myapp_network:
+                ipv4_address: 188.39.0.3
 
-  myapp_mysql:
-      restart: always
-      container_name: myapp_mysql
-      build: ./docker/local/mysql
-      environment:
-          MYSQL_DATABASE: myapp_Database
-          MYSQL_ROOT_PASSWORD: myapp_Password
-          MYSQL_USER: myapp_User
-          MYSQL_PASSWORD: Password
-          TZ: Asia/Tokyo
-      ports:
-          - 3306:3306
-      networks:
-          myapp_network:
-              ipv4_address: 188.39.0.4
+#    vue:
+#        restart: always
+#        container_name: vue
+#        build: ./VUE/server/nginx
+#        volumes:
+#            - ./VUE/server/nginx/nginx.conf:/etc/nginx/nginx.conf
+#            - ./VUE/logs/nginx/access.log:/var/log/nginx/access.log
+#            - ./VUE/logs/nginx/error.log:/var/log/nginx/error.log
+#            - ./VUE/vue_js/dist:/var/www
+#            - ./VUE/ssl:/etc/nginx/ssl
+#        ports:
+#            - "443:5050"
+#            - "80:5051"
+#        environment:
+#            TZ: "Asia/Tokyo"
+#        networks:
+#            myapp_network:
+#                ipv4_address: 188.39.0.4
 
-  myapp_phpmyadmin:
-      restart: always
-      image: phpmyadmin/phpmyadmin
-      container_name: myapp_phpmyadmin
-      environment:
-          - PMA_ARBITRARY=1
-          - PMA_HOST=myapp_mysql
-          - PMA_USER=myapp_User
-          - PMA_PASSWORD=Password
-      links:
-          - myapp_mysql
-      ports:
-          - 7070:80
+#    vue_develop:
+#        restart: always
+#        container_name: vue_develop
+#        build: ./VUE
+#        volumes:
+#            - "./VUE:/templates"
+#        tty: true
+#        environment:
+#            TZ: "Asia/Tokyo"
+#        ports:
+#            - "8083:8080"
+#            - "3000:3000"
+#        networks:
+#            myapp_network:
+#                ipv4_address: 188.39.0.5
 
-      networks:
-          myapp_network:
-              ipv4_address: 188.39.0.5
+    myapp_mysql:
+        restart: always
+        container_name: myapp_mysql
+        build: ./api_setting/setting/mysql
+        environment:
+            MYSQL_DATABASE: myapp_Database
+            MYSQL_ROOT_PASSWORD: myapp_Password
+            MYSQL_USER: myapp_User
+            MYSQL_PASSWORD: Password
+            TZ: Asia/Tokyo
+        ports:
+            - 3306:3306
+        networks:
+            myapp_network:
+                ipv4_address: 188.39.0.6
+
+    myapp_phpmyadmin:
+        restart: always
+        image: phpmyadmin/phpmyadmin
+        container_name: myapp_phpmyadmin
+        environment:
+            - PMA_ARBITRARY=1
+            - PMA_HOST=myapp_mysql
+            - PMA_USER=myapp_User
+            - PMA_PASSWORD=Password
+        links:
+            - myapp_mysql
+        ports:
+            - 7070:80
+
+        networks:
+            myapp_network:
+                ipv4_address: 188.39.0.7
 
 networks:
     myapp_network:
