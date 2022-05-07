@@ -43,5 +43,27 @@
                 "awslogs-stream-prefix": "nginx"
             }
         }
+    },
+
+    {
+        "name": "myapp-vue",
+        "image": "011066745250.dkr.ecr.ap-northeast-1.amazonaws.com/app:myapp-vue",
+        "cpu": 150,
+        "memoryReservation": 250,
+        "essential": true,
+        "portMappings": [
+            {
+                "hostPort": 80,
+                "containerPort": 5051
+            }
+        ],
+        "logConfiguration": {
+            "logDriver": "awslogs",
+            "options": {
+                "awslogs-group": "gwcloudwatch",
+                "awslogs-region": "ap-northeast-1",
+                "awslogs-stream-prefix": "myapp-vue"
+            }
+        }
     }
 ]

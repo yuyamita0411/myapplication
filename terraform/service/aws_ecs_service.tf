@@ -11,4 +11,10 @@ resource "aws_ecs_service" "webapp-nginx" {
         container_name   = "webapp-nginx"
         container_port   = "80"
     }
+
+    load_balancer {
+        target_group_arn = aws_lb_target_group.http_vue.arn
+        container_name   = "myapp-vue"
+        container_port   = "5051"
+    }
 }

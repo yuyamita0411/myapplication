@@ -1,5 +1,0 @@
-2022/05/06 13:10:53 [error] 24#24: *2 directory index of "/var/www/" is forbidden, client: 188.39.0.1, server: localhost, request: "GET / HTTP/1.1", host: "localhost"
-2022/05/06 13:10:53 [error] 24#24: *3 rewrite or internal redirection cycle while internally redirecting to "/index.html", client: 188.39.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost", referrer: "http://localhost/"
-2022/05/06 16:03:46 [error] 23#23: *5 rewrite or internal redirection cycle while internally redirecting to "/index.html", client: 188.39.0.1, server: localhost, request: "GET /schedule HTTP/1.1", host: "localhost"
-2022/05/06 16:03:46 [error] 23#23: *7 rewrite or internal redirection cycle while internally redirecting to "/index.html", client: 188.39.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost", referrer: "https://localhost/schedule"
-2022/05/06 16:36:56 [error] 25#25: *2 rewrite or internal redirection cycle while internally redirecting to "/index.html", client: 188.39.0.1, server: localhost, request: "GET /schedule HTTP/1.1", host: "localhost"
