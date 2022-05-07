@@ -1,0 +1,25 @@
+2022/05/07 16:59:07 [emerg] 1#1: "server" directive is not allowed here in /etc/nginx/nginx.conf:1
+2022/05/07 16:59:07 [emerg] 1#1: "server" directive is not allowed here in /etc/nginx/nginx.conf:1
+2022/05/07 16:59:08 [emerg] 1#1: "server" directive is not allowed here in /etc/nginx/nginx.conf:1
+2022/05/07 16:59:08 [emerg] 1#1: "server" directive is not allowed here in /etc/nginx/nginx.conf:1
+2022/05/07 16:59:09 [emerg] 1#1: "server" directive is not allowed here in /etc/nginx/nginx.conf:1
+2022/05/07 16:59:11 [emerg] 1#1: "server" directive is not allowed here in /etc/nginx/nginx.conf:1
+2022/05/07 16:59:15 [emerg] 1#1: "server" directive is not allowed here in /etc/nginx/nginx.conf:1
+2022/05/07 16:59:21 [emerg] 1#1: "server" directive is not allowed here in /etc/nginx/nginx.conf:1
+2022/05/07 16:59:34 [emerg] 1#1: "server" directive is not allowed here in /etc/nginx/nginx.conf:1
+2022/05/07 16:59:57 [emerg] 1#1: "server" directive is not allowed here in /etc/nginx/nginx.conf:1
+2022/05/07 16:59:57 [emerg] 1#1: "server" directive is not allowed here in /etc/nginx/nginx.conf:1
+2022/05/07 16:59:58 [emerg] 1#1: "server" directive is not allowed here in /etc/nginx/nginx.conf:1
+2022/05/07 16:59:58 [emerg] 1#1: "server" directive is not allowed here in /etc/nginx/nginx.conf:1
+2022/05/07 16:59:59 [emerg] 1#1: "server" directive is not allowed here in /etc/nginx/nginx.conf:1
+2022/05/07 17:00:01 [emerg] 1#1: "server" directive is not allowed here in /etc/nginx/nginx.conf:1
+2022/05/07 17:00:05 [emerg] 1#1: "server" directive is not allowed here in /etc/nginx/nginx.conf:1
+2022/05/07 17:00:11 [emerg] 1#1: "server" directive is not allowed here in /etc/nginx/nginx.conf:1
+2022/05/07 17:00:24 [emerg] 1#1: "server" directive is not allowed here in /etc/nginx/nginx.conf:1
+2022/05/07 17:01:00 [emerg] 1#1: unknown log format "main" in /etc/nginx/nginx.conf:12
+2022/05/07 17:01:01 [emerg] 1#1: unknown log format "main" in /etc/nginx/nginx.conf:12
+2022/05/07 17:01:01 [emerg] 1#1: unknown log format "main" in /etc/nginx/nginx.conf:12
+2022/05/07 17:01:02 [emerg] 1#1: unknown log format "main" in /etc/nginx/nginx.conf:12
+2022/05/07 17:01:03 [emerg] 1#1: unknown log format "main" in /etc/nginx/nginx.conf:12
+2022/05/07 17:01:05 [emerg] 1#1: unknown log format "main" in /etc/nginx/nginx.conf:12
+2022/05/07 17:01:08 [emerg] 1#1: unknown log format "main" in /etc/nginx/nginx.conf:12

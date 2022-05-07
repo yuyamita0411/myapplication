@@ -8,3 +8,6 @@ ADD ./VUE/vue_js/dist /var/www
 ADD ./VUE/environment/local/ssl /etc/nginx/ssl
 
 CMD ["nginx", "-g", "daemon off;", "-c", "/etc/nginx/nginx.conf"]
+
+EXPOSE 5050
+EXPOSE 5051
