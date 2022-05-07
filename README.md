@@ -8,7 +8,7 @@
 ・ローカル環境、本番構築: docker  
 
 ●フレームワーク  
-laravel  
+laravel, vue.js
 
 ●言語  
 php/javascript

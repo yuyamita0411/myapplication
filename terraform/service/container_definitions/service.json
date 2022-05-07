@@ -28,7 +28,7 @@
         "memoryReservation": 128,
         "portMappings": [
             {
-                "hostPort": 8081,
+                "hostPort": 8082,
                 "containerPort": 80
             }
         ],

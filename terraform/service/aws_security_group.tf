@@ -38,8 +38,8 @@ resource "aws_security_group" "alb" {
     vpc_id      = data.terraform_remote_state.vp.outputs.vpc_id
 
     ingress {
-        from_port = 8082
-        to_port = 80
+        from_port = 80
+        to_port = 8082
         protocol = "TCP"
         cidr_blocks = [
             "0.0.0.0/0"
@@ -47,8 +47,8 @@ resource "aws_security_group" "alb" {
     }
 
     ingress {
-        from_port = 8081
-        to_port   = 443
+        from_port = 443
+        to_port   = 8081
         protocol  = "TCP"
         cidr_blocks = [
             "0.0.0.0/0"
