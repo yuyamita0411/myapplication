@@ -16,7 +16,7 @@ jobs:
           command: |
             curl -sS https://getcomposer.org/installer | php
             mv composer.phar /usr/local/bin/composer
-            cd /home/circleci/docker_environment/portfolio/gware/source
+            cd /home/circleci/docker_environment/portfolio/gware/API/source
             composer install -n --prefer-dist
             composer update
             echo ${LARAVEL_ENV_FILE} | base64 -di > .env
