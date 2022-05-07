@@ -40,8 +40,8 @@ jobs:
       - run:
           name: build container
           command: |
-            docker build -t ${ECR_DOMAIN}:myapp-php-fpm -f ./docker/aws/php/Dockerfile .
-            docker build -t ${ECR_DOMAIN}:myapp-nginx -f ./docker/aws/nginx/Dockerfile .
+            docker build -t ${ECR_DOMAIN}:myapp-php-fpm -f ./API/environment/aws/php/Dockerfile .
+            docker build -t ${ECR_DOMAIN}:myapp-nginx -f ./API/environment/aws/nginx/Dockerfile .
       - run:
           name: push docker image
           command: |

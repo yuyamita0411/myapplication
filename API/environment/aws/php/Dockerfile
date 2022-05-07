@@ -10,6 +10,6 @@ RUN mv composer.phar /usr/local/bin/composer
 
 RUN mkdir -p /var/www/html/gware
 
-ADD ./source /var/www/html/gware
+ADD ./API/source /var/www/html/gware
 
 RUN chmod -R 777 /var/www/html/gware/*
