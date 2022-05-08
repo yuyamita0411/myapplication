@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+
 use App\Notifications\PasswordResetNotification;
 
 //パスワードリセットのクラス
@@ -14,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AppliUser extends Authenticatable
 {
-    use Notifiable;
+    use HasApiTokens, Notifiable;
 
     protected $table = 'appli_users';
 

@@ -55,7 +55,7 @@ services:
         environment:
             TZ: "Asia/Tokyo"
         ports:
-            - "8083:8084"
+            - "8083:8080"
             - "3000:3000"
         networks:
             myapp_network:

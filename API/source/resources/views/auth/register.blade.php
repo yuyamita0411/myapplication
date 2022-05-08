@@ -160,13 +160,9 @@
         import {SetElementMiddle} from '/js/design.js'
         ['load', 'resize'].forEach((ev) => {
             window.addEventListener(ev, () => {
-<<<<<<< HEAD
-                SetElementMiddle('Loginmodal');
-=======
                 (() => {
                     SetElementMiddle('Loginmodal');
                 })();
->>>>>>> okregister
             });
         });
         </script>

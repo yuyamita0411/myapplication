@@ -523,6 +523,8 @@ class ComposerStaticInit74d8747700dd8466d483ad821e134840
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Http\\Controllers\\API\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/LoginController.php',
+        'App\\Http\\Controllers\\API\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/RegisterController.php',
         'App\\Http\\Controllers\\Admin\\ManageUserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ManageUserController.php',
         'App\\Http\\Controllers\\Auth\\ChangePasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ChangePasswordController.php',
         'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
@@ -545,6 +547,7 @@ class ComposerStaticInit74d8747700dd8466d483ad821e134840
         'App\\Http\\Middleware\\InitialLoginCheck' => __DIR__ . '/../..' . '/app/Http/Middleware/InitialLoginCheck.php',
         'App\\Http\\Middleware\\PreventRequestsDuringMaintenance' => __DIR__ . '/../..' . '/app/Http/Middleware/PreventRequestsDuringMaintenance.php',
         'App\\Http\\Middleware\\RedirectIfAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfAuthenticated.php',
+        'App\\Http\\Middleware\\RedirectToHttps' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectToHttps.php',
         'App\\Http\\Middleware\\SendDataToTemplate' => __DIR__ . '/../..' . '/app/Http/Middleware/SendDataToTemplate.php',
         'App\\Http\\Middleware\\StatusCodeRedirect' => __DIR__ . '/../..' . '/app/Http/Middleware/StatusCodeRedirect.php',
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',

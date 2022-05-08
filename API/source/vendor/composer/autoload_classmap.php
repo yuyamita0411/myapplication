@@ -8,6 +8,8 @@ $baseDir = dirname($vendorDir);
 return array(
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
+    'App\\Http\\Controllers\\API\\LoginController' => $baseDir . '/app/Http/Controllers/API/LoginController.php',
+    'App\\Http\\Controllers\\API\\RegisterController' => $baseDir . '/app/Http/Controllers/API/RegisterController.php',
     'App\\Http\\Controllers\\Admin\\ManageUserController' => $baseDir . '/app/Http/Controllers/Admin/ManageUserController.php',
     'App\\Http\\Controllers\\Auth\\ChangePasswordController' => $baseDir . '/app/Http/Controllers/Auth/ChangePasswordController.php',
     'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
@@ -30,6 +32,7 @@ return array(
     'App\\Http\\Middleware\\InitialLoginCheck' => $baseDir . '/app/Http/Middleware/InitialLoginCheck.php',
     'App\\Http\\Middleware\\PreventRequestsDuringMaintenance' => $baseDir . '/app/Http/Middleware/PreventRequestsDuringMaintenance.php',
     'App\\Http\\Middleware\\RedirectIfAuthenticated' => $baseDir . '/app/Http/Middleware/RedirectIfAuthenticated.php',
+    'App\\Http\\Middleware\\RedirectToHttps' => $baseDir . '/app/Http/Middleware/RedirectToHttps.php',
     'App\\Http\\Middleware\\SendDataToTemplate' => $baseDir . '/app/Http/Middleware/SendDataToTemplate.php',
     'App\\Http\\Middleware\\StatusCodeRedirect' => $baseDir . '/app/Http/Middleware/StatusCodeRedirect.php',
     'App\\Http\\Middleware\\TrimStrings' => $baseDir . '/app/Http/Middleware/TrimStrings.php',
