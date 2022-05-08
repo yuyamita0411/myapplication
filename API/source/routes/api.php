@@ -20,23 +20,3 @@ Route::middleware('auth:sanctum')->group(function(){
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });*/
-
-
-Route::get('/items', function(Request $request) {
-    $data = [
-        [
-            "id" => 7,
-            "name" => "na like this",
-            "description" => "",
-            "created_at" => "2020-07-26T05:53:00.376501Z",
-            "updated_at" => "2020-07-26T05:53:00.376501Z"
-        ], [
-            "id" => 5,
-            "name" => "write a book",
-            "description" => "hohoho",
-            "created_at" => "2020-07-26T05:47:00.908706Z",
-            "updated_at" => "2020-07-26T05:53:00.376501Z"
-        ]
-    ];
-    return response()->json($data);
- });

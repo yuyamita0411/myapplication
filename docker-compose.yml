@@ -6,15 +6,15 @@ services:
         container_name: 'SslMyapp'
         #<Host Port>:<Container Port> 
         ports:
-        - '8081:443'
-        - '8082:80'
+            - '8081:443'
+            - '8082:80'
         volumes:
-        - ./API/environment/local/ssl:/etc/nginx/ssl
-        - ./API/environment/local/nginx:/etc/nginx/conf.d
-        - ./API/source:/var/www/html/gware
-        - ./API/log:/var/log/nginx
+            - ./API/environment/local/ssl:/etc/nginx/ssl
+            - ./API/environment/local/nginx:/etc/nginx/conf.d
+            - ./API/source:/var/www/html/gware
+            - ./API/log:/var/log/nginx
         links:
-        - webappservice
+            - webappservice
         networks:
             myapp_network:
                 ipv4_address: 188.39.0.2
