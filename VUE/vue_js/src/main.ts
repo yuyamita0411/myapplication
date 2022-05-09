@@ -20,17 +20,22 @@ router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.isAuthenticated)) {
         if (!localStorage.getItem('access_token')) {
             next({ name: 'Login' });
+            console.log('1');
         }else{
             next();
+            console.log('2');
         }
     }else{
         if (localStorage.getItem('access_token')) {
             if(location.pathname == '/login'){
-                next({ name: 'Dashboard' });
+                next({ name: 'AfterLogin' });
+                console.log('3');
             }else{
                 next();
+                console.log('4');
             }
         }
     }
     next();
+    console.log('5');
 });

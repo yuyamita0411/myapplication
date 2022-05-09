@@ -1,4 +1,7 @@
 //サイズを調整する。
+export const test = () => {
+    return "test!!";
+}
 export class SIZE{
     //横幅と高さを同じにする
     static SetElementMiddlePosition(target:string){
