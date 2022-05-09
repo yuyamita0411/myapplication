@@ -67,8 +67,7 @@ services:
         build: ./VUE/environment/local/server/nginx
         volumes:
             - ./VUE/environment/local/server/nginx/nginx.conf:/etc/nginx/nginx.conf
-            - ./VUE/environment/local/logs/nginx/access.log:/var/log/nginx/access.log
-            - ./VUE/environment/local/logs/nginx/error.log:/var/log/nginx/error.log
+            - ./VUE/environment/local/logs/nginx:/var/log/nginx
             - ./VUE/vue_js/dist:/var/www
             - ./VUE/environment/local/ssl:/etc/nginx/ssl
         ports:
