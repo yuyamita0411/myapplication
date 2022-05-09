@@ -15,22 +15,26 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
     name: 'Login',
-    component: loginView
+    component: loginView,
+    meta: { title: 'Gware', desc: 'use gware tool' }
   },
   {
     path: '/password/forgot',
     name: 'ForgotPass',
-    component: ForgotPassView
+    component: ForgotPassView,
+    meta: { title: 'Gware', desc: 'use gware tool' }
   },
   {
     path: '/register',
     name: 'Register',
-    component: RegisterView
+    component: RegisterView,
+    meta: { title: 'Gware', desc: 'use gware tool' }
   },
   {
     path: '/',
     name: 'AfterLogin',
     component: AfterLoginView,
+    meta: { title: 'Gware', desc: 'use gware tool' },
     children: [
       {
         path: '/dashboard',
@@ -53,9 +57,9 @@ const routes: Array<RouteRecordRaw> = [
         component: TaskInfoView,
       }
     ],
-    meta: {
+    /*meta: {
       isAuthenticated: true,
-    }
+    }*/
   }/*,
   {
     path: '/',

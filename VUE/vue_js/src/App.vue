@@ -9,7 +9,7 @@ export default defineComponent({
     name: 'APP'
 });
 
-['load', 'resize'].forEach((ev) => {
+['load', 'resize'].forEach((ev:string) => {
     window.addEventListener(ev, () => {
         SIZE.SetTopPadding('maincolumn', ['dashboardnemue', 'hbwrapper']);
         SIZE.SetTopPadding('sidebar', ['dashboardnemue', 'hbwrapper']);

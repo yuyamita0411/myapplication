@@ -40,7 +40,7 @@ export class SIZE{
         }
     }
 
-    static SetTopPadding(target:string, basearr:[string]){
+    static SetTopPadding(target:string, basearr:[string, string]){
         let paddingtop = 0;
         if(!document.getElementById(target)){
             return;

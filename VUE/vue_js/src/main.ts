@@ -28,7 +28,7 @@ router.beforeEach((to, from, next) => {
     }else{
         if (localStorage.getItem('access_token')) {
             if(location.pathname == '/login'){
-                next({ name: 'AfterLogin' });
+                next({ name: 'Dashboard' });
                 console.log('3');
             }else{
                 next();
@@ -38,4 +38,5 @@ router.beforeEach((to, from, next) => {
     }
     next();
     console.log('5');
+    console.log(localStorage.getItem('access_token'));
 });
