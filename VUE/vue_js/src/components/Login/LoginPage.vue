@@ -127,7 +127,7 @@ export default defineComponent({
                 this.token = response.data.token;
                 localStorage.setItem('access_token', response.data.token);
                 //ダッシュボードへリダイレクト
-                location.pathname = '/dashboard';
+                this.$router.push('/dashboard');
                 /*
                 router.beforeEach((to, from, next) => {
                     next({ name: 'Dashboard' });
