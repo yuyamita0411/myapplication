@@ -14,6 +14,7 @@ import TaskInfoView from '@/components/AfterLogin/TaskInfoView.vue';
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
+    redirect: '/login',
     name: 'home',
     component: HomeView
   },

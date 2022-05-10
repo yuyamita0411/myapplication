@@ -54,15 +54,7 @@
                     <button
                     type="submit"
                     class="inportbutton w-100 d-inline-block b-none text-white text-center font-weight-bold p-2 cursor br5px"
-                    @click="logout">
-                        ログアウト
-                    </button>
-                </div>
-                <div class="col-12 col-lg-10 m-auto pb-4">
-                    <button
-                    type="submit"
-                    class="inportbutton w-100 d-inline-block b-none text-white text-center font-weight-bold p-2 cursor br5px"
-                    @click="hoge">
+                    @click="CheckAccesstoken">
                         トークン確認
                     </button>
                 </div>
@@ -103,19 +95,22 @@ export default defineComponent({
             this.nopasswordalert = '';
             this.mailorpasswrong = '';
 
-            var flag = true;
+            this.nomailalert = MAElement.value == '' ? "メールアドレスを入力してください。" : '';
+            this.nopasswordalert = PAElement.value == '' ? "パスワードを入力してください。" : '';
 
+            var flag = true;
             if(MAElement.value == ''){
-                this.nomailalert = "メールアドレスを入力してください。";
                 flag = false;
             }
             if(PAElement.value == ''){
-                this.nopasswordalert = "パスワードを入力してください。";
                 flag = false;
             }
             if(flag !== true){
-                return http.get("");
+                return http.get("/api/check/auth/failed").then(response => {
+                    this.mailorpasswrong = MAElement.value != '' && PAElement.value != '' ? response.data : '';
+                });
             }
+
 /** バリデーション **/
             return http.post(
             "/api/login",
@@ -125,24 +120,25 @@ export default defineComponent({
             })
             .then(response => {
                 this.token = response.data.token;
-                localStorage.setItem('access_token', response.data.token);
+                if(response.data.token != undefined && response.data.token != null && response.data.token != ""){
+                    localStorage.setItem('access_token', response.data.token);
+                    this.$router.push('/dashboard');
+                }
                 //ダッシュボードへリダイレクト
-                this.$router.push('/dashboard');
-                /*
-                router.beforeEach((to, from, next) => {
-                    next({ name: 'Dashboard' });
-                });
-                */
             })
             .catch(error => {
-                console.log(error);
-                this.mailorpasswrong = 'メールアドレス、またはパスワードが違います。';
+                this.mailorpasswrong = '処理中にエラーが発生しました。';
             });
         },
+        CheckAccesstoken(): Promise<any> {
+            if(!localStorage.getItem('access_token')){
+                return http.get("/api/check/auth/failed").then(response => {
+                    console.log(response);
+                });
+            }
 
-        hoge(): Promise<any> {
             return http.get(
-            "/api/hoge",
+            "/api/check/auth/accesstoken",
             {
                 headers: {
                     Authorization: `Bearer ${this.token}`
@@ -155,18 +151,6 @@ export default defineComponent({
                 console.log(error);
             });
         },
-
-        logout(): Promise<any> {
-            return http.post(
-            "/api/logout"
-            )
-            .then(response => {
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-        }
     },
 
 });

@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" @load="load">
   ホーム
   </div>
 </template>

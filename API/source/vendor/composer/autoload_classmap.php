@@ -162,6 +162,7 @@ return array(
     'Cron\\HoursField' => $vendorDir . '/dragonmantank/cron-expression/src/Cron/HoursField.php',
     'Cron\\MinutesField' => $vendorDir . '/dragonmantank/cron-expression/src/Cron/MinutesField.php',
     'Cron\\MonthField' => $vendorDir . '/dragonmantank/cron-expression/src/Cron/MonthField.php',
+    'Database\\Seeders\\AccessTokenSeeder' => $baseDir . '/database/seeders/AccessTokenSeeder.php',
     'Database\\Seeders\\AppliUserSeeder' => $baseDir . '/database/seeders/AppliUserSeeder.php',
     'Database\\Seeders\\CompanyInfoSeeder' => $baseDir . '/database/seeders/CompanyInfoSeeder.php',
     'Database\\Seeders\\DatabaseSeeder' => $baseDir . '/database/seeders/DatabaseSeeder.php',

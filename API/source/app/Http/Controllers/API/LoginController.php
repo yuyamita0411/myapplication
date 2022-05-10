@@ -14,11 +14,20 @@ class LoginController extends Controller
 {
     public function login(Request $request)
     {
-
         $credentials = $request->validate([
             'mail_address' => 'required',
             'password' => 'required'
         ]);
+
+        $checkmail = AppliUser::where('mail_address', '=', $request->mail_address)->exists();
+        $checkpass = AppliUser::where('password', '=', $request->password)->exists();
+
+        if(!empty($checkmail)){
+            return response()->json(['data' => 'メールアドレスまたはパスワードが違います。']);
+        }
+        if(!empty($checkpass)){
+            return response()->json(['data' => 'メールアドレスまたはパスワードが違います。']);
+        }
 
         if (Auth::attempt($credentials)) {
             $user = AppliUser::whereMailAddress($request->mail_address)->first(); //トークンの作成と取得
@@ -28,8 +37,8 @@ class LoginController extends Controller
 
             return response()->json(['token' => $token], Response::HTTP_OK);
         }
-
         return response()->json('Can Not Login.', Response::HTTP_INTERNAL_SERVER_ERROR);
+
     }
 
     public function logout(){
