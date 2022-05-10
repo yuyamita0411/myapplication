@@ -8,14 +8,15 @@
                       <a href="p-news-list__item js-inter fadeInLeft is-invasion">
                           <div class="w-100">
                               <p class="mb-0 font-weight-bold">
+                              お知らせーーー
                               </p>
                           </div>
                       </a>
                   </article>
               </div>
               <div class="gridinside w-100 bg-white p-3">
-                  <img src="" class="clipicon position-absolute">
-                  <div id="notificationarea"></div>
+                  <img src="@/assets/clipicon.png" class="clipicon position-absolute">
+                  <div id="notificationarea">sss</div>
 
                   <div class="d-inline-block w-100 mt-3">
                       <div id="notificationpagenationarea" class="col-10 col-md-6 col-lg-4 d-flex m-auto">
@@ -34,6 +35,6 @@ export default defineComponent({
   name: 'DashboardView',
   props: {
     msg: String,
-  },
+  }
 });
 </script>

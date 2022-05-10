@@ -5,15 +5,14 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import {SIZE} from './views/ts/design';
+import router from './router'
+
 export default defineComponent({
     name: 'APP'
 });
 
 ['load', 'resize'].forEach((ev:string) => {
     window.addEventListener(ev, () => {
-        SIZE.SetTopPadding('maincolumn', ['dashboardnemue', 'hbwrapper']);
-        SIZE.SetTopPadding('sidebar', ['dashboardnemue', 'hbwrapper']);
-        SIZE.SetElementMiddle('Loginmodal');
         SIZE.SetTopMargin('hbwrapper', ['dashboardnemue']);
         var hprop = '';
         if(768 < window.innerWidth){
@@ -21,6 +20,9 @@ export default defineComponent({
         }
         if(window.innerWidth <= 768){
             hprop = `height:calc(${window.innerHeight}px - 8rem);`
+        }
+        if(!document.getElementById('commonmodal')){
+            return;
         }
         document.getElementById('commonmodal')!.setAttribute(
             'style',
@@ -65,11 +67,22 @@ export default defineComponent({
         left: calc((100% - 45rem) / 2);
         width: 45rem;
     }
+    #maincolumn,
+    #sidebar{
+        margin-top:2rem;
+    }
+    #hbwrapper{
+        margin-top:2rem;
+    }
 }
 @media (max-width: 768px){
     #commonmodalMenuBar{
         width: 90%;
         left: 5%;
+    }
+    #maincolumn,
+    #sidebar{
+        margin-top:4rem;
     }
 }
 </style>

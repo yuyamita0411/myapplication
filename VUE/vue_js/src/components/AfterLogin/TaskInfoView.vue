@@ -626,7 +626,9 @@
 						<div class="searchbarwrapper mt-0">
 							<input class="w-100 searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none float-left pl-2" name="searchTaskTitle" placeholder="キーワードを入力してください。" type="text" value="">
 						</div>
-					</div><input class="searchicon" src="" type="image" value="検索">
+					</div>
+					<!--input class="searchicon" src="@/assets/SearchGlassIcon.png" type="image" value="検索"-->
+					<img class="searchicon cursor" src="@/assets/SearchGlassIcon.png">
 				</div>
 			</form>
 			<div class="">
@@ -636,31 +638,31 @@
 						<div class="d-inline-block w-100 pt-3 pb-3 pr-2 pl-2 overflow-hidden">
 							<div class="col-12 col-md-4 float-left p-2">
 								<div class="tooltip-top float-left cursor" data-tooltip="タスク名">
-                  <img class="searchicon d-inline-block" src="">
+                  <img class="searchicon d-inline-block" src="@/assets/taskicon.png">
                 </div>
                 <span class="d-inline-block position-absolute font-lg-12 col-10">タスク名2</span>
 							</div>
 							<div class="col-12 col-md-4 float-left p-2">
 								<div class="tooltip-top float-left cursor" data-tooltip="担当者">
-                  <img class="searchicon d-inline-block" src="">
+                  <img class="searchicon d-inline-block" src="@/assets/personicon.png">
                 </div>
                 <span class="d-inline-block position-absolute font-lg-12 col-10">ユーザー名2</span>
 							</div>
 							<div class="col-12 col-md-4 float-left p-2">
 								<div class="tooltip-top float-left cursor" data-tooltip="グループ">
-                  <img class="searchicon d-inline-block" src="">
+                  <img class="searchicon d-inline-block" src="@/assets/groupicon.png">
                 </div>
                 <span class="d-inline-block position-absolute font-lg-12 col-10">グループ名2</span>
 							</div>
 							<div class="col-12 col-md-4 float-left p-2">
 								<div class="tooltip-top float-left cursor" data-tooltip="期日">
-                  <img class="searchicon d-inline-block" src="">
+                  <img class="searchicon d-inline-block" src="@/assets/deadlineicon.png">
                 </div>
                 <span class="col-10 float-left"><span class="taskinfoalertare d-inline-block float-left ml-2 font-lg-12 w-100 pr-0 pl-0">期限切れ</span> <span class="taskinfostr deadlinestr d-inline-block float-left ml-2 font-lg-12 w-100 pr-0 pl-0 red">2020-05-06</span></span>
 							</div>
 							<div class="col-12 col-md-4 float-left p-2">
 								<div class="tooltip-top float-left cursor" data-tooltip="ステータス">
-                  <img class="searchicon d-inline-block" src="">
+                  <img class="searchicon d-inline-block" src="@/assets/statusicon.png">
                 </div>
                 <span class="d-inline-block position-absolute font-lg-12 col-10">未</span>
 							</div>

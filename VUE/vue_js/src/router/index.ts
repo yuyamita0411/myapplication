@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw} from 'vue-router'
-//import HomeView from '../views/HomeView.vue'
+import HomeView from '../views/HomeView.vue'
 import loginView from '../views/Login.vue'
 import ForgotPassView from '../views/ForgotPass.vue'
 import RegisterView from '../views/Register.vue'
@@ -12,6 +12,11 @@ import GroupInfoView from '@/components/AfterLogin/GroupInfo.vue';
 import TaskInfoView from '@/components/AfterLogin/TaskInfoView.vue';
 
 const routes: Array<RouteRecordRaw> = [
+  {
+    path: '/',
+    name: 'home',
+    component: HomeView
+  },
   {
     path: '/login',
     name: 'Login',
@@ -31,10 +36,9 @@ const routes: Array<RouteRecordRaw> = [
     meta: { title: 'Gware', desc: 'use gware tool' }
   },
   {
-    path: '/',
+    path: '/dashboard',
     name: 'AfterLogin',
     component: AfterLoginView,
-    meta: { title: 'Gware', desc: 'use gware tool' },
     children: [
       {
         path: '/dashboard',
@@ -57,9 +61,9 @@ const routes: Array<RouteRecordRaw> = [
         component: TaskInfoView,
       }
     ],
-    /*meta: {
+    meta: {
       isAuthenticated: true,
-    }*/
+    }
   }/*,
   {
     path: '/',

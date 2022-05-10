@@ -5,17 +5,21 @@
                 <div class="d-inline-block w-100 pr-1 pl-1 pt-1 pb-1 pr-md-3 pl-md-3">
                     <div class="d-inline-block float-left font-weight-bold pt-1 pb-1 pl-4 pl-md-0">
                         <span class="mr-2">
-                            <img src="" class="accounticon">
+                            <img src="@/assets/logo.png" class="accounticon">
                         </span>
                         <a href="/" class="logoinnertxt d-none d-md-inline-block">gware</a>
                     </div>
-                    <div id="AccountArea" class="AccountArea cursor d-inline-block float-right font-weight-bold pt-1 pb-1 pl-3 pr-3 text-white">
+                    <div
+                    id="AccountArea"
+                    class="AccountArea cursor d-inline-block float-right font-weight-bold pt-1 pb-1 pl-3 pr-3 text-white"
+                    @click="AccountInfoShow"
+                    >
                         <span class="mr-2">
-                            <img src="" class="accountpersonicon">
+                            <img src="@/assets/accounticon.png" class="accountpersonicon">
                         </span>
                         <span id="greetingbar" class="greeting font-weight-normal text-white" data-idnow="">ようこそ</span>様
                         <span class="ml-2">
-                            <img src="" id="accountrotateicon" class="accounticon">
+                            <img src="@/assets/accountarrow.png" id="accountrotateicon" class="accounticon">
                         </span>
                     </div>
                 </div>
@@ -36,28 +40,28 @@
                         data-tooltip="ダッシュボード"
                         @click="dashboard"
                     >
-                        <img src="" class="sidebaricon p-2">
+                        <img src="@/assets/homeicon.png" class="sidebaricon p-2">
                     </div>
                     <div
                         class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-6 col-md-12 mt-md-2 mb-md-2 text-center"
                         data-tooltip="スケジュール"
                         @click="schedule"
                     >
-                        <img src="" class="sidebaricon p-2">
+                        <img src="@/assets/Schedule.png" class="sidebaricon p-2">
                     </div>
                     <div
                         class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-6 col-md-12 mt-md-2 mb-md-2 text-center"
                         data-tooltip="グループ"
                         @click="groupinfo"
                     >
-                        <img src="" class="sidebaricon p-2">
+                        <img src="@/assets/groupicon.png" class="sidebaricon p-2">
                     </div>
                     <div
                         class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-6 col-md-12 mt-md-2 mb-md-2 text-center"
                         data-tooltip="タスク進捗"
                         @click="taskinfo"
                     >
-                        <img src="" class="sidebaricon p-2">
+                        <img src="@/assets/taskicon.png" class="sidebaricon p-2">
                     </div>
                 </div>
                 <div id="maincolumn" class="maincolumn position-relative float-md-right mb-3 pb-5">
@@ -178,6 +182,7 @@
             </div>
         </div>
   </div>
+  <AccountModal class="aa" />
 </template>
 
 <script lang="ts">
@@ -186,6 +191,7 @@ import DashboardView from '@/components/AfterLogin/Dashboard.vue';
 import ScheduleView from '@/components/AfterLogin/SchedulePage.vue';
 import GroupInfoView from '@/components/AfterLogin/GroupInfo.vue';
 import TaskInfoView from '@/components/AfterLogin/TaskInfoView.vue';
+import AccountModal from '@/components/AfterLogin/parts/AccountModal.vue';
 
 export default defineComponent({
     name: 'AfterLoginView',
@@ -203,19 +209,22 @@ export default defineComponent({
     methods: {
         dashboard(){
             this.$router.push('/dashboard');
-            setTimeout(() => {this.urlnow = location.pathname;}, 100);
+            setTimeout(() => {this.urlnow = location.pathname;});
         },
         schedule(){
             this.$router.push('/schedule');
-            setTimeout(() => {this.urlnow = location.pathname;}, 100);
+            setTimeout(() => {this.urlnow = location.pathname;});
         },
         groupinfo(){
             this.$router.push('/groupinfo');
-            setTimeout(() => {this.urlnow = location.pathname;}, 100);
+            setTimeout(() => {this.urlnow = location.pathname;});
         },
         taskinfo(){
             this.$router.push('/taskinfo');
-            setTimeout(() => {this.urlnow = location.pathname;}, 100);
+            setTimeout(() => {this.urlnow = location.pathname;});
+        },
+        AccountInfoShow(){
+            console.log("test");
         }
     }
 });

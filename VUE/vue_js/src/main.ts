@@ -1,10 +1,9 @@
-import { createApp } from 'vue'
+import { createApp, defineComponent } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
 
-createApp(App).use(store).use(router).mount('#app')
-
+createApp(App).use(store).use(router).mount('#app');
 /** 
  * ログイン時のロジック
  * ページを読み込んだ段階でローカルストレージにアクセストークンがあるかを確認する。
@@ -27,7 +26,7 @@ router.beforeEach((to, from, next) => {
         }
     }else{
         if (localStorage.getItem('access_token')) {
-            if(location.pathname == '/login'){
+            if(to.name == 'Login' || to.name == 'home'){
                 next({ name: 'Dashboard' });
                 console.log('3');
             }else{
@@ -37,6 +36,5 @@ router.beforeEach((to, from, next) => {
         }
     }
     next();
-    console.log('5');
-    console.log(localStorage.getItem('access_token'));
+
 });
