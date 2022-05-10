@@ -12,7 +12,7 @@
                     <div
                     id="AccountArea"
                     class="AccountArea cursor d-inline-block float-right font-weight-bold pt-1 pb-1 pl-3 pr-3 text-white"
-                    @click="AccountInfoShow"
+                    @click="AmodalOpen"
                     >
                         <span class="mr-2">
                             <img src="@/assets/accounticon.png" class="accountpersonicon">
@@ -79,35 +79,6 @@
                     </div>
                     <div class="w-100 float-left BgAccentMain">
                         <div class="cursor p-1 d-inline-block text-center mb-0 float-left w-100">メッセージ</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="logoutmodalcover" class="logoutmodalcover position-fixed cursor"></div>
-        <div id="logoutmodal" class="logoutmodal position-fixed">
-            <div class="logoutmodalinner w-100 bg-white position-relative">
-                <div id="" class="w-100 m-auto p-3 bg-white d-inline-block">
-                    <div id="" class="d-inline-block w-100 float-md-right pr-0 pl-0">
-                        <div class="pt-3 m-auto">
-                            <div class="w-100 d-inline-block text-center">
-                                <h3 class="font-weight-bold pt-2 pb-2 mb-0 m-auto">アカウント</h3>
-                            </div>
-                        </div>
-                        <div class="pt-5 pb-5 w-100 p-3 m-auto">
-                            <div class=" col-md-12 m-auto pt-3 pb-3 pl-0 pr-0 bg-white">
-                                <div class="col-12 pt-1 pb-1 m-auto">
-                                    <div>
-                                        <button type="submit" class="w-100 d-inline-block b-none text-white text-center font-weight-bold p-2 cursor bgmain">アカウント情報</button>
-                                    </div>
-                                </div>
-                                <!--ログアウトのモーダル-->
-                                <div class="col-12 pt-1 pb-1 m-auto">
-                                    <form action="" method="POST">
-                                        <button type="submit" class="w-100 d-inline-block b-none text-white text-center font-weight-bold p-2 cursor BgAccentColor">ログアウト</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -182,11 +153,13 @@
             </div>
         </div>
   </div>
-  <AccountModal class="aa" />
+<div id="logoutmodalcover" :class="Amodalclass" @click="AmodalClose"></div>
+<AccountModal></AccountModal>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 import DashboardView from '@/components/AfterLogin/Dashboard.vue';
 import ScheduleView from '@/components/AfterLogin/SchedulePage.vue';
 import GroupInfoView from '@/components/AfterLogin/GroupInfo.vue';
@@ -194,17 +167,26 @@ import TaskInfoView from '@/components/AfterLogin/TaskInfoView.vue';
 import AccountModal from '@/components/AfterLogin/parts/AccountModal.vue';
 
 export default defineComponent({
+    setup(props, context) {
+        const execEmit = () => {
+            context.emit('eventTest2', 'パラメータ1', 'パラメータ2');
+        }
+    },
     name: 'AfterLoginView',
     data() {
         return {
-            urlnow:location.pathname
+            urlnow:location.pathname,
+            Amodalclass:"logoutmodalcover position-fixed cursor modalcover_close",
+            addfriends_modal_wrapper_class:"logoutmodal position-fixed modal_close",
+            message:'logoutmodal position-fixed modal_close'
         };
     },
     components: {
         DashboardView,
         ScheduleView,
         GroupInfoView,
-        TaskInfoView
+        TaskInfoView,
+        AccountModal
     },
     methods: {
         dashboard(){
@@ -223,9 +205,42 @@ export default defineComponent({
             this.$router.push('/taskinfo');
             setTimeout(() => {this.urlnow = location.pathname;});
         },
-        AccountInfoShow(){
-            console.log("test");
+        AmodalOpen(){
+            this.Amodalclass = "logoutmodalcover position-fixed cursor modalcover_open";
+            //vue.の書き方にできれば変えたい
+            document.getElementById('logoutmodal')!.classList.toggle("modal_close");
+            document.getElementById('logoutmodal')!.classList.toggle("modal_open");
+        },
+        AmodalClose(){
+            this.Amodalclass = "logoutmodalcover position-fixed cursor modalcover_close";
+            //vue.の書き方にできれば変えたい
+            document.getElementById('logoutmodal')!.classList.toggle("modal_close");
+            document.getElementById('logoutmodal')!.classList.toggle("modal_open");
         }
     }
 });
 </script>
+
+<style lang="scss">
+.logoutmodal{
+    overflow:scroll;
+}
+.logoutmodal,
+.logoutmodalinner{
+    height: 40vh;
+}
+@media (min-width: 768px){
+    .logoutmodal{
+        margin: 30vh calc((100vw - 30rem) / 2);
+    }
+}
+@media (max-width: 768px){
+    .logoutmodal,
+    .logoutmodalinner{
+        height: 80vh;
+    }
+    .logoutmodal{
+        margin: 30vh calc((100vw - 90%) / 2);
+    }
+}
+</style>
