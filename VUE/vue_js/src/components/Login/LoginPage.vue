@@ -87,31 +87,8 @@ export default defineComponent({
     },
     methods: {
         login(): Promise<any> {
-/** バリデーション **/
             const MAElement = this.$refs.mail_address as HTMLInputElement
             const PAElement = this.$refs.password as HTMLInputElement
-
-            this.nomailalert = '';
-            this.nopasswordalert = '';
-            this.mailorpasswrong = '';
-
-            this.nomailalert = MAElement.value == '' ? "メールアドレスを入力してください。" : '';
-            this.nopasswordalert = PAElement.value == '' ? "パスワードを入力してください。" : '';
-
-            var flag = true;
-            if(MAElement.value == ''){
-                flag = false;
-            }
-            if(PAElement.value == ''){
-                flag = false;
-            }
-            if(flag !== true){
-                return http.get("/api/check/auth/failed").then(response => {
-                    this.mailorpasswrong = MAElement.value != '' && PAElement.value != '' ? response.data : '';
-                });
-            }
-
-/** バリデーション **/
             return http.post(
             "/api/login",
             {
@@ -122,24 +99,23 @@ export default defineComponent({
                 this.token = response.data.token;
                 if(response.data.token != undefined && response.data.token != null && response.data.token != ""){
                     localStorage.setItem('access_token', response.data.token);
+                    //ダッシュボードへ
                     this.$router.push('/dashboard');
                 }
-                //ダッシュボードへリダイレクト
+                this.nomailalert = response.data.EmptyCheck != undefined ? response.data.EmptyCheck.mail_address: '';
+                this.nopasswordalert = response.data.EmptyCheck != undefined ? response.data.EmptyCheck.password: '';
+                this.mailorpasswrong = MAElement.value != '' && PAElement.value != '' ? response.data.WrongMsg : '';
             })
             .catch(error => {
-                this.mailorpasswrong = '処理中にエラーが発生しました。';
+                console.log(error);
+                this.mailorpasswrong = error.data.WrongMsg;
             });
         },
         CheckAccesstoken(): Promise<any> {
-            if(!localStorage.getItem('access_token')){
-                return http.get("/api/check/auth/failed").then(response => {
-                    console.log(response);
-                });
-            }
-
             return http.get(
             "/api/check/auth/accesstoken",
             {
+                //アクセスする時はローカルストレージに保存されたアクセストークンをリクエストヘッダに入れてlaravel側のAuth::userで照合する。
                 headers: {
                     Authorization: `Bearer ${this.token}`
                 }

@@ -37,5 +37,4 @@ router.beforeEach((to, from, next) => {
     }
     console.log("5");
     next();
-
 });

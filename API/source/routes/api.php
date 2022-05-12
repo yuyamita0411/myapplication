@@ -9,14 +9,13 @@ use Illuminate\Support\Facades\Hash;
 Route::get('/check/auth/failed', function(){
     return 'メールアドレス、またはパスワードが違います。';
 });
-Route::post('/register', [App\Http\Controllers\API\RegisterController::class, 'register']);// ユーザー登録
-Route::post('/login', [App\Http\Controllers\API\LoginController::class, 'login']);// ログイン
-Route::post('/logout', [App\Http\Controllers\API\LoginController::class, 'logout']);// ログアウト
+Route::post('/register', [App\Http\Controllers\API\Auth\RegisterController::class, 'register']);// ユーザー登録
+Route::post('/login', [App\Http\Controllers\API\Auth\LoginController::class, 'login']);// ログイン
+Route::post('/logout', [App\Http\Controllers\API\Auth\LoginController::class, 'logout']);// ログアウト
 
 Route::middleware('auth:sanctum')->group(function(){
-    Route::get('/check/auth/accesstoken', function(){
-        return 'auth is working!!';
-    });
+    Route::get('/user/check', [App\Http\Controllers\API\Auth\AccessTokenController::class, 'UserCheck']);// ログアウト
+    Route::get('/dashboard', [App\Http\Controllers\API\HomeController::class, 'index']);
 });
 
 /*

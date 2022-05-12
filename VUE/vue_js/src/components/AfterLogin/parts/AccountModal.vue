@@ -47,7 +47,7 @@ export default defineComponent({
         "/api/logout"
         )
         .then(response => {
-            //localStorage.setItem('access_token',"");
+            localStorage.setItem('access_token',"");
             this.$router.push('/login');
         })
         .catch(error => {

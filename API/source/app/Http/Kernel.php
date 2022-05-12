@@ -61,6 +61,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'check.which.user' => \App\Http\Middleware\CheckWhichUser::class,
         'send.data.to.template' => \App\Http\Middleware\SendDataToTemplate::class,
+        'check.accesstoken' => \App\Http\Middleware\CheckAccessToken::class,
     ];
 
     protected $middlewarePriority = [
@@ -71,6 +72,7 @@ class Kernel extends HttpKernel
         \Illuminate\Session\Middleware\AuthenticateSession::class,
         \Illuminate\Routing\Middleware\SubstituteBindings::class,
         \Illuminate\Auth\Middleware\Authorize::class,
+        \App\Http\Middleware\CheckAccessToken::class,
         \App\Http\Middleware\CheckWhichUser::class,
         \App\Http\Middleware\SendDataToTemplate::class,
     ];
