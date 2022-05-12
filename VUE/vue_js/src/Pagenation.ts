@@ -1,8 +1,8 @@
 export class PageNation{
-    MakePagenation(amount, PageNow, TxtArea=true){
-        var NumHTML = '';
-        for(var i = 1; i <= amount; i++){
-            var Pnow = Number(PageNow);
+    MakePagenation(amount:any, PageNow:number, TxtArea=true){
+        let NumHTML = '';
+        for(let i = 1; i <= amount; i++){
+            const Pnow = Number(PageNow);
 
             if(i <= 3){
                 if(i == Pnow){//今開いてるページ

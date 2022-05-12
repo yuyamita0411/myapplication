@@ -16,6 +16,7 @@ Route::post('/logout', [App\Http\Controllers\API\Auth\LoginController::class, 'l
 Route::middleware('auth:sanctum')->group(function(){
     Route::get('/user/check', [App\Http\Controllers\API\Auth\AccessTokenController::class, 'UserCheck']);// ログアウト
     Route::get('/dashboard', [App\Http\Controllers\API\HomeController::class, 'index']);
+    Route::get('/notification/get', [App\Http\Controllers\API\HomeController::class, 'GetNotification']);
 });
 
 /*

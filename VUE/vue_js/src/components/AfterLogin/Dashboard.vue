@@ -1,7 +1,6 @@
 <template>
     <div class="shadowwrapper m-auto pl-2 pr-2 pl-lg-0 pr-lg-0">
         <div id="loadingarea" v-html="Loading"></div>
-
         <div class="contentwraper w-100 d-inline-block pt-3 pb-4 pl-0 pr-0 mt-3">
             <div :class="`articlewrapper col-12 m-auto p-3 ${loadstatus}`">
                 <h3 class="mainfontcolor newarticletitle col-12 pt-1 pb-1 mb-0 bg-transparent pl-0 pr-0">NEW!!</h3>
@@ -18,7 +17,7 @@
                     <div id="notificationarea">
                         <article class="p-news-list__item js-inter fadeInLeft is-invasion mb-3 p-2 position-relative" v-for="Nt in notificationarr" :key="Nt.id">
                             <router-link :to="{path: Nt.notificationlink = Nt.notificationlink != null ? Nt.notificationlink : '/dashboard'}">
-                                <div class="p-news-list__item__data pb-2" v-if="Nt != notificationarr[0] && Nt">
+                                <div class="p-news-list__item__data pb-2" v-if="Nt != notificationarr[Object.keys(notificationarr)[0]] && Nt">
                                     <p class="p-news-list__item__data__date mb-0">
                                     {{`
                                         ${new Date(Nt.created_at).getFullYear()}-
@@ -33,14 +32,11 @@
                         </article>
                     </div>
                     <div class="d-inline-block w-100 mt-3">
-                        <div class="col-10 col-md-6 col-lg-4 d-flex m-auto" id="notificationpagenationarea">
-                            <p class="pagenationnum PageNow PageNationNum cursor w-100 text-center p-1" id="">1</p><input class="mt-0 mb-0 col-2" id="PageNationInput" name="PageNationInput" type="text" value="1">
-                        </div>
+                        <div class="col-10 col-md-6 col-lg-4 d-flex m-auto" id="notificationpagenationarea" v-html="PageNationHTML"></div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </template>
 
@@ -48,6 +44,7 @@
 import { defineComponent, createApp } from 'vue';
 import http from "@/views/ts/http";
 import {GetData, loading} from "../../http";
+import {PageNation} from "../../Pagenation";
 
 export default defineComponent({
     name: 'DashboardView',
@@ -56,26 +53,74 @@ export default defineComponent({
             Loading:loading,
             loadstatus:'d-none',
             TopNotification:'',
-            notificationarr:[]
+            notificationarr:[],
+            PageNow:1,
+            PageAmount:0,
+            PageNationHTML:''
         };
+    },
+    methods:{
+        rebaseNotification(pagenow:number): void{
+            const http = new GetData();
+            this.Loading = loading;
+            this.loadstatus = 'd-none';
+
+            http.common(
+                "/api/notification/get",
+                {PageNow: pagenow},
+                (res:any) => {
+                    this.TopNotification = res.data[Object.keys(res.data)[0]].title;
+                    this.PageAmount = res.data.PageAmount;
+
+                    var objarr:any = [];
+                    for (var property in res.data) {
+                        if(typeof res.data[property] == "object"){
+                            objarr.push(res.data[property]);
+                        }
+                    }
+                    this.notificationarr = objarr;
+
+                    var pagination = new PageNation();
+                    this.PageNationHTML = pagination.MakePagenation(this.PageAmount, pagenow);
+
+                    //読み込みが完全に終わってからカバーを外す
+                    this.Loading = '';
+                    this.loadstatus = '';
+                }
+            );
+        }
     },
     props: {
         msg: String
     },
     mounted(){
         const http = new GetData();
-        http.common("/api/dashboard",
-        (res:any) => {
-            this.TopNotification = res.data[0].title;
-            this.notificationarr = res.data;
-            this.Loading = '';
-            this.loadstatus = '';
+        this.rebaseNotification(this.PageNow);
+
+        //ページネーション、インプットタグは生成されたものがマウントされるのでwindowイベント引数eからid, classを取得して対応
+        window.addEventListener('click', (e) => {
+            var t = e.target as HTMLElement;
+            if(t!.className.match(/pagenationnum/)){
+                this.PageNow = Number(t!.innerText);
+                console.log(this.PageNow);
+                //rebaseNotification(PageNow);
+                this.rebaseNotification(this.PageNow);
+            }
         });
-    },
-    methods:{
-        mthod(){
-            console.log("dammy");
-        }
+        window.addEventListener('input', (e) => {
+            var t = e.target as HTMLInputElement;
+            if(t!.id.match(/PageNationInput/)){
+                setTimeout(() => {
+                    if(t!.value != ''){
+                        this.PageNow = Number(t!.value);
+                        console.log(this.PageNow);
+                        //rebaseNotification(PageNow);
+                        this.rebaseNotification(this.PageNow);
+                    }
+                }, 500);
+            }
+        });
+
     }
 });
 </script>

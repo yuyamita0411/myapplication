@@ -14,14 +14,16 @@ export const loading = `
     </div>
 `;
 export class GetData {
-    async common(url:string, callback:any): Promise<any> {
+    async common(url:string, data:any, callback:any): Promise<any> {
         return http.get(
             url,
-        {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('access_token')!}`
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('access_token')!}`,
+                },
+                params: data
             }
-        })
+        )
         .then(response => {
             callback(response);
         })
