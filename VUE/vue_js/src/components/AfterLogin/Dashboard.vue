@@ -34,6 +34,24 @@
                     <div class="d-inline-block w-100 mt-3">
                         <div class="col-10 col-md-6 col-lg-4 d-flex m-auto" id="notificationpagenationarea" v-html="PageNationHTML"></div>
                     </div>
+
+
+                    <!--div class="d-inline-block w-100 mt-3">
+                        <div class="col-10 col-md-6 col-lg-4 d-flex m-auto" id="">
+
+                            <div v-for="i in PageAmount" :key="i" class="pagenationnum PageNationNum cursor w-100 text-center p-1">
+                                <p v-if="i <= 3 && i == PageNow" id="" class="PageNow">{{i}}</p>
+                                <p v-if="i <= 3 && i != PageNow" id="" class="">{{i}}</p>
+                                <p v-if="3 < i && i == PageNow - 1" id="" class="">{{i}}</p>
+                                <p v-if="3 < i && i == PageNow" id="" class="PageNow">{{i}}</p>
+                                <p v-if="3 < i && i == PageNow + 1" id="" class="">{{i}}</p>
+                                <p v-if="i == PageNow + 2 || i == PageNow - 2" id="" class="">...</p>
+                                <p v-if="i == PageAmount && PageAmount - 1 > PageNow" id="PageLastNum" class="">{{i}}</p>
+                            </div>
+
+                        </div>
+                    </div-->
+
                 </div>
             </div>
         </div>
