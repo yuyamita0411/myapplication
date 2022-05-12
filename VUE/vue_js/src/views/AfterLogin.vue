@@ -7,7 +7,7 @@
                         <span class="mr-2">
                             <img src="@/assets/logo.png" class="accounticon">
                         </span>
-                        <a href="/" class="logoinnertxt d-none d-md-inline-block">gware</a>
+                        <div @click="dashboard" to="dashboard" class="logoinnertxt d-none d-md-inline-block cursor">gware</div>
                     </div>
                     <div
                     id="AccountArea"
