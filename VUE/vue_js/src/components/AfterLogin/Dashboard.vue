@@ -32,26 +32,16 @@
                         </article>
                     </div>
                     <div class="d-inline-block w-100 mt-3">
-                        <div class="col-10 col-md-6 col-lg-4 d-flex m-auto" id="notificationpagenationarea" v-html="PageNationHTML"></div>
-                    </div>
-
-
-                    <!--div class="d-inline-block w-100 mt-3">
-                        <div class="col-10 col-md-6 col-lg-4 d-flex m-auto" id="">
-
-                            <div v-for="i in PageAmount" :key="i" class="pagenationnum PageNationNum cursor w-100 text-center p-1">
-                                <p v-if="i <= 3 && i == PageNow" id="" class="PageNow">{{i}}</p>
-                                <p v-if="i <= 3 && i != PageNow" id="" class="">{{i}}</p>
-                                <p v-if="3 < i && i == PageNow - 1" id="" class="">{{i}}</p>
-                                <p v-if="3 < i && i == PageNow" id="" class="PageNow">{{i}}</p>
-                                <p v-if="3 < i && i == PageNow + 1" id="" class="">{{i}}</p>
-                                <p v-if="i == PageNow + 2 || i == PageNow - 2" id="" class="">...</p>
-                                <p v-if="i == PageAmount && PageAmount - 1 > PageNow" id="PageLastNum" class="">{{i}}</p>
+                        <div class="col-10 col-md-6 col-lg-4 m-auto d-flex" id="">
+                            <div v-for="i in PageAmount" :key="i" class="pagenationnum PageNationNum cursor d-inline-block w-100 text-center p-1">
+                                <p
+                                :id="`${PageNationClass(i).PageNationId}`"
+                                :class="`${PageNationClass(i).PageNationClass}`"
+                                @click="PageNationClick">{{`${PageNationClass(i).PageNationTxt}`}}</p>
                             </div>
-
+                            <input type="text" name="PageNationInput" :value="PageNow" id="PageNationInput" @input="PageNationInput" class="mt-0 mb-0 col-2">
                         </div>
-                    </div-->
-
+                    </div>
                 </div>
             </div>
         </div>
@@ -63,6 +53,7 @@ import { defineComponent, createApp } from 'vue';
 import http from "@/views/ts/http";
 import {GetData, loading} from "../../http";
 import {PageNation} from "../../Pagenation";
+import {Validation} from "../../validation";
 
 export default defineComponent({
     name: 'DashboardView',
@@ -74,11 +65,15 @@ export default defineComponent({
             notificationarr:[],
             PageNow:1,
             PageAmount:0,
-            PageNationHTML:''
+            onlyint:/^[0-9]*$/
         };
     },
     methods:{
         rebaseNotification(pagenow:number): void{
+            if(!this.onlyint.test(pagenow.toString())){
+                return;
+            }
+            //Validation.onlyInt(pagenow.toString());
             const http = new GetData();
             this.Loading = loading;
             this.loadstatus = 'd-none';
@@ -98,14 +93,37 @@ export default defineComponent({
                     }
                     this.notificationarr = objarr;
 
-                    var pagination = new PageNation();
-                    this.PageNationHTML = pagination.MakePagenation(this.PageAmount, pagenow);
-
                     //読み込みが完全に終わってからカバーを外す
                     this.Loading = '';
                     this.loadstatus = '';
+
+                    console.log(this.PageAmount);
                 }
             );
+        },
+        PageNationClass(i:number, PageNow:number, PageAmount:number){
+            return PageNation.PageNationClass(i, this.PageNow , this.PageAmount);
+        },
+        PageNationClick(e:any){
+            var t = e.target as HTMLElement;
+            if(!this.onlyint.test(t!.innerText.toString())){
+                return;
+            }
+            this.PageNow = Number(t!.innerText);
+            console.log(this.PageNow);
+            this.rebaseNotification(this.PageNow);
+        },
+        PageNationInput(e:any){
+            var t = e.target as HTMLInputElement;
+            if(!this.onlyint.test(t!.innerText.toString())){
+                return;
+            }
+            setTimeout(() => {
+                if(t!.value != ''){
+                    this.PageNow = Number(t!.value);
+                    this.rebaseNotification(this.PageNow);
+                }
+            }, 500);
         }
     },
     props: {
@@ -114,31 +132,6 @@ export default defineComponent({
     mounted(){
         const http = new GetData();
         this.rebaseNotification(this.PageNow);
-
-        //ページネーション、インプットタグは生成されたものがマウントされるのでwindowイベント引数eからid, classを取得して対応
-        window.addEventListener('click', (e) => {
-            var t = e.target as HTMLElement;
-            if(t!.className.match(/pagenationnum/)){
-                this.PageNow = Number(t!.innerText);
-                console.log(this.PageNow);
-                //rebaseNotification(PageNow);
-                this.rebaseNotification(this.PageNow);
-            }
-        });
-        window.addEventListener('input', (e) => {
-            var t = e.target as HTMLInputElement;
-            if(t!.id.match(/PageNationInput/)){
-                setTimeout(() => {
-                    if(t!.value != ''){
-                        this.PageNow = Number(t!.value);
-                        console.log(this.PageNow);
-                        //rebaseNotification(PageNow);
-                        this.rebaseNotification(this.PageNow);
-                    }
-                }, 500);
-            }
-        });
-
     }
 });
 </script>
