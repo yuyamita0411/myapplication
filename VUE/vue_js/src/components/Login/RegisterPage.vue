@@ -54,14 +54,14 @@
                         </div>
                         <div class="w-100 d-inline-block mb-3">
                             <div class="tablediv bg-white w-100 d-inline-block">
-                                <input id="password-confirm"
+                                <input id="password_confirmation"
                                 type="text"
                                 class="loginborder br5px w-100 bg-white pl-2 fileinput"
                                 name="password_confirmation"
                                 ref="password_confirm"
                                 value=""
                                 placeholder="user password confirm(必須)"
-                                required>
+                                >
                             </div>
                             <small class="red text-left d-block w-100 mt-1">{{nopasswordconfalert}}</small>
                         </div>
@@ -180,21 +180,6 @@ export default defineComponent({
     },
     methods: {
         register(data: any) {
-            this.nonamealert = "";
-            this.noemailalert = "";
-            this.nopasswordalert = "";
-            this.nopasswordconfalert = "";
-
-            this.companynamealert = "";
-            this.companyaddressalert = "";
-            this.companytelalert = "";
-            this.companymailalert = "";
-            this.companyindustryalert = "";
-
-            var flag = true;
-            const regex = /^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/;
-            const onlyint = /^[0-9]*$/;
-
             const NAElement = this.$refs.name as HTMLInputElement
             const EMElement = this.$refs.email as HTMLInputElement
             const PAElement = this.$refs.password as HTMLInputElement
@@ -205,94 +190,13 @@ export default defineComponent({
             const CMAILElement = this.$refs.companymail as HTMLInputElement
             const CINDElement = this.$refs.companyindustry as HTMLInputElement
 
-            if(NAElement.value == ''){
-                this.nonamealert = "*名前は必須です";
-                flag = false;
-            }
-            if(200 < NAElement.value.length){
-                this.nonamealert = "200文字以内でお願いします。";
-                flag = false;
-            }
-
-            if(EMElement.value == ''){
-                this.noemailalert = "*メールアドレスは必須です";
-                flag = false;
-            }
-            if(200 < EMElement.value.length){
-                this.noemailalert = "200文字以内でお願いします。";
-                flag = false;
-            }
-            if(!regex.test(EMElement.value)){
-                this.noemailalert = "メールアドレスの形式が正しくありません。";
-                flag = false;
-            }
-
-            if(PAElement.value == ''){
-                this.nopasswordalert = "*パスワードは必須です";
-                flag = false;
-            }
-            if(255 < PAElement.value.length){
-                this.nopasswordalert = "255文字以内でお願いします。";
-                flag = false;
-            }
-
-            if(PACONElement.value == ''){
-                this.nopasswordconfalert = "*パスワード確認は必須です";
-                flag = false;
-            }
-            if(255 < PACONElement.value.length){
-                this.nopasswordconfalert = "255文字以内でお願いします。";
-                flag = false;
-            }
-            if(PAElement.value != PACONElement.value){
-                this.nopasswordconfalert = "パスワードが一致しません。";
-                flag = false;
-            }
-
-            if(255 < CNElement.value.length){
-                this.companynamealert = "255文字以内でお願いします。";
-                flag = false;
-            }
-
-            if(255 < CADDElement.value.length){
-                this.companyaddressalert = "255文字以内でお願いします。";
-                flag = false;
-            }
-
-            if(255 < CTELLElement.value.length){
-                this.companytelalert = "255文字以内でお願いします。";
-                flag = false;
-            }
-            if(!onlyint.test(CTELLElement.value)){
-                this.companytelalert = "数字のみでお願いします";
-                flag = false;
-            }
-
-            if(255 < CMAILElement.value.length){
-                this.companymailalert = "255文字以内でお願いします。";
-                flag = false;
-            }
-            if(!regex.test(CMAILElement.value) && CMAILElement.value.length != 0){
-                this.companymailalert = "メールアドレスの形式が正しくありません。";
-                flag = false;
-            }
-
-            if(255 < CINDElement.value.length){
-                this.companyindustryalert = "255文字以内でお願いします。";
-                flag = false;
-            }
-
-            if(flag != true){
-                return;
-            }
-
             return http.post(
             "/api/register",
             {
                 'name':NAElement.value,
                 'email':EMElement.value,
                 'password':PAElement.value,
-                'password-confirm':PACONElement.value,
+                'password_confirmation':PACONElement.value,
                 'companyname':CNElement.value,
                 'companyaddress':CADDElement.value,
                 'companytel':CTELLElement.value,
@@ -300,8 +204,23 @@ export default defineComponent({
                 'companyindustry':CINDElement.value
             })
             .then(response => {
-                this.SModalClass = 'position-fixed w-100 h-100 smodalshow';
-                this.completemsg = response.data.message;
+                console.log(response);
+                this.nonamealert = response.data.EmptyCheck.name;
+                this.noemailalert = response.data.EmptyCheck.email;
+                this.nopasswordalert = response.data.EmptyCheck.password;
+                this.nopasswordconfalert = response.data.EmptyCheck.password_confirmation;
+                this.companynamealert = response.data.EmptyCheck.companyname;
+                this.companyaddressalert = response.data.EmptyCheck.companyaddress;
+                this.companytelalert = response.data.EmptyCheck.companytel;
+                this.companymailalert = response.data.EmptyCheck.companymail;
+                this.companyindustryalert = response.data.EmptyCheck.companyindustry;
+
+                //重複するユーザーがいた時もモーダルを出すようにする。
+                if(response.data.RegisterStatus == "success" || response.data.RegisterStatus == "duplicated"){
+                    this.SModalClass = 'position-fixed w-100 h-100 smodalshow';
+                    this.completemsg = response.data.message;
+                }
+
                 setTimeout(() => {
                     this.SModalClass = 'position-fixed w-100 h-100 smodalhide';
                 }, 2000);

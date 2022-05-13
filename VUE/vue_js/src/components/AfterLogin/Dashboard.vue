@@ -73,7 +73,6 @@ export default defineComponent({
             if(!this.onlyint.test(pagenow.toString())){
                 return;
             }
-            //Validation.onlyInt(pagenow.toString());
             const http = new GetData();
             this.Loading = loading;
             this.loadstatus = 'd-none';
@@ -82,13 +81,15 @@ export default defineComponent({
                 "/api/notification/get",
                 {PageNow: pagenow},
                 (res:any) => {
-                    this.TopNotification = res.data[Object.keys(res.data)[0]].title;
-                    this.PageAmount = res.data.PageAmount;
+
+                    this.TopNotification = res.data.NFirstArr.title;
+                    this.PageAmount = res.data.NArr.PageAmount;
+                    
 
                     var objarr:any = [];
-                    for (var property in res.data) {
-                        if(typeof res.data[property] == "object"){
-                            objarr.push(res.data[property]);
+                    for (var property in res.data.NArr) {
+                        if(typeof res.data.NArr[property] == "object"){
+                            objarr.push(res.data.NArr[property]);
                         }
                     }
                     this.notificationarr = objarr;
@@ -96,8 +97,6 @@ export default defineComponent({
                     //読み込みが完全に終わってからカバーを外す
                     this.Loading = '';
                     this.loadstatus = '';
-
-                    console.log(this.PageAmount);
                 }
             );
         },

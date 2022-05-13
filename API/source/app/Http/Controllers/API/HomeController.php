@@ -32,16 +32,26 @@ class HomeController extends Controller
 
     public function GetNotification(Request $request)
     {
+        $NotificationFirst = new Notification;
         $Notification = new Notification;
+
+        $notificationFirstObj = 
+        $NotificationFirst
+            ->where('companyid', '=', Auth::user()->companyid)
+            ->where('touserid', '=', Auth::user()->id)
+            ->orderby('created_at', 'desc')->first();
+
         //同じ会社のユーザー、タスクを取得する。
         $notificationObj = 
             $Notification
                 ->where('companyid', '=', Auth::user()->companyid)
                 ->where('touserid', '=', Auth::user()->id)
+                ->where('id', '!=', $NotificationFirst->id)
                 ->orderby('created_at', 'desc');
 
-            $ncount = ceil(count($notificationObj->get()) / $this->Values->pagenationNum); 
-       
+        //$notificationObj = $notificationObj->where("id", "!=", $NotificationFirst->id);
+        $ncount = ceil(count($notificationObj->get()) / $this->Values->pagenationNum);
+
         if(empty($request->PageNow)){
             $notificationObj = $notificationObj->limit($this->Values->pagenationNum)->offset(0);
         }
@@ -65,9 +75,9 @@ class HomeController extends Controller
             $nobjarr[$value->id]["companyid"] = $value->companyid;
             $nobjarr[$value->id]["notificationlink"] = $value->notificationlink;
             $nobjarr[$value->id]["created_at"] = $value->created_at;
-        } 
-       
+        }
         $nobjarr['PageAmount'] = $ncount;
-        return response()->json($nobjarr);
+
+        return response()->json(["NFirstArr" => $notificationFirstObj, "NArr" => $nobjarr]);
     }
 }
