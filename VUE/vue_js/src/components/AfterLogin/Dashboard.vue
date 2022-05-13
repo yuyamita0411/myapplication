@@ -1,8 +1,8 @@
 <template>
     <div class="shadowwrapper m-auto pl-2 pr-2 pl-lg-0 pr-lg-0">
-        <div id="loadingarea" v-html="Loading"></div>
+        
         <div class="contentwraper w-100 d-inline-block pt-3 pb-4 pl-0 pr-0 mt-3">
-            <div :class="`articlewrapper col-12 m-auto p-3 ${loadstatus}`">
+            <div class="articlewrapper col-12 m-auto p-3 position-relative">
                 <h3 class="mainfontcolor newarticletitle col-12 pt-1 pb-1 mb-0 bg-transparent pl-0 pr-0">NEW!!</h3>
                 <div class="newestarticle d-flex w-100 bg-white pt-2 pb-2 pr-4 pl-4 mb-3">
                     <article class="p-news-list__item js-inter fadeInLeft is-invasion">
@@ -12,9 +12,10 @@
                         </div></a>
                     </article>
                 </div>
+                <div id="loadingarea" v-html="Loading" class="position-absolute"></div>
                 <div class="gridinside w-100 bg-white p-3">
                     <img class="clipicon position-absolute" src="@/assets/clipicon.png">
-                    <div id="notificationarea">
+                    <div id="notificationarea" :class="`${loadstatus}`">
                         <article class="p-news-list__item js-inter fadeInLeft is-invasion mb-3 p-2 position-relative" v-for="Nt in notificationarr" :key="Nt.id">
                             <router-link :to="{path: Nt.notificationlink = Nt.notificationlink != null ? Nt.notificationlink : '/dashboard'}">
                                 <div class="p-news-list__item__data pb-2" v-if="Nt != notificationarr[Object.keys(notificationarr)[0]] && Nt">
@@ -32,7 +33,7 @@
                         </article>
                     </div>
                     <div class="d-inline-block w-100 mt-3">
-                        <div class="col-10 col-md-6 col-lg-4 m-auto d-flex" id="">
+                        <div :class="`col-10 col-md-6 col-lg-4 m-auto d-flex ${this.loadpn}`" id="">
                             <div v-for="i in PageAmount" :key="i" class="pagenationnum PageNationNum cursor d-inline-block w-100 text-center p-1">
                                 <p
                                 :id="`${PageNationClass(i).PageNationId}`"
@@ -53,14 +54,14 @@ import { defineComponent, createApp } from 'vue';
 import http from "@/views/ts/http";
 import {GetData, loading} from "../../http";
 import {PageNation} from "../../Pagenation";
-import {Validation} from "../../validation";
 
 export default defineComponent({
     name: 'DashboardView',
     data() {
         return {
             Loading:loading,
-            loadstatus:'d-none',
+            loadstatus:'op0',
+            loadpn:'op0',
             TopNotification:'',
             notificationarr:[],
             PageNow:1,
@@ -75,7 +76,7 @@ export default defineComponent({
             }
             const http = new GetData();
             this.Loading = loading;
-            this.loadstatus = 'd-none';
+            this.loadstatus = 'op0';
 
             http.common(
                 "/api/notification/get",
@@ -96,7 +97,8 @@ export default defineComponent({
 
                     //読み込みが完全に終わってからカバーを外す
                     this.Loading = '';
-                    this.loadstatus = '';
+                    this.loadstatus = 'op1';
+                    this.loadpn = 'op1';
                 }
             );
         },
@@ -136,4 +138,24 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+#notificationarea{
+    height:40vh;
+    overflow:scroll;
+}
+#loadingarea{
+    left:50%;
+}
+.newestarticle{
+    height:2.5rem;
+}
+.op0{
+    opacity:0;
+}
+.op1{
+    opacity:1;
+}
+.op0,
+.op1{
+    transition:all 0.5s;
+}
 </style>

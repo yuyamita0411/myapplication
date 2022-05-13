@@ -247,12 +247,46 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import http from "@/views/ts/http";
+import {GetData, loading} from "../../http";
+import {PageNation} from "../../Pagenation";
 
 export default defineComponent({
-  name: 'ScheduleView',
-  props: {
-    msg: String,
-  },
+	name: 'ScheduleView',
+    data() {
+        return {
+            AddedUserList:{},
+            orderby:'asc',
+            PageNow:1,
+			appenddate:new Date(),
+			KeyWord:'',
+			PerPage:1,
+			startdateappend:new Date()
+        };
+    },
+    methods:{
+		RebaseSchedule(){
+			const http = new GetData();
+			http.common(
+				"/api/schedule",
+				{
+					"orderby":this.orderby,
+					"keyword":this.KeyWord,
+					"PerPage":this.PerPage,
+					"starttime":this.startdateappend
+				},
+				(res:any) => {
+					console.log(res);
+				}
+			);
+		}
+    },
+	props: {
+		msg: String,
+	},
+    mounted(){
+        this.RebaseSchedule();
+    }
 });
 </script>
 
