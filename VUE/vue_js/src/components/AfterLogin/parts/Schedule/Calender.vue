@@ -1,5 +1,6 @@
 <template>
-    <div id="ScheduleWrapper">
+    <div id="ScheduleWrapper" :class="loadstatus">
+    {{searchparam}}
         <div class="position-absolute h-100 w-100 bg-white loadinghidden" id="ScheduleLoadingArea"></div>
         <div class="myschedulearea" id="MyScheduleArea"></div>
         <div class="schedulearea" id="UserScheduleArea">
@@ -173,40 +174,44 @@ import {PageNation} from "../../../../Pagenation";
 
 export default defineComponent({
     name: 'CalenderView',
+	props: {
+		date: Object,
+		searchparam: Object
+	},
     data() {
         return {
-            AddedUserList:{},
-            orderby:'asc',
-            PageNow:1,
-			appenddate:new Date(),
-			KeyWord:'',
-			PerPage:10,
-			startdateappend:new Date()
+            loadingstatus:true,
+            loadstatus:'op0'
         };
     },
     methods:{
-		RebaseSchedule(){
+		RebaseSchedule(param){
 			const http = new GetData();
+            this.loadingstatus = true;
+            this.loadstatus = 'op0';
+
 			http.common(
 				"/api/schedule",
-				{
-					"orderby":this.orderby,
-					"keyword":this.KeyWord,
-					"PerPage":this.PerPage,
-					"starttime":this.startdateappend
-				},
+				param,
 				(res:any) => {
 					console.log(res);
+
+                    //読み込みが完全に終わってからカバーを外す
+                    this.loadingstatus = false;
+                    this.loadstatus = 'op1';
 				}
 			);
 		}
     },
-	props: {
-		msg: String,
-	},
     mounted(){
-        this.RebaseSchedule();
-    }
+        console.log("pc");
+        console.log(this.searchparam);
+        this.RebaseSchedule(this.searchparam);
+    }/*,
+    updated(){
+        console.log("pc");
+        this.RebaseSchedule(this.searchparam);
+    }*/
 });
 </script>
 

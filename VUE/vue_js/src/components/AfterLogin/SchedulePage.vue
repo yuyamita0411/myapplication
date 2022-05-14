@@ -69,15 +69,27 @@
 										</div>
 										<div class="mt-0" id="DayArea">
 											<div class="d-md-flex">
-												<div class="SortAreaishidde tooltip-top w-100 d-inline-block text-center cursor position-relative pt-2 pb-2" data-tooltip="並び変え" id="SortArea">
+												<div
+												:class="`${SortAreaClass} tooltip-top w-100 d-inline-block text-center cursor position-relative pt-2 pb-2`"
+												data-tooltip="並び変え"
+												@click="SortAreaOpen"
+												id="SortArea">
 													<img class="sccheduleplusbutton" src="@/assets/accountarrow.png">
 													<div class="position-absolute sbwrapper b-gray sbhidden bg-white" id="sortmenu">
-														<div class="sortelem p-2" data-orderby="asc">
+														<div
+														class="sortelem p-2"
+														data-orderby="asc"
+														@click="ChangeOrderBy"
+														>
 															昇順
 														</div>
-														<div class="sortelem p-2" data-orderby="desc">
+														<div
+														class="sortelem p-2"
+														data-orderby="desc"
+														@click="ChangeOrderBy"
+														>
 															降順
-														</div><input name="clorderby" type="hidden" value="">
+														</div><input name="clorderby" type="hidden" :value="`${SearchOrderBy}`">
 													</div>
 												</div>
 												
@@ -108,7 +120,16 @@
 								</div>
 
 								<!-- コンポーネント化 -->
-								<CalenderView />
+								<CalenderView
+								v-if="WhichCstyle == 'pc'"
+								:date="date"
+								:searchparam="searchparam"
+								/>
+
+								<SPCalenderView v-if="WhichCstyle == 'sp'"
+								:date="date"
+								:searchparam="searchparam"
+								/>
 								<!-- コンポーネント化 -->
 
 							</div>
@@ -123,6 +144,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import CalenderView from '@/components/AfterLogin/parts/Schedule/Calender.vue';
+import SPCalenderView from '@/components/AfterLogin/parts/Schedule/SPCalender.vue';
 import http from "@/views/ts/http";
 import {GetData} from "../../http";
 import {PageNation} from "../../Pagenation";
@@ -136,18 +158,20 @@ export default defineComponent({
 			DweekArr:[ "日", "月", "火", "水", "木", "金", "土" ],
 			Daycolor:{"土":"SaturdayColor", "日":"SundayColor", "月":"", "火":"", "水":"", "木":"", "金":""},
 			date:new Date(),
-
+			SortAreaClass:'SortAreaishidde',
 			searchparam:{},
 			SearchKeyword:'',
 			SearchDisplayNum:5,
 			SearchOrderBy:'desc',
+			WhichCstyle:""
         };
     },
     components: {
-        CalenderView
+        CalenderView,
+		SPCalenderView
     },
 	props: {
-		msg: String,
+		msg: String
 	},
 
 	methods:{
@@ -179,26 +203,57 @@ export default defineComponent({
 			this.MakeSearchParam();
 		},
 
-		SearchIncharge(data:any){
-			const Kelement = this.$refs.name as HTMLInputElement
-			this.SearchKeyword = Kelement.value;
+		SearchIncharge(e:any){
+			this.SearchKeyword = e.target.value;
 			//検索結果を出力する共通処理を入れる
 			this.MakeSearchParam();
 		},
-		SetDisplayNum(data:any){
-			const DNumVal = this.$refs.name as HTMLInputElement
-			this.SearchDisplayNum = Number(DNumVal.value);
+		SetDisplayNum(e:any){
+			this.SearchDisplayNum = Number(e.target.value);
+			//検索結果を出力する共通処理を入れる
+			this.MakeSearchParam();
+		},
+		SortAreaOpen(e:any){
+			e.target.classList.toggle("SortAreaisshow");
+			e.target.classList.toggle("SortAreaishidde");
+			if(!e.target.getElementsByClassName('sbwrapper') || !e.target.getElementsByClassName('sbwrapper')[0]){
+				return;
+			}
+
+			e.target.getElementsByClassName('sbwrapper')[0].classList.toggle("sbshow");
+			e.target.getElementsByClassName('sbwrapper')[0].classList.toggle("sbhidden");
+		},
+		ChangeOrderBy(e:any){
+			this.SearchOrderBy = e.target.dataset.orderby;
+			e.target.parentNode.parentNode.classList.toggle("SortAreaisshow");
+			e.target.parentNode.parentNode.classList.toggle("SortAreaishidde");
+			e.target.parentNode.classList.toggle("sbshow");
+			e.target.parentNode.classList.toggle("sbhidden");
 			//検索結果を出力する共通処理を入れる
 			this.MakeSearchParam();
 		},
 
+		DetermineDate(){
+			if(location.search == ''){
+				this.date = new Date();
+			}
+			if(location.search.match(/starttime=/)){
+				//○○○○-○○-○○の形式以外は認めない
+				var datestr = location.search.split('starttime=')[1].split('&')[0];
+				const regex = /^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
+				if(!regex.test(datestr)){
+					return;
+				}
+				this.date = new Date(datestr);
+			}
+		},
 		//検索結果を出力する共通処理
 		MakeSearchParam(){
 			this.searchparam = {
 				"orderby":this.SearchOrderBy,
 				"keyword":this.SearchKeyword,
 				"PerPage":this.SearchDisplayNum,
-				"starttime":this.date
+				"starttime":`${this.date.getFullYear()}/${this.date.getMonth()+1}/${this.date.getDate()}`
 			};
 		}
 	},
@@ -206,18 +261,26 @@ export default defineComponent({
 		//マウント時はパラメータの有無を確認。
 		//パラメータがある場合はパラメータの日付を取得する。
 		//ない場合は今日の日付を取得する。
-        if(location.search == ''){
-			this.date = new Date();
-        }
-        if(location.search.match(/starttime=/)){
-			//○○○○-○○-○○の形式以外は認めない
-			var datestr = location.search.split('starttime=')[1].split('&')[0];
-			const regex = /^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
-			if(!regex.test(datestr)){
-				return;
+		this.DetermineDate();
+		this.MakeSearchParam();
+		window.addEventListener('load', () => {
+			if(768 < window.innerWidth){
+				this.WhichCstyle = "pc";
 			}
-			this.date = new Date(datestr);
-        }
+			if(window.innerWidth <= 768){
+				this.WhichCstyle = "sp";
+			}
+		});
+		window.addEventListener('resize', () => {
+			if(768 < window.innerWidth){
+				this.WhichCstyle = "pc";
+			}
+			if(window.innerWidth <= 768){
+				this.WhichCstyle = "sp";
+			}
+			this.DetermineDate();
+			this.MakeSearchParam();
+		});
     }
 });
 </script>
