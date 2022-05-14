@@ -1,6 +1,5 @@
 <template>
     <div class="shadowwrapper m-auto pl-2 pr-2 pl-lg-0 pr-lg-0">
-        
         <div class="contentwraper w-100 d-inline-block pt-3 pb-4 pl-0 pr-0 mt-3">
             <div class="articlewrapper col-12 m-auto p-3 position-relative">
                 <h3 class="mainfontcolor newarticletitle col-12 pt-1 pb-1 mb-0 bg-transparent pl-0 pr-0">NEW!!</h3>
@@ -12,7 +11,7 @@
                         </div></a>
                     </article>
                 </div>
-                <div id="loadingarea" v-html="Loading" class="position-absolute"></div>
+                <LoginIconview class="dashboardloading w-100 d-inline-block text-center" v-if="loadingstatus == true" />
                 <div class="gridinside w-100 bg-white p-3">
                     <img class="clipicon position-absolute" src="@/assets/clipicon.png">
                     <div id="notificationarea" :class="`${loadstatus}`">
@@ -59,14 +58,15 @@
 <script lang="ts">
 import { defineComponent, createApp } from 'vue';
 import http from "@/views/ts/http";
-import {GetData, loading} from "../../http";
+import {GetData} from "../../http";
+import LoginIconview from '@/components/common/LoadingIcon.vue';
 import {PageNation} from "../../Pagenation";
 
 export default defineComponent({
     name: 'DashboardView',
     data() {
         return {
-            Loading:loading,
+            loadingstatus:true,
             loadstatus:'op0',
             loadpn:'op0',
             TopNotification:'',
@@ -76,13 +76,16 @@ export default defineComponent({
             onlyint:/^[0-9]*$/
         };
     },
+    components: {
+        LoginIconview
+    },
     methods:{
         rebaseNotification(pagenow:number): void{
             if(!this.onlyint.test(pagenow.toString())){
                 return;
             }
             const http = new GetData();
-            this.Loading = loading;
+            this.loadingstatus = true;
             this.loadstatus = 'op0';
 
             http.common(
@@ -90,12 +93,9 @@ export default defineComponent({
                 {PageNow: pagenow},
                 (res:any) => {
 
-                    console.log(res);
-                    console.log(Object.keys(res.data.NArr).length);
-
                     if(res.data.NFirstArr == null){
                         this.TopNotification = '新しいお知らせはありません。';
-                        this.Loading = '';
+                        this.loadingstatus = false;
                         return;
                     }
 
@@ -111,7 +111,7 @@ export default defineComponent({
                     this.notificationarr = objarr;
 
                     //読み込みが完全に終わってからカバーを外す
-                    this.Loading = '';
+                    this.loadingstatus = false;
                     this.loadstatus = 'op1';
                     this.loadpn = 'op1';
                 }
@@ -126,7 +126,6 @@ export default defineComponent({
                 return;
             }
             this.PageNow = Number(t!.innerText);
-            console.log(this.PageNow);
             this.rebaseNotification(this.PageNow);
         },
         PageNationInput(e:any){
@@ -160,17 +159,15 @@ export default defineComponent({
 #loadingarea{
     left:50%;
 }
+#loadingarea{
+    top:35%;
+}
 .newestarticle{
     height:2.5rem;
 }
-.op0{
-    opacity:0;
-}
-.op1{
-    opacity:1;
-}
-.op0,
-.op1{
-    transition:all 0.5s;
+.dashboardloading{
+    position:absolute;
+    top:20%;
+    transform:scale(0.7);
 }
 </style>

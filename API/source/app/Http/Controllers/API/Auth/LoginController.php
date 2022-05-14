@@ -59,4 +59,8 @@ class LoginController extends Controller
         Auth::logout();
         return response()->json(['message' => 'Logged out'], 200);
     }
+
+    public function GetUserInfo(){
+        return response()->json(['userinfo' => Auth::user()], Response::HTTP_OK);
+    }
 }

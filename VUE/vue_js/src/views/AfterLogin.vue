@@ -1,5 +1,8 @@
 <template>
-  <div class="home">
+<div id="MainColumLoadArea" v-if="loadingstatus == true" class="position-absolute">
+    <LoginIconview />
+</div>
+  <div :class="`home ${loadstatus}`">
         <div class="dashbordwrapper d-inline-block w-100">
             <div id="dashboardnemue" class="dashboardnemue d-inline-block position-fixed w-100 p-0 bg-white">
                 <div class="d-inline-block w-100 pr-1 pl-1 pt-1 pb-1 pr-md-3 pl-md-3">
@@ -17,7 +20,7 @@
                         <span class="mr-2">
                             <img src="@/assets/accounticon.png" class="accountpersonicon">
                         </span>
-                        <span id="greetingbar" class="greeting font-weight-normal text-white" data-idnow="">ようこそ</span>様
+                        <span id="greetingbar" class="greeting font-weight-normal text-white" data-idnow="">ようこそ{{username}}</span>様
                         <span class="ml-2">
                             <img src="@/assets/accountarrow.png" id="accountrotateicon" class="accounticon">
                         </span>
@@ -160,6 +163,10 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import http from "@/views/ts/http";
+import {GetData, loading} from "../http";
+import LoginIconview from '@/components/common/LoadingIcon.vue';
+
 import DashboardView from '@/components/AfterLogin/Dashboard.vue';
 import ScheduleView from '@/components/AfterLogin/SchedulePage.vue';
 import GroupInfoView from '@/components/AfterLogin/GroupInfo.vue';
@@ -175,6 +182,9 @@ export default defineComponent({
     name: 'AfterLoginView',
     data() {
         return {
+            username:"",
+            loadstatus:'op0',
+            loadingstatus:true,
             urlnow:location.pathname,
             Amodalclass:"logoutmodalcover position-fixed cursor modalcover_close",
             addfriends_modal_wrapper_class:"logoutmodal position-fixed modal_close",
@@ -186,7 +196,21 @@ export default defineComponent({
         ScheduleView,
         GroupInfoView,
         TaskInfoView,
-        AccountModal
+        AccountModal,
+        LoginIconview
+    },
+    mounted(){
+        this.loadingstatus = true;
+        const http = new GetData();
+        http.common(
+            "/api/user/info",
+            {},
+            (res:any) => {
+                this.loadingstatus = false;
+                this.username = res.data.userinfo.name;
+                this.loadstatus = 'op1';
+            }
+        );
     },
     methods: {
         dashboard(){
@@ -228,6 +252,12 @@ export default defineComponent({
 .logoutmodal,
 .logoutmodalinner{
     height: 40vh;
+}
+#MainColumLoadArea{
+    top:30vh;
+}
+#MainColumLoadArea{
+    left:50%;
 }
 @media (min-width: 768px){
     .logoutmodal{
