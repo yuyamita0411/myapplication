@@ -19,7 +19,6 @@
         </h4>
     </div>
 </template>
-
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { Component, Prop, Vue } from 'vue-property-decorator';
@@ -47,32 +46,44 @@ export default defineComponent({
             count += 1;
             var whichphase = count % 7;
             if(whichphase == 0){
-                this.ll1 = "op02 llhide";
-                this.ll2 = "op02 llhide";
-                this.ll3 = "op02 llhide";
-                this.ll4 = "op02 llhide";
-                this.ll5 = "op02 llhide";
-                this.ll6 = "op02 llhide";
-                this.ll7 = "op02 llhide";
-                this.ll7 = "op02 llshow";
+                this.ll5 = "op0 llhide";
+                this.ll6 = "op04 llhide";
+                this.ll7 = "op1 llshow";
+                this.ll1 = "op04 llhide";
             }
             if(whichphase == 1){
+                this.ll7 = "op02 llhide";
                 this.ll1 = "op1 llshow";
+                this.ll2 = "op04 llhide";
             }
             if(whichphase == 2){
+                this.ll1 = "op04 llhide";
                 this.ll2 = "op1 llshow";
+                this.ll3 = "op04 llhide";
             }
             if(whichphase == 3){
+                this.ll1 = "op02 llhide";
+                this.ll2 = "op04 llhide";
                 this.ll3 = "op1 llshow";
+                this.ll4 = "op04 llhide";
             }
             if(whichphase == 4){
+                this.ll2 = "op02 llhide";
+                this.ll3 = "op02 llhide";
                 this.ll4 = "op1 llshow";
+                this.ll5 = "op04 llhide";
             }
             if(whichphase == 5){
+                this.ll3 = "op02 llhide";
+                this.ll4 = "op04 llhide";
                 this.ll5 = "op1 llshow";
+                this.ll6 = "op04 llhide";
             }
             if(whichphase == 6){
+                this.ll4 = "op02 llhide";
+                this.ll5 = "op04 llhide";
                 this.ll6 = "op1 llshow";
+                this.ll7 = "op04 llhide";
             }
         }, 100);
         
@@ -97,11 +108,11 @@ export default defineComponent({
 }
 .llshow{
     letter-spacing:5px;
-    transform:scale(1);
+    transform:scale(1.2);
 }
 .llhide,
 .llshow{
-    transition:all 0.1s;
+    transition:all 0.2s;
 }
 /* ローディング関連 */
 .sk-chase {
@@ -145,6 +156,10 @@ export default defineComponent({
 .sk-chase-dot:nth-child(5):before { animation-delay: -0.7s; }
 .sk-chase-dot:nth-child(6):before { animation-delay: -0.6s; }
 
+.loadingcover{
+    position:absolute;
+    left:0;
+}
 @keyframes sk-chase {
     100% { transform: rotate(360deg); } 
 }

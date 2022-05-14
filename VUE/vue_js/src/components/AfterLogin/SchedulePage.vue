@@ -8,33 +8,50 @@
 							<div class="w-100 d-inline-block position-relative">
 								<div class="font1-3 d-inline-block w-100 cursor year_menu_closed" id="YearMenuArea"></div>
 								<div class="YearAreaWrapper mycolor d-flex mb-0 p-2">
-									<div class="font1-3 d-inline-block mr-3 cursor" id="YearArea">
-										2022
-									</div><input class="searchbar border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none float-left pl-2 mt-0" id="SearchCbyWord" name="SearchCbyWord" placeholder="担当者名から検索" type="text"> <input class="col-1 ml-2 searchbar border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none float-left pl-2 mt-0" id="PerPageArea" name="PerPage" placeholder="表示件数" type="text">
+
+									<div id="YearArea" class="font1-3 d-inline-block mr-3 cursor">
+										{{date.getFullYear()}}
+									</div>
+
+									<input type="text" id="SearchCbyWord" name="SearchCbyWord"
+									class="searchbar border-top-left-radius-1rem border-bottom-left-radius-1rem
+									border-top-right-radius-1rem border-bottom-right-radius-1rem b-none float-left pl-2 mt-0"
+									placeholder="担当者名から検索"
+									>
+									<input type="text" id="PerPageArea" name="PerPage"
+									class="col-1 ml-2 searchbar border-top-left-radius-1rem border-bottom-left-radius-1rem
+									border-top-right-radius-1rem border-bottom-right-radius-1rem b-none float-left pl-2 mt-0"
+									placeholder="表示件数"
+									>
 								</div>
 								<div class="font1-3 d-inline-block w-100 cursor month_menu_closed" id="MonthMenuArea"></div>
 								<div class="w-100 d-md-flex">
 									<div class="Carea d-inline-block w-100">
 										<div class="montharea d-md-flex w-100 mb-0">
-											<div class="text-center w-100 d-flex pr-2" id="MonthArea">
-												<div class="d-inline-block cursor pt-2 pb-2 text-left pl-2" data-forcommondate="2022/5/12" id="MonthButton">
-													5月
+
+											<div id="MonthArea" class="text-center w-100 d-flex pr-2">
+												<div class="d-inline-block cursor pt-2 pb-2 text-left pl-2" :data-forcommondate="`${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`" id="MonthButton">
+													{{date.getMonth()+1}}月
 												</div>
 											</div>
-											<div class="cbutton tooltip-top d-inline-block text-center cursor col-auto pl-0 pr-0 font12" data-tooltip="7日前" id="prev7">
-												◀︎◀︎
-											</div>
-											<div class="cbutton tooltip-top d-inline-block text-center cursor col-auto pl-0 pr-0 font12" data-tooltip="1日前" id="prev">
-												◀︎
-											</div>
-											<div class="cbutton tooltip-top d-inline-block text-center cursor col-auto pl-0 pr-0 font12" data-tooltip="1日後" id="next">
-												▶︎
-											</div>
-											<div class="cbutton tooltip-top d-inline-block text-center cursor col-auto pl-0 pr-0 font12" data-tooltip="7日後" id="next7">
-												▶︎▶︎
-											</div>
+											<div id="prev7"
+												@click="SevenDaysAgo"
+												class="cbutton tooltip-top d-inline-block text-center cursor col-auto pl-0 pr-0 font12"
+												data-tooltip="7日前">◀︎◀︎</div>
+											<div id="prev"
+												@click="OneDayAgo"
+												class="cbutton tooltip-top d-inline-block text-center cursor col-auto pl-0 pr-0 font12"
+												data-tooltip="1日前">◀︎</div>
+											<div id="next"
+												@click="OneDayNext"
+												class="cbutton tooltip-top d-inline-block text-center cursor col-auto pl-0 pr-0 font12"
+												data-tooltip="1日後">▶︎</div>
+											<div id="next7"
+												@click="SevenDaysNext"
+												class="cbutton tooltip-top d-inline-block text-center cursor col-auto pl-0 pr-0 font12"
+												data-tooltip="7日後">▶︎▶︎</div>
 										</div>
-										<div class="mt-0" id="DayArea">
+										<div class="mt-0" id="DayArea" v-if="location == ''">
 											<div class="d-md-flex">
 												<div class="SortAreaishidde tooltip-top w-100 d-inline-block text-center cursor position-relative pt-2 pb-2" data-tooltip="並び変え" id="SortArea">
 													<img class="sccheduleplusbutton" src="@/assets/accountarrow.png">
@@ -47,195 +64,71 @@
 														</div><input name="clorderby" type="hidden" value="">
 													</div>
 												</div>
-												<div class=" w-100 text-center pt-2 pb-2 font12" data-cstartdate="2022/5/9" data-forcommondate="2022/5/9" id="CFirstDate">
-													9(月)
+												
+												<div
+												class="w-100"
+												v-for="i in 7" :key="i">
+													<div
+													v-if="i == 1" id="CFirstDate"
+													:data-forcommondate="`${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`"
+													:data-cstartdate="`${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`"
+													:class="`${Daycolor[DweekArr[date.getDay()]]} w-100 h-100 text-center pt-2 pb-2 font12`"
+													>{{date.getDate()}}({{DweekArr[date.getDay()]}})
+													</div>
+													<div
+													v-else
+													:data-forcommondate="`${new Date(MakeDateFromInstance(date, i-1))}`"
+													:class="`${Daycolor[DweekArr[new Date(MakeDateFromInstance(date, i-1)).getDay()]]} w-100 h-100 text-center pt-2 pb-2 font12`"
+													>{{new Date(MakeDateFromInstance(date, i-1)).getDate()}}({{DweekArr[new Date(MakeDateFromInstance(date, i-1)).getDay()]}})
+													</div>
 												</div>
-												<div class=" w-100 text-center pt-2 pb-2 font12" data-forcommondate="2022/5/10">
-													10(火)
-												</div>
-												<div class=" w-100 text-center pt-2 pb-2 font12" data-forcommondate="2022/5/11">
-													11(水)
-												</div>
-												<div class=" w-100 text-center pt-2 pb-2 font12" data-forcommondate="2022/5/12">
-													12(木)
-												</div>
-												<div class=" w-100 text-center pt-2 pb-2 font12" data-forcommondate="2022/5/13">
-													13(金)
-												</div>
-												<div class="SaturdayColor w-100 text-center pt-2 pb-2 font12" data-forcommondate="2022/5/14">
-													14(土)
-												</div>
-												<div class="SundayColor w-100 text-center pt-2 pb-2 font12" data-forcommondate="2022/5/15">
-													15(日)
-												</div>
-												<div data-cenddate="2022/5/15" id="getCalenderRange"></div>
+
+												<div :data-cenddate="`${cdate.getFullYear()}/${cdate.getMonth()+1}/${cdate.getDate()}`" id="getCalenderRange"></div>
 											</div>
 										</div>
+
+										<div class="mt-0" id="DayArea" v-if="location.match(/starttime=/)">
+											<div class="d-md-flex">
+												<div class="SortAreaishidde tooltip-top w-100 d-inline-block text-center cursor position-relative pt-2 pb-2" data-tooltip="並び変え" id="SortArea">
+													<img class="sccheduleplusbutton" src="@/assets/accountarrow.png">
+													<div class="position-absolute sbwrapper b-gray sbhidden bg-white" id="sortmenu">
+														<div class="sortelem p-2" data-orderby="asc">
+															昇順
+														</div>
+														<div class="sortelem p-2" data-orderby="desc">
+															降順
+														</div><input name="clorderby" type="hidden" value="">
+													</div>
+												</div>
+
+												<div
+												class="w-100"
+												v-for="i in 7" :key="i">
+													<div
+													v-if="i == 1" id="CFirstDate"
+													:data-forcommondate="`${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`"
+													:data-cstartdate="`${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`"
+													:class="`${Daycolor[DweekArr[date.getDay()]]} w-100 h-100 text-center pt-2 pb-2 font12`"
+													>{{date.getDate()}}({{DweekArr[date.getDay()]}})													
+													</div>
+													<div
+													v-else
+													:data-forcommondate="`${new Date(MakeDateFromInstance(date).setDate(MakeDateFromInstance(date).getDate() + 1))}/${date.getMonth()+1}/${date.getDate()}`"
+													:class="`${Daycolor[DweekArr[date.getDay()]]} w-100 h-100 text-center pt-2 pb-2 font12`"
+													>{{date.getDate()}}({{DweekArr[date.getDay()]}})
+													</div>
+												</div>
+												<div :data-cenddate="`${date.getFullYear()}/${date.getMonth()+1}/${cdate.getDate()}`" id="getCalenderRange"></div>
+											</div>
+										</div>
+
 									</div>
 								</div>
-								<div id="ScheduleWrapper">
-									<div class="position-absolute h-100 w-100 bg-white loadinghidden" id="ScheduleLoadingArea"></div>
-									<div class="myschedulearea" id="MyScheduleArea"></div>
-									<div class="schedulearea" id="UserScheduleArea">
-										<div data-nameidforsort="名前1-6">
-											<div class="d-flex">
-												<div class="w-100 d-inline-block text-center pt-2 pb-2">
-													<div class="d-inline-block mt-3">
-														<img class="searchicon" src="@/assets/personicon.png"> 名前1
-													</div>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="6" data-setscheduleinfo="2022/5/9" data-tooltip="スケジュールを追加する" id="ScheduleId-6" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="6" data-setscheduleinfo="2022/5/10" data-tooltip="スケジュールを追加する" id="ScheduleId-6" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="6" data-setscheduleinfo="2022/5/11" data-tooltip="スケジュールを追加する" id="ScheduleId-6" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="6" data-setscheduleinfo="2022/5/12" data-tooltip="スケジュールを追加する" id="ScheduleId-6" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="6" data-setscheduleinfo="2022/5/13" data-tooltip="スケジュールを追加する" id="ScheduleId-6" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="6" data-setscheduleinfo="2022/5/14" data-tooltip="スケジュールを追加する" id="ScheduleId-6" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="6" data-setscheduleinfo="2022/5/15" data-tooltip="スケジュールを追加する" id="ScheduleId-6" type="button"></button>
-												</div>
-											</div>
-										</div>
-										<div data-nameidforsort="名前1-16">
-											<div class="d-flex">
-												<div class="w-100 d-inline-block text-center pt-2 pb-2">
-													<div class="d-inline-block mt-3">
-														<img class="searchicon" src="@/assets/personicon.png"> 名前1
-													</div>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="16" data-setscheduleinfo="2022/5/9" data-tooltip="スケジュールを追加する" id="ScheduleId-16" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="16" data-setscheduleinfo="2022/5/10" data-tooltip="スケジュールを追加する" id="ScheduleId-16" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="16" data-setscheduleinfo="2022/5/11" data-tooltip="スケジュールを追加する" id="ScheduleId-16" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="16" data-setscheduleinfo="2022/5/12" data-tooltip="スケジュールを追加する" id="ScheduleId-16" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="16" data-setscheduleinfo="2022/5/13" data-tooltip="スケジュールを追加する" id="ScheduleId-16" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="16" data-setscheduleinfo="2022/5/14" data-tooltip="スケジュールを追加する" id="ScheduleId-16" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="16" data-setscheduleinfo="2022/5/15" data-tooltip="スケジュールを追加する" id="ScheduleId-16" type="button"></button>
-												</div>
-											</div>
-										</div>
-										<div data-nameidforsort="名前1-26">
-											<div class="d-flex">
-												<div class="w-100 d-inline-block text-center pt-2 pb-2">
-													<div class="d-inline-block mt-3">
-														<img class="searchicon" src="@/assets/personicon.png"> 名前1
-													</div>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="26" data-setscheduleinfo="2022/5/9" data-tooltip="スケジュールを追加する" id="ScheduleId-26" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="26" data-setscheduleinfo="2022/5/10" data-tooltip="スケジュールを追加する" id="ScheduleId-26" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="26" data-setscheduleinfo="2022/5/11" data-tooltip="スケジュールを追加する" id="ScheduleId-26" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="26" data-setscheduleinfo="2022/5/12" data-tooltip="スケジュールを追加する" id="ScheduleId-26" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="26" data-setscheduleinfo="2022/5/13" data-tooltip="スケジュールを追加する" id="ScheduleId-26" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="26" data-setscheduleinfo="2022/5/14" data-tooltip="スケジュールを追加する" id="ScheduleId-26" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="26" data-setscheduleinfo="2022/5/15" data-tooltip="スケジュールを追加する" id="ScheduleId-26" type="button"></button>
-												</div>
-											</div>
-										</div>
-										<div data-nameidforsort="名前1-36">
-											<div class="d-flex">
-												<div class="w-100 d-inline-block text-center pt-2 pb-2">
-													<div class="d-inline-block mt-3">
-														<img class="searchicon" src="@/assets/personicon.png"> 名前1
-													</div>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="36" data-setscheduleinfo="2022/5/9" data-tooltip="スケジュールを追加する" id="ScheduleId-36" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="36" data-setscheduleinfo="2022/5/10" data-tooltip="スケジュールを追加する" id="ScheduleId-36" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="36" data-setscheduleinfo="2022/5/11" data-tooltip="スケジュールを追加する" id="ScheduleId-36" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="36" data-setscheduleinfo="2022/5/12" data-tooltip="スケジュールを追加する" id="ScheduleId-36" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="36" data-setscheduleinfo="2022/5/13" data-tooltip="スケジュールを追加する" id="ScheduleId-36" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="36" data-setscheduleinfo="2022/5/14" data-tooltip="スケジュールを追加する" id="ScheduleId-36" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="36" data-setscheduleinfo="2022/5/15" data-tooltip="スケジュールを追加する" id="ScheduleId-36" type="button"></button>
-												</div>
-											</div>
-										</div>
-										<div data-nameidforsort="名前1-54">
-											<div class="d-flex">
-												<div class="w-100 d-inline-block text-center pt-2 pb-2">
-													<div class="d-inline-block mt-3">
-														<img class="searchicon" src="@/assets/personicon.png"> 名前1
-													</div>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="54" data-setscheduleinfo="2022/5/9" data-tooltip="スケジュールを追加する" id="ScheduleId-54" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="54" data-setscheduleinfo="2022/5/10" data-tooltip="スケジュールを追加する" id="ScheduleId-54" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="54" data-setscheduleinfo="2022/5/11" data-tooltip="スケジュールを追加する" id="ScheduleId-54" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="54" data-setscheduleinfo="2022/5/12" data-tooltip="スケジュールを追加する" id="ScheduleId-54" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="54" data-setscheduleinfo="2022/5/13" data-tooltip="スケジュールを追加する" id="ScheduleId-54" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="54" data-setscheduleinfo="2022/5/14" data-tooltip="スケジュールを追加する" id="ScheduleId-54" type="button"></button>
-												</div>
-												<div class="w-100 d-inline-block pt-2 pb-2 position-relative">
-													<button class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0" data-buttonuserid="54" data-setscheduleinfo="2022/5/15" data-tooltip="スケジュールを追加する" id="ScheduleId-54" type="button"></button>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="paginationarea d-flex pt-4 col-12 col-lg-4 m-auto" id="PagenationArea">
-									<p class="pagenationnum PageNow PageNationNum cursor w-100 text-center p-1" id="">1</p>
-									<p class="pagenationnum PageNationNum cursor w-100 text-center p-1" id="">2</p>
-									<p class="pagenationnum PageNationNum cursor w-100 text-center p-1" id="">3</p>
-									<p class="pagenationnum PageNationNum cursor w-100 text-center p-1" id="">...</p>
-									<p class="pagenationnum PageNationNum cursor w-100 text-center p-1" id="PageLastNum">39</p><input class="mt-0 mb-0 col-2" id="PageNationInput" name="PageNationInput" type="text" value="1">
-								</div>
+
+								<!-- コンポーネント化 -->
+								<CalenderView />
+								<!-- コンポーネント化 -->
+
 							</div>
 						</div>
 					</div>
@@ -247,8 +140,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import CalenderView from '@/components/AfterLogin/parts/Schedule/Calender.vue';
 import http from "@/views/ts/http";
 import {GetData} from "../../http";
+import {Param} from "../../param";
 import {PageNation} from "../../Pagenation";
 
 export default defineComponent({
@@ -256,36 +151,90 @@ export default defineComponent({
     data() {
         return {
             AddedUserList:{},
-            orderby:'asc',
-            PageNow:1,
-			appenddate:new Date(),
-			KeyWord:'',
-			PerPage:1,
-			startdateappend:new Date()
+			location:location.search,
+			param:new Param(),
+			DweekArr:[ "日", "月", "火", "水", "木", "金", "土" ],
+			Daycolor:{"土":"SaturdayColor", "日":"SundayColor", "月":"", "火":"", "水":"", "木":"", "金":""},
+			appenddateObj:new Date(),
+			appenddate:'',
+			date:new Date(),
+			cdate:new Date(),
+			Dobj:new Date(),
+			dayOfWeek:0,
+			daycolor:'',
+			forcmdate:new Date(),
         };
     },
-    methods:{
-		RebaseSchedule(){
-			const http = new GetData();
-			http.common(
-				"/api/schedule",
-				{
-					"orderby":this.orderby,
-					"keyword":this.KeyWord,
-					"PerPage":this.PerPage,
-					"starttime":this.startdateappend
-				},
-				(res:any) => {
-					console.log(res);
-				}
-			);
-		}
+    components: {
+        CalenderView
     },
 	props: {
 		msg: String,
 	},
+
+	methods:{
+		RebaseSchedule(){
+			console.log("rebase!!");
+			
+		},
+		MakeDateFromInstance(obj:any, plus:number){
+			//一旦変数に入れる。
+			var Dobj = new Date(obj);
+			var returnobj = new Date(Dobj.setDate(Dobj.getDate() + plus));
+			return returnobj;
+		},
+		SevenDaysAgo(){
+			this.date = new Date(this.date.setDate(this.date.getDate() - 7));
+		},
+		OneDayAgo(){
+			this.date = new Date(this.date.setDate(this.date.getDate() - 1));
+		},
+		OneDayNext(){
+			this.date = new Date(this.date.setDate(this.date.getDate() + 1));
+		},
+		SevenDaysNext(){
+			this.date = new Date(this.date.setDate(this.date.getDate() + 7));
+		}
+		//クリックイベントはthis.dateに足し引きしていく。
+	},
     mounted(){
-        this.RebaseSchedule();
+		//マウント時はパラメータの有無を確認。
+		//パラメータがある場合はパラメータの日付を取得する。
+		//ない場合は今日の日付を取得する。
+		var dateobj = this.param.GetUrlParamObj();
+        if(dateobj.year && dateobj.month && dateobj.day){
+            this.appenddate = `${dateobj.year}/${dateobj.month}/${dateobj.day}`;
+			var dateval = this.appenddate;//
+			this.date = new Date(dateval);
+			this.cdate = this.date;
+			/*this.date.setDate(this.date.getDate());
+			this.dayOfWeek = this.date.getDay();
+
+			if(this.DweekArr[this.dayOfWeek] == '土'){
+				this.daycolor = 'SaturdayColor';
+			}
+			if(this.DweekArr[this.dayOfWeek] == '日'){
+				this.daycolor = 'SundayColor';
+			}*/
+			/*for(var i=2; i <= 7; i++){
+				this.Dobj = new Date(this.cdate.setDate(this.cdate.getDate() + 1));
+				var year = this.Dobj.getFullYear();
+				var month = this.Dobj.getMonth();
+				var day = this.Dobj.getDate();
+				var dayOfWeek = this.Dobj.getDay();
+				var getdatarange = '';
+				var daycolor = '';
+				this.forcmdate = this.Dobj;
+			}*/
+        }
+
+		//いずれかで日付を取得できたらカレンダーの日付のエリアを作成する
+
+        /*if(this.dateobj.year && this.dateobj.month && this.dateobj.day){
+            this.appenddate = `${this.dateobj.year}/${this.dateobj.month}/${this.dateobj.day}`;
+        }*/
+		
+        console.log(new Date("2022/5/14"));
     }
 });
 </script>
