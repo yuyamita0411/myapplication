@@ -1,6 +1,6 @@
 <template>
     <div class="loadingcover w-100 pr-0 pl-0 pl-lg-1 float-lg-left d-inline-block text-center h-100">
-        <div class="sk-chase position-absolute" style="width:rem; top:5rem; left:calc((100% - 3rem) / 2);">
+        <div class="sk-chase position-absolute">
             <div class="sk-chase-dot"></div>
             <div class="sk-chase-dot"></div>
             <div class="sk-chase-dot"></div>
@@ -8,7 +8,7 @@
             <div class="sk-chase-dot"></div>
             <div class="sk-chase-dot"></div>
         </div>
-        <h4 id="LoadingStr" class="loading text-center position-absolute d-flex w-100" style="top:12rem; left:calc((100% - 4rem) / 2); color:rgb(255, 183, 90);">
+        <h4 id="LoadingStr" class="loading text-center position-absolute d-flex w-100">
             <span :class="ll1">L</span>
             <span :class="ll2">o</span>
             <span :class="ll3">a</span>
@@ -86,8 +86,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-#LoadingStr{   
-color: rgb(255, 183, 90);
+#LoadingStr{
+    top:12rem;
+    left:calc((100% - 4rem) / 2);
+    color:rgb(255, 183, 90);
 }
 .llhide{
     letter-spacing:2px;
@@ -103,6 +105,8 @@ color: rgb(255, 183, 90);
 }
 /* ローディング関連 */
 .sk-chase {
+    top:5rem;
+    left:50%;
     width: 70px;
     height: 70px;
     position: relative;
