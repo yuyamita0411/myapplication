@@ -13,12 +13,20 @@
 										{{date.getFullYear()}}
 									</div>
 
-									<input type="text" id="SearchCbyWord" name="SearchCbyWord"
+									<input
+									@input="SearchIncharge"
+									type="text"
+									id="SearchCbyWord"
+									name="SearchCbyWord"
 									class="searchbar border-top-left-radius-1rem border-bottom-left-radius-1rem
 									border-top-right-radius-1rem border-bottom-right-radius-1rem b-none float-left pl-2 mt-0"
 									placeholder="担当者名から検索"
 									>
-									<input type="text" id="PerPageArea" name="PerPage"
+									<input
+									@input="SetDisplayNum"
+									type="text"
+									id="PerPageArea"
+									name="PerPage"
 									class="col-1 ml-2 searchbar border-top-left-radius-1rem border-bottom-left-radius-1rem
 									border-top-right-radius-1rem border-bottom-right-radius-1rem b-none float-left pl-2 mt-0"
 									placeholder="表示件数"
@@ -37,21 +45,29 @@
 											<div id="prev7"
 												@click="SevenDaysAgo"
 												class="cbutton tooltip-top d-inline-block text-center cursor col-auto pl-0 pr-0 font12"
-												data-tooltip="7日前">◀︎◀︎</div>
+												data-tooltip="7日前"
+												:data-cldata="`${new Date(MDFI(date, -7)).getFullYear()}/${new Date(MDFI(date, -7)).getMonth()+1}/${new Date(MDFI(date, -7)).getDate()}`"
+												>◀︎◀︎</div>
 											<div id="prev"
 												@click="OneDayAgo"
 												class="cbutton tooltip-top d-inline-block text-center cursor col-auto pl-0 pr-0 font12"
-												data-tooltip="1日前">◀︎</div>
+												data-tooltip="1日前"
+												:data-cldata="`${new Date(MDFI(date, -1)).getFullYear()}/${new Date(MDFI(date, -1)).getMonth()+1}/${new Date(MDFI(date, -1)).getDate()}`"
+												>◀︎</div>
 											<div id="next"
 												@click="OneDayNext"
 												class="cbutton tooltip-top d-inline-block text-center cursor col-auto pl-0 pr-0 font12"
-												data-tooltip="1日後">▶︎</div>
+												data-tooltip="1日後"
+												:data-cldata="`${new Date(MDFI(date, +1)).getFullYear()}/${new Date(MDFI(date, +1)).getMonth()+1}/${new Date(MDFI(date, +1)).getDate()}`"
+												>▶︎</div>
 											<div id="next7"
 												@click="SevenDaysNext"
 												class="cbutton tooltip-top d-inline-block text-center cursor col-auto pl-0 pr-0 font12"
-												data-tooltip="7日後">▶︎▶︎</div>
+												data-tooltip="7日後"
+												:data-cldata="`${new Date(MDFI(date, +7)).getFullYear()}/${new Date(MDFI(date, +7)).getMonth()+1}/${new Date(MDFI(date, +7)).getDate()}`"
+												>▶︎▶︎</div>
 										</div>
-										<div class="mt-0" id="DayArea" v-if="location == ''">
+										<div class="mt-0" id="DayArea">
 											<div class="d-md-flex">
 												<div class="SortAreaishidde tooltip-top w-100 d-inline-block text-center cursor position-relative pt-2 pb-2" data-tooltip="並び変え" id="SortArea">
 													<img class="sccheduleplusbutton" src="@/assets/accountarrow.png">
@@ -77,51 +93,17 @@
 													</div>
 													<div
 													v-else
-													:data-forcommondate="`${new Date(MakeDateFromInstance(date, i-1))}`"
-													:class="`${Daycolor[DweekArr[new Date(MakeDateFromInstance(date, i-1)).getDay()]]} w-100 h-100 text-center pt-2 pb-2 font12`"
-													>{{new Date(MakeDateFromInstance(date, i-1)).getDate()}}({{DweekArr[new Date(MakeDateFromInstance(date, i-1)).getDay()]}})
+													:data-forcommondate="`${new Date(MDFI(date, i-1)).getFullYear()}/${new Date(MDFI(date, i-1)).getMonth()+1}/${new Date(MDFI(date, i-1)).getDate()}`"
+													:class="`${Daycolor[DweekArr[new Date(MDFI(date, i-1)).getDay()]]} w-100 h-100 text-center pt-2 pb-2 font12`"
+													>
+													{{new Date(MDFI(date, i-1)).getDate()}}
+													({{DweekArr[new Date(MDFI(date, i-1)).getDay()]}})
 													</div>
 												</div>
 
-												<div :data-cenddate="`${cdate.getFullYear()}/${cdate.getMonth()+1}/${cdate.getDate()}`" id="getCalenderRange"></div>
+												<div :data-cenddate="`${new Date(MDFI(date, 6)).getFullYear()}/${new Date(MDFI(date, 6)).getMonth()+1}/${new Date(MDFI(date, 6)).getDate()}`" id="getCalenderRange"></div>
 											</div>
 										</div>
-
-										<div class="mt-0" id="DayArea" v-if="location.match(/starttime=/)">
-											<div class="d-md-flex">
-												<div class="SortAreaishidde tooltip-top w-100 d-inline-block text-center cursor position-relative pt-2 pb-2" data-tooltip="並び変え" id="SortArea">
-													<img class="sccheduleplusbutton" src="@/assets/accountarrow.png">
-													<div class="position-absolute sbwrapper b-gray sbhidden bg-white" id="sortmenu">
-														<div class="sortelem p-2" data-orderby="asc">
-															昇順
-														</div>
-														<div class="sortelem p-2" data-orderby="desc">
-															降順
-														</div><input name="clorderby" type="hidden" value="">
-													</div>
-												</div>
-
-												<div
-												class="w-100"
-												v-for="i in 7" :key="i">
-													<div
-													v-if="i == 1" id="CFirstDate"
-													:data-forcommondate="`${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`"
-													:data-cstartdate="`${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`"
-													:class="`${Daycolor[DweekArr[date.getDay()]]} w-100 h-100 text-center pt-2 pb-2 font12`"
-													>{{date.getDate()}}({{DweekArr[date.getDay()]}})													
-													</div>
-													<div
-													v-else
-													:data-forcommondate="`${new Date(MakeDateFromInstance(date).setDate(MakeDateFromInstance(date).getDate() + 1))}/${date.getMonth()+1}/${date.getDate()}`"
-													:class="`${Daycolor[DweekArr[date.getDay()]]} w-100 h-100 text-center pt-2 pb-2 font12`"
-													>{{date.getDate()}}({{DweekArr[date.getDay()]}})
-													</div>
-												</div>
-												<div :data-cenddate="`${date.getFullYear()}/${date.getMonth()+1}/${cdate.getDate()}`" id="getCalenderRange"></div>
-											</div>
-										</div>
-
 									</div>
 								</div>
 
@@ -143,7 +125,6 @@ import { defineComponent } from 'vue';
 import CalenderView from '@/components/AfterLogin/parts/Schedule/Calender.vue';
 import http from "@/views/ts/http";
 import {GetData} from "../../http";
-import {Param} from "../../param";
 import {PageNation} from "../../Pagenation";
 
 export default defineComponent({
@@ -152,17 +133,14 @@ export default defineComponent({
         return {
             AddedUserList:{},
 			location:location.search,
-			param:new Param(),
 			DweekArr:[ "日", "月", "火", "水", "木", "金", "土" ],
 			Daycolor:{"土":"SaturdayColor", "日":"SundayColor", "月":"", "火":"", "水":"", "木":"", "金":""},
-			appenddateObj:new Date(),
-			appenddate:'',
 			date:new Date(),
-			cdate:new Date(),
-			Dobj:new Date(),
-			dayOfWeek:0,
-			daycolor:'',
-			forcmdate:new Date(),
+
+			searchparam:{},
+			SearchKeyword:'',
+			SearchDisplayNum:5,
+			SearchOrderBy:'desc',
         };
     },
     components: {
@@ -173,11 +151,8 @@ export default defineComponent({
 	},
 
 	methods:{
-		RebaseSchedule(){
-			console.log("rebase!!");
-			
-		},
-		MakeDateFromInstance(obj:any, plus:number){
+		//クリックイベントはクラス内の変数 this.date に足し引きしていく。
+		MDFI(obj:any, plus:number){
 			//一旦変数に入れる。
 			var Dobj = new Date(obj);
 			var returnobj = new Date(Dobj.setDate(Dobj.getDate() + plus));
@@ -185,56 +160,64 @@ export default defineComponent({
 		},
 		SevenDaysAgo(){
 			this.date = new Date(this.date.setDate(this.date.getDate() - 7));
+			//検索結果を出力する共通処理を入れる
+			this.MakeSearchParam();
 		},
 		OneDayAgo(){
 			this.date = new Date(this.date.setDate(this.date.getDate() - 1));
+			//検索結果を出力する共通処理を入れる
+			this.MakeSearchParam();
 		},
 		OneDayNext(){
 			this.date = new Date(this.date.setDate(this.date.getDate() + 1));
+			//検索結果を出力する共通処理を入れる
+			this.MakeSearchParam();
 		},
 		SevenDaysNext(){
 			this.date = new Date(this.date.setDate(this.date.getDate() + 7));
+			//検索結果を出力する共通処理を入れる
+			this.MakeSearchParam();
+		},
+
+		SearchIncharge(data:any){
+			const Kelement = this.$refs.name as HTMLInputElement
+			this.SearchKeyword = Kelement.value;
+			//検索結果を出力する共通処理を入れる
+			this.MakeSearchParam();
+		},
+		SetDisplayNum(data:any){
+			const DNumVal = this.$refs.name as HTMLInputElement
+			this.SearchDisplayNum = Number(DNumVal.value);
+			//検索結果を出力する共通処理を入れる
+			this.MakeSearchParam();
+		},
+
+		//検索結果を出力する共通処理
+		MakeSearchParam(){
+			this.searchparam = {
+				"orderby":this.SearchOrderBy,
+				"keyword":this.SearchKeyword,
+				"PerPage":this.SearchDisplayNum,
+				"starttime":this.date
+			};
 		}
-		//クリックイベントはthis.dateに足し引きしていく。
 	},
     mounted(){
 		//マウント時はパラメータの有無を確認。
 		//パラメータがある場合はパラメータの日付を取得する。
 		//ない場合は今日の日付を取得する。
-		var dateobj = this.param.GetUrlParamObj();
-        if(dateobj.year && dateobj.month && dateobj.day){
-            this.appenddate = `${dateobj.year}/${dateobj.month}/${dateobj.day}`;
-			var dateval = this.appenddate;//
-			this.date = new Date(dateval);
-			this.cdate = this.date;
-			/*this.date.setDate(this.date.getDate());
-			this.dayOfWeek = this.date.getDay();
-
-			if(this.DweekArr[this.dayOfWeek] == '土'){
-				this.daycolor = 'SaturdayColor';
-			}
-			if(this.DweekArr[this.dayOfWeek] == '日'){
-				this.daycolor = 'SundayColor';
-			}*/
-			/*for(var i=2; i <= 7; i++){
-				this.Dobj = new Date(this.cdate.setDate(this.cdate.getDate() + 1));
-				var year = this.Dobj.getFullYear();
-				var month = this.Dobj.getMonth();
-				var day = this.Dobj.getDate();
-				var dayOfWeek = this.Dobj.getDay();
-				var getdatarange = '';
-				var daycolor = '';
-				this.forcmdate = this.Dobj;
-			}*/
+        if(location.search == ''){
+			this.date = new Date();
         }
-
-		//いずれかで日付を取得できたらカレンダーの日付のエリアを作成する
-
-        /*if(this.dateobj.year && this.dateobj.month && this.dateobj.day){
-            this.appenddate = `${this.dateobj.year}/${this.dateobj.month}/${this.dateobj.day}`;
-        }*/
-		
-        console.log(new Date("2022/5/14"));
+        if(location.search.match(/starttime=/)){
+			//○○○○-○○-○○の形式以外は認めない
+			var datestr = location.search.split('starttime=')[1].split('&')[0];
+			const regex = /^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
+			if(!regex.test(datestr)){
+				return;
+			}
+			this.date = new Date(datestr);
+        }
     }
 });
 </script>
