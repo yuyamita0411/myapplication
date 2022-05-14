@@ -158,6 +158,7 @@ export default defineComponent({
 
 .loadingcover{
     position:absolute;
+    top:0;
     left:0;
 }
 @keyframes sk-chase {

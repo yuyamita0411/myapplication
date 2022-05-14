@@ -1,4 +1,5 @@
 <template>
+    <LoginIconview class="calenderloading w-100 d-inline-block text-center" v-if="loadingstatus == true" />
     <div id="ScheduleWrapper" :class="loadstatus">
     {{searchparam}}
         <div class="position-absolute h-100 w-100 bg-white loadinghidden" id="ScheduleLoadingArea"></div>
@@ -156,7 +157,7 @@
             </div>
         </div>
     </div>
-    <div class="paginationarea d-flex pt-4 col-12 col-lg-4 m-auto" id="PagenationArea">
+    <div :class="`paginationarea d-flex pt-4 col-12 col-lg-4 m-auto ${loadstatus}`" id="PagenationArea">
         <p class="pagenationnum PageNow PageNationNum cursor w-100 text-center p-1" id="">1</p>
         <p class="pagenationnum PageNationNum cursor w-100 text-center p-1" id="">2</p>
         <p class="pagenationnum PageNationNum cursor w-100 text-center p-1" id="">3</p>
@@ -176,42 +177,23 @@ export default defineComponent({
     name: 'CalenderView',
 	props: {
 		date: Object,
-		searchparam: Object
+		searchparam: Object,
+		loadingstatus: Boolean,
+		loadstatus: String
 	},
     data() {
         return {
-            loadingstatus:true,
-            loadstatus:'op0'
+            dammy:true
         };
     },
-    methods:{
-		RebaseSchedule(param){
-			const http = new GetData();
-            this.loadingstatus = true;
-            this.loadstatus = 'op0';
-
-			http.common(
-				"/api/schedule",
-				param,
-				(res:any) => {
-					console.log(res);
-
-                    //読み込みが完全に終わってからカバーを外す
-                    this.loadingstatus = false;
-                    this.loadstatus = 'op1';
-				}
-			);
-		}
+    components: {
+        LoginIconview
     },
-    mounted(){
-        console.log("pc");
-        console.log(this.searchparam);
-        this.RebaseSchedule(this.searchparam);
-    }/*,
-    updated(){
-        console.log("pc");
-        this.RebaseSchedule(this.searchparam);
-    }*/
+    methods:{
+		RebaseSchedule(){
+            console.log("param");
+		}
+    }
 });
 </script>
 
@@ -228,10 +210,5 @@ export default defineComponent({
 }
 .newestarticle{
     height:2.5rem;
-}
-.dashboardloading{
-    position:absolute;
-    top:0;
-    transform:scale(0.7);
 }
 </style>

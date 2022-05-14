@@ -1,8 +1,7 @@
 <template>
+    <LoginIconview class="calenderloading w-100 d-inline-block text-center" v-if="loadingstatus == true" />
 	<div id="ScheduleWrapper" :class="loadstatus">
-    {{searchparam}}
-		<div class="position-absolute h-100 w-100 bg-white loadinghidden" id="ScheduleLoadingArea"></div>
-		<div class="myschedulearea" id="MyScheduleArea"></div>
+	{{searchparam}}
 		<div class="schedulearea" id="UserScheduleArea">
 			<div class="b-gray d-inline-block w-100 mb-3" data-nameidforsort="名前16">
 				<div class="d-inline-block w-100">
@@ -321,7 +320,7 @@
 			</div>
 		</div>
 	</div>
-    <div class="paginationarea d-flex pt-4 col-12 col-lg-4 m-auto" id="PagenationArea">
+    <div :class="`paginationarea d-flex pt-4 col-12 col-lg-4 m-auto ${loadstatus}`" id="PagenationArea">
         <p class="pagenationnum PageNow PageNationNum cursor w-100 text-center p-1" id="">1</p>
         <p class="pagenationnum PageNationNum cursor w-100 text-center p-1" id="">2</p>
         <p class="pagenationnum PageNationNum cursor w-100 text-center p-1" id="">3</p>
@@ -341,65 +340,26 @@ export default defineComponent({
     name: 'SPCalenderView',
 	props: {
 		date: Object,
-		searchparam: Object
+		searchparam: Object,
+		loadingstatus: Boolean,
+		loadstatus: String
 	},
-    setup(props, context) {
-        console.log("qfqrgt");
-        //this.RebaseSchedule(this.searchparam);
-    },
     data() {
         return {
-            loadingstatus:true,
-            loadstatus:'op0'
+            dammy:true
         };
     },
-    methods:{
-		RebaseSchedule(param){
-			const http = new GetData();
-            this.loadingstatus = true;
-            this.loadstatus = 'op0';
-
-			http.common(
-				"/api/schedule",
-				param,
-				(res:any) => {
-					console.log(res);
-
-                    //読み込みが完全に終わってからカバーを外す
-                    this.loadingstatus = false;
-                    this.loadstatus = 'op1';
-				}
-			);
-		}
+    components: {
+        LoginIconview
     },
-    mounted(){
-        console.log("pc");
-        this.RebaseSchedule(this.searchparam);
-    }/*,
-    updated(){
-        console.log("pc");
-        this.RebaseSchedule(this.searchparam);
-    }*/
+    methods:{
+		RebaseSchedule(){
+			console.log("param");
+		}
+    }
 });
 </script>
 
 <style lang="scss">
-#notificationarea{
-    height:40vh;
-    overflow:scroll;
-}
-#loadingarea{
-    left:50%;
-}
-#loadingarea{
-    top:35%;
-}
-.newestarticle{
-    height:2.5rem;
-}
-.dashboardloading{
-    position:absolute;
-    top:0;
-    transform:scale(0.7);
-}
+
 </style>
