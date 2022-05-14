@@ -11,7 +11,7 @@
             <div class=" col-md-12 m-auto pl-0 pr-0 bg-white">
                 <div class="col-12 col-lg-10 m-auto">
                     <div class="w-100 d-inline-block">
-                        <div class="w-100 d-inline-block mb-3">
+                        <div class="w-100 d-inline-block mb-3 position-relative">
                             <div class="tablediv bg-white w-100 d-inline-block">
                                 <input
                                 id="mail_address"
@@ -23,9 +23,9 @@
                                 required autocomplete="mail_address" 
                                 autofocus>
                             </div>
-                            <small class="red text-left d-block w-100 mt-1">{{nomailalert}}</small>
+                            <small :class="`AlertArea red text-left d-block w-100 mt-1 position-absolute ${AlertshowClass}`">{{nomailalert}}</small>
                         </div>
-                        <div class="w-100 d-inline-block mb-3">
+                        <div class="w-100 d-inline-block mb-3 position-relative">
                             <div class="tablediv bg-white w-100 d-inline-block">
                                 <input id="password"
                                 type="password"
@@ -36,10 +36,10 @@
                                 required
                                 autocomplete="current-password">
                             </div>
-                            <small class="red text-left d-block w-100 mt-1">{{nopasswordalert}}</small>
+                            <small :class="`AlertArea red text-left d-block w-100 mt-1 position-absolute ${AlertshowClass}`">{{nopasswordalert}}</small>
                         </div>
                     </div>
-                    <small class="red text-left d-block w-100 mt-1">{{mailorpasswrong}}</small>
+                    <small :class="`AlertArea red text-left d-block w-100 mt-1 ${AlertshowClass}`">{{mailorpasswrong}}</small>
                 </div>
                 <div class="col-12 col-lg-10 m-auto pb-4">
                     <button
@@ -81,6 +81,7 @@ export default defineComponent({
         return {
             token:null,
             nomailalert: '',
+            AlertshowClass: 'AlertShowHide',
             nopasswordalert: '',
             mailorpasswrong: ''
         };
@@ -89,6 +90,8 @@ export default defineComponent({
         login(): Promise<any> {
             const MAElement = this.$refs.mail_address as HTMLInputElement
             const PAElement = this.$refs.password as HTMLInputElement
+            this.AlertshowClass = 'AlertShowHide';
+
             return http.post(
             "/api/login",
             {
@@ -105,6 +108,8 @@ export default defineComponent({
                 this.nomailalert = response.data.EmptyCheck != undefined ? response.data.EmptyCheck.mail_address: '';
                 this.nopasswordalert = response.data.EmptyCheck != undefined ? response.data.EmptyCheck.password: '';
                 this.mailorpasswrong = MAElement.value != '' && PAElement.value != '' ? response.data.WrongMsg : '';
+
+                this.AlertshowClass = 'AlertShow';
             })
             .catch(error => {
                 console.log(error);
@@ -131,3 +136,6 @@ export default defineComponent({
 
 });
 </script>
+
+<style lang="scss">
+</style>

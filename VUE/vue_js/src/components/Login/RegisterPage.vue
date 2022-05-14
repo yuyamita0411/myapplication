@@ -11,7 +11,7 @@
             <div class=" col-md-12 m-auto pl-0 pr-0 bg-white">
                 <div class="col-12 m-auto">
                     <div class="w-100 d-inline-block">
-                        <div class="w-100 d-inline-block mb-3">
+                        <div class="w-100 d-inline-block mb-3 position-relative">
                             <div class="tablediv bg-white w-100 d-inline-block">
                                 <input id="name" type="text" 
                                 class="loginborder br5px w-100 bg-white pl-2 fileinput @error('name') is-invalid @enderror"
@@ -22,9 +22,9 @@
                                 required autocomplete="name" 
                                 autofocus>
                             </div>
-                            <small class="red text-left d-block w-100 mt-1">{{nonamealert}}</small>
+                            <small :class="`AlertArea red text-left d-block w-100 mt-1 position-absolute ${AlertshowClass}`">{{nonamealert}}</small>
                         </div>
-                        <div class="w-100 d-inline-block mb-3">
+                        <div class="w-100 d-inline-block mb-3 position-relative">
                             <div class="tablediv bg-white w-100 d-inline-block">
                                 <input id="email"
                                 type="email"
@@ -36,9 +36,9 @@
                                 autocomplete="email"
                                 value="">
                             </div>
-                            <small class="red text-left d-block w-100 mt-1">{{noemailalert}}</small>
+                            <small :class="`AlertArea red text-left d-block w-100 mt-1 position-absolute ${AlertshowClass}`">{{noemailalert}}</small>
                         </div>
-                        <div class="w-100 d-inline-block mb-3">
+                        <div class="w-100 d-inline-block mb-3 position-relative">
                             <div class="tablediv bg-white w-100 d-inline-block">
                                 <input id="password"
                                 type="text"
@@ -50,9 +50,9 @@
                                 value=""
                                 >
                             </div>
-                            <small class="red text-left d-block w-100 mt-1">{{nopasswordalert}}</small>
+                            <small :class="`AlertArea red text-left d-block w-100 mt-1 position-absolute ${AlertshowClass}`">{{nopasswordalert}}</small>
                         </div>
-                        <div class="w-100 d-inline-block mb-3">
+                        <div class="w-100 d-inline-block mb-3 position-relative">
                             <div class="tablediv bg-white w-100 d-inline-block">
                                 <input id="password_confirmation"
                                 type="text"
@@ -63,9 +63,9 @@
                                 placeholder="user password confirm(必須)"
                                 >
                             </div>
-                            <small class="red text-left d-block w-100 mt-1">{{nopasswordconfalert}}</small>
+                            <small :class="`AlertArea red text-left d-block w-100 mt-1 position-absolute ${AlertshowClass}`">{{nopasswordconfalert}}</small>
                         </div>
-                        <div class="w-100 d-inline-block mb-3">
+                        <div class="w-100 d-inline-block mb-3 position-relative">
                             <div class="tablediv bg-white w-100 d-inline-block">
                                 <input id="companyname"
                                 type="text"
@@ -76,9 +76,9 @@
                                 placeholder="社名(任意)"
                                 >
                             </div>
-                            <small class="red text-left d-block w-100 mt-1">{{companynamealert}}</small>
+                            <small :class="`AlertArea red text-left d-block w-100 mt-1 position-absolute ${AlertshowClass}`">{{companynamealert}}</small>
                         </div>
-                        <div class="w-100 d-inline-block mb-3">
+                        <div class="w-100 d-inline-block mb-3 position-relative">
                             <div class="tablediv bg-white w-100 d-inline-block">
                                 <input id="companyaddress"
                                 type="text"
@@ -89,9 +89,9 @@
                                 placeholder="会社所在地(任意)"
                                 >
                             </div>
-                            <small class="red text-left d-block w-100 mt-1">{{companyaddressalert}}</small>
+                            <small :class="`AlertArea red text-left d-block w-100 mt-1 position-absolute ${AlertshowClass}`">{{companyaddressalert}}</small>
                         </div>
-                        <div class="w-100 d-inline-block mb-3">
+                        <div class="w-100 d-inline-block mb-3 position-relative">
                             <div class="tablediv bg-white w-100 d-inline-block">
                                 <input id="companytel"
                                 type="text"
@@ -102,9 +102,9 @@
                                 placeholder="会社電話番号(任意)"
                                 >
                             </div>
-                            <small class="red text-left d-block w-100 mt-1">{{companytelalert}}</small>
+                            <small :class="`AlertArea red text-left d-block w-100 mt-1 position-absolute ${AlertshowClass}`">{{companytelalert}}</small>
                         </div>
-                        <div class="w-100 d-inline-block mb-3">
+                        <div class="w-100 d-inline-block mb-3 position-relative">
                             <div class="tablediv bg-white w-100 d-inline-block">
                                 <input id="companymail"
                                 type="text"
@@ -115,9 +115,9 @@
                                 placeholder="会社メールアドレス(任意)"
                                 >
                             </div>
-                            <small class="red text-left d-block w-100 mt-1">{{companymailalert}}</small>
+                            <small :class="`AlertArea red text-left d-block w-100 mt-1 position-absolute ${AlertshowClass}`">{{companymailalert}}</small>
                         </div>
-                        <div class="w-100 d-inline-block mb-3">
+                        <div class="w-100 d-inline-block mb-3 position-relative">
                             <div class="tablediv bg-white w-100 d-inline-block">
                                 <input id="companyindustry"
                                 type="text"
@@ -128,7 +128,7 @@
                                 placeholder="業界(任意)"
                                 >
                             </div>
-                            <small class="red text-left d-block w-100 mt-1">{{companyindustryalert}}</small>
+                            <small :class="`AlertArea red text-left d-block w-100 mt-1 position-absolute ${AlertshowClass}`">{{companyindustryalert}}</small>
                         </div>
                     </div>
                 </div>
@@ -166,6 +166,7 @@ export default defineComponent({
 
             nonamealert: '',
             noemailalert: '',
+            AlertshowClass: 'AlertShowHide',
             nopasswordalert: '',
             nopasswordconfalert: '',
 
@@ -189,6 +190,8 @@ export default defineComponent({
             const CTELLElement = this.$refs.companytel as HTMLInputElement
             const CMAILElement = this.$refs.companymail as HTMLInputElement
             const CINDElement = this.$refs.companyindustry as HTMLInputElement
+
+            this.AlertshowClass = 'AlertShowHide';
 
             return http.post(
             "/api/register",
@@ -214,6 +217,8 @@ export default defineComponent({
                 this.companytelalert = response.data.EmptyCheck.companytel;
                 this.companymailalert = response.data.EmptyCheck.companymail;
                 this.companyindustryalert = response.data.EmptyCheck.companyindustry;
+
+                this.AlertshowClass = 'AlertShow';
 
                 //重複するユーザーがいた時もモーダルを出すようにする。
                 if(response.data.RegisterStatus == "success" || response.data.RegisterStatus == "duplicated"){

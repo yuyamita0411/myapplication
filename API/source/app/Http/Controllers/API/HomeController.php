@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Notification;
 use App\module\Values;
 
+use Illuminate\Support\Facades\DB;
 class HomeController extends Controller
 {
     public function __construct()
@@ -49,17 +50,16 @@ class HomeController extends Controller
                 ->where('id', '!=', $NotificationFirst->id)
                 ->orderby('created_at', 'desc');
 
-        //$notificationObj = $notificationObj->where("id", "!=", $NotificationFirst->id);
         $ncount = ceil(count($notificationObj->get()) / $this->Values->pagenationNum);
 
         if(empty($request->PageNow)){
-            $notificationObj = $notificationObj->limit($this->Values->pagenationNum)->offset(0);
+            $notificationObj->limit($this->Values->pagenationNum)->offset(0);
         }
         if(!empty($request->PageNow)){
             if($request->PageNow == 1){
-                $notificationObj = $notificationObj->limit($this->Values->pagenationNum)->offset(0);
+                $notificationObj->limit($this->Values->pagenationNum)->offset(0);
             }else{
-                $notificationObj = $notificationObj->limit($this->Values->pagenationNum)->offset((($request->PageNow - 1) * $this->Values->pagenationNum) + 1);
+                $notificationObj->limit($this->Values->pagenationNum)->offset((($request->PageNow - 1) * $this->Values->pagenationNum));
             }
         }
 

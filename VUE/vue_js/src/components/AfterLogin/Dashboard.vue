@@ -16,9 +16,16 @@
                 <div class="gridinside w-100 bg-white p-3">
                     <img class="clipicon position-absolute" src="@/assets/clipicon.png">
                     <div id="notificationarea" :class="`${loadstatus}`">
+                        <article class="p-news-list__item js-inter fadeInLeft is-invasion mb-3 p-2 position-relative" v-if="notificationarr.length == 0">
+                            <div class="p-news-list__item__data pb-2">
+                                <p class="mb-0">
+                                お知らせが見つかりませんでした。
+                                </p>
+                            </div>
+                        </article>
                         <article class="p-news-list__item js-inter fadeInLeft is-invasion mb-3 p-2 position-relative" v-for="Nt in notificationarr" :key="Nt.id">
                             <router-link :to="{path: Nt.notificationlink = Nt.notificationlink != null ? Nt.notificationlink : '/dashboard'}">
-                                <div class="p-news-list__item__data pb-2" v-if="Nt != notificationarr[Object.keys(notificationarr)[0]] && Nt">
+                                <div class="p-news-list__item__data pb-2">
                                     <p class="p-news-list__item__data__date mb-0">
                                     {{`
                                         ${new Date(Nt.created_at).getFullYear()}-
@@ -83,9 +90,17 @@ export default defineComponent({
                 {PageNow: pagenow},
                 (res:any) => {
 
+                    console.log(res);
+                    console.log(Object.keys(res.data.NArr).length);
+
+                    if(res.data.NFirstArr == null){
+                        this.TopNotification = '新しいお知らせはありません。';
+                        this.Loading = '';
+                        return;
+                    }
+
                     this.TopNotification = res.data.NFirstArr.title;
                     this.PageAmount = res.data.NArr.PageAmount;
-                    
 
                     var objarr:any = [];
                     for (var property in res.data.NArr) {

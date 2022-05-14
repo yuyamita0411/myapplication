@@ -518,7 +518,8 @@ textarea{
 .csvmodalcoverclose,
 .BacktoPrevButtonMoveRight,
 .sbhidden,
-.wrapperop0{
+.wrapperop0,
+.AlertShowHide{
     opacity: 0;
 }
 .p-news-list__item__data__date{
@@ -533,7 +534,8 @@ textarea{
 .commonmodalcoveropen,
 .csvmodalcoveropen,
 .sbshow,
-.wrapperop1{
+.wrapperop1,
+.AlertShow{
     opacity: 1;
 }
 /*opacity*/
@@ -683,6 +685,10 @@ body{
 }
 .schedulemodal{
     top: calc((100% - 5rem) / 2);
+}
+.AlertShowHide,
+.AlertShow{
+    top:2.3rem;
 }
 .sbshow{
     top:2.5rem;
@@ -871,7 +877,9 @@ body{
 .sortelem:hover,
 .cbutton,
 .cbutton:hover,
-#delete_date_area{
+#delete_date_area,
+.AlertShowHide,
+.AlertShow{
     transition:all 0.5s;
 }
 .inchargemenu{
