@@ -164,7 +164,7 @@
 import { defineComponent } from 'vue';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import http from "@/views/ts/http";
-import {GetData, loading} from "../http";
+import {GetData} from "../http";
 import LoginIconview from '@/components/common/LoadingIcon.vue';
 
 import DashboardView from '@/components/AfterLogin/Dashboard.vue';

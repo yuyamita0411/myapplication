@@ -248,7 +248,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import http from "@/views/ts/http";
-import {GetData, loading} from "../../http";
+import {GetData} from "../../http";
 import {PageNation} from "../../Pagenation";
 
 export default defineComponent({
