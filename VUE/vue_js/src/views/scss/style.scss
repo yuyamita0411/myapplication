@@ -523,7 +523,11 @@ textarea{
 .op0{
     opacity: 0;
 }
-.p-news-list__item__data__date{
+.op02{
+    opacity: 0.2;
+}
+.p-news-list__item__data__date,
+.op04{
     opacity: .4;
 }
 .modal_open,
@@ -883,6 +887,8 @@ body{
 .AlertShowHide,
 .AlertShow,
 .op0,
+.op02,
+.op04,
 .op1{
     transition:all 0.5s;
 }

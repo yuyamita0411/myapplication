@@ -1,8 +1,8 @@
 <template>
-<div id="MainColumLoadArea" v-if="loadingstatus == true" class="position-absolute">
-    <LoginIconview />
-</div>
-  <div :class="`home ${loadstatus}`">
+    <div id="MainColumLoadArea" v-if="loadingstatus == true" class="position-absolute">
+        <LoginIconview />
+    </div>
+    <div :class="`home ${loadstatus}`">
         <div class="dashbordwrapper d-inline-block w-100">
             <div id="dashboardnemue" class="dashboardnemue d-inline-block position-fixed w-100 p-0 bg-white">
                 <div class="d-inline-block w-100 pr-1 pl-1 pt-1 pb-1 pr-md-3 pl-md-3">
@@ -155,9 +155,9 @@
                 </div>
             </div>
         </div>
-  </div>
-<div id="logoutmodalcover" :class="Amodalclass" @click="AmodalClose"></div>
-<AccountModal></AccountModal>
+    </div>
+    <div id="logoutmodalcover" :class="Amodalclass" @click="AmodalClose"></div>
+    <AccountModal></AccountModal>
 </template>
 
 <script lang="ts">

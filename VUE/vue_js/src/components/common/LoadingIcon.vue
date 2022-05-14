@@ -9,13 +9,13 @@
             <div class="sk-chase-dot"></div>
         </div>
         <h4 id="LoadingStr" class="loading text-center position-absolute d-flex w-100" style="top:12rem; left:calc((100% - 4rem) / 2); color:rgb(255, 183, 90);">
-            <span>L</span>
-            <span>o</span>
-            <span>a</span>
-            <span>d</span>
-            <span>i</span>
-            <span>n</span>
-            <span>g</span>
+            <span :class="ll1">L</span>
+            <span :class="ll2">o</span>
+            <span :class="ll3">a</span>
+            <span :class="ll4">d</span>
+            <span :class="ll5">i</span>
+            <span :class="ll6">n</span>
+            <span :class="ll7">g</span>
         </h4>
     </div>
 </template>
@@ -31,11 +31,51 @@ export default defineComponent({
     name: 'LoginIconview',
     data() {
         return {
-            msg:""
+            msg:"",
+            ll1:"op02 llhide",
+            ll2:"op02 llhide",
+            ll3:"op02 llhide",
+            ll4:"op02 llhide",
+            ll5:"op02 llhide",
+            ll6:"op02 llhide",
+            ll7:"op02 llhide"
         };
     },
     mounted(){
-        console.log("mounted!!");
+        var count = 0;
+        setInterval(() => {
+            count += 1;
+            var whichphase = count % 7;
+            if(whichphase == 0){
+                this.ll1 = "op02 llhide";
+                this.ll2 = "op02 llhide";
+                this.ll3 = "op02 llhide";
+                this.ll4 = "op02 llhide";
+                this.ll5 = "op02 llhide";
+                this.ll6 = "op02 llhide";
+                this.ll7 = "op02 llhide";
+                this.ll7 = "op02 llshow";
+            }
+            if(whichphase == 1){
+                this.ll1 = "op1 llshow";
+            }
+            if(whichphase == 2){
+                this.ll2 = "op1 llshow";
+            }
+            if(whichphase == 3){
+                this.ll3 = "op1 llshow";
+            }
+            if(whichphase == 4){
+                this.ll4 = "op1 llshow";
+            }
+            if(whichphase == 5){
+                this.ll5 = "op1 llshow";
+            }
+            if(whichphase == 6){
+                this.ll6 = "op1 llshow";
+            }
+        }, 100);
+        
     },
     methods: {
         LoadingMotion(){
@@ -49,29 +89,18 @@ export default defineComponent({
 #LoadingStr{   
 color: rgb(255, 183, 90);
 }
-
-.loading span {
-    animation: loading .7s infinite alternate;
+.llhide{
+    letter-spacing:2px;
+    transform:scale(0.8);
 }
-.loading span:nth-child(2) {
-    animation-delay: .1s;
+.llshow{
+    letter-spacing:5px;
+    transform:scale(1);
 }
-.loading span:nth-child(3) {
-    animation-delay: .2s;
+.llhide,
+.llshow{
+    transition:all 0.1s;
 }
-.loading span:nth-child(4) {
-    animation-delay: .3s;
-}
-.loading span:nth-child(5) {
-    animation-delay: .4s;
-}
-.loading span:nth-child(6) {
-    animation-delay: .5s;
-}
-.loading span:nth-child(7) {
-    animation-delay: .6s;
-}
-
 /* ローディング関連 */
 .sk-chase {
     width: 70px;
@@ -128,37 +157,4 @@ color: rgb(255, 183, 90);
     } 
 }
 /* ローディング関連 */
-
-@keyframes loading {
-    0% {
-        opacity:0.3;
-        //letter-spacing:5px;
-        transform: scale(0.8);
-    }
-    20%{
-        opacity:0.36;
-        transform: scale(0.82);
-        //letter-spacing:4.2px;
-    }
-    40%{
-        opacity:0.48;
-        transform: scale(0.86);
-        //letter-spacing:3px;
-    }
-    60%{
-        opacity:0.66;
-        transform: scale(0.92);
-        //letter-spacing:2.6px;
-    }
-    80%{
-        opacity:0.8;
-        transform: scale(0.98);
-        //letter-spacing:2.2px;
-    }
-    100% {
-        opacity:1;
-        //letter-spacing:2px;
-        transform: scale(1);
-    }
-}
 </style>
