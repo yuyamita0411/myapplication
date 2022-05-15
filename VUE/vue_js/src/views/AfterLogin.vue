@@ -30,14 +30,19 @@
             <div class="dashbordcontent w-100 position-relative">
                 <div class="w-100 d-inline-block">
                     <div id="hbwrapper" class="hbwrapper w-100 position-fixed">
-                        <div id="humburgerbutton" class="hbwrapper position-relative cursor float-right">
+                        <div id="humburgerbutton" class="hbwrapper position-relative cursor float-right"
+                        @click="SidebarOpen"
+                        >
                             <span class="hbar w-75 d-inline-block position-absolute"></span>
                             <span class="hbar w-75 d-inline-block position-absolute"></span>
                             <span class="hbar w-75 d-inline-block position-absolute"></span>
                         </div>
                     </div>
                 </div>
-                <div id="sidebar" class="sidecolor sidebar shadowgrid col-12 col-md-3 float-md-left">
+                <div
+                id="sidebar" class="sidecolor sidebar shadowgrid col-12 col-md-3 float-md-left"
+                @click="SidebarOpen"
+                >
                     <div
                         class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-6 col-md-12 mt-md-2 mb-md-2 text-center"
                         data-tooltip="ダッシュボード"
@@ -240,6 +245,15 @@ export default defineComponent({
             //vue.の書き方にできれば変えたい
             document.getElementById('logoutmodal')!.classList.toggle("modal_close");
             document.getElementById('logoutmodal')!.classList.toggle("modal_open");
+        },
+        SidebarOpen(){
+            if(window.innerWidth < 768){
+                document.getElementById('humburgerbutton')!.classList.toggle("status_open");
+                document.querySelectorAll('.hbar').forEach((ob) => {
+                    ob.classList.toggle("barrotate");
+                });
+                document.getElementById('sidebar')!.classList.toggle("sidebaropen");
+            }
         }
     }
 });
