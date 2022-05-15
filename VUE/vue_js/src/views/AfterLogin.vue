@@ -44,28 +44,28 @@
                 @click="SidebarOpen"
                 >
                     <div
-                        class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-6 col-md-12 mt-md-2 mb-md-2 text-center"
+                        class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-2 text-md-center"
                         data-tooltip="ダッシュボード"
                         @click="dashboard"
                     >
                         <img src="@/assets/homeicon.png" class="sidebaricon p-2">
                     </div>
                     <div
-                        class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-6 col-md-12 mt-md-2 mb-md-2 text-center"
+                        class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-2 text-md-center"
                         data-tooltip="スケジュール"
                         @click="schedule"
                     >
                         <img src="@/assets/Schedule.png" class="sidebaricon p-2">
                     </div>
                     <div
-                        class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-6 col-md-12 mt-md-2 mb-md-2 text-center"
+                        class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-2 text-md-center"
                         data-tooltip="グループ"
                         @click="groupinfo"
                     >
                         <img src="@/assets/groupicon.png" class="sidebaricon p-2">
                     </div>
                     <div
-                        class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-6 col-md-12 mt-md-2 mb-md-2 text-center"
+                        class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-md-2 text-md-center"
                         data-tooltip="タスク進捗"
                         @click="taskinfo"
                     >

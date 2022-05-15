@@ -1,5 +1,5 @@
 <template>
-    <div id="ScheduleWrapper" class="schedulearea position-relative">
+    <div id="ScheduleWrapper" :class="`position-relative ${scheduleborder}`">
     <LoginIconview class="calenderloading w-100 d-inline-block text-center" v-if="loadingstatus == true" />
         <div class="myschedulearea" id="MyScheduleArea"></div>
         <div id="UserScheduleArea" :class="loadstatus">
@@ -41,6 +41,7 @@
                             `${MDFI(date, i-1).getFullYear()}-${ReturnDMFormat(new Date(MDFI(date, i-1)).getMonth()+1)}-${ReturnDMFormat(new Date(MDFI(date, i-1)).getDate())}`
                             "
                             class="editsceduleicon cursor ml-1 tooltip-left" data-tooltip="スケジュールを編集する"
+                            @click="RebaseModalMotion"
                             >
                                 {{edata.title}}
                                 <img
@@ -68,6 +69,9 @@
     <ScheduleAddModal
     :AddScheduleData="AddScheduleData"
     />
+    <ScheduleRebaseModal
+    :RebaseScheduleData="RebaseScheduleData"
+    />
 </template>
 
 <script lang="ts">
@@ -76,6 +80,7 @@ import http from "@/views/ts/http";
 import {GetData} from "../../../../http";
 import LoginIconview from '@/components/common/LoadingIcon.vue';
 import ScheduleAddModal from '@/components/AfterLogin/parts/modal/ScheduleAddModal.vue';
+import ScheduleRebaseModal from '@/components/AfterLogin/parts/modal/ScheduleRebaseModal.vue';
 import {PageNation} from "../../../../Pagenation";
 
 export default defineComponent({
@@ -85,16 +90,19 @@ export default defineComponent({
 		searchparam: Object,
 		loadingstatus: Boolean,
 		loadstatus: String,
+		scheduleborder: String,
         ScheduleData: Object
 	},
     data() {
         return {
-            AddScheduleData:{}
+            AddScheduleData:{},
+            RebaseScheduleData:{}
         };
     },
     components: {
         LoginIconview,
-        ScheduleAddModal
+        ScheduleAddModal,
+        ScheduleRebaseModal
     },
     methods:{
 		RebaseSchedule(){
@@ -122,7 +130,18 @@ export default defineComponent({
             document.getElementById('ScheduleAddModalcover')!.classList.toggle('ScheduleAddModalcoveropen');
             document.getElementById('ScheduleAddModal')!.classList.toggle('ScheduleAddModalclose');
             document.getElementById('ScheduleAddModal')!.classList.toggle('ScheduleAddModalopen');
-        }
+        },
+        RebaseModalMotion(e:any){
+            var t = e.target as HTMLElement;
+            this.RebaseScheduleData = {
+                "startdate":t.dataset.setscheduleinfo,
+                "userid":t.dataset.buttonuserid
+            }
+            document.getElementById('ScheduleRebaseModalcover')!.classList.toggle('ScheduleRebaseModalcoverclose');
+            document.getElementById('ScheduleRebaseModalcover')!.classList.toggle('ScheduleRebaseModalcoveropen');
+            document.getElementById('ScheduleRebaseModal')!.classList.toggle('ScheduleRebaseModalclose');
+            document.getElementById('ScheduleRebaseModal')!.classList.toggle('ScheduleRebaseModalopen');
+        },
     }
 });
 </script>
@@ -140,5 +159,10 @@ export default defineComponent({
 }
 .newestarticle{
     height:2.5rem;
+}
+@media (min-width: 768px) {
+	.scheduleborder {
+		box-shadow: 0px 0px 3px 0px rgb(0, 0, 0, 0.1);
+	}
 }
 </style>

@@ -60,9 +60,8 @@ export default defineComponent({
         width: 90%;
         left: 5%;
     }
-    #maincolumn,
-    #sidebar{
-        margin-top:4rem;
+    #maincolumn{
+        margin-top:3rem;
     }
 }
 </style>

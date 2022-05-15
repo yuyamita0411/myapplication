@@ -1114,9 +1114,11 @@ input[name="newtore"]:checked + label{
     .accountpersonicon{
         height: 1.25rem;
     }
-    #sidebar > div:nth-child(1),
-    #sidebar > div:nth-child(2){
-        margin-top:4rem;
+    #dashboardnemue{
+        margin-top:3rem;
+    }
+    #sidebar > div:nth-child(1){
+        margin-top:2rem;
     }
     .logoutmodal{
         margin:10rem 5% 0 5%;

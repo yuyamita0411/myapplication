@@ -122,6 +122,7 @@
                                 :searchparam = "searchparam"
                                 :loadingstatus = "loadingstatus"
                                 :loadstatus = "loadstatus"
+                                :scheduleborder = "scheduleborder"
 								:ScheduleData="ScheduleData"
                                 />
 
@@ -178,6 +179,7 @@ export default defineComponent({
 			WhichCstyle:'',
 			loadingstatus:true,
 			loadstatus:'op0',
+			scheduleborder:'',
 			ScheduleData:{},
 			PageNow:1,
 			PageAmount:0,
@@ -280,6 +282,7 @@ export default defineComponent({
 			const http = new GetData();
 			this.loadingstatus = true;
 			this.loadstatus = 'op0';
+			this.scheduleborder = '';
 
 			http.common(
 				"/api/schedule",
@@ -290,6 +293,7 @@ export default defineComponent({
 
 					//読み込みが完全に終わってからカバーを外す
 					this.loadingstatus = false;
+					this.scheduleborder = 'scheduleborder';
 					this.loadstatus = 'op1';
 				}
 			);
@@ -472,9 +476,6 @@ div[class*="CalBg"] {
 	}
 	#DayArea>div>div:not(:nth-child(8)), #UserScheduleArea>div>div>div:not(:nth-child(8)) {
 		border-right: solid 0.5px rgb(0, 0, 0, 0.1);
-	}
-	.schedulearea {
-		box-shadow: 0px 0px 3px 0px rgb(0, 0, 0, 0.1);
 	}
 }
 </style>
