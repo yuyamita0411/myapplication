@@ -17,6 +17,11 @@
             <span :class="ll6">n</span>
             <span :class="ll7">g</span>
         </h4>
+        <h5 class="loadingwait w-100 d-flex position-absolute text-left">
+            <span :class="`d-inline-block text-center ${loadingwait1}`">●</span>
+            <span :class="`d-inline-block text-center ${loadingwait2}`">●</span>
+            <span :class="`d-inline-block text-center ${loadingwait3}`">●</span>
+        </h5>
     </div>
 </template>
 <script lang="ts">
@@ -37,11 +42,34 @@ export default defineComponent({
             ll4:"op02 llhide",
             ll5:"op02 llhide",
             ll6:"op02 llhide",
-            ll7:"op02 llhide"
+            ll7:"op02 llhide",
+            loadingwait1:"op0",
+            loadingwait2:"op0",
+            loadingwait3:"op0"
         };
     },
     mounted(){
         var count = 0;
+        var waitincount = 0;
+
+        setInterval(() => {
+            waitincount += 1;
+            var waitingwhichphase = waitincount % 3;
+
+            if(waitingwhichphase == 0){
+                this.loadingwait2 = "op0";
+                this.loadingwait3 = "op1";
+            }
+            if(waitingwhichphase == 1){
+                this.loadingwait3 = "op0";
+                this.loadingwait1 = "op1";
+            }
+            if(waitingwhichphase == 2){
+                this.loadingwait1 = "op0";
+                this.loadingwait2 = "op1";
+            }
+        }, 150);
+
         setInterval(() => {
             count += 1;
             var whichphase = count % 7;
@@ -101,6 +129,13 @@ export default defineComponent({
     top:12rem;
     left:calc((100% - 4rem) / 2);
     color:rgb(255, 183, 90);
+}
+.loadingwait{
+    top:15rem;
+    left:calc((100% - 4rem) / 2);
+}
+.loadingwait{
+    letter-spacing:1rem;
 }
 .llhide{
     letter-spacing:2px;

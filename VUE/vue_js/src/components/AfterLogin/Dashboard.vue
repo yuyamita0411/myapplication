@@ -15,7 +15,8 @@
                     <LoginIconview class="dashboardloading w-100 d-inline-block text-center" v-if="loadingstatus == true" />
                     <img class="clipicon position-absolute" src="@/assets/clipicon.png">
                     <div id="notificationarea" :class="`${loadstatus}`">
-                        <article class="p-news-list__item js-inter fadeInLeft is-invasion mb-3 p-2 position-relative" v-if="notificationarr.length == 0">
+                        <article class="p-news-list__item js-inter fadeInLeft is-invasion mb-3 p-2 position-relative"
+                        v-if="notificationarr.length == 0">
                             <div class="p-news-list__item__data pb-2">
                                 <p class="mb-0">
                                 お知らせが見つかりませんでした。
