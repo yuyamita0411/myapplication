@@ -40,11 +40,14 @@
                     </div>
                     <div class="d-inline-block w-100 mt-3">
                         <div :class="`col-10 col-md-6 col-lg-4 m-auto d-flex ${this.loadpn}`" id="">
-                            <div v-for="i in PageAmount" :key="i" class="pagenationnum PageNationNum cursor d-inline-block w-100 text-center p-1">
-                                <p
-                                :id="`${PageNationClass(i).PageNationId}`"
-                                :class="`${PageNationClass(i).PageNationClass}`"
-                                @click="PageNationClick">{{`${PageNationClass(i).PageNationTxt}`}}</p>
+                            <div
+                            id="PagenationArea"
+                            class="paginationarea d-flex pt-4 col-12 col-lg-4 m-auto float-left"
+                            >
+                            <p id=""
+                            v-for="i in PageAmount" :key="i"
+                            class="pagenationnum PageNationNum cursor d-inline-block w-100 text-center p-1"
+                            @click="PageMotion">{{i}}</p>
                             </div>
                             <input type="text" name="PageNationInput" :value="PageNow" id="PageNationInput" @input="PageNationInput" class="mt-0 mb-0 col-2">
                         </div>
@@ -73,6 +76,7 @@ export default defineComponent({
             notificationarr:[],
             PageNow:1,
             PageAmount:0,
+            pagenation:"",
             onlyint:/^[0-9]*$/
         };
     },
@@ -110,6 +114,8 @@ export default defineComponent({
                     }
                     this.notificationarr = objarr;
 
+                    this.pagenation = PageNation.MakePagenation(this.PageAmount, this.PageNow);
+
                     //読み込みが完全に終わってからカバーを外す
                     this.loadingstatus = false;
                     this.loadstatus = 'op1';
@@ -117,17 +123,14 @@ export default defineComponent({
                 }
             );
         },
-        PageNationClass(i:number, PageNow:number, PageAmount:number){
-            return PageNation.PageNationClass(i, this.PageNow , this.PageAmount);
-        },
-        PageNationClick(e:any){
+        /*PageNationClick(e:any){
             var t = e.target as HTMLElement;
             if(!this.onlyint.test(t!.innerText.toString())){
                 return;
             }
             this.PageNow = Number(t!.innerText);
             this.rebaseNotification(this.PageNow);
-        },
+        },*/
         PageNationInput(e:any){
             var t = e.target as HTMLInputElement;
             if(!this.onlyint.test(t!.innerText.toString())){
@@ -139,6 +142,10 @@ export default defineComponent({
                     this.rebaseNotification(this.PageNow);
                 }
             }, 500);
+        },
+        PageMotion(e:any){
+			this.PageNow = Number(e.target.innerText);
+			this.rebaseNotification(this.PageNow);
         }
     },
     props: {
@@ -147,6 +154,7 @@ export default defineComponent({
     mounted(){
         const http = new GetData();
         this.rebaseNotification(this.PageNow);
+        this.pagenation = PageNation.MakePagenation(this.PageAmount, this.PageNow);
     }
 });
 </script>
