@@ -18,7 +18,7 @@ a:hover{
     text-decoration: none;
 }
 /*text-decoration*/
-#commonmodal::-webkit-scrollbar-thumb,
+
 textarea::-webkit-scrollbar-thumb,
 .modalinnercover > div[class^="modal"]::-webkit-scrollbar-thumb{
     box-shadow: none;
@@ -110,11 +110,6 @@ input[type='file'] {
 .cbutton:hover{
     background:rgb(0, 0, 0, 0.05);
 }
-
-.commonmodalcoveropen,
-.commonmodalcoverclose,
-.csvmodalcoveropen,
-.csvmodalcoverclose,
 .modalcover_open{
     background:rgb(0, 0, 0, 0.5);
 }
@@ -153,7 +148,6 @@ h3:not(.notificationtitle),
 .p-news-list__item__data__line{
     background: #c6cccc;
 }
-#commonmodal::-webkit-scrollbar-thumb,
 textarea::-webkit-scrollbar-thumb,
 .modalinnercover > div[class^="modal"]::-webkit-scrollbar-thumb{
     background: #aaa;
@@ -215,7 +209,6 @@ textarea::-webkit-scrollbar-thumb,
 
 /*border*/
 .b-none,
-#commonmodal::-webkit-scrollbar-track,
 textarea::-webkit-scrollbar-track,
 .modalinnercover > div[class^="modal"]::-webkit-scrollbar-track{
     border: none;
@@ -272,10 +265,8 @@ textarea{
 }
 .br5px,
 #AccountArea,
-#commonmodal::-webkit-scrollbar-thumb,
 textarea::-webkit-scrollbar-thumb,
 .modalinnercover > div[class^="modal"]::-webkit-scrollbar-thumb,
-#commonmodal::-webkit-scrollbar-track,
 textarea::-webkit-scrollbar-track,
 .modalinnercover > div[class^="modal"]::-webkit-scrollbar-track{
     border-radius: 5px;
@@ -384,19 +375,12 @@ input.fileinput,
 .clipicon{
     height: 3.5rem;
 }
+
 .logoutmodalcover,
-.commonmodalcoveropen,
-.commonmodalcoverclose,
-.csvmodalcoveropen,
-.csvmodalcoverclose,
 #sidebar{
     height: 100%;
 }
 /*.schedulearea,*/
-.commonmodalclose,
-.csvmodalclose{
-    height: 100vh;
-}
 .schedulespdic{
     min-height:2rem;
 }
@@ -444,7 +428,6 @@ input.fileinput,
 .calenderBtn{
     width:15px;
 }
-#commonmodal::-webkit-scrollbar,
 textarea::-webkit-scrollbar,
 .modalinnercover > div[class^="modal"]::-webkit-scrollbar{
     width: 12px;
@@ -478,11 +461,7 @@ textarea::-webkit-scrollbar,
 .p-news-list__item__data:after,
 .LoginmodalOutside,
 .logoutmodalcover,
-.logoutmodal,
-.commonmodalcoveropen,
-.commonmodalcoverclose,
-.csvmodalcoveropen,
-.csvmodalcoverclose{
+.logoutmodal{
     width: 100%;
 }
 
@@ -511,11 +490,6 @@ textarea{
 .p-news-list__item__data:after,
 .logoutmodalcover,
 .logoutmodal,
-.commonmodalclose,
-.csvmodalclose,
-.commonmodalcoverclose,
-.csvmodalcoveropen,
-.csvmodalcoverclose,
 .BacktoPrevButtonMoveRight,
 .sbhidden,
 .wrapperop0,
@@ -536,8 +510,6 @@ textarea{
 .p-news-list__item__data:hover:after,
 .p-news-list__item__data:hover > .p-news-list__item__data__date,
 .is-invasion:not(.no-fade), .is-invasion .parent-observe,
-.commonmodalcoveropen,
-.csvmodalcoveropen,
 .sbshow,
 .wrapperop1,
 .AlertShow,
@@ -554,13 +526,6 @@ textarea{
 .wrapperZm1,
 .loadinghidden{
     z-index:-1;
-}
-.commonmodalclose,
-.csvmodalclose,
-.commonmodalcoverclose,
-.csvmodalcoveropen,
-.csvmodalcoverclose{
-    z-index: 0;
 }
 .scheduleinnerselector,
 .p-news-list__item__data:after,
@@ -586,15 +551,6 @@ textarea{
 .modal_open{
     z-index:5;
 }
-.commonmodalcoveropen,
-.csvmodalcoveropen{
-    z-index: 6;
-}
-
-.commonmodalopen,
-.csvmodalopen{
-    z-index: 7;
-}
 /*z-index*/
 
 /*overflow*/
@@ -603,8 +559,6 @@ textarea{
 .p-news-list__item__title{
     overflow: hidden;
 }
-#commonmodal,
-#csvmodal,
 textarea,
 .schedulespdic,
 .inchargemenu{
@@ -678,9 +632,7 @@ body{
 }
 .hbwrapper,
 .logoutmodalcover,
-.logoutmodal,
-.commonmodalcoveropen,
-.csvmodalcoveropen{
+.logoutmodal{
     top:0;
 }
 .sbhidden{
@@ -699,12 +651,6 @@ body{
 .sbshow{
     top:2.5rem;
 }
-.commonmodalclose,
-.csvmodalclose,
-.commonmodalcoverclose,
-.csvmodalcoverclose{
-    top: 100%;
-}
 .right0,
 .hbwrapper{
     right: 0;
@@ -720,12 +666,6 @@ body{
 .modalinnercover,
 .p-news-list__item__data:before,
 .p-news-list__item__data:after,
-.commonmodalclose,
-.csvmodalclose,
-.commonmodalcoveropen,
-.commonmodalcoverclose,
-.csvmodalcoveropen,
-.csvmodalcoverclose,
 .sbwrapper{
     left: 0;
 }
@@ -748,9 +688,7 @@ body{
 .p-news-list__item__data:after{
     position: absolute;
 }
-.commonmodalcoveropen,
-.commonmodalcoverclose,
-.csvmodalcoveropen,
+
 .csvmodalcoverclose{
     position: fixed;
 }
@@ -848,13 +786,7 @@ body{
 .accounticon,
 #AccountArea,
 #AccountArea:hover,
-.commonmodalopen,
 .csvmodalopen,
-.commonmodalclose,
-.csvmodalclose,
-.commonmodalcoveropen,
-.commonmodalcoverclose,
-.csvmodalcoveropen,
 .csvmodalcoverclose,
 .modalinnercover,
 .BgAccentColor:hover,
@@ -871,6 +803,7 @@ body{
 .inchargemenuclose{
     transition: all 0.25s;
 }
+
 .adduserbuton:hover,
 .adduserbuton,
 .existingusernow:hover,
@@ -997,13 +930,6 @@ input[name="newtore"]:checked + label{
 /*チェックボックス関連*/
 
 @media (min-width: 768px){
-    .commonmodalopen,
-    .csvmodalopen,
-    .commonmodalclose,
-    .csvmodalclose{
-        left: calc((100% - 45rem) / 2);
-        width: 45rem;
-    }
     .BacktoPrevButtonMoveRight{
         left: 9.5rem;
     }
@@ -1101,10 +1027,6 @@ input[name="newtore"]:checked + label{
     }
     .b-md-gray{
         border:solid 1px rgb(0, 0, 0, 0.2);
-    }
-    .commonmodalopen,
-    .csvmodalopen{
-        top: 2rem;
     }
 }
 
@@ -1218,10 +1140,7 @@ input[name="newtore"]:checked + label{
     .hbwrapper > .barrotate:nth-child(3){
         top: 1.25rem;
     }
-    .commonmodalopen,
-    .csvmodalopen{
-        top: 2rem;
-    }
+
     .sidebar{
         left: -100%;
     }
@@ -1258,13 +1177,6 @@ input[name="newtore"]:checked + label{
     .hbwrapper > .hbar:nth-child(2),
     .hbwrapper > .hbar:nth-child(3){
         transition: all 0.5s;
-    }
-    .commonmodalopen,
-    .csvmodalopen,
-    .commonmodalclose,
-    .csvmodalclose{
-        width: 90%;
-        left: 5%;
     }
     .maincolumn{
         width:100%;

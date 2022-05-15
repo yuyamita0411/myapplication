@@ -10,26 +10,6 @@ import router from './router'
 export default defineComponent({
     name: 'APP'
 });
-
-['load', 'resize'].forEach((ev:string) => {
-    window.addEventListener(ev, () => {
-        SIZE.SetTopMargin('hbwrapper', ['dashboardnemue']);
-        var hprop = '';
-        if(768 < window.innerWidth){
-            hprop = `height:calc(${window.innerHeight}px - 10rem);`
-        }
-        if(window.innerWidth <= 768){
-            hprop = `height:calc(${window.innerHeight}px - 8rem);`
-        }
-        if(!document.getElementById('commonmodal')){
-            return;
-        }
-        document.getElementById('commonmodal')!.setAttribute(
-            'style',
-            hprop
-        );
-    });
-});
 </script>
 
 <style lang="scss">

@@ -25,7 +25,9 @@
                         :data-setscheduleinfo="`${new Date(MDFI(date, i-1)).getFullYear()}/${new Date(MDFI(date, i-1)).getMonth()+1}/${new Date(MDFI(date, i-1)).getDate()}`"
                         :data-buttonuserid="`${sdata[0].id}`"
                         data-tooltip="スケジュールを追加する"
-                        class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0">
+                        class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0"
+                        @click="ModalMotion"
+                        >
                         </button>
 
                         <small
@@ -63,6 +65,9 @@
 
         </div>
     </div>
+    <ScheduleAddModal
+    :AddScheduleData="AddScheduleData"
+    />
 </template>
 
 <script lang="ts">
@@ -70,6 +75,7 @@ import { defineComponent, createApp } from 'vue';
 import http from "@/views/ts/http";
 import {GetData} from "../../../../http";
 import LoginIconview from '@/components/common/LoadingIcon.vue';
+import ScheduleAddModal from '@/components/AfterLogin/parts/modal/ScheduleAddModal.vue';
 import {PageNation} from "../../../../Pagenation";
 
 export default defineComponent({
@@ -83,11 +89,12 @@ export default defineComponent({
 	},
     data() {
         return {
-            dammy:true
+            AddScheduleData:{}
         };
     },
     components: {
-        LoginIconview
+        LoginIconview,
+        ScheduleAddModal
     },
     methods:{
 		RebaseSchedule(){
@@ -104,6 +111,17 @@ export default defineComponent({
                 str = "0" + str;
             }
             return str;
+        },
+        ModalMotion(e:any){
+            var t = e.target as HTMLElement;
+            this.AddScheduleData = {
+                "startdate":t.dataset.setscheduleinfo,
+                "userid":t.dataset.buttonuserid
+            }
+            document.getElementById('ScheduleAddModalcover')!.classList.toggle('ScheduleAddModalcoverclose');
+            document.getElementById('ScheduleAddModalcover')!.classList.toggle('ScheduleAddModalcoveropen');
+            document.getElementById('ScheduleAddModal')!.classList.toggle('ScheduleAddModalclose');
+            document.getElementById('ScheduleAddModal')!.classList.toggle('ScheduleAddModalopen');
         }
     }
 });
