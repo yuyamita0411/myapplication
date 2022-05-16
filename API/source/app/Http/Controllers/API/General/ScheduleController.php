@@ -295,7 +295,7 @@ class ScheduleController extends Controller
 
     public function search(Request $request){
         $purifyquery = DB::table('appli_users')
-            ->where('appli_users.id', '!=', $request->memberitself)
+            ->where('appli_users.id', '!=', Auth::user()->id)
             ->where('appli_users.name', 'LIKE', "%{$request->addgroupmember}%")
             ->Where('appli_users.companyid', Auth::user()->companyid)
             ->select(
@@ -306,6 +306,10 @@ class ScheduleController extends Controller
                 'appli_users.created_at',
                 'appli_users.updated_at'
             )->get();
+
+            if($request->addgroupmember == ''){
+                $purifyquery = (object)[];
+            }
             return response()->json($purifyquery);
     }
 }

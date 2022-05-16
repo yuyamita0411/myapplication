@@ -1,7 +1,8 @@
 <template>
 	<LoginIconview class="calenderloading w-100 d-inline-block text-center position-absolute" v-if="loadingstatus == true" />
 	<div id="ScheduleWrapper" class="position-relative">
-		<div :class="`schedulearea ${loadstatus}`" id="UserScheduleArea">
+		<div class="myschedulearea" id="MyScheduleArea"></div>
+		<div id="UserScheduleArea" :class="`schedulearea ${loadstatus}`">
 
 			<div
 			class="b-gray d-inline-block w-100 mb-3"
@@ -29,7 +30,16 @@
 						</div>
 
 						<div class="borderleftgray schedulespdic col-10 d-inline-block text-left float-right pt-1 pb-1 pl-1 pr-1 bg-white">
-
+							<button
+							type="button"
+							:id="`ScheduleId-${sdata[0].id}`"
+							:data-setscheduleinfo="`${new Date(MDFI(date, i-1)).getFullYear()}/${new Date(MDFI(date, i-1)).getMonth()+1}/${new Date(MDFI(date, i-1)).getDate()}`"
+							:data-buttonuserid="`${sdata[0].id}`"
+							data-tooltip="スケジュールを追加する"
+							class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0"
+							@click="ModalMotion"
+							>
+							</button>
 							<small
 							v-for="edata in sdata" :key="edata"
 							>
@@ -46,35 +56,29 @@
 									<span
 									class="editsceduleicon cursor ml-1
 									tooltip-right"
-									data-tooltip="スケジュールを編集する">
+									>
 									<img
 									src="@/assets/orangepenicon.png"
 									class="rebaseschedule orangepenicon"
-									:data-id="`${edata.id}`"
+									:data-buttonuserid="`${edata.id}`"
 									:data-mailaddress="`${edata.mail_address}`"
 									:data-createdat="`${edata.created_at}`"
 									:data-scheduleid="`${edata.scheduleid}`"
 									:data-title="`${edata.title}`"
-									data-description=""
+									:data-description="`${edata.description}`"
+									:data-setscheduleinfo="`${new Date(MDFI(date, i-1)).getFullYear()}/${new Date(MDFI(date, i-1)).getMonth()+1}/${new Date(MDFI(date, i-1)).getDate()}`"
 									:data-starttime="`${edata.starttime}`"
 									:data-endtime="`${edata.endtime}`"
+									:data-taskid="`${edata.taskid}`"
 									data-groupid=""
-									:data-taskid="`${edata.taskid}`">
+									data-tooltip="スケジュールを編集する"
+									@click="ModalMotion"
+									>
 									</span>
 								</span>
 
 							</small>
 
-							<button
-							type="button"
-							:id="`ScheduleId-${sdata[0].id}`"
-							:data-setscheduleinfo="`${new Date(MDFI(date, i-1)).getFullYear()}/${new Date(MDFI(date, i-1)).getMonth()+1}/${new Date(MDFI(date, i-1)).getDate()}`"
-							:data-buttonuserid="`${sdata[0].id}`"
-							data-tooltip="スケジュールを追加する"
-							class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0"
-							@click="ModalMotion"
-							>
-							</button>
 						</div>
 					</div>
 				</div>
@@ -82,8 +86,10 @@
 
 		</div>
 	</div>
-    <ScheduleAddModal
-    :AddScheduleData="AddScheduleData"
+
+    <ScheduleModal
+    :ScheduleTagData="ScheduleTagData"
+    :modaltitle="modaltitle"
     />
 </template>
 
@@ -92,7 +98,7 @@ import { defineComponent, createApp } from 'vue';
 import http from "@/views/ts/http";
 import {GetData} from "../../../../http";
 import LoginIconview from '@/components/common/LoadingIcon.vue';
-import ScheduleAddModal from '@/components/AfterLogin/parts/modal/ScheduleAddModal.vue';
+import ScheduleModal from '@/components/AfterLogin/parts/modal/ScheduleModal.vue';
 import {PageNation} from "../../../../Pagenation";
 
 export default defineComponent({
@@ -102,45 +108,52 @@ export default defineComponent({
 		searchparam: Object,
 		loadingstatus: Boolean,
 		loadstatus: String,
-		ScheduleData: Object
+		ScheduleData: Object,
+		DweekArr: Object,
+		Daycolor: Object
 	},
     data() {
         return {
-			DweekArr:[ "日", "月", "火", "水", "木", "金", "土" ],
-			Daycolor:{"土":"SaturdayColor", "日":"SundayColor", "月":"", "火":"", "水":"", "木":"", "金":""},
-			AddScheduleData:{}
+			ScheduleTagData:{},
+			modaltitle:""
         };
     },
     components: {
         LoginIconview,
-		ScheduleAddModal
+		ScheduleModal
     },
     methods:{
-		RebaseSchedule(){
-			console.log("param");
-		},
-		MDFI(obj:any, plus:number){
-			//一旦変数に入れる。
-			var Dobj = new Date(obj);
-			var returnobj = new Date(Dobj.setDate(Dobj.getDate() + plus));
-			return returnobj;
-		},
+        ModalMotion(e:any){
+            this.ScheduleTagData = {
+                "startdate":e.target.dataset.setscheduleinfo,
+                "userid":e.target.dataset.buttonuserid,
+                "mailaddress":e.target.dataset.mailaddress,
+                "createdat":e.target.dataset.createdat,
+                "scheduleid":e.target.dataset.scheduleid,
+                "title":e.target.dataset.title,
+                "description":e.target.dataset.description,
+                "setscheduleinfo":e.target.dataset.setscheduleinfo,
+                "starttime":e.target.dataset.starttime,
+                "endtime":e.target.dataset.endtime,
+                "taskid":e.target.dataset.taskid
+            }
+            this.modaltitle = e.target.dataset.tooltip;
+            document.getElementById('ScheduleModalcover')!.classList.remove('ScheduleModalcoverclose');
+            document.getElementById('ScheduleModalcover')!.classList.add('ScheduleModalcoveropen');
+            document.getElementById('ScheduleModal')!.classList.remove('ScheduleModalclose');
+            document.getElementById('ScheduleModal')!.classList.add('ScheduleModalopen');
+        },
+        MDFI(obj:any, plus:number){
+            //一旦変数に入れる。
+            const Dobj = new Date(obj);
+            const returnobj = new Date(Dobj.setDate(Dobj.getDate() + plus));
+            return returnobj;
+        },
         ReturnDMFormat(str:string){
             if (str.toString().length == 1) {
                 str = "0" + str;
             }
             return str;
-        },
-        ModalMotion(e:any){
-            var t = e.target as HTMLElement;
-            this.AddScheduleData = {
-                "startdate":t.dataset.setscheduleinfo,
-                "userid":t.dataset.buttonuserid
-            }
-            document.getElementById('ScheduleAddModalcover')!.classList.toggle('ScheduleAddModalcoverclose');
-            document.getElementById('ScheduleAddModalcover')!.classList.toggle('ScheduleAddModalcoveropen');
-            document.getElementById('ScheduleAddModal')!.classList.toggle('ScheduleAddModalclose');
-            document.getElementById('ScheduleAddModal')!.classList.toggle('ScheduleAddModalopen');
         }
     }
 });

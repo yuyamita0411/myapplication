@@ -18,58 +18,75 @@
                                 <input
                                 name="mainid"
                                 type="hidden"
-                                value="52">
+                                :value="RebaseScheduleData.userid">
                                 <input name="starttime"
                                 type="hidden"
-                                value="2022-03-24">
+                                :value="RebaseScheduleData.startdate">
                                 <div class="col-12 d-flex">
                                     <img class="searchicon cursor p-1 mr-3 tooltip-top"
                                     data-tooltip="時刻を設定する"
                                     src="@/assets/timeicon.png">
-                                    <div class="w-100 text-center pr-2 position-relative">
-                                        <div class="starthour buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor"
-                                        id="">
-                                            00
-                                        </div>
-                                        <div class="position-absolute bg-white menuhide gridinside" id=""></div>
-                                    </div>
-                                    <div class="buttonicon text-center pr-2">
-                                        :
-                                    </div>
-                                    <div class="w-100 text-center pr-2 position-relative">
-                                        <div class="startminute buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id="">
-                                            00
-                                        </div>
-                                        <div class="position-absolute bg-white menuhide gridinside" id=""></div>
-                                    </div>
-                                    <div class="buttonicon text-center">
-                                        ~
-                                    </div>
-                                    <div class="w-100 text-center pl-2 position-relative">
-                                        <div class="endhour buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id="">
-                                            00
-                                        </div>
-                                        <div class="position-absolute bg-white menuhide gridinside" id=""></div>
-                                    </div>
-                                    <div class="buttonicon text-center pl-2">
-                                        :
-                                    </div>
-                                    <div class="w-100 text-center pl-2 position-relative">
-                                        <div class="endminute buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id="">
-                                            00
-                                        </div>
-                                        <div class="position-absolute bg-white menuhide gridinside" id=""></div>
-                                    </div>
-                                    <input
-                                    id=""
-                                    name="Sstarttime"
-                                    type="hidden"
-                                    value="00:00">
-                                    <input
-                                    id=""
-                                    name="Sendtime"
-                                    type="hidden"
-                                    value="">
+									<div class="w-100 text-center pr-2 position-relative">
+										<div
+										@click="OpenScheduleStartTime"
+										class="starthour buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id="">
+											{{sstime}}
+										</div>
+										<div class="Scaccordion position-absolute bg-white menuhide zm1 gridinside" id="">
+											<div
+											@click="GetSStartTime"
+											v-for="i in 12" :key="i"
+											class="starthourmenubutton Sbutton w-100 d-inline-block cursor bb" data-makeour="0">{{ReturnDMFormat(i)}}</div>
+										</div>
+									</div>
+									<div class="buttonicon text-center pr-2">
+										:
+									</div>
+									<div class="w-100 text-center pr-2 position-relative">
+										<div
+										@click="OpenScheduleStartMinute"
+										class="startminute buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id="">
+											{{ssminute}}
+										</div>
+										<div class="Scaccordion position-absolute bg-white menuhide zm1 gridinside" id="">
+											<div
+											@click="GetSStartMinute"
+											v-for="i in 59" :key="i"
+											class="startminutemenubutton Sbutton w-100 d-inline-block cursor bb" data-makeour="0">{{ReturnDMFormat(i)}}</div>
+										</div>
+									</div>
+									<div class="buttonicon text-center">
+										~
+									</div>
+									<div class="w-100 text-center pl-2 position-relative">
+										<div
+										@click="OpenScheduleEndTime"
+										class="endhour buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id="">
+											{{sendtime}}
+										</div>
+										<div class="Scaccordion position-absolute bg-white menuhide zm1 gridinside" id="">
+											<div
+											@click="GetSendTime"
+											v-for="i in 12" :key="i"
+											class="starthourmenubutton Sbutton w-100 d-inline-block cursor bb" data-makeour="0">{{ReturnDMFormat(i)}}</div>
+										</div>
+									</div>
+									<div class="buttonicon text-center pl-2">
+										:
+									</div>
+									<div class="w-100 text-center pl-2 position-relative">
+										<div
+										@click="OpenScheduleEndMinute"
+										class="endminute buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id="">
+											{{sendminute}}
+										</div>
+										<div class="Scaccordion position-absolute bg-white menuhide zm1 gridinside" id="">
+											<div
+											@click="GetSendMinute"
+											v-for="i in 59" :key="i"
+											class="startminutemenubutton Sbutton w-100 d-inline-block cursor bb" data-makeour="0">{{ReturnDMFormat(i)}}</div>
+										</div>
+									</div>
                                 </div>
                                 <span
                                 class="d-inline-block w-100 text-center red mt-3"
@@ -77,26 +94,33 @@
                                 <div class="schedulemodal position-relative d-inline-block col-12">
                                     <div class="d-inline-block mt-5 w-100">
                                         <small class="red" id=""></small>
-                                    </div><input class="w-100 searchbar bg-brightgray mb-3 border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none float-left pl-2"
-                                    name="schedulename"
-                                    placeholder="タイトルを入力してください"
-                                    type="text"
-                                    value="タイトル52">
+                                    </div>
+									<input
+									class="w-100 searchbar bg-brightgray mb-3 border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none float-left pl-2"
+									name="schedulename"
+									placeholder="タイトルを入力してください"
+									type="text"
+									:value="rebasescheduletitle"
+									@input="InputTitle"
+									>
                                     <div class="d-inline-block w-100">
                                         <small class="red" id=""></small>
                                     </div>
-                                    <textarea class="w-100 searchbar bg-brightgray mb-3 border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none float-left pl-2"
-                                    name="scheduledisc"
-                                    placeholder="概要を入力してください">概要概要概要概要概要概要概要概要概要概要概要概要概要概要52</textarea>
-                                    <input
-                                    name="userid"
-                                    type="hidden"
-                                    value="2">
-                                    <input
-                                    name="startdate"
-                                    type="hidden"
-                                    value="2022/3/22"
-                                    >
+									<textarea
+                                    class="w-100 searchbar bg-brightgray mb-3 border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none float-left pl-2"
+									name="scheduledisc"
+									placeholder="概要を入力してください"
+									:value="rebasescheduledescription"
+									@input="InputDescription"
+									></textarea>
+									<input
+									name="userid"
+									type="hidden"
+									:value="RebaseScheduleData.startdate">
+									<input
+									name="startdate"
+									type="hidden"
+									:value="RebaseScheduleData.startdate">
                                 </div>
                                 <h5 class="mainfontcolor col-12 pt-4 pb-1 mb-2">メンバーを追加する
                                 <small class="red" id=""></small>
@@ -109,7 +133,7 @@
                                                 <div class="d-inline-block w-100 mb-3 pl-0 pr-0">
                                                     <div class="searchbarwrapper d-inline-block w-100 mt-0">
                                                         <input class="w-100 searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none float-left pl-2"
-                                                        data-userid="2"
+                                                        :data-userid="RebaseScheduleData.userid"
                                                         id=""
                                                         name="addgroupmember"
                                                         placeholder="ユーザー名を入力してください。"
@@ -117,7 +141,15 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div id="SearchResultArea"></div>
+                                            <div id="SearchResultArea">
+                                                <div
+                                                data-id=""
+                                                data-name=""
+                                                data-mailaddress=""
+                                                class="adduserbuton d-inline-block float-left pt-1 pb-1 pr-2 pl-2 text-white mb-2 mr-2 cursor br5px">
+                                                名前1
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -217,15 +249,89 @@ import http from "@/views/ts/http";
 
 export default defineComponent({
     name: 'ScheduleRebaseModal',
+    data() {
+        return {
+            sstime:"09",
+			ssminute:"00",
+			sendtime:"10",
+			sendminute:"00",
+			rebasescheduletitle:"",
+			rebasescheduledescription:"",
+			rebasemember:{}
+        };
+    },
 	props:{
 		RebaseScheduleData:Object
 	},
 	methods:{
-		ModalMotion(){
-            document.getElementById('ScheduleRebaseModalcover')!.classList.toggle('ScheduleRebaseModalcoverclose');
-            document.getElementById('ScheduleRebaseModalcover')!.classList.toggle('ScheduleRebaseModalcoveropen');
-            document.getElementById('ScheduleRebaseModal')!.classList.toggle('ScheduleRebaseModalclose');
-            document.getElementById('ScheduleRebaseModal')!.classList.toggle('ScheduleRebaseModalopen');
+		ModalMotion(){//モーダルを閉じる時最初の状態に戻す。
+            this.sstime = "09";
+			this.ssminute = "00";
+			this.sendtime = "10";
+			this.sendminute = "00";
+            document.getElementById('ScheduleRebaseModalcover')!.classList.add('ScheduleRebaseModalcoverclose');
+            document.getElementById('ScheduleRebaseModalcover')!.classList.remove('ScheduleRebaseModalcoveropen');
+            document.getElementById('ScheduleRebaseModal')!.classList.add('ScheduleRebaseModalclose');
+            document.getElementById('ScheduleRebaseModal')!.classList.remove('ScheduleRebaseModalopen');
+            document.querySelectorAll('.Scaccordion').forEach((obj) => {
+                obj.classList.add('zm1');
+                obj.classList.remove('z1');
+                obj.classList.add('menuhide');
+                obj.classList.remove('menushow');
+            });
+		},
+		TmodalMotion(e:any){
+			var t = e.target as HTMLElement;
+			t.nextElementSibling!.classList.toggle("z1");
+			t.nextElementSibling!.classList.toggle("menushow");
+			t.nextElementSibling!.classList.toggle("zm1");
+			t.nextElementSibling!.classList.toggle("menuhide");
+		},
+		TmodalParentMotion(e:any){
+			var t = e.target as HTMLElement;
+			t.closest('.Scaccordion')!.classList.toggle('z1');
+			t.closest('.Scaccordion')!.classList.toggle('menushow');
+			t.closest('.Scaccordion')!.classList.toggle('zm1');
+			t.closest('.Scaccordion')!.classList.toggle('menuhide');
+		},
+        ReturnDMFormat(str:string){
+            if (str.toString().length == 1) {
+                str = "0" + str;
+            }
+            return str;
+        },
+		OpenScheduleStartTime(e:any){
+			this.TmodalMotion(e);
+		},
+		OpenScheduleStartMinute(e:any){
+			this.TmodalMotion(e);
+		},
+		OpenScheduleEndTime(e:any){
+			this.TmodalMotion(e);
+		},
+		OpenScheduleEndMinute(e:any){
+			this.TmodalMotion(e);
+		},
+
+		GetSStartTime(e:any){
+			var t = e.target as HTMLElement;
+            this.sstime = t.innerText;
+			this.TmodalParentMotion(e);
+		},
+		GetSStartMinute(e:any){
+			var t = e.target as HTMLElement;
+			this.ssminute = t.innerText;
+			this.TmodalParentMotion(e);
+		},
+		GetSendTime(e:any){
+			var t = e.target as HTMLElement;
+			this.sendtime = t.innerText;
+			this.TmodalParentMotion(e);
+		},
+		GetSendMinute(e:any){
+			var t = e.target as HTMLElement;
+			this.sendminute = t.innerText;
+			this.TmodalParentMotion(e);
 		}
 	}
 });

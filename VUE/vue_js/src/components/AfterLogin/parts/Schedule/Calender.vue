@@ -2,7 +2,7 @@
     <div id="ScheduleWrapper" :class="`position-relative ${scheduleborder}`">
     <LoginIconview class="calenderloading w-100 d-inline-block text-center" v-if="loadingstatus == true" />
         <div class="myschedulearea" id="MyScheduleArea"></div>
-        <div id="UserScheduleArea" :class="loadstatus">
+        <div id="UserScheduleArea" :class="`schedulearea ${loadstatus}`">
             <div
             v-for="(sdata, skey) in ScheduleData" :key="skey"
             >
@@ -32,6 +32,7 @@
 
                         <small
                         v-for="edata in sdata" :key="edata"
+                        class="d-inline-block"
                         >
                             <span
                             v-if="
@@ -40,23 +41,26 @@
                             ==
                             `${MDFI(date, i-1).getFullYear()}-${ReturnDMFormat(new Date(MDFI(date, i-1)).getMonth()+1)}-${ReturnDMFormat(new Date(MDFI(date, i-1)).getDate())}`
                             "
-                            class="editsceduleicon cursor ml-1 tooltip-left" data-tooltip="スケジュールを編集する"
-                            @click="RebaseModalMotion"
+                            class="editsceduleicon cursor ml-1 tooltip-left w-100 d-inline-block"
                             >
                                 {{edata.title}}
                                 <img
                                 src="@/assets/orangepenicon.png"
                                 class="rebaseschedule orangepenicon"
-                                :data-id="`${edata.id}`"
+                                :data-buttonuserid="`${edata.id}`"
                                 :data-mailaddress="`${edata.mail_address}`"
                                 :data-createdat="`${edata.created_at}`"
                                 :data-scheduleid="`${edata.scheduleid}`"
                                 :data-title="`${edata.title}`"
-                                data-description=""
+                                :data-description="`${edata.description}`"
+                                :data-setscheduleinfo="`${new Date(MDFI(date, i-1)).getFullYear()}/${new Date(MDFI(date, i-1)).getMonth()+1}/${new Date(MDFI(date, i-1)).getDate()}`"
                                 :data-starttime="`${edata.starttime}`"
                                 :data-endtime="`${edata.endtime}`"
+                                :data-taskid="`${edata.taskid}`"
                                 data-groupid=""
-                                :data-taskid="`${edata.taskid}`">
+                                data-tooltip="スケジュールを編集する"
+                                @click="ModalMotion"
+                                >
                             </span>
 
                         </small>
@@ -66,11 +70,10 @@
 
         </div>
     </div>
-    <ScheduleAddModal
-    :AddScheduleData="AddScheduleData"
-    />
-    <ScheduleRebaseModal
-    :RebaseScheduleData="RebaseScheduleData"
+
+    <ScheduleModal
+    :ScheduleTagData="ScheduleTagData"
+    :modaltitle="modaltitle"
     />
 </template>
 
@@ -79,8 +82,7 @@ import { defineComponent, createApp } from 'vue';
 import http from "@/views/ts/http";
 import {GetData} from "../../../../http";
 import LoginIconview from '@/components/common/LoadingIcon.vue';
-import ScheduleAddModal from '@/components/AfterLogin/parts/modal/ScheduleAddModal.vue';
-import ScheduleRebaseModal from '@/components/AfterLogin/parts/modal/ScheduleRebaseModal.vue';
+import ScheduleModal from '@/components/AfterLogin/parts/modal/ScheduleModal.vue';
 import {PageNation} from "../../../../Pagenation";
 
 export default defineComponent({
@@ -95,53 +97,47 @@ export default defineComponent({
 	},
     data() {
         return {
-            AddScheduleData:{},
-            RebaseScheduleData:{}
+            ScheduleTagData:{},
+            modaltitle:""
         };
     },
     components: {
         LoginIconview,
-        ScheduleAddModal,
-        ScheduleRebaseModal
+		ScheduleModal
     },
     methods:{
-		RebaseSchedule(){
-            console.log("param");
-		},
-		MDFI(obj:any, plus:number){
-			//一旦変数に入れる。
-			var Dobj = new Date(obj);
-			var returnobj = new Date(Dobj.setDate(Dobj.getDate() + plus));
-			return returnobj;
-		},
+        ModalMotion(e:any){
+            this.ScheduleTagData = {
+                "startdate":e.target.dataset.setscheduleinfo,
+                "userid":e.target.dataset.buttonuserid,
+                "mailaddress":e.target.dataset.mailaddress,
+                "createdat":e.target.dataset.createdat,
+                "scheduleid":e.target.dataset.scheduleid,
+                "title":e.target.dataset.title,
+                "description":e.target.dataset.description,
+                "setscheduleinfo":e.target.dataset.setscheduleinfo,
+                "starttime":e.target.dataset.starttime,
+                "endtime":e.target.dataset.endtime,
+                "taskid":e.target.dataset.taskid
+            }
+            this.modaltitle = e.target.dataset.tooltip;
+            document.getElementById('ScheduleModalcover')!.classList.remove('ScheduleModalcoverclose');
+            document.getElementById('ScheduleModalcover')!.classList.add('ScheduleModalcoveropen');
+            document.getElementById('ScheduleModal')!.classList.remove('ScheduleModalclose');
+            document.getElementById('ScheduleModal')!.classList.add('ScheduleModalopen');
+        },
+        MDFI(obj:any, plus:number){
+            //一旦変数に入れる。
+            const Dobj = new Date(obj);
+            const returnobj = new Date(Dobj.setDate(Dobj.getDate() + plus));
+            return returnobj;
+        },
         ReturnDMFormat(str:string){
             if (str.toString().length == 1) {
                 str = "0" + str;
             }
             return str;
-        },
-        ModalMotion(e:any){
-            var t = e.target as HTMLElement;
-            this.AddScheduleData = {
-                "startdate":t.dataset.setscheduleinfo,
-                "userid":t.dataset.buttonuserid
-            }
-            document.getElementById('ScheduleAddModalcover')!.classList.toggle('ScheduleAddModalcoverclose');
-            document.getElementById('ScheduleAddModalcover')!.classList.toggle('ScheduleAddModalcoveropen');
-            document.getElementById('ScheduleAddModal')!.classList.toggle('ScheduleAddModalclose');
-            document.getElementById('ScheduleAddModal')!.classList.toggle('ScheduleAddModalopen');
-        },
-        RebaseModalMotion(e:any){
-            var t = e.target as HTMLElement;
-            this.RebaseScheduleData = {
-                "startdate":t.dataset.setscheduleinfo,
-                "userid":t.dataset.buttonuserid
-            }
-            document.getElementById('ScheduleRebaseModalcover')!.classList.toggle('ScheduleRebaseModalcoverclose');
-            document.getElementById('ScheduleRebaseModalcover')!.classList.toggle('ScheduleRebaseModalcoveropen');
-            document.getElementById('ScheduleRebaseModal')!.classList.toggle('ScheduleRebaseModalclose');
-            document.getElementById('ScheduleRebaseModal')!.classList.toggle('ScheduleRebaseModalopen');
-        },
+        }
     }
 });
 </script>

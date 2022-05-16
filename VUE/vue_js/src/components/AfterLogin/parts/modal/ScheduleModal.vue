@@ -1,7 +1,8 @@
 <template>
-    <div id="ScheduleAddModalcover" class="position-fixed cursor ScheduleAddModalcoverclose"
+{{ScheduleTagData}}
+    <div id="ScheduleModalcover" class="position-fixed cursor ScheduleModalcoverclose"
 	@click="ModalMotion"></div>
-    <div id="ScheduleAddModal" class="position-fixed pr-0 mb-0 bg-white ScheduleAddModalclose">
+    <div id="ScheduleModal" class="position-fixed pr-0 mb-0 bg-white ScheduleModalclose">
 		<div class="modalinnerwrapper overflow-hidden">
 			<div class="modalinnercover d-flex position-relative" id="">
 				<div class="Modal1 col-12 p-3 bg-white" id="">
@@ -9,19 +10,19 @@
 						<div class="col-12 pr-0 pl-0 bg-white" id="">
 							<div class="">
 								<div class="w-100 d-inline-block text-center">
-									<h3 class="notificationtitle font-weight-bold pt-4 pb-2 mb-0 m-auto" id="">スケジュールを追加する</h3>
+									<h3 class="notificationtitle font-weight-bold pt-4 pb-2 mb-0 m-auto" id="">{{modaltitle}}</h3>
 								</div>
 							</div>
 							<div class="m-auto" id="">
 								<input
 								name="mainid"
 								type="hidden"
-								:value="AddScheduleData.userid">
+								:value="ScheduleTagData.userid">
 								<input
 								name="starttime"
 								type="hidden"
-								:value="AddScheduleData.startdate">
-								<p class="col-12">{{AddScheduleData.startdate}}</p>
+								:value="ScheduleTagData.startdate">
+								<p class="col-12">{{ScheduleTagData.startdate}}</p>
 								<div class="col-12 d-flex">
 									<img
 									class="searchicon cursor p-1 mr-3 tooltip-top"
@@ -115,15 +116,26 @@
 									<input
 									name="userid"
 									type="hidden"
-									:value="AddScheduleData.startdate">
+									:value="ScheduleTagData.startdate">
 									<input
 									name="startdate"
 									type="hidden"
-									:value="AddScheduleData.startdate">
+									:value="ScheduleTagData.startdate">
 								</div>
 								<h5 class="mainfontcolor col-12 pt-4 pb-1 mb-2">メンバーを追加する
 								<small class="red" id=""></small></h5>
-								<div class="col-12 mb-0 d-inline-block" id=""></div>
+<!-- クリックされるごとに追加される -->
+                                <div id="AddedMember" class="col-12 mb-0 d-inline-block">
+                                    <div class="addeduserbuton d-inline-block float-left pt-1 pb-1 pr-2 pl-2 text-white mb-2 mr-2 cursor br5px" data-addeduserid="16">
+                                        名前1
+                                        <input type="hidden" name="UserToAdd[]" value="16">
+                                    </div>
+                                    <div class="addeduserbuton d-inline-block float-left pt-1 pb-1 pr-2 pl-2 text-white mb-2 mr-2 cursor br5px" data-addeduserid="26">
+                                        名前1
+                                        <input type="hidden" name="UserToAdd[]" value="26">
+                                    </div>
+                                </div>
+<!-- クリックされるごとに追加される -->
 								<div class=" col-md-12 m-auto pb-3 pl-0 pr-0 bg-white d-flex">
 									<div class="col-12 pb-1 m-auto" id="">
 										<div class=" w-100 d-inline-block pb-3 pl-0 pr-0 bg-white">
@@ -135,7 +147,7 @@
 														@focus="SearchResultFocus"
 														@blur="SearchResultBlur"
 														class="w-100 searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none float-left pl-2"
-														:data-userid="AddScheduleData.userid"
+														:data-userid="ScheduleTagData.userid"
 														id=""
 														name="addgroupmember"
 														placeholder="ユーザー名を入力してください。"
@@ -144,7 +156,7 @@
 												</div>
 											</div>
 											<div id="" :class="`searchresultarea ${searchareashow}`">
-												<LoginIconview v-if="loadingstatus == true" class="scheduleaddloading" />
+												<LoginIconview v-if="loadingstatus == true" class="Scheduleloading" />
 												<div
 												v-for="EUobj in searchuser" :key="EUobj.id"
 												:data-id="EUobj.id"
@@ -157,6 +169,19 @@
 										</div>
 									</div>
 								</div>
+<!-- 条件分岐 -->
+                                <h5 class="mainfontcolor col-12 pt-4 pb-1 mb-2">既に追加されたメンバー</h5>
+                                <div id="" class="col-12 mb-0 d-inline-block">
+                                    <div class="alreadyadded addeduserbuton d-inline-block float-left pt-1 pb-1 pr-2 pl-2 text-white mb-2 mr-2 cursor br5px" data-addeduserid="6">
+                                        名前3
+                                        <input type="hidden" name="UserToAdd[]" value="8">
+                                    </div>
+                                    <div class="alreadyadded addeduserbuton d-inline-block float-left pt-1 pb-1 pr-2 pl-2 text-white mb-2 mr-2 cursor br5px" data-addeduserid="6">
+                                        名前5
+                                        <input type="hidden" name="UserToAdd[]" value="10">
+                                    </div>
+                                </div>
+<!-- 条件分岐 -->
 							</div>
 						</div>
 					</div>
@@ -184,7 +209,7 @@
                 <div class=" modalfinishbuttonwrapper col-12 mb-0 pt-0 pb-0 pl-0 pr-0 bg-white">
                     <div class="bgstripe45deg  col-12 m-auto pt-0 pb-0 pt-md-3 pb-md-3 pl-0 pr-0">
                         <div class="buttonarea d-flex m-auto">
-                            <div id="ScheduleAddModalclosebutton" class="buttonicon margin-right-two p-2">
+                            <div id="ScheduleModalclosebutton" class="buttonicon margin-right-two p-2">
                                 <div class="w-100 d-inline-block text-center text-white font-weight-bold cursor br-50 bordergray bg-white">
                                     <img
 									@click="ModalMotion"
@@ -232,7 +257,7 @@ import {GetData} from "../../../../http";
 import LoginIconview from '@/components/common/LoadingIcon.vue';
 
 export default defineComponent({
-    name: 'ScheduleAddModal',
+    name: 'ScheduleModal',
     data() {
         return {
             sstime:"09",
@@ -249,14 +274,15 @@ export default defineComponent({
         };
     },
 	props:{
-		AddScheduleData:Object
+		ScheduleTagData:Object,
+		modaltitle:String
 	},
 	components:{
 		LoginIconview
 	},
 	methods:{
         addfriends_modal_close(){
-            this.$emit('close-addfriends-modal-class', "ScheduleAddModalclose");
+            this.$emit('close-addfriends-modal-class', "ScheduleModalclose");
 		},
 		ModalMotion(){
             this.sstime = "09";
@@ -266,10 +292,10 @@ export default defineComponent({
 			//this.addscheduletitle = "";
 			this.addscheduledescription = "";
 			this.addmember = {};
-            document.getElementById('ScheduleAddModalcover')!.classList.add('ScheduleAddModalcoverclose');
-            document.getElementById('ScheduleAddModalcover')!.classList.remove('ScheduleAddModalcoveropen');
-            document.getElementById('ScheduleAddModal')!.classList.add('ScheduleAddModalclose');
-            document.getElementById('ScheduleAddModal')!.classList.remove('ScheduleAddModalopen');
+            document.getElementById('ScheduleModalcover')!.classList.add('ScheduleModalcoverclose');
+            document.getElementById('ScheduleModalcover')!.classList.remove('ScheduleModalcoveropen');
+            document.getElementById('ScheduleModal')!.classList.add('ScheduleModalclose');
+            document.getElementById('ScheduleModal')!.classList.remove('ScheduleModalopen');
             document.querySelectorAll('.Scaccordion').forEach((obj) => {
                 obj.classList.add('zm1');
                 obj.classList.remove('z1');
@@ -375,80 +401,80 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-#ScheduleAddModal{
+#ScheduleModal{
     height:calc(100vh - 4rem);
 }
-.ScheduleAddModalcoveropen,
-.ScheduleAddModalcoverclose{
+.ScheduleModalcoveropen,
+.ScheduleModalcoverclose{
     height: 100%;
 }
-.ScheduleAddModalcoveropen,
-.ScheduleAddModalcoverclose{
+.ScheduleModalcoveropen,
+.ScheduleModalcoverclose{
 	width:100%;
 }
-.ScheduleAddModalcoveropen,
-.ScheduleAddModalcoverclose{
+.ScheduleModalcoveropen,
+.ScheduleModalcoverclose{
     background:rgb(0, 0, 0, 0.5);
 }
-.ScheduleAddModalclose,
-.ScheduleAddModalcoverclose{
+.ScheduleModalclose,
+.ScheduleModalcoverclose{
     opacity: 0;
 }
-.ScheduleAddModalclose,
-.ScheduleAddModalcoverclose{
+.ScheduleModalclose,
+.ScheduleModalcoverclose{
     top: 100%;
 }
-.ScheduleAddModalclose,
-.ScheduleAddModalcoveropen,
-.ScheduleAddModalcoverclose{
+.ScheduleModalclose,
+.ScheduleModalcoveropen,
+.ScheduleModalcoverclose{
     left: 0;
 }
-#ScheduleAddModal::-webkit-scrollbar-thumb{
+#ScheduleModal::-webkit-scrollbar-thumb{
     box-shadow: none;
 }
-#ScheduleAddModal::-webkit-scrollbar-track{
+#ScheduleModal::-webkit-scrollbar-track{
     border: none;
 }
-#ScheduleAddModal::-webkit-scrollbar-thumb{
+#ScheduleModal::-webkit-scrollbar-thumb{
     background: #aaa;
 }
-#ScheduleAddModal::-webkit-scrollbar-thumb,
-#ScheduleAddModal::-webkit-scrollbar-track{
+#ScheduleModal::-webkit-scrollbar-thumb,
+#ScheduleModal::-webkit-scrollbar-track{
     border-radius: 5px;
 }
-.ScheduleAddModalclose{
+.ScheduleModalclose{
     height: 100vh;
 }
-#ScheduleAddModal::-webkit-scrollbar{
+#ScheduleModal::-webkit-scrollbar{
     width: 12px;
 }
-.ScheduleAddModalcoveropen{
+.ScheduleModalcoveropen{
     opacity: 1;
 }
-.ScheduleAddModalclose,
-.ScheduleAddModalcoverclose{
+.ScheduleModalclose,
+.ScheduleModalcoverclose{
     z-index: 0;
 }
-.ScheduleAddModalcoveropen{
+.ScheduleModalcoveropen{
     z-index: 6;
 }
-.ScheduleAddModalopen{
+.ScheduleModalopen{
     z-index: 7;
 }
-#ScheduleAddModal{
+#ScheduleModal{
     overflow-y: scroll;
 }
-.ScheduleAddModalcoveropen{
+.ScheduleModalcoveropen{
     top:0;
 }
-.ScheduleAddModalcoveropen,
-.ScheduleAddModalcoverclose{
+.ScheduleModalcoveropen,
+.ScheduleModalcoverclose{
     position: fixed;
 }
-.ScheduleAddModalopen,
-.ScheduleAddModalclose,
-.ScheduleAddModalcoveropen,
-.ScheduleAddModalcoverclose{
+.ScheduleModalopen,
+.ScheduleModalclose,
+.ScheduleModalcoveropen,
+.ScheduleModalcoverclose{
     transition: all 0.25s;
 }
 #modalmenuwapper{
@@ -458,16 +484,16 @@ export default defineComponent({
     left: calc((100% - 45rem) / 2);
     width: 45rem;
 }
-.scheduleaddloading{
+.Scheduleloading{
     transform:scale(0.7);
 }
 @media (min-width: 768px){
-    .ScheduleAddModalopen,
-    .ScheduleAddModalclose{
+    .ScheduleModalopen,
+    .ScheduleModalclose{
         left: calc((100% - 45rem) / 2);
         width: 45rem;
     }
-    .ScheduleAddModalopen{
+    .ScheduleModalopen{
         top: 2rem;
     }
 	.searchresultarea{
@@ -478,12 +504,12 @@ export default defineComponent({
 	}
 }
 @media (max-width: 768px){
-    .ScheduleAddModalopen{
+    .ScheduleModalopen{
         top: 2rem;
     }
 	#modalmenuwapper,
-    .ScheduleAddModalopen,
-    .ScheduleAddModalclose{
+    .ScheduleModalopen,
+    .ScheduleModalclose{
         width: 90%;
         left: 5%;
     }

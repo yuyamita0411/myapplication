@@ -336,6 +336,12 @@ textarea::-webkit-scrollbar-track,
 }
 /*padding*/
 
+/*margin*/
+div[class^="Modal"]{
+    margin-bottom: 4rem;
+}
+/*margin*/
+
 /*letter-spacing*/
 .p-news-list__item__data__date{
     letter-spacing: 1px;
@@ -519,6 +525,7 @@ textarea{
 /*opacity*/
 
 /*z-index*/
+.zm1,
 .logoutmodalcover,
 .logoutmodal,
 .sbhidden,
@@ -527,6 +534,7 @@ textarea{
 .loadinghidden{
     z-index:-1;
 }
+.z1,
 .scheduleinnerselector,
 .p-news-list__item__data:after,
 .LoginTitle,
@@ -568,9 +576,6 @@ textarea,
     overflow: unset;
 }
 
-div[class^="Modal"]{
-    overflow-x:hidden;
-}
 #sidebar{
     overflow-x: scroll;
 }

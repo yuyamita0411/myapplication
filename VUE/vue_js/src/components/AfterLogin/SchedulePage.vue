@@ -133,6 +133,8 @@
                                 :loadingstatus = "loadingstatus"
                                 :loadstatus = "loadstatus"
 								:ScheduleData="ScheduleData"
+								:DweekArr="DweekArr"
+								:Daycolor="Daycolor"
                                 />
                                 <!-- コンポーネント化 -->
 								
@@ -189,9 +191,6 @@ export default defineComponent({
 	components: {
 		CalenderView,
 		SPCalenderView
-	},
-	props: {
-		msg: String
 	},
 	methods:{
 		//クリックイベントはクラス内の変数 this.date に足し引きしていく。
