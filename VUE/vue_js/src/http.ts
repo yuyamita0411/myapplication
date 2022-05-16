@@ -18,16 +18,17 @@ export class GetData {
         });
     }
     async Postcommon(url:string, data:any, callback:any): Promise<any> {
-        return http.get(
+        return http.post(
             url,
             {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('access_token')!}`,
-                },
-                params: data
-            }
+                }
+            },
+            data
         )
         .then(response => {
+            console.log(response);
             callback(response);
         })
         .catch(error => {

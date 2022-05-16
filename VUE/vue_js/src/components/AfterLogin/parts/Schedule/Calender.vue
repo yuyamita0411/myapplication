@@ -41,6 +41,7 @@
                             ==
                             `${MDFI(date, i-1).getFullYear()}-${ReturnDMFormat(new Date(MDFI(date, i-1)).getMonth()+1)}-${ReturnDMFormat(new Date(MDFI(date, i-1)).getDate())}`
                             "
+                            data-tooltip="スケジュールを編集する"
                             class="editsceduleicon cursor ml-1 tooltip-left w-100 d-inline-block"
                             >
                                 {{edata.title}}

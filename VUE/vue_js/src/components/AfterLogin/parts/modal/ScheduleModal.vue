@@ -442,7 +442,7 @@ export default defineComponent({
                     "Sstarttime":`${this.sstime}:${this.ssminute}`,
                     "Sendtime":`${this.sendtime}:${this.sendminute}`,
                     "mainid":Number(this.ScheduleTagData.userid),
-                    "UserToAdd":this.addmember
+                    "UserToAdd":this.addmemberid
                 },
                 (res:any) => {
                     console.log(res);
