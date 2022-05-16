@@ -124,7 +124,8 @@
 								</div>
 								<h5 class="mainfontcolor col-12 pt-4 pb-1 mb-2">
                                 メンバーを追加する
-								<small class="red" id=""></small></h5>
+								<small class="red" id="">
+                                </small></h5>
 <!-- クリックされるごとに追加される -->
                                 <div id="AddedMember" class="col-12 mb-0 d-inline-block">
                                     <div
@@ -155,7 +156,9 @@
 														id=""
 														name="addgroupmember"
 														placeholder="ユーザー名を入力してください。"
-														type="text">
+														type="text"
+                                                        :value="searchuserval"
+                                                        >
 													</div>
 												</div>
 											</div>
@@ -277,9 +280,11 @@ export default defineComponent({
 			loadingstatus:false,
             alreadyaddedmember:[],
             addmember:[],
-			addmemberid:[]
+			addmemberid:[],
+            searchuserval:""
         };
     },
+
 	props:{
 		ScheduleTagData:Object,
 		modaltitle:String
@@ -300,6 +305,8 @@ export default defineComponent({
 			this.addscheduledescription = "";
 			this.addmember = [];
 			this.addmemberid = [];
+			this.searchuser = [];
+            this.searchuserval = "";
             document.getElementById('ScheduleModalcover')!.classList.add('ScheduleModalcoverclose');
             document.getElementById('ScheduleModalcover')!.classList.remove('ScheduleModalcoveropen');
             document.getElementById('ScheduleModal')!.classList.add('ScheduleModalclose');
@@ -379,6 +386,7 @@ export default defineComponent({
             const http = new GetData();
             this.loadingstatus = true;
             this.loadstatus = 'op0';
+            this.searchuserval = t.value;
             http.common(
                 "/api/schedule/search",
                 {"addgroupmember": t.value},
@@ -422,9 +430,24 @@ export default defineComponent({
             this.addmemberid = newarrforcheck;
         },
 		AddSchedule(){
+            //バリデーションの処理
 			//バックエンドにデータを送る
-			//バリデーションの処理
-			console.log("senddata!");
+            const http = new GetData();
+            http.Postcommon(
+                "/api/schedule/add",
+                {
+                    "schedulename":this.addscheduletitle,
+                    "scheduledisc":this.addscheduledescription,
+                    "starttime":this.ScheduleTagData.startdate,
+                    "Sstarttime":`${this.sstime}:${this.ssminute}`,
+                    "Sendtime":`${this.sendtime}:${this.sendminute}`,
+                    "mainid":Number(this.ScheduleTagData.userid),
+                    "UserToAdd":this.addmember
+                },
+                (res:any) => {
+                    console.log(res);
+                }
+            );
 		},
 	}
 });

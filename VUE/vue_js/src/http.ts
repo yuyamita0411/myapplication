@@ -17,5 +17,21 @@ export class GetData {
             console.log(error);
         });
     }
-
+    async Postcommon(url:string, data:any, callback:any): Promise<any> {
+        return http.get(
+            url,
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('access_token')!}`,
+                },
+                params: data
+            }
+        )
+        .then(response => {
+            callback(response);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }
 }

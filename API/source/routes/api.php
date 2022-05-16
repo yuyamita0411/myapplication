@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/schedule', [App\Http\Controllers\API\General\ScheduleController::class, 'index'])->name('schedule');//ok
     Route::get('/schedule/me/get', [App\Http\Controllers\API\General\ScheduleController::class, 'GetMySchedule'])->name('schedule.me.get');//ok
     Route::get('/schedule/search/usernow', [App\Http\API\Controllers\General\ScheduleController::class, 'SearchScheduleUserNow'])->name('schedule.search.usernow');//ok
-    Route::post('/schedule/add', [App\Http\Controllers\API\General\ScheduleController::class, 'AddSchedule'])->name('schedule.schedule.add');//ok
+    Route::get('/schedule/add', [App\Http\Controllers\API\General\ScheduleController::class, 'AddSchedule'])->name('schedule.schedule.add');//ok
     Route::get('/schedule/search', [App\Http\Controllers\API\General\ScheduleController::class, 'search'])->name('schedule.schedule.search');//ok
     Route::post('/schedule/rebase', [App\Http\Controllers\API\General\ScheduleController::class, 'RebaseSchedule'])->name('schedule.schedule.rebase');//ok
     Route::get('/schedule/get/id', [App\Http\Controllers\API\General\ScheduleController::class, 'GetScheduleFromId'])->name('schedule.schedule.fromid');//ok
