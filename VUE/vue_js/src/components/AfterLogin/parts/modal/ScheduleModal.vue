@@ -1,5 +1,4 @@
 <template>
-{{ScheduleTagData}}
     <div id="ScheduleModalcover" class="position-fixed cursor ScheduleModalcoverclose"
 	@click="ModalMotion"></div>
     <div id="ScheduleModal" class="position-fixed pr-0 mb-0 bg-white ScheduleModalclose">
@@ -123,16 +122,20 @@
 									:value="ScheduleTagData.startdate">
 								</div>
 								<h5 class="mainfontcolor col-12 pt-4 pb-1 mb-2">メンバーを追加する
+                                {{addmemberid}}
 								<small class="red" id=""></small></h5>
 <!-- クリックされるごとに追加される -->
                                 <div id="AddedMember" class="col-12 mb-0 d-inline-block">
-                                    <div class="addeduserbuton d-inline-block float-left pt-1 pb-1 pr-2 pl-2 text-white mb-2 mr-2 cursor br5px" data-addeduserid="16">
-                                        名前1
-                                        <input type="hidden" name="UserToAdd[]" value="16">
-                                    </div>
-                                    <div class="addeduserbuton d-inline-block float-left pt-1 pb-1 pr-2 pl-2 text-white mb-2 mr-2 cursor br5px" data-addeduserid="26">
-                                        名前1
-                                        <input type="hidden" name="UserToAdd[]" value="26">
+                                    <div
+                                    @click="DeleteUserFromResult"
+                                    v-for="eachadded in addmember" :key="eachadded.id"
+                                    class="addeduserbuton d-inline-block float-left pt-1 pb-1 pr-2 pl-2 text-white mb-2 mr-2 cursor br5px"
+                                    :data-addeduserid="eachadded.id">
+                                        {{eachadded.name}}
+                                        <input
+                                        type="hidden"
+                                        name="UserToAdd[]"
+                                        :value="eachadded.id">
                                     </div>
                                 </div>
 <!-- クリックされるごとに追加される -->
@@ -158,11 +161,12 @@
 											<div id="" :class="`searchresultarea ${searchareashow}`">
 												<LoginIconview v-if="loadingstatus == true" class="Scheduleloading" />
 												<div
+                                                @click="AddUserFromResult"
 												v-for="EUobj in searchuser" :key="EUobj.id"
 												:data-id="EUobj.id"
 												:data-name="EUobj.name"
 												:data-mailaddress="EUobj.mail_address"
-												:class="`${loadstatus} adduserbuton d-inline-block float-left pt-1 pb-1 pr-2 pl-2 text-white mb-2 mr-2 cursor br5px`">
+												:class="`${loadstatus} ${CheckIfisAdded(EUobj.id, addmemberid)} d-inline-block float-left pt-1 pb-1 pr-2 pl-2 text-white mb-2 mr-2 cursor br5px`">
 												{{EUobj.name}}
 												</div>
 											</div>
@@ -170,15 +174,15 @@
 									</div>
 								</div>
 <!-- 条件分岐 -->
-                                <h5 class="mainfontcolor col-12 pt-4 pb-1 mb-2">既に追加されたメンバー</h5>
-                                <div id="" class="col-12 mb-0 d-inline-block">
-                                    <div class="alreadyadded addeduserbuton d-inline-block float-left pt-1 pb-1 pr-2 pl-2 text-white mb-2 mr-2 cursor br5px" data-addeduserid="6">
-                                        名前3
-                                        <input type="hidden" name="UserToAdd[]" value="8">
-                                    </div>
-                                    <div class="alreadyadded addeduserbuton d-inline-block float-left pt-1 pb-1 pr-2 pl-2 text-white mb-2 mr-2 cursor br5px" data-addeduserid="6">
-                                        名前5
-                                        <input type="hidden" name="UserToAdd[]" value="10">
+                                <div
+                                v-if="ScheduleTagData.alreadyaddeduser"
+                                id="" class="col-12 mb-0 d-inline-block">
+                                    <h5 class="mainfontcolor w-100 pt-4 pb-1 mb-2">既に追加されたメンバー</h5>
+                                    <div
+                                    v-for="eachuserinfo in ScheduleTagData.alreadyaddeduser" :key="eachuserinfo.id"
+                                    class="alreadyadded addeduserbuton d-inline-block float-left pt-1 pb-1 pr-2 pl-2 text-white mb-2 mr-2 cursor br5px" data-addeduserid="6">
+                                        {{eachuserinfo.name}}
+                                        <input type="hidden" name="UserToAdd[]" :value="eachuserinfo.id">
                                     </div>
                                 </div>
 <!-- 条件分岐 -->
@@ -270,7 +274,9 @@ export default defineComponent({
 			loadstatus:"op0",
 			searchareashow:"",
 			loadingstatus:false,
-			addmember:{}
+            alreadyaddedmember:[],
+            addmember:[],
+			addmemberid:[]
         };
     },
 	props:{
@@ -291,7 +297,8 @@ export default defineComponent({
 			this.sendminute = "00";
 			//this.addscheduletitle = "";
 			this.addscheduledescription = "";
-			this.addmember = {};
+			this.addmember = [];
+			this.addmemberid = [];
             document.getElementById('ScheduleModalcover')!.classList.add('ScheduleModalcoverclose');
             document.getElementById('ScheduleModalcover')!.classList.remove('ScheduleModalcoveropen');
             document.getElementById('ScheduleModal')!.classList.add('ScheduleModalclose');
@@ -376,7 +383,6 @@ export default defineComponent({
                 {"addgroupmember": t.value},
                 (res:any) => {
 
-					console.log(res);
 					this.searchuser = res.data;
 
                     //読み込みが完全に終わってからカバーを外す
@@ -391,11 +397,42 @@ export default defineComponent({
 		SearchResultBlur(){
 			this.searchareashow = "";
 		},
+        AddUserFromResult(e:any){
+            //既に追加されたユーザーは追加できないようにする処理
+            if(this.addmemberid.indexOf(e.target.dataset.id) == -1){
+                this.addmember.push({
+                    "id":e.target.dataset.id,
+                    "name":e.target.dataset.name,
+                    "mailaddress":e.target.dataset.mailaddress
+                });
+                //追加済みか否かを後ほどチェックするため。
+                this.addmemberid.push(e.target.dataset.id);
+            }
+        },
+        DeleteUserFromResult(e:any){
+            var newarr = [];
+            var newarrforcheck = [];
+            this.addmember.forEach((ob) => {
+                if(e.target.dataset.addeduserid != ob.id){
+                    newarr.push(ob);
+                    newarrforcheck.push(ob.id);
+                }
+            });
+            this.addmember = newarr;
+            this.addmemberid = newarrforcheck;
+        },
+        CheckIfisAdded(str:string, checkarr:[string]){
+            var addedclass = "addeduserbuton";
+            if(checkarr.indexOf(str) != -1){
+                addedclass = "inportbutton";
+            }
+            return addedclass;
+        },
 		AddSchedule(){
 			//バックエンドにデータを送る
 			//バリデーションの処理
 			console.log("senddata!");
-		}
+		},
 	}
 });
 </script>

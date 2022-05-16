@@ -119,8 +119,35 @@ export default defineComponent({
                 "starttime":e.target.dataset.starttime,
                 "endtime":e.target.dataset.endtime,
                 "taskid":e.target.dataset.taskid
-            }
+            };
+
             this.modaltitle = e.target.dataset.tooltip;
+
+            if(e.target.dataset.scheduleid){
+                const http = new GetData();
+
+                http.common(
+                    "/api/schedule/get/id",
+                    {"scheduleid":e.target.dataset.scheduleid},
+                    (res:any) => {
+                        this.ScheduleTagData = {
+                            "startdate":e.target.dataset.setscheduleinfo,
+                            "userid":e.target.dataset.buttonuserid,
+                            "mailaddress":e.target.dataset.mailaddress,
+                            "createdat":e.target.dataset.createdat,
+                            "scheduleid":e.target.dataset.scheduleid,
+                            "title":e.target.dataset.title,
+                            "description":e.target.dataset.description,
+                            "setscheduleinfo":e.target.dataset.setscheduleinfo,
+                            "starttime":e.target.dataset.starttime,
+                            "endtime":e.target.dataset.endtime,
+                            "taskid":e.target.dataset.taskid,
+                            "alreadyaddeduser":res.data
+                        };
+                    }
+                );
+            }
+
             document.getElementById('ScheduleModalcover')!.classList.remove('ScheduleModalcoverclose');
             document.getElementById('ScheduleModalcover')!.classList.add('ScheduleModalcoveropen');
             document.getElementById('ScheduleModal')!.classList.remove('ScheduleModalclose');
@@ -143,18 +170,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-#notificationarea{
-    height:40vh;
-    overflow:scroll;
-}
 #loadingarea{
     left:50%;
 }
 #loadingarea{
     top:35%;
-}
-.newestarticle{
-    height:2.5rem;
 }
 @media (min-width: 768px) {
 	.scheduleborder {
