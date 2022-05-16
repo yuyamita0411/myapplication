@@ -1,6 +1,7 @@
 <template>
     <div id="ScheduleModalcover" class="position-fixed cursor ScheduleModalcoverclose"
-	@click="ModalMotion"></div>
+	@click="ModalMotion">
+    </div>
     <div id="ScheduleModal" class="position-fixed pr-0 mb-0 bg-white ScheduleModalclose">
 		<div class="modalinnerwrapper overflow-hidden">
 			<div class="modalinnercover d-flex position-relative" id="">
@@ -121,8 +122,8 @@
 									type="hidden"
 									:value="ScheduleTagData.startdate">
 								</div>
-								<h5 class="mainfontcolor col-12 pt-4 pb-1 mb-2">メンバーを追加する
-                                {{addmemberid}}
+								<h5 class="mainfontcolor col-12 pt-4 pb-1 mb-2">
+                                メンバーを追加する
 								<small class="red" id=""></small></h5>
 <!-- クリックされるごとに追加される -->
                                 <div id="AddedMember" class="col-12 mb-0 d-inline-block">
@@ -166,7 +167,7 @@
 												:data-id="EUobj.id"
 												:data-name="EUobj.name"
 												:data-mailaddress="EUobj.mail_address"
-												:class="`${loadstatus} ${CheckIfisAdded(EUobj.id, addmemberid)} d-inline-block float-left pt-1 pb-1 pr-2 pl-2 text-white mb-2 mr-2 cursor br5px`">
+												:class="`${addmemberid.indexOf(EUobj.id.toString()) != -1 ? 'inportbutton' : 'adduserbuton'} d-inline-block float-left pt-1 pb-1 pr-2 pl-2 text-white mb-2 mr-2 cursor br5px`">
 												{{EUobj.name}}
 												</div>
 											</div>
@@ -295,7 +296,7 @@ export default defineComponent({
 			this.ssminute = "00";
 			this.sendtime = "10";
 			this.sendminute = "00";
-			//this.addscheduletitle = "";
+
 			this.addscheduledescription = "";
 			this.addmember = [];
 			this.addmemberid = [];
@@ -382,7 +383,6 @@ export default defineComponent({
                 "/api/schedule/search",
                 {"addgroupmember": t.value},
                 (res:any) => {
-
 					this.searchuser = res.data;
 
                     //読み込みが完全に終わってからカバーを外す
@@ -420,13 +420,6 @@ export default defineComponent({
             });
             this.addmember = newarr;
             this.addmemberid = newarrforcheck;
-        },
-        CheckIfisAdded(str:string, checkarr:[string]){
-            var addedclass = "addeduserbuton";
-            if(checkarr.indexOf(str) != -1){
-                addedclass = "inportbutton";
-            }
-            return addedclass;
         },
 		AddSchedule(){
 			//バックエンドにデータを送る
