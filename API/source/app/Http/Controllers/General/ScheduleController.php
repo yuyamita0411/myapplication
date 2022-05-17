@@ -241,7 +241,7 @@ class ScheduleController extends Controller
         $ScheduleObj->description = $request->scheduledisc;
         $ScheduleObj->starttime = $request->starttime.' '.$request->Sstarttime;
         $ScheduleObj->endtime = $request->starttime.' '.$request->Sendtime;
-        $ScheduleObj->companyid = Auth::user()->companyid.' ';
+        $ScheduleObj->companyid = Auth::user()->companyid;
         $ScheduleObj->save();
 
         $latestid = $ScheduleObj->id;//スケジュールid

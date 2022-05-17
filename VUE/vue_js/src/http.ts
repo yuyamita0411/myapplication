@@ -5,7 +5,7 @@ export class GetData {
             url,
             {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem('access_token')!}`,
+                    Authorization: `Bearer ${localStorage.getItem('access_token')!}`
                 },
                 params: data
             }
@@ -18,17 +18,12 @@ export class GetData {
         });
     }
     async Postcommon(url:string, data:any, callback:any): Promise<any> {
-        return await http.post(
+        http.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('access_token')!}`;
+        return http.post(
             url,
-            {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('access_token')!}`,
-                }
-            },
             data
         )
         .then(response => {
-            console.log(response);
             callback(response);
         })
         .catch(error => {

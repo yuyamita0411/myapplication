@@ -448,8 +448,6 @@ export default defineComponent({
 		AddSchedule(){
             //バリデーションの処理
 			//バックエンドにデータを送る
-            const http = new GetData();
-
 			interface ScheduleBackObj {
 				schedulename: string;
 				scheduledisc: string;
@@ -460,20 +458,24 @@ export default defineComponent({
 				UserToAdd: string[];
 			}
 
+			//送信用にデータを整える
+			var vdatestr = this.ScheduleTagData!.startdate.split("/");
+			var vdate = `${this.ReturnDMFormat(vdatestr[0])}-${this.ReturnDMFormat(vdatestr[1])}-${this.ReturnDMFormat(vdatestr[2])}`
+
 			var addmemberobj: ScheduleBackObj = {
 				schedulename: this.addscheduletitle,
 				scheduledisc: this.addscheduledescription,
-				starttime: this.ScheduleTagData!.startdate,
-				Sstarttime: `${this.sstime}:${this.ssminute}`,
-				Sendtime: `${this.sendtime}:${this.sendminute}`,
+				starttime: vdate,
+				Sstarttime: `${this.ReturnDMFormat(this.sstime)}:${this.ReturnDMFormat(this.ssminute)}`,
+				Sendtime: `${this.ReturnDMFormat(this.sendtime)}:${this.ReturnDMFormat(this.sendminute)}`,
 				mainid: Number(this.ScheduleTagData!.userid),
-				UserToAdd: this.addmemberid,
+				UserToAdd: this.addmemberid
 			};
 
-			var schedulename = 
+			const http = new GetData();
             http.Postcommon(
                 "/api/schedule/add",
-                addmemberobj,
+				addmemberobj,
                 (res:any) => {
                     console.log(res);
                 }

@@ -238,7 +238,7 @@ class ScheduleController extends Controller
         $ScheduleObj->description = $request->scheduledisc;
         $ScheduleObj->starttime = $request->starttime.' '.$request->Sstarttime;
         $ScheduleObj->endtime = $request->starttime.' '.$request->Sendtime;
-        $ScheduleObj->companyid = Auth::user()->companyid.' ';
+        $ScheduleObj->companyid = Auth::user()->companyid;
         $ScheduleObj->save();
 
         $latestid = $ScheduleObj->id;//スケジュールid
@@ -249,11 +249,11 @@ class ScheduleController extends Controller
         $ScheduleRelationObj1->save();
 
         //もし自分以外に他のユーザーがいた場合
-        if($request->UserToAdd ){
+        if(!empty($request->UserToAdd)){
             foreach($request->UserToAdd as $key => $val){
                 $ScheduleRelationObj2 = new ScheduleRelation;
-                $ScheduleRelationObj2->scheduleid = $latestid;
-                $ScheduleRelationObj2->userid = $val;
+                $ScheduleRelationObj2->scheduleid = intval($latestid);
+                $ScheduleRelationObj2->userid = intval($val);
                 $ScheduleRelationObj2->save();
             }
         }

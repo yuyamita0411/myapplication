@@ -96,6 +96,7 @@ export default defineComponent({
                 "/api/notification/get",
                 {PageNow: pagenow},
                 (res:any) => {
+
                     if(res.data.NFirstArr == null){
                         this.TopNotification = '新しいお知らせはありません。';
                         this.loadingstatus = false;

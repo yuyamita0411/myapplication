@@ -2,9 +2,9 @@
 
 return [
 
-//    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
-    'paths' => ['cor-test', 'api/*'],
+//    'paths' => ['cor-test', 'api/*'],
 
     'allowed_methods' => ['*'],
 
