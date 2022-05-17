@@ -30,7 +30,7 @@
                             'd-inline-block w-100 d-inline-block float-left mb-1'
                             : 'd-none'
                         }`"
-                        :data-tooltip="`${edata.title != null ? `${edata.title} ${edata.starttime.split(' ')[1]}~` : 'タイトルがありません。'}`"
+                        :data-tooltip="`${edata.title != null ? `${edata.title}` : 'タイトルがありません。'}`"
                         >
                             <img
                             src="@/assets/orangepenicon.png"
@@ -46,12 +46,12 @@
                             :data-endtime="`${edata.endtime}`"
                             :data-taskid="`${edata.taskid}`"
                             data-groupid=""
-                            :data-tooltip="`${edata.title != null ? `${edata.title} ${edata.starttime.split(' ')[1]}~` : 'タイトルがありません。'}`"
+                            :data-tooltip="`${edata.title != null ? `${edata.title}` : 'タイトルがありません。'}`"
                             @click="ModalMotion"
                             >
                             <span class="slengtharea float-right d-inline-block">
-                                <span v-for="(fruit, index) in GetScheduleMarkRange(edata.starttime, edata.endtime)" :key="fruit"
-                                :class="`slengtharea${index + 1} d-inline-block float-left`" :style="`width:${fruit}px;`">
+                                <span v-for="(width, index) in GetScheduleMarkRange(edata.starttime, edata.endtime)" :key="width"
+                                :class="`slengtharea${index + 1} d-inline-block float-left`" :style="`width:${width}%;`">
                                 </span>
                             </span>
 
@@ -175,22 +175,16 @@ export default defineComponent({
             return str;
         },
         GetScheduleMarkRange(starttime:string, endtime:string){
-            /*starttime - 当日0時 1の長さ `${starttime.split(" ")[0]} 00:00:00` - starttime
-            starttime - endtime 2の長さ endtime - starttime
-            翌日0時 - endtime 3の長さ 
-            data-starttime="2022-05-18 09:00:00"
-            data-endtime="2022-05-18 10:00:00"*/
-            console.log("test");
+
             if(!starttime ||!endtime){
                 return;
             }
 
-            var planedate:any = `${starttime.split(" ")[0].replace("-", "/").replace("-", "/")} 00:00:00`;//当日の0時 2022/04/11
+            var planedate:any = `${starttime.split(" ")[0].replace("-", "/").replace("-", "/")} 09:00:00`;//当日の0時 2022/04/11
             var sstart:string = starttime.replace("-", "/").replace("-", "/");//文字
             var ssend:string = endtime.replace("-", "/").replace("-", "/");//文字
 
-            var pDob:any = this.MDFI(new Date(starttime.replace("-", "/").replace("-", "/")), 1);
-            var tmstr:any = `${pDob.getFullYear()}/${pDob.getMonth()+1}/${pDob.getDate()+1} 00:00:00`;//
+            var tmstr:any = `${starttime.split(" ")[0].replace("-", "/").replace("-", "/")} 18:00:00`;//
 
             var pr1:any = new Date(tmstr);
             var pr2:any = new Date(planedate);
@@ -205,12 +199,6 @@ export default defineComponent({
             var resultarr = [lenno1, lenno2, lenno3]
 
             return resultarr;
-/*
-            return {
-                "1":`<span class="slengtharea1 d-inline-block" style="width:${lenno1}px;"></span>`,
-                "2":`<span class="slengtharea2 d-inline-block" style="width:${lenno2}px;"></span>`,
-                "3":`<span class="slengtharea3 d-inline-block" style="width:${lenno3}px;"></span>`
-            }*/
         }
     }
 });
@@ -224,16 +212,19 @@ export default defineComponent({
     top:35%;
 }
 .slengtharea,
-.slengtharea2{
+.slengtharea1,
+.slengtharea2,
+.slengtharea3{
     height: 1rem;
 }
+
 .slengtharea{
     width: calc(100% - 1.75rem);
     right: 0.25rem;
     position: relative;
 }
 .slengtharea2{
-    background:blue;
+    background: rgba(24, 71, 182, 0.3);
 }
 @media (min-width: 768px) {
 	.scheduleborder {

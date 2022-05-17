@@ -29,8 +29,8 @@
 										<div class="Scaccordion position-absolute bg-white menuhide zm1 gridinside" id="">
 											<div
 											@click="GetSStartTime"
-											v-for="i in 12" :key="i"
-											class="starthourmenubutton Sbutton w-100 d-inline-block cursor bb" data-makeour="0">{{ReturnDMFormat(i)}}</div>
+											v-for="i in 9" :key="i"
+											class="starthourmenubutton Sbutton w-100 d-inline-block cursor bb" data-makeour="0">{{ReturnDMFormat(i+8)}}</div>
 										</div>
 									</div>
 									<div class="buttonicon text-center pr-2">
@@ -61,8 +61,8 @@
 										<div class="Scaccordion position-absolute bg-white menuhide zm1 gridinside" id="">
 											<div
 											@click="GetSendTime"
-											v-for="i in 12" :key="i"
-											class="starthourmenubutton Sbutton w-100 d-inline-block cursor bb" data-makeour="0">{{ReturnDMFormat(i)}}</div>
+											v-for="i in 9" :key="i"
+											class="starthourmenubutton Sbutton w-100 d-inline-block cursor bb" data-makeour="0">{{ReturnDMFormat(i+9)}}</div>
 										</div>
 									</div>
 									<div class="buttonicon text-center pl-2">

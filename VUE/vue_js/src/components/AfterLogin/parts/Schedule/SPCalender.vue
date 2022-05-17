@@ -29,56 +29,63 @@
 						({{DweekArr[new Date(MDFI(date, i-1)).getDay()]}})
 						</div>
 
-						<div class="borderleftgray schedulespdic col-10 d-inline-block text-left float-right pt-1 pb-1 pl-1 pr-1 bg-white">
-							<button
-							type="button"
-							:id="`ScheduleId-${sdata[0].id}`"
-							:data-setscheduleinfo="`${new Date(MDFI(date, i-1)).getFullYear()}/${new Date(MDFI(date, i-1)).getMonth()+1}/${new Date(MDFI(date, i-1)).getDate()}`"
-							:data-buttonuserid="`${sdata[0].id}`"
-							data-tooltip="スケジュールを追加する"
-							class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0"
-							@click="ModalMotion"
-							>
-							</button>
+						<div class="borderleftgray schedulespdic col-10 d-inline-block text-left float-right pt-1 pb-1 pl-1 pr-1 bg-white position-relative">
 							<small
 							v-for="edata in sdata" :key="edata"
+							class="w-100 d-inline-block position-relative float-left"
 							>
 								<span
-								v-if="
-								edata.starttime &&
-								edata.starttime.split(' ')[0]
-								==
-								`${MDFI(date, i-1).getFullYear()}-${ReturnDMFormat(new Date(MDFI(date, i-1)).getMonth()+1)}-${ReturnDMFormat(new Date(MDFI(date, i-1)).getDate())}`
-								"
-								class="cursor d-inline-block w-100 mb-1"
+								:class="`
+								${
+									edata.starttime &&
+									edata.starttime.split(' ')[0]
+									==
+									`${MDFI(date, i-1).getFullYear()}-${ReturnDMFormat(new Date(MDFI(date, i-1)).getMonth()+1)}-${ReturnDMFormat(new Date(MDFI(date, i-1)).getDate())}`
+									?
+									'editsceduleicon cursor d-inline-block w-100 mb-1 position-relative z1'
+									:
+									'd-none'
+								}
+								`"
 								>
-									{{edata.title}}
-									<span
-									class="editsceduleicon cursor ml-1
-									tooltip-right"
-									>
-									<img
-									src="@/assets/orangepenicon.png"
-									class="rebaseschedule orangepenicon"
-									:data-buttonuserid="`${edata.id}`"
-									:data-mailaddress="`${edata.mail_address}`"
-									:data-createdat="`${edata.created_at}`"
-									:data-scheduleid="`${edata.scheduleid}`"
-									:data-title="`${edata.title}`"
-									:data-description="`${edata.description}`"
-									:data-setscheduleinfo="`${new Date(MDFI(date, i-1)).getFullYear()}/${new Date(MDFI(date, i-1)).getMonth()+1}/${new Date(MDFI(date, i-1)).getDate()}`"
-									:data-starttime="`${edata.starttime}`"
-									:data-endtime="`${edata.endtime}`"
-									:data-taskid="`${edata.taskid}`"
-									data-groupid=""
-									data-tooltip="スケジュールを編集する"
-									@click="ModalMotion"
-									>
+									<span class="sleft d-inline-block float-left">
+										<img
+										src="@/assets/orangepenicon.png"
+										class="rebaseschedule orangepenicon"
+										:data-buttonuserid="`${edata.id}`"
+										:data-mailaddress="`${edata.mail_address}`"
+										:data-createdat="`${edata.created_at}`"
+										:data-scheduleid="`${edata.scheduleid}`"
+										:data-title="`${edata.title}`"
+										:data-description="`${edata.description}`"
+										:data-setscheduleinfo="`${new Date(MDFI(date, i-1)).getFullYear()}/${new Date(MDFI(date, i-1)).getMonth()+1}/${new Date(MDFI(date, i-1)).getDate()}`"
+										:data-starttime="`${edata.starttime}`"
+										:data-endtime="`${edata.endtime}`"
+										:data-taskid="`${edata.taskid}`"
+										data-groupid=""
+										:data-tooltip="`${edata.title}`"
+										@click="ModalMotion"
+										>
+										{{edata.title && CSNum(edata.title) < edata.title.length ? `${edata.title.slice(0, CSNum(edata.title))} ...` : edata.title}}
+									</span>
+									<span class="sright d-inline-block position-absolute timerangecover">
+											<span v-for="(width, index) in GetScheduleMarkRange(edata.starttime, edata.endtime)" :key="width"
+											:class="`slengtharea${index + 1} d-inline-block float-left`" :style="`width:${width}%;`"></span>
 									</span>
 								</span>
-
 							</small>
-
+							<div class="d-inline-block w-100">
+								<button
+								type="button"
+								:id="`ScheduleId-${sdata[0].id}`"
+								:data-setscheduleinfo="`${MDFI(date, i-1).getFullYear()}/${ReturnDMFormat(new Date(MDFI(date, i-1)).getMonth()+1)}/${ReturnDMFormat(new Date(MDFI(date, i-1)).getDate())}`"
+								:data-buttonuserid="`${sdata[0].id}`"
+								data-tooltip="スケジュールを追加する"
+								class="calenderBtn tooltip-left bg-white cursor b-none p-0 float-right"
+								@click="ModalMotion"
+								>
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -185,11 +192,72 @@ export default defineComponent({
                 str = "0" + str;
             }
             return str;
-        }
+        },
+        GetScheduleMarkRange(starttime:string, endtime:string){
+
+            if(!starttime ||!endtime){
+                return;
+            }
+
+            var planedate:any = `${starttime.split(" ")[0].replace("-", "/").replace("-", "/")} 09:00:00`;//当日の0時 2022/04/11
+            var sstart:string = starttime.replace("-", "/").replace("-", "/");//文字
+            var ssend:string = endtime.replace("-", "/").replace("-", "/");//文字
+
+            var tmstr:any = `${starttime.split(" ")[0].replace("-", "/").replace("-", "/")} 18:00:00`;//
+
+            var pr1:any = new Date(tmstr);
+            var pr2:any = new Date(planedate);
+            var pr3:any = new Date(sstart);
+            var pr4:any = new Date(ssend);
+
+            var alllentgh:number = pr1 - pr2;
+            var lenno1:number = ((pr3 - pr2) / (pr1 - pr2)) * 100;
+            var lenno2:number = ((pr4 - pr3) / (pr1 - pr2)) * 100;
+            var lenno3:number = ((pr1 - pr4) / (pr1 - pr2)) * 100;
+
+            var resultarr = [lenno1, lenno2, lenno3]
+
+            return resultarr;
+        },
+		CSNum(str:string){
+			return Math.floor(16 * (window.innerWidth / 550));
+		}
     }
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.timerangecover{
+	z-index:-1;
+	height:1.25rem;
+	width:100%;
+	bottom:0;
+	right:0;
+}
+.calenderBtn{
+	right:1rem;
+	bottom:0;
+}
+.slengtharea,
+.slengtharea1,
+.slengtharea2,
+.slengtharea3{
+    height: 1.25rem;
+}
 
+.slengtharea{
+    width: 100%;
+    right: 0.25rem;
+    position: relative;
+}
+.slengtharea2{
+    background: rgba(24, 71, 182, 0.3);
+}
+
+.sleft{
+	width:40%;
+}
+.sright{
+	width:60%;
+}
 </style>
