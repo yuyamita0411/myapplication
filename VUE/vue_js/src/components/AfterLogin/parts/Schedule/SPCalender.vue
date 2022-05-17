@@ -56,14 +56,14 @@
 										:data-mailaddress="`${edata.mail_address}`"
 										:data-createdat="`${edata.created_at}`"
 										:data-scheduleid="`${edata.scheduleid}`"
-										:data-title="`${edata.title}`"
+										:data-title="`${edata.title != null ? edata.title : 'タイトルがありません。'}`"
 										:data-description="`${edata.description}`"
 										:data-setscheduleinfo="`${new Date(MDFI(date, i-1)).getFullYear()}/${new Date(MDFI(date, i-1)).getMonth()+1}/${new Date(MDFI(date, i-1)).getDate()}`"
 										:data-starttime="`${edata.starttime}`"
 										:data-endtime="`${edata.endtime}`"
 										:data-taskid="`${edata.taskid}`"
 										data-groupid=""
-										:data-tooltip="`${edata.title}`"
+										:data-tooltip="`${edata.title != null ? edata.title : 'タイトルがありません。'}`"
 										@click="ModalMotion"
 										>
 										{{edata.title && CSNum(edata.title) < edata.title.length ? `${edata.title.slice(0, CSNum(edata.title))} ...` : edata.title}}

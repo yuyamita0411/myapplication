@@ -15,7 +15,7 @@
                     <LoginIconview class="dashboardloading w-100 d-inline-block text-center" v-if="loadingstatus == true" />
                     <img class="clipicon position-absolute" src="@/assets/clipicon.png">
                     <div id="notificationarea" :class="`${loadstatus}`">
-                        <article class="p-news-list__item js-inter fadeInLeft is-invasion mb-3 p-2 position-relative"
+                        <article class="p-news-list__item js-inter fadeInLeft is-invasion mb-3 p-2 position-relative text-left"
                         v-if="notificationarr.length == 0">
                             <div class="p-news-list__item__data pb-2">
                                 <p class="mb-0">
@@ -23,7 +23,7 @@
                                 </p>
                             </div>
                         </article>
-                        <article class="p-news-list__item js-inter fadeInLeft is-invasion mb-3 p-2 position-relative" v-for="Nt in notificationarr" :key="Nt.id">
+                        <article class="p-news-list__item js-inter fadeInLeft is-invasion mb-3 p-2 position-relative text-left" v-for="Nt in notificationarr" :key="Nt.id">
                             <router-link :to="{path: Nt.notificationlink = Nt.notificationlink != null ? Nt.notificationlink : '/dashboard'}">
                                 <div class="p-news-list__item__data pb-2">
                                     <p class="p-news-list__item__data__date mb-0">
