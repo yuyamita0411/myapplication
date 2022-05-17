@@ -18,7 +18,7 @@ export class GetData {
         });
     }
     async Postcommon(url:string, data:any, callback:any): Promise<any> {
-        return http.post(
+        return await http.post(
             url,
             {
                 headers: {

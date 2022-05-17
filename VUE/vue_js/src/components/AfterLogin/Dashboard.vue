@@ -60,8 +60,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, createApp } from 'vue';
-import http from "@/views/ts/http";
+import { defineComponent } from 'vue';
 import {GetData} from "../../http";
 import LoginIconview from '@/components/common/LoadingIcon.vue';
 import {PageNation} from "../../Pagenation";
@@ -97,7 +96,6 @@ export default defineComponent({
                 "/api/notification/get",
                 {PageNow: pagenow},
                 (res:any) => {
-
                     if(res.data.NFirstArr == null){
                         this.TopNotification = '新しいお知らせはありません。';
                         this.loadingstatus = false;
@@ -124,14 +122,6 @@ export default defineComponent({
                 }
             );
         },
-        /*PageNationClick(e:any){
-            var t = e.target as HTMLElement;
-            if(!this.onlyint.test(t!.innerText.toString())){
-                return;
-            }
-            this.PageNow = Number(t!.innerText);
-            this.rebaseNotification(this.PageNow);
-        },*/
         PageNationInput(e:any){
             var t = e.target as HTMLInputElement;
             if(!this.onlyint.test(t!.innerText.toString())){

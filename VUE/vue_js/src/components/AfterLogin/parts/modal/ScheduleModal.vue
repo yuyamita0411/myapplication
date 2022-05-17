@@ -278,9 +278,9 @@ export default defineComponent({
 			loadstatus:"op0",
 			searchareashow:"",
 			loadingstatus:false,
-            alreadyaddedmember:[],
-            addmember:[],
-			addmemberid:[],
+            alreadyaddedmember:[{}],
+            addmember:[{}],
+			addmemberid:[""],
             searchuserval:""
         };
     },
@@ -406,26 +406,42 @@ export default defineComponent({
 			this.searchareashow = "";
 		},
         AddUserFromResult(e:any){
+			const id:string = e.target.dataset.id;
+			const name:string = e.target.dataset.name;
+			const mailaddress:string = e.target.dataset.mailaddress;
             //既に追加されたユーザーは追加できないようにする処理
-            if(this.addmemberid.indexOf(e.target.dataset.id) == -1){
-                this.addmember.push({
-                    "id":e.target.dataset.id,
-                    "name":e.target.dataset.name,
-                    "mailaddress":e.target.dataset.mailaddress
-                });
-                //追加済みか否かを後ほどチェックするため。
-                this.addmemberid.push(e.target.dataset.id);
+            if(this.addmemberid.indexOf(id) == -1){
+
+				interface MemberDataObj {
+					id: string;
+					name: string;
+					mailaddress: string;
+				}
+
+				if(name){
+					const addmemberobj: MemberDataObj = {
+						id: id,
+						name: name,
+						mailaddress: mailaddress,
+					};
+					this.addmember.push(addmemberobj);
+					//追加済みか否かを後ほどチェックするため。
+					this.addmemberid.push(id);
+				}
+
             }
         },
         DeleteUserFromResult(e:any){
-            var newarr = [];
-            var newarrforcheck = [];
-            this.addmember.forEach((ob) => {
-                if(e.target.dataset.addeduserid != ob.id){
+			var newarr:{id:string, name:string, mailaddress:string}[] = [];
+			var newarrforcheck:string[] = [];
+            this.addmember.forEach((ob:any) => {
+				var uid:number = e.target.dataset.addeduserid;
+                if(uid != ob.id){
                     newarr.push(ob);
                     newarrforcheck.push(ob.id);
                 }
             });
+			console.log(newarr);
             this.addmember = newarr;
             this.addmemberid = newarrforcheck;
         },
@@ -433,17 +449,31 @@ export default defineComponent({
             //バリデーションの処理
 			//バックエンドにデータを送る
             const http = new GetData();
+
+			interface ScheduleBackObj {
+				schedulename: string;
+				scheduledisc: string;
+				starttime: string;
+				Sstarttime: string;
+				Sendtime: string;
+				mainid: number;
+				UserToAdd: string[];
+			}
+
+			var addmemberobj: ScheduleBackObj = {
+				schedulename: this.addscheduletitle,
+				scheduledisc: this.addscheduledescription,
+				starttime: this.ScheduleTagData!.startdate,
+				Sstarttime: `${this.sstime}:${this.ssminute}`,
+				Sendtime: `${this.sendtime}:${this.sendminute}`,
+				mainid: Number(this.ScheduleTagData!.userid),
+				UserToAdd: this.addmemberid,
+			};
+
+			var schedulename = 
             http.Postcommon(
                 "/api/schedule/add",
-                {
-                    "schedulename":this.addscheduletitle,
-                    "scheduledisc":this.addscheduledescription,
-                    "starttime":this.ScheduleTagData.startdate,
-                    "Sstarttime":`${this.sstime}:${this.ssminute}`,
-                    "Sendtime":`${this.sendtime}:${this.sendminute}`,
-                    "mainid":Number(this.ScheduleTagData.userid),
-                    "UserToAdd":this.addmemberid
-                },
+                addmemberobj,
                 (res:any) => {
                     console.log(res);
                 }

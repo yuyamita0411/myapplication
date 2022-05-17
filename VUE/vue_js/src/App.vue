@@ -4,8 +4,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import {SIZE} from './views/ts/design';
-import router from './router'
 
 export default defineComponent({
     name: 'APP'

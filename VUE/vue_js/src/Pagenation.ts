@@ -1,6 +1,6 @@
 export class PageNation{
 
-    static PageNationClass(amount:any, PageNow:number){
+    static PageNationClass(amount:number, PageNow:number){
 
         const PNArr = [];
         for(let i = 1; i <= amount; i++){
@@ -68,7 +68,7 @@ export class PageNation{
         return PNArr;
     }
 
-    static MakePagenation(amount:any, PageNow:number, TxtArea=true){
+    static MakePagenation(amount:number, PageNow:number, TxtArea=true){
         let NumHTML = '';
         for(let i = 1; i <= amount; i++){
             const Pnow = Number(PageNow);
