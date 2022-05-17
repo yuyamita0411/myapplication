@@ -1,4 +1,88 @@
 export class PageNation{
+    /*static MakePagenation(amount:number, PageNow:number){
+        interface PInfo {
+            PId: string;
+            PClass: string;
+            PTxt: any;
+        }
+
+        const Pjson = [{}];
+        for(var i = 1; i <= amount; i++){
+            const Pnow = Number(PageNow);
+            const PInow: PInfo = {
+                PId: "",
+                PClass: "d-none",
+                PTxt:i
+            }
+            if(i < 3){
+                if(i == Pnow){
+                    const PInow = {
+                        PId: "",
+                        PClass: "pagenationnum PageNow PageNationNum cursor w-100 text-center p-1",
+                        PTxt:i
+                    }
+                }else{
+                    const PInow = {
+                        PId: "",
+                        PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
+                        PTxt:i
+                    }
+                }
+            }
+
+            if(3 <= i){
+                if(i == Pnow - 1){
+                    const PInow = {
+                        PId: "",
+                        PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
+                        PTxt:i
+                    }
+                }
+                if(i == Pnow){
+                    const PInow = {
+                        PId: "",
+                        PClass: "pagenationnum PageNow PageNationNum cursor w-100 text-center p-1",
+                        PTxt:i
+                    }
+                }
+                if(i == Pnow + 1){
+                    const PInow = {
+                        PId: "",
+                        PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
+                        PTxt:i
+                    }
+                }
+            }
+
+            if(i == Pnow + 3 || i == Pnow - 3 && i != 1){
+                const PInow = {
+                    PId: "",
+                    PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
+                    PTxt:"..."
+                }
+            }
+
+            if(i == amount && amount - 1 > Pnow){
+                const PInow = {
+                    PId: "PageLastNum",
+                    PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
+                    PTxt:i
+                }
+            }
+
+            if(i == 1 && i != Pnow){
+                const PInow = {
+                    PId: "",
+                    PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
+                    PTxt:i
+                }
+            }
+
+            Pjson.push(PInow);
+        }
+        return Pjson;
+    }*/
+
 
     static PageNationClass(amount:number, PageNow:number){
 
@@ -67,7 +151,7 @@ export class PageNation{
         }
         return PNArr;
     }
-
+/*
     static MakePagenation(amount:number, PageNow:number, TxtArea=true){
         let NumHTML = '';
         for(let i = 1; i <= amount; i++){
@@ -102,4 +186,5 @@ export class PageNation{
         }
         return NumHTML;
     }
+*/
 }

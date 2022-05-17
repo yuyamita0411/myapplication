@@ -136,23 +136,18 @@
 								:DweekArr="DweekArr"
 								:Daycolor="Daycolor"
                                 />
-                                <!-- コンポーネント化 -->
-								
-								<div
-								id="PagenationArea"
-								class="paginationarea d-flex pt-4 col-12 col-lg-4 m-auto float-left"
-								>
-								<!--p id=""
-								v-for="i in PageAmount" :key="i"
-								class="pagenationnum PageNationNum cursor d-inline-block w-100 text-center p-1"
-								@click="PageMotion">{{i}}</p>
-								</div-->
-
-								<p
-								v-for="obj in MakePagenation(PageAmount, PageNow)" :key="obj"
-								:id="obj.PId"
-								:class="obj.PClass"
-								@click="PageMotion">{{obj.PTxt}}</p>
+								<div id="PagenationArea" class="w-100 text-center d-flex">
+									<div
+									class="paginationarea d-flex pt-4 col-12 col-lg-4 m-auto float-left"
+									>
+										<p
+										v-for="obj in MakePagenation(PageAmount, PageNow)" :key="obj"
+										:id="obj.PId"
+										:class="obj.PClass"
+										@click="PageMotion">
+										{{obj.PTxt}}
+										</p>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -340,8 +335,6 @@ export default defineComponent({
 					}
 				}
 
-				//if(i == 3){}
-
 				if(3 <= i){
 					if(i == Pnow - 1){
 						PInow = {
@@ -392,7 +385,6 @@ export default defineComponent({
 
 				this.Pjson.push(PInow);
 			}
-			console.log(this.Pjson);
 			return this.Pjson;
 		}
 	},

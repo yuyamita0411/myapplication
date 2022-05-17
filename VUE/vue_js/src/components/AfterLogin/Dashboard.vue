@@ -39,7 +39,7 @@
                             </router-link>
                         </article>
                     </div>
-                    <div class="d-inline-block w-100 mt-3">
+                    <!--div class="d-inline-block w-100 mt-3">
                         <div :class="`col-10 col-md-6 col-lg-4 m-auto d-flex ${this.loadpn}`" id="">
                             <div
                             id="PagenationArea"
@@ -52,7 +52,23 @@
                             </div>
                             <input type="text" name="PageNationInput" :value="PageNow" id="PageNationInput" @input="PageNationInput" class="mt-0 mb-0 col-2">
                         </div>
+                    </div-->
+
+                    <div id="PagenationArea" class="w-100 text-center d-flex">
+                        <div
+                        :class="`paginationarea d-flex pt-4 col-12 col-lg-4 m-auto float-left ${this.loadpn}`"
+                        >
+                            <p
+                            v-for="obj in MakePagenation(PageAmount, PageNow)" :key="obj"
+                            :id="obj.PId"
+                            :class="obj.PClass"
+                            @click="PageMotion">
+                            {{obj.PTxt}}
+                            </p>
+                            <input type="text" name="PageNationInput" :value="PageNow" id="PageNationInput" @input="PageNationInput" class="mt-0 mb-0 col-2">
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -76,6 +92,7 @@ export default defineComponent({
             notificationarr:[],
             PageNow:1,
             PageAmount:0,
+            Pjson:[{}],
             pagenation:"",
             onlyint:/^[0-9]*$/
         };
@@ -114,7 +131,7 @@ export default defineComponent({
                     }
                     this.notificationarr = objarr;
 
-                    this.pagenation = PageNation.MakePagenation(this.PageAmount, this.PageNow);
+                    //this.pagenation = PageNation.MakePagenation(this.PageAmount, this.PageNow);
 
                     //読み込みが完全に終わってからカバーを外す
                     this.loadingstatus = false;
@@ -138,7 +155,90 @@ export default defineComponent({
         PageMotion(e:any){
 			this.PageNow = Number(e.target.innerText);
 			this.rebaseNotification(this.PageNow);
-        }
+        },
+		MakePagenation(amount:number, PageNow:number){
+            interface PInfo {
+				PId: string;
+                PClass: string;
+                PTxt: any;
+			}
+
+			this.Pjson = [{}];
+			for(let i = 1; i <= amount; i++){
+				const Pnow = Number(PageNow);
+				var PInow: PInfo = {
+					PId: "",
+					PClass: "d-none",
+					PTxt:i
+				}
+				if(i < 3){
+					if(i == Pnow){
+						PInow = {
+							PId: "",
+							PClass: "pagenationnum PageNow PageNationNum cursor w-100 text-center p-1",
+							PTxt:i
+						}
+					}else{
+						PInow = {
+							PId: "",
+							PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
+							PTxt:i
+						}
+					}
+				}
+
+				if(3 <= i){
+					if(i == Pnow - 1){
+						PInow = {
+							PId: "",
+							PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
+							PTxt:i
+						}
+					}
+					if(i == Pnow){
+						PInow = {
+							PId: "",
+							PClass: "pagenationnum PageNow PageNationNum cursor w-100 text-center p-1",
+							PTxt:i
+						}
+					}
+					if(i == Pnow + 1){
+						PInow = {
+							PId: "",
+							PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
+							PTxt:i
+						}
+					}
+				}
+
+				if(i == Pnow + 3 || i == Pnow - 3 && i != 1){
+					PInow = {
+						PId: "",
+						PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
+						PTxt:"..."
+					}
+				}
+
+				if(i == amount && amount - 1 > Pnow){
+					PInow = {
+						PId: "PageLastNum",
+						PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
+						PTxt:i
+					}
+				}
+
+				if(i == 1 && i != Pnow){
+					PInow = {
+						PId: "",
+						PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
+						PTxt:i
+					}
+				}
+
+				this.Pjson.push(PInow);
+			}
+			return this.Pjson;
+		}
     },
     props: {
         msg: String
@@ -146,7 +246,7 @@ export default defineComponent({
     mounted(){
         const http = new GetData();
         this.rebaseNotification(this.PageNow);
-        this.pagenation = PageNation.MakePagenation(this.PageAmount, this.PageNow);
+        //this.pagenation = PageNation.MakePagenation(this.PageAmount, this.PageNow);
     }
 });
 </script>
