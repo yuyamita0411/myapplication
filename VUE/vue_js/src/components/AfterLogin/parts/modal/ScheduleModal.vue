@@ -14,14 +14,6 @@
 								</div>
 							</div>
 							<div class="m-auto" id="">
-								<input
-								name="mainid"
-								type="hidden"
-								:value="ScheduleTagData.userid">
-								<input
-								name="starttime"
-								type="hidden"
-								:value="ScheduleTagData.startdate">
 								<p class="col-12">{{ScheduleTagData.startdate}}</p>
 								<div class="col-12 d-flex">
 									<img
@@ -113,14 +105,6 @@
 									@input="InputDescription"
 									>
 									</textarea>
-									<input
-									name="userid"
-									type="hidden"
-									:value="ScheduleTagData.startdate">
-									<input
-									name="startdate"
-									type="hidden"
-									:value="ScheduleTagData.startdate">
 								</div>
 								<h5 class="mainfontcolor col-12 pt-4 pb-1 mb-2">
                                 メンバーを追加する
@@ -131,13 +115,9 @@
                                     <div
                                     @click="DeleteUserFromResult"
                                     v-for="eachadded in addmember" :key="eachadded.id"
-                                    class="addeduserbuton d-inline-block float-left pt-1 pb-1 pr-2 pl-2 text-white mb-2 mr-2 cursor br5px"
+                                    :class="`${eachadded.id ? 'addeduserbuton d-inline-block float-left pt-1 pb-1 pr-2 pl-2 text-white mb-2 mr-2 cursor br5px' : 'd-none'}`"
                                     :data-addeduserid="eachadded.id">
                                         {{eachadded.name}}
-                                        <input
-                                        type="hidden"
-                                        name="UserToAdd[]"
-                                        :value="eachadded.id">
                                     </div>
                                 </div>
 <!-- クリックされるごとに追加される -->
@@ -186,7 +166,6 @@
                                     v-for="eachuserinfo in ScheduleTagData.alreadyaddeduser" :key="eachuserinfo.id"
                                     class="alreadyadded addeduserbuton d-inline-block float-left pt-1 pb-1 pr-2 pl-2 text-white mb-2 mr-2 cursor br5px" data-addeduserid="6">
                                         {{eachuserinfo.name}}
-                                        <input type="hidden" name="UserToAdd[]" :value="eachuserinfo.id">
                                     </div>
                                 </div>
 <!-- 条件分岐 -->

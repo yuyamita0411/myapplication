@@ -124,19 +124,36 @@ export default defineComponent({
     },
     methods:{
         ModalMotion(e:any){
-            this.ScheduleTagData = {
-                "startdate":e.target.dataset.setscheduleinfo,
-                "userid":e.target.dataset.buttonuserid,
-                "mailaddress":e.target.dataset.mailaddress,
-                "createdat":e.target.dataset.createdat,
-                "scheduleid":e.target.dataset.scheduleid,
-                "title":e.target.dataset.title,
-                "description":e.target.dataset.description,
-                "setscheduleinfo":e.target.dataset.setscheduleinfo,
-                "starttime":e.target.dataset.starttime,
-                "endtime":e.target.dataset.endtime,
-                "taskid":e.target.dataset.taskid
+            interface STagFormat {
+                startdate: string;
+                userid: string;
+                mailaddress: string;
+                createdat: string;
+                scheduleid: string;
+                title: string;
+                description: string;
+                setscheduleinfo: string;
+                starttime: string;
+                endtime: string;
+                taskid: string;
+                alreadyaddeduser: any;
             }
+            const stag: STagFormat = {
+                startdate: e.target.dataset.setscheduleinfo,
+                userid: e.target.dataset.buttonuserid,
+                mailaddress: e.target.dataset.mailaddress,
+                createdat: e.target.dataset.createdat,
+                scheduleid: e.target.dataset.scheduleid,
+                title: e.target.dataset.title,
+                description: e.target.dataset.description,
+                setscheduleinfo: e.target.dataset.setscheduleinfo,
+                starttime: e.target.dataset.starttime,
+                endtime: e.target.dataset.endtime,
+                taskid: e.target.dataset.taskid,
+                alreadyaddeduser: [],
+            };
+            this.ScheduleTagData = stag;
+
             this.modaltitle = e.target.dataset.tooltip;
 
             if(e.target.dataset.scheduleid){
@@ -146,20 +163,8 @@ export default defineComponent({
                     "/api/schedule/get/id",
                     {"scheduleid":e.target.dataset.scheduleid},
                     (res:any) => {
-                        this.ScheduleTagData = {
-                            "startdate":e.target.dataset.setscheduleinfo,
-                            "userid":e.target.dataset.buttonuserid,
-                            "mailaddress":e.target.dataset.mailaddress,
-                            "createdat":e.target.dataset.createdat,
-                            "scheduleid":e.target.dataset.scheduleid,
-                            "title":e.target.dataset.title,
-                            "description":e.target.dataset.description,
-                            "setscheduleinfo":e.target.dataset.setscheduleinfo,
-                            "starttime":e.target.dataset.starttime,
-                            "endtime":e.target.dataset.endtime,
-                            "taskid":e.target.dataset.taskid,
-                            "alreadyaddeduser":res.data
-                        };
+                        stag.alreadyaddeduser = res.data;
+                        this.ScheduleTagData = stag;
                     }
                 );
             }
