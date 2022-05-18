@@ -39,21 +39,6 @@
                             </router-link>
                         </article>
                     </div>
-                    <!--div class="d-inline-block w-100 mt-3">
-                        <div :class="`col-10 col-md-6 col-lg-4 m-auto d-flex ${this.loadpn}`" id="">
-                            <div
-                            id="PagenationArea"
-                            class="paginationarea d-flex pt-4 col-12 col-lg-4 m-auto float-left"
-                            >
-                            <p id=""
-                            v-for="i in PageAmount" :key="i"
-                            class="pagenationnum PageNationNum cursor d-inline-block w-100 text-center p-1"
-                            @click="PageMotion">{{i}}</p>
-                            </div>
-                            <input type="text" name="PageNationInput" :value="PageNow" id="PageNationInput" @input="PageNationInput" class="mt-0 mb-0 col-2">
-                        </div>
-                    </div-->
-
                     <div id="PagenationArea" class="w-100 text-center d-flex">
                         <div
                         :class="`paginationarea d-flex pt-4 col-12 col-lg-4 m-auto float-left ${this.loadpn}`"

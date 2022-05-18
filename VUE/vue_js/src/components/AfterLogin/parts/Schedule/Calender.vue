@@ -25,7 +25,7 @@
                         :class="
                         `${
                             edata.starttime && edata.starttime.split(' ')[0] == 
-                            `${MDFI(date, i-1).getFullYear()}-${ReturnDMFormat(new Date(MDFI(date, i-1)).getMonth()+1)}-${ReturnDMFormat(new Date(MDFI(date, i-1)).getDate())}`
+                            `${calculate.MDFI(date, i-1).getFullYear()}-${calculate.ReturnDMFormat(new Date(calculate.MDFI(date, i-1)).getMonth()+1)}-${calculate.ReturnDMFormat(new Date(calculate.MDFI(date, i-1)).getDate())}`
                             ?
                             'd-inline-block w-100 d-inline-block float-left mb-1'
                             : 'd-none'
@@ -41,7 +41,7 @@
                             :data-scheduleid="`${edata.scheduleid}`"
                             :data-title="`${edata.title != null ? edata.title : 'タイトルがありません。'}`"
                             :data-description="`${edata.description}`"
-                            :data-setscheduleinfo="`${new Date(MDFI(date, i-1)).getFullYear()}/${new Date(MDFI(date, i-1)).getMonth()+1}/${new Date(MDFI(date, i-1)).getDate()}`"
+                            :data-setscheduleinfo="`${new Date(calculate.MDFI(date, i-1)).getFullYear()}/${new Date(calculate.MDFI(date, i-1)).getMonth()+1}/${new Date(calculate.MDFI(date, i-1)).getDate()}`"
                             :data-starttime="`${edata.starttime}`"
                             :data-endtime="`${edata.endtime}`"
                             :data-taskid="`${edata.taskid}`"
@@ -50,7 +50,7 @@
                             @click="ModalMotion"
                             >
                             <span class="slengtharea float-right d-inline-block">
-                                <span v-for="(width, index) in GetScheduleMarkRange(edata.starttime, edata.endtime)" :key="width"
+                                <span v-for="(width, index) in calculate.GetScheduleMarkRange(edata.starttime, edata.endtime)" :key="width"
                                 :class="`slengtharea${index + 1} d-inline-block float-left`" :style="`width:${width}%;`">
                                 </span>
                             </span>
@@ -60,7 +60,7 @@
                             <button
                             type="button"
                             :id="`ScheduleId-${sdata[0].id}`"
-                            :data-setscheduleinfo="`${new Date(MDFI(date, i-1)).getFullYear()}/${new Date(MDFI(date, i-1)).getMonth()+1}/${new Date(MDFI(date, i-1)).getDate()}`"
+                            :data-setscheduleinfo="`${new Date(calculate.MDFI(date, i-1)).getFullYear()}/${new Date(calculate.MDFI(date, i-1)).getMonth()+1}/${new Date(calculate.MDFI(date, i-1)).getDate()}`"
                             :data-buttonuserid="`${sdata[0].id}`"
                             data-tooltip="スケジュールを追加する"
                             class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0"
@@ -85,6 +85,8 @@
 import { defineComponent, createApp } from 'vue';
 import http from "@/views/ts/http";
 import {GetData} from "../../../../http";
+import {Calculate} from "../../../../calculate";
+import {Dataformat} from "../../../../dataformat";
 import LoginIconview from '@/components/common/LoadingIcon.vue';
 import ScheduleModal from '@/components/AfterLogin/parts/modal/ScheduleModal.vue';
 import {PageNation} from "../../../../Pagenation";
@@ -102,7 +104,9 @@ export default defineComponent({
     data() {
         return {
             ScheduleTagData:{},
-            modaltitle:""
+            modaltitle:"",
+            calculate:new Calculate(),
+            dformat:new Dataformat()
         };
     },
     components: {
@@ -111,37 +115,7 @@ export default defineComponent({
     },
     methods:{
         ModalMotion(e:any){
-            interface STagFormat {
-                startdate: string;
-                userid: string;
-                mailaddress: string;
-                createdat: string;
-                scheduleid: string;
-                title: string;
-                description: string;
-                setscheduleinfo: string;
-                starttime: string;
-                endtime: string;
-                taskid: string;
-                alreadyaddeduser: any;
-            }
-
-            const stag: STagFormat = {
-                startdate: e.target.dataset.setscheduleinfo,
-                userid: e.target.dataset.buttonuserid,
-                mailaddress: e.target.dataset.mailaddress,
-                createdat: e.target.dataset.createdat,
-                scheduleid: e.target.dataset.scheduleid,
-                title: e.target.dataset.title,
-                description: e.target.dataset.description,
-                setscheduleinfo: e.target.dataset.setscheduleinfo,
-                starttime: e.target.dataset.starttime,
-                endtime: e.target.dataset.endtime,
-                taskid: e.target.dataset.taskid,
-                alreadyaddeduser: [],
-            };
-            this.ScheduleTagData = stag;
-
+            this.ScheduleTagData = this.dformat.schedulemodalformat(e);
             this.modaltitle = e.target.dataset.tooltip;
 
             if(e.target.dataset.scheduleid){
@@ -151,54 +125,15 @@ export default defineComponent({
                     "/api/schedule/get/id",
                     {"scheduleid":e.target.dataset.scheduleid},
                     (res:any) => {
-                        stag.alreadyaddeduser = res.data;
-                        this.ScheduleTagData = stag;
+                        this.dformat.schedulemodalformat(e).alreadyaddeduser = res.data;
+                        this.ScheduleTagData = this.dformat.schedulemodalformat(e);
                     }
                 );
             }
-
             document.getElementById('ScheduleModalcover')!.classList.remove('ScheduleModalcoverclose');
             document.getElementById('ScheduleModalcover')!.classList.add('ScheduleModalcoveropen');
             document.getElementById('ScheduleModal')!.classList.remove('ScheduleModalclose');
             document.getElementById('ScheduleModal')!.classList.add('ScheduleModalopen');
-        },
-        MDFI(obj:any, plus:number){
-            //一旦変数に入れる。
-            const Dobj = new Date(obj);
-            const returnobj = new Date(Dobj.setDate(Dobj.getDate() + plus));
-            return returnobj;
-        },
-        ReturnDMFormat(str:string){
-            if (str.toString().length == 1) {
-                str = "0" + str;
-            }
-            return str;
-        },
-        GetScheduleMarkRange(starttime:string, endtime:string){
-
-            if(!starttime ||!endtime){
-                return;
-            }
-
-            var planedate:any = `${starttime.split(" ")[0].replace("-", "/").replace("-", "/")} 09:00:00`;//当日の0時 2022/04/11
-            var sstart:string = starttime.replace("-", "/").replace("-", "/");//文字
-            var ssend:string = endtime.replace("-", "/").replace("-", "/");//文字
-
-            var tmstr:any = `${starttime.split(" ")[0].replace("-", "/").replace("-", "/")} 18:00:00`;//
-
-            var pr1:any = new Date(tmstr);
-            var pr2:any = new Date(planedate);
-            var pr3:any = new Date(sstart);
-            var pr4:any = new Date(ssend);
-
-            var alllentgh:number = pr1 - pr2;
-            var lenno1:number = ((pr3 - pr2) / (pr1 - pr2)) * 100;
-            var lenno2:number = ((pr4 - pr3) / (pr1 - pr2)) * 100;
-            var lenno3:number = ((pr1 - pr4) / (pr1 - pr2)) * 100;
-
-            var resultarr = [lenno1, lenno2, lenno3]
-
-            return resultarr;
         }
     }
 });

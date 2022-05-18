@@ -241,6 +241,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import router from '../../../../router'
 import http from "@/views/ts/http";
 import {GetData} from "../../../../http";
+import {Calculate} from "../../../../calculate";
 import LoginIconview from '@/components/common/LoadingIcon.vue';
 
 export default defineComponent({
@@ -260,7 +261,8 @@ export default defineComponent({
             alreadyaddedmember:[{}],
             addmember:[{}],
 			addmemberid:[""],
-            searchuserval:""
+            searchuserval:"",
+			calculate:new Calculate()
         };
     },
 
@@ -272,9 +274,6 @@ export default defineComponent({
 		LoginIconview
 	},
 	methods:{
-        addfriends_modal_close(){
-            this.$emit('close-addfriends-modal-class', "ScheduleModalclose");
-		},
 		ModalMotion(){
             this.sstime = "09";
 			this.ssminute = "00";

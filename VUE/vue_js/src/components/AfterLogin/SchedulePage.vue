@@ -38,28 +38,28 @@
                                                 </div>
                                             </div>
                                             <div id="prev7"
-                                            @click="SevenDaysAgo"
+                                            @click="DaysShift(-7)"
                                             class="cbutton tooltip-top d-inline-block text-center cursor col-auto pl-0 pr-0 font12"
                                             data-tooltip="7日前"
-                                            :data-cldata="`${new Date(MDFI(date, -7)).getFullYear()}/${new Date(MDFI(date, -7)).getMonth()+1}/${new Date(MDFI(date, -7)).getDate()}`"
+                                            :data-cldata="`${new Date(calculate.MDFI(date, -7)).getFullYear()}/${new Date(calculate.MDFI(date, -7)).getMonth()+1}/${new Date(calculate.MDFI(date, -7)).getDate()}`"
                                             >◀︎◀︎</div>
                                             <div id="prev"
-                                            @click="OneDayAgo"
+                                            @click="DaysShift(-1)"
                                             class="cbutton tooltip-top d-inline-block text-center cursor col-auto pl-0 pr-0 font12"
                                             data-tooltip="1日前"
-                                            :data-cldata="`${new Date(MDFI(date, -1)).getFullYear()}/${new Date(MDFI(date, -1)).getMonth()+1}/${new Date(MDFI(date, -1)).getDate()}`"
+                                            :data-cldata="`${new Date(calculate.MDFI(date, -1)).getFullYear()}/${new Date(calculate.MDFI(date, -1)).getMonth()+1}/${new Date(calculate.MDFI(date, -1)).getDate()}`"
                                             >◀︎</div>
                                             <div id="next"
-                                            @click="OneDayNext"
+                                            @click="DaysShift(1)"
                                             class="cbutton tooltip-top d-inline-block text-center cursor col-auto pl-0 pr-0 font12"
                                             data-tooltip="1日後"
-                                            :data-cldata="`${new Date(MDFI(date, +1)).getFullYear()}/${new Date(MDFI(date, +1)).getMonth()+1}/${new Date(MDFI(date, +1)).getDate()}`"
+                                            :data-cldata="`${new Date(calculate.MDFI(date, +1)).getFullYear()}/${new Date(calculate.MDFI(date, +1)).getMonth()+1}/${new Date(calculate.MDFI(date, +1)).getDate()}`"
                                             >▶︎</div>
                                             <div id="next7"
-                                            @click="SevenDaysNext"
+                                            @click="DaysShift(7)"
                                             class="cbutton tooltip-top d-inline-block text-center cursor col-auto pl-0 pr-0 font12"
                                             data-tooltip="7日後"
-                                            :data-cldata="`${new Date(MDFI(date, +7)).getFullYear()}/${new Date(MDFI(date, +7)).getMonth()+1}/${new Date(MDFI(date, +7)).getDate()}`"
+                                            :data-cldata="`${new Date(calculate.MDFI(date, +7)).getFullYear()}/${new Date(calculate.MDFI(date, +7)).getMonth()+1}/${new Date(calculate.MDFI(date, +7)).getDate()}`"
                                             >▶︎▶︎</div>
                                         </div>
                                         <div class="mt-0" id="DayArea">
@@ -101,15 +101,15 @@
                                                 </div>
                                                 <div
                                                 v-else
-                                                :data-forcommondate="`${new Date(MDFI(date, i-1)).getFullYear()}/${new Date(MDFI(date, i-1)).getMonth()+1}/${new Date(MDFI(date, i-1)).getDate()}`"
-                                                :class="`${Daycolor[DweekArr[new Date(MDFI(date, i-1)).getDay()]]} w-100 h-100 text-center pt-2 pb-2 font12`"
+                                                :data-forcommondate="`${new Date(calculate.MDFI(date, i-1)).getFullYear()}/${new Date(calculate.MDFI(date, i-1)).getMonth()+1}/${new Date(calculate.MDFI(date, i-1)).getDate()}`"
+                                                :class="`${Daycolor[DweekArr[new Date(calculate.MDFI(date, i-1)).getDay()]]} w-100 h-100 text-center pt-2 pb-2 font12`"
                                                 >
-                                                {{new Date(MDFI(date, i-1)).getDate()}}
-                                                ({{DweekArr[new Date(MDFI(date, i-1)).getDay()]}})
+                                                {{new Date(calculate.MDFI(date, i-1)).getDate()}}
+                                                ({{DweekArr[new Date(calculate.MDFI(date, i-1)).getDay()]}})
                                                 </div>
                                             </div>
 
-                                            <div :data-cenddate="`${new Date(MDFI(date, 6)).getFullYear()}/${new Date(MDFI(date, 6)).getMonth()+1}/${new Date(MDFI(date, 6)).getDate()}`" id="getCalenderRange"></div>
+                                            <div :data-cenddate="`${new Date(calculate.MDFI(date, 6)).getFullYear()}/${new Date(calculate.MDFI(date, 6)).getMonth()+1}/${new Date(calculate.MDFI(date, 6)).getDate()}`" id="getCalenderRange"></div>
                                             </div>
                                         </div>
 									</div>
@@ -164,6 +164,7 @@ import CalenderView from '@/components/AfterLogin/parts/Schedule/Calender.vue';
 import SPCalenderView from '@/components/AfterLogin/parts/Schedule/SPCalender.vue';
 import http from "@/views/ts/http";
 import {GetData} from "../../http";
+import {Calculate} from "../../calculate";
 import {PageNation} from "../../Pagenation";
 
 export default defineComponent({
@@ -187,7 +188,8 @@ export default defineComponent({
 			PageNow:1,
 			PageAmount:0,
 			pagenation:'',
-			Pjson:[{}]
+			Pjson:[{}],
+			calculate:new Calculate()
 		};
 	},
 	components: {
@@ -195,30 +197,8 @@ export default defineComponent({
 		SPCalenderView
 	},
 	methods:{
-		//クリックイベントはクラス内の変数 this.date に足し引きしていく。
-		MDFI(obj:any, plus:number){
-			//一旦変数に入れる。
-			var Dobj = new Date(obj);
-			var returnobj = new Date(Dobj.setDate(Dobj.getDate() + plus));
-			return returnobj;
-		},
-		SevenDaysAgo(){
-			this.date = new Date(this.date.setDate(this.date.getDate() - 7));
-			//検索結果を出力する共通処理を入れる
-			this.MakeSearchParam();
-		},
-		OneDayAgo(){
-			this.date = new Date(this.date.setDate(this.date.getDate() - 1));
-			//検索結果を出力する共通処理を入れる
-			this.MakeSearchParam();
-		},
-		OneDayNext(){
-			this.date = new Date(this.date.setDate(this.date.getDate() + 1));
-			//検索結果を出力する共通処理を入れる
-			this.MakeSearchParam();
-		},
-		SevenDaysNext(){
-			this.date = new Date(this.date.setDate(this.date.getDate() + 7));
+		DaysShift(num:number){
+			this.date = new Date(this.date.setDate(this.date.getDate() + num));
 			//検索結果を出力する共通処理を入れる
 			this.MakeSearchParam();
 		},
@@ -271,7 +251,6 @@ export default defineComponent({
 		},
 		//検索結果を出力する共通処理
 		MakeSearchParam(){
-			console.log("start!!");
 			this.searchparam = {
 				"orderby":this.SearchOrderBy,
 				"keyword":this.SearchKeyword,
@@ -301,7 +280,6 @@ export default defineComponent({
 		},
         PageMotion(e:any){
 			this.PageNow = Number(e.target.innerText);
-			console.log(this.PageNow);
 			this.MakeSearchParam();
         },
 		MakePagenation(amount:number, PageNow:number){
@@ -359,7 +337,7 @@ export default defineComponent({
 					}
 				}
 
-				if(i == Pnow + 3 || i == Pnow - 3 && i != 1){
+				if(i == Pnow + 2 || i == Pnow - 2 && i != 1){
 					PInow = {
 						PId: "",
 						PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
@@ -392,7 +370,6 @@ export default defineComponent({
 		//マウント時はパラメータの有無を確認。
 		//パラメータがある場合はパラメータの日付を取得する。
 		//ない場合は今日の日付を取得する。
-		console.log("mount schedule!!");
 		if(768 < window.innerWidth){
 			this.WhichCstyle = "pc";
 		}
