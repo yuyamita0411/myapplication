@@ -83,9 +83,9 @@
 
 <script lang="ts">
 import { defineComponent, createApp } from 'vue';
-import {GetData} from "../../../../http";
-import {Calculate} from "../../../../calculate";
-import {Dataformat} from "../../../../dataformat";
+import {GetData} from "@/http";
+import {Calculate} from "@/calculate";
+import {Dataformat} from "@/dataformat";
 import LoginIconview from '@/components/common/LoadingIcon.vue';
 import ScheduleModal from '@/components/AfterLogin/parts/Schedule/modal/ScheduleModal.vue';
 

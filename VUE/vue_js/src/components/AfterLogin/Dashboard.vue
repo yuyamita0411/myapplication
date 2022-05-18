@@ -62,8 +62,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import {GetData} from "../../http";
-import {Calculate} from "../../calculate";
+import {GetData} from "@/http";
+import {Calculate} from "@/calculate";
 import LoginIconview from '@/components/common/LoadingIcon.vue';
 
 export default defineComponent({

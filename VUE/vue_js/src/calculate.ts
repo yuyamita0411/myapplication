@@ -67,7 +67,7 @@ export class Calculate{
                 PInow.PClass = "pagenationnum PageNationNum cursor w-100 text-center p-1";
             }
 
-            if(i == Pnow + 2 || i == Pnow - 2 && i != 1){
+            if((i == Pnow + 2 && i != amount) || (i == Pnow - 2 && i != amount) && i != 1){
                 PInow.PTxt = "...";
             }
 

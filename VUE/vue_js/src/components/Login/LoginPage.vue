@@ -63,7 +63,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import http from "@/http";
+import {apiClient} from "@/http";
 
 export default defineComponent({
     name: 'LoginPage',
@@ -82,7 +82,7 @@ export default defineComponent({
             const PAElement = this.$refs.password as HTMLInputElement
             this.AlertshowClass = 'AlertShowHide';
 
-            return http.post(
+            return apiClient.post(
             "/api/login",
             {
                 "mail_address":MAElement.value,

@@ -100,7 +100,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import {GetData} from "../http";
+import {GetData} from "@/http";
 import LoginIconview from '@/components/common/LoadingIcon.vue';
 
 import DashboardView from '@/components/AfterLogin/Dashboard.vue';

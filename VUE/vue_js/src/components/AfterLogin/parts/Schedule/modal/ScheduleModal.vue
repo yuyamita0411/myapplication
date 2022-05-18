@@ -238,9 +238,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import router from '../../../../../router'
-import {GetData} from "../../../../../http";
-import {Calculate} from "../../../../../calculate";
+import router from '@/router'
+import {GetData} from "@/http";
+import {Calculate} from "@/calculate";
 import LoginIconview from '@/components/common/LoadingIcon.vue';
 
 export default defineComponent({

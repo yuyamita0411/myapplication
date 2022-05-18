@@ -162,8 +162,8 @@
 import { defineComponent } from 'vue';
 import CalenderView from '@/components/AfterLogin/parts/Schedule/Calender.vue';
 import SPCalenderView from '@/components/AfterLogin/parts/Schedule/SPCalender.vue';
-import {GetData} from "../../http";
-import {Calculate} from "../../calculate";
+import {GetData} from "@/http";
+import {Calculate} from "@/calculate";
 
 export default defineComponent({
 	name: 'ScheduleView',

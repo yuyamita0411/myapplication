@@ -36,14 +36,14 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import router from '../../../../../router'
-import http from "@/http";
+import router from '@/router'
+import {apiClient} from "@/http";
 
 export default defineComponent({
     name: 'AccountModal',
     methods:{
       Logout(): Promise<any> {
-        return http.post(
+        return apiClient.post(
         "/api/logout"
         )
         .then(response => {

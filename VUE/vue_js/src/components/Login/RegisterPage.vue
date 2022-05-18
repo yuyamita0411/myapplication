@@ -156,7 +156,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import http from "@/http";
+import {apiClient} from "@/http";
 
 export default defineComponent({
     name: 'RegisterPage',
@@ -193,7 +193,7 @@ export default defineComponent({
 
             this.AlertshowClass = 'AlertShowHide';
 
-            return http.post(
+            return apiClient.post(
             "/api/register",
             {
                 'name':NAElement.value,

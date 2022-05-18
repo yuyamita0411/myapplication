@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 
-const apiClient: AxiosInstance = axios.create({
+export const apiClient: AxiosInstance = axios.create({
     //本番反映の際はここを本番のドメインに変える
     baseURL: "https://localhost:8081",
     headers: {
@@ -8,11 +8,9 @@ const apiClient: AxiosInstance = axios.create({
     },
 });
 
-export default apiClient;
-
 export class GetData {
     async common(url:string, data:any, callback:any): Promise<any> {
-        return axios.get(
+        return apiClient.get(
             url,
             {
                 headers: {
@@ -29,8 +27,8 @@ export class GetData {
         });
     }
     async Postcommon(url:string, data:any, callback:any): Promise<any> {
-        axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('access_token')!}`;
-        return axios.post(
+        apiClient.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('access_token')!}`;
+        return apiClient.post(
             url,
             data
         )
