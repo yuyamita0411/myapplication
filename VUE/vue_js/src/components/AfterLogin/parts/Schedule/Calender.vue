@@ -78,7 +78,6 @@
     <ScheduleModal
     :ScheduleTagData="ScheduleTagData"
     :modaltitle="modaltitle"
-    :modalstatus="modalstatus"
     />
 </template>
 
@@ -103,8 +102,7 @@ export default defineComponent({
         return {
             ScheduleTagData:{},
             modaltitle:"",
-            calculate:new Calculate(),
-            modalstatus:false
+            calculate:new Calculate()
         };
     },
     components: {
@@ -154,7 +152,6 @@ export default defineComponent({
 
             if(!e.target.dataset.scheduleid){
                 this.ScheduleTagData = stag;
-                this.modalstatus = true;
             }
 
             if(e.target.dataset.scheduleid){
@@ -171,7 +168,6 @@ export default defineComponent({
                         stag.sendminute = res.data[0].endtime.split(" ")[1].split(":")[1];
 
                         this.ScheduleTagData = stag;
-                        this.modalstatus = true;
                     }
                 );
             }

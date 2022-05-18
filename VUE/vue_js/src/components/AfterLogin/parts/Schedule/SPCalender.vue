@@ -80,7 +80,7 @@
 									:data-setscheduleinfo="`${calculate.MDFI(date, i-1).getFullYear()}/${calculate.ReturnDMFormat(new Date(calculate.MDFI(date, i-1)).getMonth()+1)}/${calculate.ReturnDMFormat(new Date(calculate.MDFI(date, i-1)).getDate())}`"
 									:data-buttonuserid="`${sdata[0].id}`"
 									data-tooltip="スケジュールを追加する"
-									class="calenderBtn tooltip-left bg-white cursor b-none p-0 float-right position-absolute"
+									class="calenderBtn tooltip-left bg-white cursor b-none p-0 float-right"
 									@click="ModalMotion"
 									>
 									</button>
@@ -96,7 +96,6 @@
     <ScheduleModal
     :ScheduleTagData="ScheduleTagData"
     :modaltitle="modaltitle"
-    :modalstatus="modalstatus"
     />
 </template>
 
@@ -176,7 +175,6 @@ export default defineComponent({
 
             if(!e.target.dataset.scheduleid){
                 this.ScheduleTagData = stag;
-                this.modalstatus = true;
             }
 
             if(e.target.dataset.scheduleid){
@@ -193,7 +191,6 @@ export default defineComponent({
                         stag.sendminute = res.data[0].endtime.split(" ")[1].split(":")[1];
 
                         this.ScheduleTagData = stag;
-						this.modalstatus = true;
                     }
                 );
             }
@@ -246,7 +243,7 @@ export default defineComponent({
 	width:40%;
 }
 .sright{
-	width:58%;
+	width:59%;
 }
 #UserScheduleArea>div:nth-child(2n)>div:not(.mycolor) > div:nth-child(1){
 	background: rgb(0, 0, 0, 0.03);
@@ -282,6 +279,10 @@ export default defineComponent({
 .userssp{
 	border-bottom: solid 0.5px rgba(0, 0, 0, 0.1);
 }
+
+/*.scheduleborder > div > div:not(:first-child){
+	border-bottom: solid 2px rgba(0, 0, 0, 0.1);
+}*/
 .sleft{
 	background: rgba(0, 0, 0, 0.02);
 }
@@ -294,7 +295,7 @@ export default defineComponent({
 }
 .calenderBtnWrapper{
 	height:1.5rem;
-	border-top: double 3px rgba(0, 0, 0, 0.1);
+	border-top: solid 1px rgba(0, 0, 0, 0.1);
 }
 .SPdatearea{
 	border-right: solid 0.5px rgba(0, 0, 0, 0.1);

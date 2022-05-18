@@ -159,7 +159,7 @@
 								</div>
 <!-- 条件分岐 -->
                                 <div
-                                v-if="ScheduleTagData.alreadyaddeduser && ScheduleTagData.alreadyaddeduser.length != 0"
+                                v-if="ScheduleTagData.alreadyaddeduser"
                                 id="" class="col-12 mb-0 d-inline-block">
                                     <h5 class="mainfontcolor w-100 pt-4 pb-1 mb-2">既に追加されたメンバー</h5>
                                     <div
@@ -461,6 +461,29 @@ export default defineComponent({
                     console.log(res);
                 }
             );
+		},
+		EditScheduleTime(){
+			interface Data {
+				sstime: string;
+				ssminute: string;
+				sendtime: string;
+				sendminute: string;
+			}
+			if(this.ScheduleTagData!.starttime || this.ScheduleTagData!.endtime){
+				this.sstime = this.ScheduleTagData!.starttime.split(" ")[1].split(":")[0];
+				this.ssminute = this.ScheduleTagData!.starttime.split(" ")[1].split(":")[1];
+				this.sendtime = this.ScheduleTagData!.endtime.split(" ")[1].split(":")[0];
+				this.sendminute = this.ScheduleTagData!.endtime.split(" ")[1].split(":")[1];
+			}
+
+			const sdata: Data = {
+				sstime: this.sstime,
+				ssminute: this.ssminute,
+				sendtime: this.sendtime,
+				sendminute: this.sendminute
+			};
+
+			return sdata;
 		}
 	}
 });
