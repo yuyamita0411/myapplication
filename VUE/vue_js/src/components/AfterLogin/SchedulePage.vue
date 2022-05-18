@@ -141,7 +141,7 @@
 									class="paginationarea d-flex pt-4 col-12 col-lg-4 m-auto float-left"
 									>
 										<p
-										v-for="obj in MakePagenation(PageAmount, PageNow)" :key="obj"
+										v-for="obj in calculate.MakePagenation(Pjson, PageAmount, PageNow)" :key="obj"
 										:id="obj.PId"
 										:class="obj.PClass"
 										@click="PageMotion">
@@ -281,90 +281,7 @@ export default defineComponent({
         PageMotion(e:any){
 			this.PageNow = Number(e.target.innerText);
 			this.MakeSearchParam();
-        },
-		MakePagenation(amount:number, PageNow:number){
-            interface PInfo {
-				PId: string;
-                PClass: string;
-                PTxt: any;
-			}
-
-			this.Pjson = [{}];
-			for(let i = 1; i <= amount; i++){
-				const Pnow = Number(PageNow);
-				var PInow: PInfo = {
-					PId: "",
-					PClass: "d-none",
-					PTxt:i
-				}
-				if(i < 3){
-					if(i == Pnow){
-						PInow = {
-							PId: "",
-							PClass: "pagenationnum PageNow PageNationNum cursor w-100 text-center p-1",
-							PTxt:i
-						}
-					}else{
-						PInow = {
-							PId: "",
-							PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
-							PTxt:i
-						}
-					}
-				}
-
-				if(3 <= i){
-					if(i == Pnow - 1){
-						PInow = {
-							PId: "",
-							PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
-							PTxt:i
-						}
-					}
-					if(i == Pnow){
-						PInow = {
-							PId: "",
-							PClass: "pagenationnum PageNow PageNationNum cursor w-100 text-center p-1",
-							PTxt:i
-						}
-					}
-					if(i == Pnow + 1){
-						PInow = {
-							PId: "",
-							PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
-							PTxt:i
-						}
-					}
-				}
-
-				if(i == Pnow + 2 || i == Pnow - 2 && i != 1){
-					PInow = {
-						PId: "",
-						PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
-						PTxt:"..."
-					}
-				}
-
-				if(i == amount && amount - 1 > Pnow){
-					PInow = {
-						PId: "PageLastNum",
-						PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
-						PTxt:i
-					}
-				}
-
-				if(i == 1 && i != Pnow){
-					PInow = {
-						PId: "",
-						PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
-						PTxt:i
-					}
-				}
-
-				this.Pjson.push(PInow);
-			}
-			return this.Pjson;
-		}
+        }
 	},
 	mounted(){
 		//マウント時はパラメータの有無を確認。

@@ -44,7 +44,7 @@
                         :class="`paginationarea d-flex pt-4 col-12 col-lg-4 m-auto float-left ${this.loadpn}`"
                         >
                             <p
-                            v-for="obj in MakePagenation(PageAmount, PageNow)" :key="obj"
+                            v-for="obj in calculate.MakePagenation(Pjson, PageAmount, PageNow)" :key="obj"
                             :id="obj.PId"
                             :class="obj.PClass"
                             @click="PageMotion">
@@ -63,6 +63,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import {GetData} from "../../http";
+import {Calculate} from "../../calculate";
 import LoginIconview from '@/components/common/LoadingIcon.vue';
 import {PageNation} from "../../Pagenation";
 
@@ -79,7 +80,8 @@ export default defineComponent({
             PageAmount:0,
             Pjson:[{}],
             pagenation:"",
-            onlyint:/^[0-9]*$/
+            onlyint:/^[0-9]*$/,
+            calculate:new Calculate()
         };
     },
     components: {
@@ -140,90 +142,7 @@ export default defineComponent({
         PageMotion(e:any){
 			this.PageNow = Number(e.target.innerText);
 			this.rebaseNotification(this.PageNow);
-        },
-		MakePagenation(amount:number, PageNow:number){
-            interface PInfo {
-				PId: string;
-                PClass: string;
-                PTxt: any;
-			}
-
-			this.Pjson = [{}];
-			for(let i = 1; i <= amount; i++){
-				const Pnow = Number(PageNow);
-				var PInow: PInfo = {
-					PId: "",
-					PClass: "d-none",
-					PTxt:i
-				}
-				if(i < 3){
-					if(i == Pnow){
-						PInow = {
-							PId: "",
-							PClass: "pagenationnum PageNow PageNationNum cursor w-100 text-center p-1",
-							PTxt:i
-						}
-					}else{
-						PInow = {
-							PId: "",
-							PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
-							PTxt:i
-						}
-					}
-				}
-
-				if(3 <= i){
-					if(i == Pnow - 1){
-						PInow = {
-							PId: "",
-							PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
-							PTxt:i
-						}
-					}
-					if(i == Pnow){
-						PInow = {
-							PId: "",
-							PClass: "pagenationnum PageNow PageNationNum cursor w-100 text-center p-1",
-							PTxt:i
-						}
-					}
-					if(i == Pnow + 1){
-						PInow = {
-							PId: "",
-							PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
-							PTxt:i
-						}
-					}
-				}
-
-				if(i == Pnow + 3 || i == Pnow - 3 && i != 1){
-					PInow = {
-						PId: "",
-						PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
-						PTxt:"..."
-					}
-				}
-
-				if(i == amount && amount - 1 > Pnow){
-					PInow = {
-						PId: "PageLastNum",
-						PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
-						PTxt:i
-					}
-				}
-
-				if(i == 1 && i != Pnow){
-					PInow = {
-						PId: "",
-						PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
-						PTxt:i
-					}
-				}
-
-				this.Pjson.push(PInow);
-			}
-			return this.Pjson;
-		}
+        }
     },
     props: {
         msg: String

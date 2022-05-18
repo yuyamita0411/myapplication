@@ -38,4 +38,88 @@ export class Calculate{
     CSNum(str:string){
         return Math.floor(16 * (window.innerWidth / 550));
     }
+    MakePagenation(Pjson:any, amount:number, PageNow:number){
+        interface PInfo {
+            PId: string;
+            PClass: string;
+            PTxt: any;
+        }
+
+        Pjson = [{}];
+        for(let i = 1; i <= amount; i++){
+            const Pnow = Number(PageNow);
+            let PInow: PInfo = {
+                PId: "",
+                PClass: "d-none",
+                PTxt:i
+            }
+            if(i < 3){
+                if(i == Pnow){
+                    PInow = {
+                        PId: "",
+                        PClass: "pagenationnum PageNow PageNationNum cursor w-100 text-center p-1",
+                        PTxt:i
+                    }
+                }else{
+                    PInow = {
+                        PId: "",
+                        PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
+                        PTxt:i
+                    }
+                }
+            }
+
+            if(3 <= i){
+                if(i == Pnow - 1){
+                    PInow = {
+                        PId: "",
+                        PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
+                        PTxt:i
+                    }
+                }
+                if(i == Pnow){
+                    PInow = {
+                        PId: "",
+                        PClass: "pagenationnum PageNow PageNationNum cursor w-100 text-center p-1",
+                        PTxt:i
+                    }
+                }
+                if(i == Pnow + 1){
+                    PInow = {
+                        PId: "",
+                        PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
+                        PTxt:i
+                    }
+                }
+            }
+
+            if(i == Pnow + 2 || i == Pnow - 2 && i != 1){
+                PInow = {
+                    PId: "",
+                    PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
+                    PTxt:"..."
+                }
+            }
+
+            if(i == amount && amount - 1 > Pnow){
+                PInow = {
+                    PId: "PageLastNum",
+                    PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
+                    PTxt:i
+                }
+            }
+
+            if(i == 1 && i != Pnow){
+                PInow = {
+                    PId: "",
+                    PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
+                    PTxt:i
+                }
+            }
+
+            Pjson.push(PInow);
+        }
+        return Pjson;
+    }
+
 }
