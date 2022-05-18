@@ -162,7 +162,6 @@
 import { defineComponent } from 'vue';
 import CalenderView from '@/components/AfterLogin/parts/Schedule/Calender.vue';
 import SPCalenderView from '@/components/AfterLogin/parts/Schedule/SPCalender.vue';
-import http from "@/views/ts/http";
 import {GetData} from "../../http";
 import {Calculate} from "../../calculate";
 

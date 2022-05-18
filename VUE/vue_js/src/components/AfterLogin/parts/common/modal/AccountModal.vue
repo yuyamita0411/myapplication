@@ -36,7 +36,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import router from '../../../../router'
+import router from '../../../../../router'
 import http from "@/views/ts/http";
 
 export default defineComponent({

@@ -107,7 +107,7 @@ import DashboardView from '@/components/AfterLogin/Dashboard.vue';
 import ScheduleView from '@/components/AfterLogin/SchedulePage.vue';
 import GroupInfoView from '@/components/AfterLogin/GroupInfo.vue';
 import TaskInfoView from '@/components/AfterLogin/TaskInfoView.vue';
-import AccountModal from '@/components/AfterLogin/parts/modal/AccountModal.vue';
+import AccountModal from '@/components/AfterLogin/parts/common/modal/AccountModal.vue';
 
 export default defineComponent({
     name: 'AfterLoginView',
