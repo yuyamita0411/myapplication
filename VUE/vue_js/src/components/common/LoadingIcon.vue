@@ -26,12 +26,8 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Component, Prop, Vue } from 'vue-property-decorator';
 
 export default defineComponent({
-    setup(props, context) {
-        console.log("setup!!");
-    },
     name: 'LoginIconview',
     data() {
         return {

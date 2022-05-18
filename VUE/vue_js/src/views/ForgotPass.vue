@@ -6,7 +6,7 @@
     </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, reactive, onMounted } from 'vue'
+import { defineComponent } from 'vue'
 import ForgotPassPage from '@/components/Login/ForgotPassPage.vue';
 
 export default defineComponent({

@@ -26,3 +26,11 @@ composer require laravel/sanctum
 php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
 composer require laravel/ui
 php artisan ui vue --auth
+
+
+# 要修正テンプレート
+AfterLogin.vue
+SchedulePage.vue
+Calender.vue
+SPCalender.vue
+ScheduleModal.vue

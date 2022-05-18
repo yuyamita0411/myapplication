@@ -15,9 +15,6 @@ import RegisterPage from '@/components/Login/RegisterPage.vue';
 
 export default defineComponent({
     name: 'BeforeLoginView',
-    updated(){
-        console.log("aa");
-    },
     components: {
         ForgotPassPage,
         LoginPage,

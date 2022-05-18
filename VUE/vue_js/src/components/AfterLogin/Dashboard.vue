@@ -65,7 +65,6 @@ import { defineComponent } from 'vue';
 import {GetData} from "../../http";
 import {Calculate} from "../../calculate";
 import LoginIconview from '@/components/common/LoadingIcon.vue';
-import {PageNation} from "../../Pagenation";
 
 export default defineComponent({
     name: 'DashboardView',
@@ -118,8 +117,6 @@ export default defineComponent({
                     }
                     this.notificationarr = objarr;
 
-                    //this.pagenation = PageNation.MakePagenation(this.PageAmount, this.PageNow);
-
                     //読み込みが完全に終わってからカバーを外す
                     this.loadingstatus = false;
                     this.loadstatus = 'op1';
@@ -150,7 +147,6 @@ export default defineComponent({
     mounted(){
         const http = new GetData();
         this.rebaseNotification(this.PageNow);
-        //this.pagenation = PageNation.MakePagenation(this.PageAmount, this.PageNow);
     }
 });
 </script>

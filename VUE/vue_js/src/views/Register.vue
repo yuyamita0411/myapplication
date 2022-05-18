@@ -6,7 +6,7 @@
     </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, reactive, onMounted } from 'vue'
+import { defineComponent } from 'vue'
 import RegisterPage from '@/components/Login/RegisterPage.vue';
 
 export default defineComponent({

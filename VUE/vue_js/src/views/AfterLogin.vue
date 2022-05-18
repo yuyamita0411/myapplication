@@ -46,28 +46,28 @@
                     <div
                         class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-2 text-md-center"
                         data-tooltip="ダッシュボード"
-                        @click="dashboard"
+                        @click="movepage('/dashboard')"
                     >
                         <img src="@/assets/homeicon.png" class="sidebaricon p-2">
                     </div>
                     <div
                         class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-2 text-md-center"
                         data-tooltip="スケジュール"
-                        @click="schedule"
+                        @click="movepage('schedule')"
                     >
                         <img src="@/assets/Schedule.png" class="sidebaricon p-2">
                     </div>
                     <div
                         class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-2 text-md-center"
                         data-tooltip="グループ"
-                        @click="groupinfo"
+                        @click="movepage('groupinfo')"
                     >
                         <img src="@/assets/groupicon.png" class="sidebaricon p-2">
                     </div>
                     <div
                         class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-md-2 text-md-center"
                         data-tooltip="タスク進捗"
-                        @click="taskinfo"
+                        @click="movepage('taskinfo')"
                     >
                         <img src="@/assets/taskicon.png" class="sidebaricon p-2">
                     </div>
@@ -92,9 +92,6 @@
             </div>
         </div>
 
-<!-- 共通モーダル -->
-<!-- 共通モーダル -->
-
     </div>
     <div id="logoutmodalcover" :class="Amodalclass" @click="AmodalClose"></div>
 
@@ -103,8 +100,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import http from "@/views/ts/http";
 import {GetData} from "../http";
 import LoginIconview from '@/components/common/LoadingIcon.vue';
 
@@ -115,11 +110,6 @@ import TaskInfoView from '@/components/AfterLogin/TaskInfoView.vue';
 import AccountModal from '@/components/AfterLogin/parts/modal/AccountModal.vue';
 
 export default defineComponent({
-    setup(props, context) {
-        const execEmit = () => {
-            context.emit('eventTest2', 'パラメータ1', 'パラメータ2');
-        }
-    },
     name: 'AfterLoginView',
     data() {
         return {
@@ -154,31 +144,17 @@ export default defineComponent({
         );
     },
     methods: {
-        dashboard(){
-            this.$router.push('/dashboard');
-            setTimeout(() => {this.urlnow = location.pathname;});
-        },
-        schedule(){
-            this.$router.push('/schedule');
-            setTimeout(() => {this.urlnow = location.pathname;});
-        },
-        groupinfo(){
-            this.$router.push('/groupinfo');
-            setTimeout(() => {this.urlnow = location.pathname;});
-        },
-        taskinfo(){
-            this.$router.push('/taskinfo');
+        movepage(where:string){
+            this.$router.push(where);
             setTimeout(() => {this.urlnow = location.pathname;});
         },
         AmodalOpen(){
             this.Amodalclass = "logoutmodalcover position-fixed cursor modalcover_open";
-            //vue.の書き方にできれば変えたい
             document.getElementById('logoutmodal')!.classList.toggle("modal_close");
             document.getElementById('logoutmodal')!.classList.toggle("modal_open");
         },
         AmodalClose(){
             this.Amodalclass = "logoutmodalcover position-fixed cursor modalcover_close";
-            //vue.の書き方にできれば変えたい
             document.getElementById('logoutmodal')!.classList.toggle("modal_close");
             document.getElementById('logoutmodal')!.classList.toggle("modal_open");
         },

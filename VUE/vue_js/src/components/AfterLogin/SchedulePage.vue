@@ -165,7 +165,6 @@ import SPCalenderView from '@/components/AfterLogin/parts/Schedule/SPCalender.vu
 import http from "@/views/ts/http";
 import {GetData} from "../../http";
 import {Calculate} from "../../calculate";
-import {PageNation} from "../../Pagenation";
 
 export default defineComponent({
 	name: 'ScheduleView',

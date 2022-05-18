@@ -50,15 +50,6 @@
                     </button>
                 </div>
 
-                <div class="col-12 col-lg-10 m-auto pb-4">
-                    <button
-                    type="submit"
-                    class="inportbutton w-100 d-inline-block b-none text-white text-center font-weight-bold p-2 cursor br5px"
-                    @click="CheckAccesstoken">
-                        トークン確認
-                    </button>
-                </div>
-
                 <div class="d-inline-block w-100">
                     <router-link class="d-inline-block font-weight-bold" to="/password/forgot">パスワードを忘れた方はこちら</router-link>
                 </div>
@@ -73,7 +64,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import http from "@/views/ts/http";
-import router from '../../router'
 
 export default defineComponent({
     name: 'LoginPage',
@@ -115,23 +105,7 @@ export default defineComponent({
                 console.log(error);
                 this.mailorpasswrong = error.data.WrongMsg;
             });
-        },
-        CheckAccesstoken(): Promise<any> {
-            return http.get(
-            "/api/check/auth/accesstoken",
-            {
-                //アクセスする時はローカルストレージに保存されたアクセストークンをリクエストヘッダに入れてlaravel側のAuth::userで照合する。
-                headers: {
-                    Authorization: `Bearer ${this.token}`
-                }
-            })
-            .then(response => {
-                console.log(localStorage.getItem('access_token'));
-            })
-            .catch(error => {
-                console.log(error);
-            });
-        },
+        }
     },
 
 });

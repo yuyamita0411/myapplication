@@ -1,6 +1,5 @@
 export class Calculate{
-    MDFI(obj:any, plus:number){
-        //一旦変数に入れる。
+    MDFI(obj:string, plus:number){
         const Dobj = new Date(obj);
         const returnobj = new Date(Dobj.setDate(Dobj.getDate() + plus));
         return returnobj;
@@ -17,7 +16,7 @@ export class Calculate{
             return;
         }
 
-        const planedate:any = `${starttime.split(" ")[0].replace("-", "/").replace("-", "/")} 09:00:00`,//当日の0時 2022/04/11
+        const planedate = `${starttime.split(" ")[0].replace("-", "/").replace("-", "/")} 09:00:00`,//当日の0時 2022/04/11
         sstart:string = starttime.replace("-", "/").replace("-", "/"),//文字
         ssend:string = endtime.replace("-", "/").replace("-", "/"),//文字
 
@@ -53,38 +52,27 @@ export class Calculate{
                 PClass: "d-none",
                 PTxt:i
             }
-            if(i < 3){
-                if(i == Pnow){
-                    PInow.PClass = "pagenationnum PageNow PageNationNum cursor w-100 text-center p-1";
-                }else{
-                    PInow.PClass = "pagenationnum PageNationNum cursor w-100 text-center p-1";
-                }
+            if((i < 3 && i == Pnow) || (3 <= i && i == Pnow)){
+                PInow.PClass = "pagenationnum PageNow PageNationNum cursor w-100 text-center p-1";
             }
-
-            if(3 <= i){
-                if(i == Pnow - 1){
-                    PInow.PClass = "pagenationnum PageNationNum cursor w-100 text-center p-1";
-                }
-                if(i == Pnow){
-                    PInow.PClass = "pagenationnum PageNow PageNationNum cursor w-100 text-center p-1";
-                }
-                if(i == Pnow + 1){
-                    PInow.PClass = "pagenationnum PageNationNum cursor w-100 text-center p-1";
-                }
+            if(
+                (i < 3 && i != Pnow) || 
+                (3 <= i && i == Pnow - 1) || 
+                (3 <= i && i == Pnow + 1) ||
+                i == Pnow + 2 ||
+                i == Pnow - 2 && i != 1 ||
+                (i == amount && amount - 1 > Pnow) ||
+                (i == 1 && i != Pnow)
+            ){
+                PInow.PClass = "pagenationnum PageNationNum cursor w-100 text-center p-1";
             }
 
             if(i == Pnow + 2 || i == Pnow - 2 && i != 1){
                 PInow.PTxt = "...";
-                PInow.PClass = "pagenationnum PageNationNum cursor w-100 text-center p-1";
             }
 
             if(i == amount && amount - 1 > Pnow){
                 PInow.PId = "PageLastNum";
-                PInow.PClass = "pagenationnum PageNationNum cursor w-100 text-center p-1";
-            }
-
-            if(i == 1 && i != Pnow){
-                PInow.PClass = "pagenationnum PageNationNum cursor w-100 text-center p-1";
             }
 
             Pjson.push(PInow);
