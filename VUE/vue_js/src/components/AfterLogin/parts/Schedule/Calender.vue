@@ -1,5 +1,5 @@
 <template>
-    <div id="ScheduleWrapper" :class="`position-relative ${scheduleborder}`">
+    <div id="ScheduleWrapper" :class="`position-relative ${scheduleborder} mb-1`">
     <LoginIconview class="calenderloading w-100 d-inline-block text-center" v-if="loadingstatus == true" />
         <div class="myschedulearea" id="MyScheduleArea"></div>
         <div id="UserScheduleArea" :class="`schedulearea ${loadstatus}`">
@@ -137,7 +137,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 #loadingarea{
     left:50%;
 }
@@ -159,9 +159,22 @@ export default defineComponent({
 .slengtharea2{
     background: rgba(24, 71, 182, 0.3);
 }
+.calenderloading {
+	position: absolute;
+	transform: scale(0.7);
+}
+#UserScheduleArea>div:nth-child(2n)>div:not(.mycolor) {
+	background: rgb(0, 0, 0, 0.03);
+}
+#UserScheduleArea>div:nth-child(2n+1)>div:not(.mycolor) {
+	background: #ffff;
+}
 @media (min-width: 768px) {
 	.scheduleborder {
 		box-shadow: 0px 0px 3px 0px rgb(0, 0, 0, 0.1);
+	}
+	#DayArea>div>div:not(:nth-child(8)), #UserScheduleArea > div > div > div:not(:nth-child(8)) {
+		border-right: solid 0.5px rgb(0, 0, 0, 0.1);
 	}
 }
 </style>

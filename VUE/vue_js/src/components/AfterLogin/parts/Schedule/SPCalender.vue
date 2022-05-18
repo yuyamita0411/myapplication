@@ -5,36 +5,35 @@
 		<div id="UserScheduleArea" :class="`schedulearea ${loadstatus}`">
 
 			<div
-			class="b-gray d-inline-block w-100 mb-3"
 			v-for="(sdata, skey) in ScheduleData" :key="skey"
+			:class="`${sdata[0].name ? 'scheduleborder d-inline-block w-100 mb-3' : 'd-none'}`"
 			>
 				<div
 				class="d-inline-block w-100"
 				v-if="sdata[0].name"
 				>
 					<div
-					class="bbgray bgray w-100 d-inline-block text-left pt-2 pb-2 pl-4">
+					class="Carea w-100 d-inline-block text-left pt-2 pb-2 pl-4">
 						<img class="searchicon" src="@/assets/personicon.png">
 						{{sdata[0].name}}
 					</div>
 					<div
 					v-for="i in 7" :key="i"
-					class="bbgray w-100 d-flex"
+					class="userssp w-100 d-flex"
 					>
 
 						<div
-						:class="`${Daycolor[DweekArr[new Date(calculate.MDFI(date, i-1)).getDay()]]} col-2 d-inline-block text-center float-left pt-1 pb-1 cursor`"
+						:class="`${Daycolor[DweekArr[new Date(calculate.MDFI(date, i-1)).getDay()]]} 
+						SPdatearea col-2 d-inline-block text-center float-left pt-1 pb-1 cursor`"
 						>
 						{{new Date(calculate.MDFI(date, i-1)).getDate()}}
 						({{DweekArr[new Date(calculate.MDFI(date, i-1)).getDay()]}})
 						</div>
 
-						<div class="borderleftgray schedulespdic col-10 d-inline-block text-left float-right pt-1 pb-1 pl-1 pr-1 bg-white position-relative">
-							<small
-							v-for="edata in sdata" :key="edata"
-							class="w-100 d-inline-block position-relative float-left"
-							>
-								<span
+						<div class="schedulespdic col-10 d-inline-block text-left float-right p-0 position-relative">
+
+								<small
+								v-for="edata in sdata" :key="edata"
 								:class="`
 								${
 									edata.starttime &&
@@ -42,13 +41,14 @@
 									==
 									`${calculate.MDFI(date, i-1).getFullYear()}-${calculate.ReturnDMFormat(new Date(calculate.MDFI(date, i-1)).getMonth()+1)}-${calculate.ReturnDMFormat(new Date(calculate.MDFI(date, i-1)).getDate())}`
 									?
-									'editsceduleicon cursor d-inline-block w-100 mb-1 position-relative z1'
+									'editsceduleicon cursor d-inline-block w-100 position-relative float-left z1'
 									:
 									'd-none'
 								}
 								`"
 								>
-									<span class="sleft d-inline-block float-left">
+									<span
+									class="sleft d-inline-block pt-2 pb-2 pl-1">
 										<img
 										src="@/assets/orangepenicon.png"
 										class="rebaseschedule orangepenicon"
@@ -72,20 +72,19 @@
 											<span v-for="(width, index) in calculate.GetScheduleMarkRange(edata.starttime, edata.endtime)" :key="width"
 											:class="`slengtharea${index + 1} d-inline-block float-left`" :style="`width:${width}%;`"></span>
 									</span>
-								</span>
-							</small>
-							<div class="d-inline-block w-100">
-								<button
-								type="button"
-								:id="`ScheduleId-${sdata[0].id}`"
-								:data-setscheduleinfo="`${calculate.MDFI(date, i-1).getFullYear()}/${calculate.ReturnDMFormat(new Date(calculate.MDFI(date, i-1)).getMonth()+1)}/${calculate.ReturnDMFormat(new Date(calculate.MDFI(date, i-1)).getDate())}`"
-								:data-buttonuserid="`${sdata[0].id}`"
-								data-tooltip="スケジュールを追加する"
-								class="calenderBtn tooltip-left bg-white cursor b-none p-0 float-right"
-								@click="ModalMotion"
-								>
-								</button>
-							</div>
+								</small>
+								<div class="calenderBtnWrapper d-inline-block w-100 z1 bg-white">
+									<button
+									type="button"
+									:id="`ScheduleId-${sdata[0].id}`"
+									:data-setscheduleinfo="`${calculate.MDFI(date, i-1).getFullYear()}/${calculate.ReturnDMFormat(new Date(calculate.MDFI(date, i-1)).getMonth()+1)}/${calculate.ReturnDMFormat(new Date(calculate.MDFI(date, i-1)).getDate())}`"
+									:data-buttonuserid="`${sdata[0].id}`"
+									data-tooltip="スケジュールを追加する"
+									class="calenderBtn tooltip-left bg-white cursor b-none p-0 float-right position-absolute"
+									@click="ModalMotion"
+									>
+									</button>
+								</div>
 						</div>
 					</div>
 				</div>
@@ -162,7 +161,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .timerangecover{
 	z-index:-1;
-	height:1.25rem;
+	height:2rem;
 	width:100%;
 	bottom:0;
 	right:0;
@@ -175,7 +174,7 @@ export default defineComponent({
 .slengtharea1,
 .slengtharea2,
 .slengtharea3{
-    height: 1.25rem;
+    height: 2rem;
 }
 
 .slengtharea{
@@ -186,11 +185,68 @@ export default defineComponent({
 .slengtharea2{
     background: rgba(24, 71, 182, 0.3);
 }
-
+.calenderloading {
+	position: absolute;
+	transform: scale(0.7);
+}
+.sleft{
+	height:2rem;
+}
 .sleft{
 	width:40%;
 }
 .sright{
-	width:60%;
+	width:58%;
+}
+#UserScheduleArea>div:nth-child(2n)>div:not(.mycolor) > div:nth-child(1){
+	background: rgb(0, 0, 0, 0.03);
+}
+#UserScheduleArea>div:nth-child(2n+1)>div:not(.mycolor) > div:nth-child(1){
+	background: #ffff;
+}
+.saturdayBG {
+	background: #E8EEFB;
+}
+.sundayBG {
+	background: #FFE5E5;
+}
+.SuturdayColor {
+	color: #0069d9;
+}
+.SaturdayColor {
+	background: rgb(24, 71, 182, 0.1);
+	color: #0069d9;
+}
+.SundayColor {
+	background: rgb(255, 183, 90, 0.1);
+	color: rgb(255, 183, 90, 1);
+}
+.scheduleborder {
+	box-shadow: 0px 0px 3px 0px rgb(0, 0, 0, 0.1);
+}
+.Carea {
+	box-shadow: 0px 0px 3px 0px rgb(0, 0, 0, 0.1);
+}
+.timerangecover,
+.sleft,
+.userssp{
+	border-bottom: solid 0.5px rgba(0, 0, 0, 0.1);
+}
+.sleft{
+	background: rgba(0, 0, 0, 0.02);
+}
+.calenderBtnWrapper{
+	position: sticky;
+	position: -webkit-sticky;
+	right: 0;
+	bottom:
+	0;
+}
+.calenderBtnWrapper{
+	height:1.5rem;
+	border-top: double 3px rgba(0, 0, 0, 0.1);
+}
+.SPdatearea{
+	border-right: solid 0.5px rgba(0, 0, 0, 0.1);
 }
 </style>

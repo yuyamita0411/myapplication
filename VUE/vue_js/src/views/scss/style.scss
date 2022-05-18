@@ -1120,7 +1120,7 @@ input[name="newtore"]:checked + label{
         height: 1.25rem;
     }
     #dashboardnemue{
-        margin-top:3rem;
+        margin-top:2.5rem;
     }
     #sidebar > div:nth-child(1){
         margin-top:2rem;
@@ -1199,5 +1199,8 @@ input[name="newtore"]:checked + label{
     }
     .sidebar{
         cursor: pointer;
+    }
+    .orangepenicon{
+        padding: 2px;
     }
 }

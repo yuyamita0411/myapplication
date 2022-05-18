@@ -462,7 +462,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 #ScheduleModal{
     height:calc(100vh - 4rem);
 }
@@ -548,6 +548,21 @@ export default defineComponent({
 }
 .Scheduleloading{
     transform:scale(0.7);
+}
+#starthourmenu, #startminutemenu, #endhourmenu, #endminutemenu {
+	left: 0;
+	overflow: scroll;
+	height: 8rem;
+	z-index: 1;
+}
+.menuhide {
+	opacity: 0;
+}
+.menushow {
+	opacity: 1;
+}
+.menuhide, .menushow {
+	transition: opacity 0.5s;
 }
 @media (min-width: 768px){
     .ScheduleModalopen,
