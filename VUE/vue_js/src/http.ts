@@ -1,7 +1,18 @@
-import http from "@/views/ts/http";
+import axios, { AxiosInstance } from "axios";
+
+const apiClient: AxiosInstance = axios.create({
+    //本番反映の際はここを本番のドメインに変える
+    baseURL: "https://localhost:8081",
+    headers: {
+        "Content-type": "application/json",
+    },
+});
+
+export default apiClient;
+
 export class GetData {
     async common(url:string, data:any, callback:any): Promise<any> {
-        return http.get(
+        return axios.get(
             url,
             {
                 headers: {
@@ -18,8 +29,8 @@ export class GetData {
         });
     }
     async Postcommon(url:string, data:any, callback:any): Promise<any> {
-        http.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('access_token')!}`;
-        return http.post(
+        axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('access_token')!}`;
+        return axios.post(
             url,
             data
         )

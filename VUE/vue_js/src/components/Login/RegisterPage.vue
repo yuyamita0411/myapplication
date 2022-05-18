@@ -156,7 +156,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import http from "@/views/ts/http";
+import http from "@/http";
 
 export default defineComponent({
     name: 'RegisterPage',

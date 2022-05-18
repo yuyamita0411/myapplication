@@ -37,7 +37,7 @@
 import { defineComponent } from 'vue';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import router from '../../../../../router'
-import http from "@/views/ts/http";
+import http from "@/http";
 
 export default defineComponent({
     name: 'AccountModal',
