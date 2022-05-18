@@ -48,73 +48,43 @@ export class Calculate{
         Pjson = [{}];
         for(let i = 1; i <= amount; i++){
             const Pnow = Number(PageNow);
-            let PInow: PInfo = {
+            const PInow: PInfo = {
                 PId: "",
                 PClass: "d-none",
                 PTxt:i
             }
             if(i < 3){
                 if(i == Pnow){
-                    PInow = {
-                        PId: "",
-                        PClass: "pagenationnum PageNow PageNationNum cursor w-100 text-center p-1",
-                        PTxt:i
-                    }
+                    PInow.PClass = "pagenationnum PageNow PageNationNum cursor w-100 text-center p-1";
                 }else{
-                    PInow = {
-                        PId: "",
-                        PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
-                        PTxt:i
-                    }
+                    PInow.PClass = "pagenationnum PageNationNum cursor w-100 text-center p-1";
                 }
             }
 
             if(3 <= i){
                 if(i == Pnow - 1){
-                    PInow = {
-                        PId: "",
-                        PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
-                        PTxt:i
-                    }
+                    PInow.PClass = "pagenationnum PageNationNum cursor w-100 text-center p-1";
                 }
                 if(i == Pnow){
-                    PInow = {
-                        PId: "",
-                        PClass: "pagenationnum PageNow PageNationNum cursor w-100 text-center p-1",
-                        PTxt:i
-                    }
+                    PInow.PClass = "pagenationnum PageNow PageNationNum cursor w-100 text-center p-1";
                 }
                 if(i == Pnow + 1){
-                    PInow = {
-                        PId: "",
-                        PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
-                        PTxt:i
-                    }
+                    PInow.PClass = "pagenationnum PageNationNum cursor w-100 text-center p-1";
                 }
             }
 
             if(i == Pnow + 2 || i == Pnow - 2 && i != 1){
-                PInow = {
-                    PId: "",
-                    PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
-                    PTxt:"..."
-                }
+                PInow.PTxt = "...";
+                PInow.PClass = "pagenationnum PageNationNum cursor w-100 text-center p-1";
             }
 
             if(i == amount && amount - 1 > Pnow){
-                PInow = {
-                    PId: "PageLastNum",
-                    PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
-                    PTxt:i
-                }
+                PInow.PId = "PageLastNum";
+                PInow.PClass = "pagenationnum PageNationNum cursor w-100 text-center p-1";
             }
 
             if(i == 1 && i != Pnow){
-                PInow = {
-                    PId: "",
-                    PClass: "pagenationnum PageNationNum cursor w-100 text-center p-1",
-                    PTxt:i
-                }
+                PInow.PClass = "pagenationnum PageNationNum cursor w-100 text-center p-1";
             }
 
             Pjson.push(PInow);
