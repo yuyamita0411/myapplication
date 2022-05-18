@@ -24,7 +24,7 @@
 										<div
 										@click="OpenScheduleStartTime"
 										class="starthour buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id="">
-											{{sstime}}
+											{{ScheduleTagData.sstime}}
 										</div>
 										<div class="Scaccordion position-absolute bg-white menuhide zm1 gridinside" id="">
 											<div
@@ -40,7 +40,7 @@
 										<div
 										@click="OpenScheduleStartMinute"
 										class="startminute buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id="">
-											{{ssminute}}
+											{{ScheduleTagData.ssminute}}
 										</div>
 										<div class="Scaccordion position-absolute bg-white menuhide zm1 gridinside" id="">
 											<div
@@ -56,7 +56,7 @@
 										<div
 										@click="OpenScheduleEndTime"
 										class="endhour buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id="">
-											{{sendtime}}
+											{{ScheduleTagData.sendtime}}
 										</div>
 										<div class="Scaccordion position-absolute bg-white menuhide zm1 gridinside" id="">
 											<div
@@ -72,7 +72,7 @@
 										<div
 										@click="OpenScheduleEndMinute"
 										class="endminute buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id="">
-											{{sendminute}}
+											{{ScheduleTagData.sendminute}}
 										</div>
 										<div class="Scaccordion position-absolute bg-white menuhide zm1 gridinside" id="">
 											<div
@@ -159,7 +159,7 @@
 								</div>
 <!-- 条件分岐 -->
                                 <div
-                                v-if="ScheduleTagData.alreadyaddeduser"
+                                v-if="ScheduleTagData.alreadyaddeduser && ScheduleTagData.alreadyaddeduser.length != 0"
                                 id="" class="col-12 mb-0 d-inline-block">
                                     <h5 class="mainfontcolor w-100 pt-4 pb-1 mb-2">既に追加されたメンバー</h5>
                                     <div
@@ -245,12 +245,17 @@ import LoginIconview from '@/components/common/LoadingIcon.vue';
 
 export default defineComponent({
     name: 'ScheduleModal',
+	props:{
+		ScheduleTagData:Object,
+		modaltitle:String
+	},
+
     data() {
         return {
-            sstime:"09",
-			ssminute:"00",
-			sendtime:"10",
-			sendminute:"00",
+            sstime: this.ScheduleTagData!.sstime,
+			ssminute: this.ScheduleTagData!.ssminute,
+			sendtime: this.ScheduleTagData!.sendtime,
+			sendminute: this.ScheduleTagData!.sendminute,
 			addscheduletitle:"",
 			addscheduledescription:"",
 			searchuser:[],
@@ -264,11 +269,6 @@ export default defineComponent({
 			calculate:new Calculate()
         };
     },
-
-	props:{
-		ScheduleTagData:Object,
-		modaltitle:String
-	},
 	components:{
 		LoginIconview
 	},
@@ -332,21 +332,25 @@ export default defineComponent({
 		GetSStartTime(e:any){
 			var t = e.target as HTMLElement;
             this.sstime = t.innerText;
+			this.ScheduleTagData!.sstime = t.innerText;
 			this.TmodalParentMotion(e);
 		},
 		GetSStartMinute(e:any){
 			var t = e.target as HTMLElement;
 			this.ssminute = t.innerText;
+			this.ScheduleTagData!.ssminute = t.innerText;
 			this.TmodalParentMotion(e);
 		},
 		GetSendTime(e:any){
 			var t = e.target as HTMLElement;
 			this.sendtime = t.innerText;
+			this.ScheduleTagData!.sendtime = t.innerText;
 			this.TmodalParentMotion(e);
 		},
 		GetSendMinute(e:any){
 			var t = e.target as HTMLElement;
 			this.sendminute = t.innerText;
+			this.ScheduleTagData!.sendminute = t.innerText;
 			this.TmodalParentMotion(e);
 		},
 		InputTitle(e:any){
@@ -457,7 +461,7 @@ export default defineComponent({
                     console.log(res);
                 }
             );
-		},
+		}
 	}
 });
 </script>

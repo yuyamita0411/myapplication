@@ -78,6 +78,7 @@
     <ScheduleModal
     :ScheduleTagData="ScheduleTagData"
     :modaltitle="modaltitle"
+    :modalstatus="modalstatus"
     />
 </template>
 
@@ -85,7 +86,6 @@
 import { defineComponent, createApp } from 'vue';
 import {GetData} from "@/http";
 import {Calculate} from "@/calculate";
-import {Dataformat} from "@/dataformat";
 import LoginIconview from '@/components/common/LoadingIcon.vue';
 import ScheduleModal from '@/components/AfterLogin/parts/Schedule/modal/ScheduleModal.vue';
 
@@ -104,7 +104,7 @@ export default defineComponent({
             ScheduleTagData:{},
             modaltitle:"",
             calculate:new Calculate(),
-            dformat:new Dataformat()
+            modalstatus:false
         };
     },
     components: {
@@ -113,8 +113,49 @@ export default defineComponent({
     },
     methods:{
         ModalMotion(e:any){
-            this.ScheduleTagData = this.dformat.schedulemodalformat(e);
             this.modaltitle = e.target.dataset.tooltip;
+
+            interface STagFormat {
+                startdate: string;
+                userid: string;
+                mailaddress: string;
+                createdat: string;
+                scheduleid: string;
+                title: string;
+                description: string;
+                setscheduleinfo: string;
+                starttime: string;
+                sstime: string;
+                ssminute: string;
+                sendtime: string;
+                sendminute: string;
+                endtime: string;
+                taskid: string;
+                alreadyaddeduser: any;
+            }
+            const stag: STagFormat = {
+                startdate: e.target.dataset.setscheduleinfo,
+                userid: e.target.dataset.buttonuserid,
+                mailaddress: e.target.dataset.mailaddress,
+                createdat: e.target.dataset.createdat,
+                scheduleid: e.target.dataset.scheduleid,
+                title: e.target.dataset.title,
+                description: e.target.dataset.description,
+                setscheduleinfo: e.target.dataset.setscheduleinfo,
+                starttime: e.target.dataset.starttime,
+                sstime:"09",
+                ssminute:"00",
+                sendtime:"10",
+                sendminute:"00",
+                endtime: e.target.dataset.endtime,
+                taskid: e.target.dataset.taskid,
+                alreadyaddeduser: [],
+            };
+
+            if(!e.target.dataset.scheduleid){
+                this.ScheduleTagData = stag;
+                this.modalstatus = true;
+            }
 
             if(e.target.dataset.scheduleid){
                 const http = new GetData();
@@ -122,16 +163,24 @@ export default defineComponent({
                 http.common(
                     "/api/schedule/get/id",
                     {"scheduleid":e.target.dataset.scheduleid},
-                    (res:any) => {
-                        this.dformat.schedulemodalformat(e).alreadyaddeduser = res.data;
-                        this.ScheduleTagData = this.dformat.schedulemodalformat(e);
+                    async (res:any) => {
+                        stag.alreadyaddeduser = res.data;
+                        stag.sstime = res.data[0].starttime.split(" ")[1].split(":")[0];
+                        stag.ssminute = res.data[0].starttime.split(" ")[1].split(":")[1];
+                        stag.sendtime = res.data[0].endtime.split(" ")[1].split(":")[0];
+                        stag.sendminute = res.data[0].endtime.split(" ")[1].split(":")[1];
+
+                        this.ScheduleTagData = stag;
+                        this.modalstatus = true;
                     }
                 );
             }
+
             document.getElementById('ScheduleModalcover')!.classList.remove('ScheduleModalcoverclose');
             document.getElementById('ScheduleModalcover')!.classList.add('ScheduleModalcoveropen');
             document.getElementById('ScheduleModal')!.classList.remove('ScheduleModalclose');
             document.getElementById('ScheduleModal')!.classList.add('ScheduleModalopen');
+
         }
     }
 });
