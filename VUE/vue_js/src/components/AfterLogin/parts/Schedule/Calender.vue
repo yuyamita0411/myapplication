@@ -39,8 +39,8 @@
                             :data-mailaddress="`${edata.mail_address}`"
                             :data-createdat="`${edata.created_at}`"
                             :data-scheduleid="`${edata.scheduleid}`"
-                            :data-title="edata.title"
-                            :data-description="`${edata.description}`"
+                            :data-title="`${edata.title != undefined ? edata.title : ''}`"
+                            :data-description="`${edata.description != undefined ? edata.description : ''}`"
                             :data-setscheduleinfo="`${new Date(calculate.MDFI(date, i-1)).getFullYear()}/${new Date(calculate.MDFI(date, i-1)).getMonth()+1}/${new Date(calculate.MDFI(date, i-1)).getDate()}`"
                             :data-starttime="`${edata.starttime}`"
                             :data-endtime="`${edata.endtime}`"
@@ -176,11 +176,16 @@ export default defineComponent({
 #loadingarea{
     top:35%;
 }
-.slengtharea,
+.slengtharea{
+    height: 1rem;
+}
+
 .slengtharea1,
 .slengtharea2,
 .slengtharea3{
-    height: 1rem;
+    height: 0.2rem;
+    position: absolute;
+    bottom: 0;
 }
 
 .slengtharea{

@@ -258,6 +258,8 @@ export default defineComponent({
 				"/api/schedule",
 				this.searchparam,
 				(res:any) => {
+					console.log("schedule.vue");
+					console.log(res.data);
 					this.ScheduleData = res.data;
 					this.PageAmount = res.data.PageAmount[0];
 

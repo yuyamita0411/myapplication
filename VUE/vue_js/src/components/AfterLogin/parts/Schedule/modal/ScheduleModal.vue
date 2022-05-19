@@ -147,7 +147,7 @@
 									name="schedulename"
 									placeholder="タイトルを入力してください"
 									type="text"
-									:value="addscheduletitle != undefined ? addscheduletitle : ''"
+									:value="addscheduletitle == undefined ? '' : addscheduletitle"
 									>
 									<div class="d-inline-block w-100">
 										<small class="red" id=""></small>
@@ -155,7 +155,7 @@
 									<textarea class="w-100 searchbar bg-brightgray mb-3 border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none float-left pl-2"
 									name="scheduledisc"
 									placeholder="概要を入力してください"
-									:value="addscheduledescription != undefined ? addscheduledescription : ''"
+									:value="addscheduledescription == undefined ? '' : addscheduledescription"
 									>
 									</textarea>
 								</div>
@@ -208,7 +208,7 @@
 												:data-id="EUobj.id"
 												:data-name="EUobj.name"
 												:data-mailaddress="EUobj.mail_address"
-												:class="`${addmemberid.indexOf(EUobj.id.toString()) != -1 ? 'inportbutton' : 'adduserbuton'} d-inline-block float-left pt-1 pb-1 pr-2 pl-2 text-white mb-2 mr-2 cursor br5px`">
+												:class="`${addmemberid.indexOf(EUobj.id) != -1 ? 'inportbutton' : 'adduserbuton'} d-inline-block float-left pt-1 pb-1 pr-2 pl-2 text-white mb-2 mr-2 cursor br5px`">
 												{{EUobj.name}}
 												</div>
 											</div>
@@ -349,7 +349,6 @@ export default defineComponent({
 			this.sendtime = "10";
 			this.sendminute = "00";
 
-			this.addscheduledescription = "";
 			this.addmember = [];
 			this.addmemberid = [];
 			this.searchuser = [];
@@ -481,8 +480,6 @@ export default defineComponent({
 				mainid:0,
 				UserToAdd: []
 			};
-			console.log("addmemberobj");
-			console.log(addmemberobj);
 
 			//addmemberid {0: 16, 1: 26, 2: 36, 3: 54}
 			//既に存在するユーザーに関してはモーダルが開いた瞬間に変数に格納しておいてコンポーネント内で追加削除ができるようにする。

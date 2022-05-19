@@ -107,6 +107,7 @@ class ScheduleController extends Controller
                         "updated_at" => $val2->updated_at,
                         "scheduleid" => $val2->scheduleid,
                         "title" => $val2->title,
+                        "description" => $val2->description,
                         "starttime" => $val2->starttime,
                         "endtime" => $val2->endtime,
                         "taskid" => $val2->taskid
