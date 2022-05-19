@@ -187,7 +187,7 @@
 													<div class="searchbarwrapper d-inline-block w-100 mt-0">
 														<input
 														@input="
-														SearchMember,
+														SearchMember($event),
 														loadingstatus = true,
 														loadstatus = 'op0',
 														searchuserval = $event.target.value
@@ -206,7 +206,6 @@
 												</div>
 											</div>
 											<div id="" :class="`searchresultarea ${searchareashow}`">
-											{{addmemberid}}
 												<LoginIconview v-if="loadingstatus == true" class="Scheduleloading" />
 												<div
                                                 @click="AddUserFromResult"
@@ -216,6 +215,7 @@
 												:data-mailaddress="EUobj.mail_address"
 												:class="`${addmemberid.indexOf(EUobj.id.toString()) != -1 ? 'inportbutton' : 'adduserbuton'} d-inline-block float-left pt-1 pb-1 pr-2 pl-2 text-white mb-2 mr-2 cursor br5px`">
 												{{EUobj.name}}
+												{{typeof EUobj.id}}
 												</div>
 											</div>
 										</div>
@@ -310,24 +310,27 @@ export default defineComponent({
     name: 'ScheduleModal',
 	props:{
 		ScheduleTagData:Object,
-		modaltitle:String
+		modaltitle:String,
+		modalclass:String,
+		modalcoverclass:String
 	},
-
     data() {
         return {
-            sstime: this.ScheduleTagData ? this.ScheduleTagData.sstime : "09",
-			ssminute: this.ScheduleTagData ? this.ScheduleTagData.ssminute : "00",
-			sendtime: this.ScheduleTagData ? this.ScheduleTagData.sendtime : "10",
-			sendminute: this.ScheduleTagData ? this.ScheduleTagData.sendminute : "00",
+            sstime: "09",
+			ssminute: "00",
+			sendtime: "10",
+			sendminute: "00",
 			addscheduletitle:"",
 			addscheduledescription:"",
 			searchuser:[],
 			loadstatus:"op0",
 			searchareashow:"",
 			loadingstatus:false,
+			MClass:'',
+			Modalcover:'',
             alreadyaddedmember:[{}],
             addmember:[{}],
-			addmemberid:[""],
+			addmemberid:[0],
             searchuserval:"",
 			calculate:new Calculate(),
 			sf:new SearchMFormat(),
@@ -365,11 +368,14 @@ export default defineComponent({
 				obj.classList.add('menuhide');
 				obj.classList.remove('menushow');
 			});
+
 		},
         ReturnDMFormat(str:string){
-            if (str.toString().length == 1) {
-                str = "0" + str;
-            }
+			if(str != undefined){
+				if (str.toString().length == 1) {
+					str = "0" + str;
+				}
+			}
             return str;
         },
 		EditTime(event:Event){
@@ -377,8 +383,8 @@ export default defineComponent({
 			return t.innerText;
 		},
 
-		SearchMember(e:Event){
-			var t = e.target as HTMLInputElement;
+		SearchMember(event:Event){
+			var t = event.target as HTMLInputElement;
             const http = new GetData();
 
             http.common(
@@ -395,7 +401,7 @@ export default defineComponent({
 		},
         AddUserFromResult(e:Event){
 			var t = e.target as HTMLElement;
-			const id:string = t.dataset.id ? t.dataset.id : "";
+			const id:number = t.dataset.id ? Number(t.dataset.id) : 0;
 			const name:string = t.dataset.name ? t.dataset.name : "";
 			const mailaddress:string = t.dataset.mailaddress ? t.dataset.mailaddress: "";
 
@@ -404,7 +410,7 @@ export default defineComponent({
 
 				if(name){
 					interface MemberDataObj {
-						id: string;
+						id: number;
 						name: string;
 						mailaddress: string;
 					}
@@ -422,8 +428,8 @@ export default defineComponent({
         },
         DeleteUserFromResult(e:Event){
 			var t = e.target as HTMLElement;
-			var newarr:{id:string, name:string, mailaddress:string}[] = [];
-			var newarrforcheck:string[] = [];
+			var newarr:{id:number, name:string, mailaddress:string}[] = [];
+			var newarrforcheck:number[] = [];
 
             this.addmember.forEach((ob:any):void => {
 				var uid:number = t.dataset.addeduserid != undefined ? Number(t.dataset.addeduserid) : 0;
@@ -442,7 +448,7 @@ export default defineComponent({
 			//送信用にデータを整える
 			var rawstagdata = this.ScheduleTagData ? this.ScheduleTagData.startdate : "";
 			var vdatestr = rawstagdata.split("/");
-			var vdate = `${this.ReturnDMFormat(vdatestr[0])}-${this.ReturnDMFormat(vdatestr[1])}-${this.ReturnDMFormat(vdatestr[2])}`
+			var vdate = `${this.ReturnDMFormat(vdatestr[0])}-${this.ReturnDMFormat(vdatestr[1])}-${this.ReturnDMFormat(vdatestr[2])}`;
 
 			interface ScheduleBackObj {
 				schedulename: string;
@@ -451,7 +457,7 @@ export default defineComponent({
 				Sstarttime: string;
 				Sendtime: string;
 				mainid: number;
-				UserToAdd: string[];
+				UserToAdd: number[];
 			}
 			var addmemberobj: ScheduleBackObj = {
 				schedulename: this.addscheduletitle,
@@ -459,7 +465,7 @@ export default defineComponent({
 				starttime: vdate,
 				Sstarttime: `${this.ReturnDMFormat(this.sstime)}:${this.ReturnDMFormat(this.ssminute)}`,
 				Sendtime: `${this.ReturnDMFormat(this.sendtime)}:${this.ReturnDMFormat(this.sendminute)}`,
-				mainid: Number(this.ScheduleTagData!.userid),
+				mainid: Number(this.ScheduleTagData ? this.ScheduleTagData.userid : null),
 				UserToAdd: this.addmemberid
 			};
 

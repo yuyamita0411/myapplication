@@ -103,6 +103,8 @@ export default defineComponent({
         return {
             ScheduleTagData:{},
             modaltitle:"",
+            modalclass:"ScheduleModalclose",
+            modalcoverclass:"ScheduleModalcoveropen",
             calculate:new Calculate(),
             dformat:new Dataformat()
         };
@@ -155,7 +157,6 @@ export default defineComponent({
                     }
                 );
             }
-
             document.getElementById('ScheduleModalcover')!.classList.remove('ScheduleModalcoverclose');
             document.getElementById('ScheduleModalcover')!.classList.add('ScheduleModalcoveropen');
             document.getElementById('ScheduleModal')!.classList.remove('ScheduleModalclose');

@@ -7,11 +7,10 @@
 						<div class="w-100 d-inline-block pl-3 pr-3">
 							<div class="w-100 d-inline-block position-relative">
 								<div class="YearAreaWrapper mycolor d-flex mb-0 p-2">
-									<div class="font1-3 d-inline-block mr-3 cursor" id="YearArea">
-										{{date.getFullYear()}}
-									</div>
+									<div class="font1-3 d-inline-block mr-3 cursor" id="YearArea">{{date.getFullYear()}}</div>
                                     <input
-                                    @input="SearchIncharge"
+                                    @input="PageNow = 1,SearchKeyword = $event.target.value, MakeSearchParam()
+									"
                                     type="text"
                                     id="SearchCbyWord"
                                     name="SearchCbyWord"
@@ -20,7 +19,7 @@
                                     placeholder="担当者名から検索"
                                     >
                                     <input
-                                    @input="SetDisplayNum"
+                                    @input="PageNow = 1, SearchDisplayNum = Number($event.target.value), MakeSearchParam()"
                                     type="text"
                                     id="PerPageArea"
                                     name="PerPage"
@@ -67,21 +66,42 @@
                                                 <div
                                                 :class="`${SortAreaClass} tooltip-top w-100 d-inline-block text-center cursor position-relative pt-2 pb-2`"
                                                 data-tooltip="並び変え"
-                                                @click="SortAreaOpen"
+                                                @click="
+												$event.target.classList.toggle('SortAreaisshow'),
+												$event.target.classList.toggle('SortAreaishidde'),
+												$event.target.getElementsByClassName('sbwrapper')[0].classList.toggle('sbshow'),
+												$event.target.getElementsByClassName('sbwrapper')[0].classList.toggle('sbhidden')
+												"
                                                 id="SortArea">
                                                 <img class="sccheduleplusbutton" src="@/assets/accountarrow.png">
                                                 <div class="position-absolute sbwrapper b-gray sbhidden bg-white" id="sortmenu">
                                                     <div
                                                     class="sortelem p-2"
                                                     data-orderby="asc"
-                                                    @click="ChangeOrderBy"
+                                                    @click="
+													PageNow = 1,
+													SearchOrderBy = $event.target.dataset.orderby,
+													$event.target.parentNode.parentNode.classList.toggle('SortAreaisshow'),
+													$event.target.parentNode.parentNode.classList.toggle('SortAreaishidde'),
+													$event.target.parentNode.classList.toggle('sbshow'),
+													$event.target.parentNode.classList.toggle('sbhidden'),
+													MakeSearchParam()
+													"
                                                     >
                                                     昇順
                                                     </div>
                                                     <div
                                                     class="sortelem p-2"
                                                     data-orderby="desc"
-                                                    @click="ChangeOrderBy"
+                                                    @click="
+													PageNow = 1,
+													SearchOrderBy = $event.target.dataset.orderby,
+													$event.target.parentNode.parentNode.classList.toggle('SortAreaisshow'),
+													$event.target.parentNode.parentNode.classList.toggle('SortAreaishidde'),
+													$event.target.parentNode.classList.toggle('sbshow'),
+													$event.target.parentNode.classList.toggle('sbhidden'),
+													MakeSearchParam()
+													"
                                                     >
                                                     降順
                                                     </div>
@@ -150,7 +170,9 @@
 				v-for="obj in calculate.MakePagenation(Pjson, PageAmount, PageNow)" :key="obj"
 				:id="obj.PId"
 				:class="obj.PClass"
-				@click="PageMotion">
+				@click="
+				PageNow = $event.target.innerText, MakeSearchParam()
+				">
 				{{obj.PTxt}}
 				</p>
 			</div>
@@ -200,39 +222,6 @@ export default defineComponent({
 			//検索結果を出力する共通処理を入れる
 			this.MakeSearchParam();
 		},
-		SearchIncharge(e:any){
-			this.PageNow = 1;
-			this.SearchKeyword = e.target.value;
-			//検索結果を出力する共通処理を入れる
-			this.MakeSearchParam();
-		},
-		SetDisplayNum(e:any){
-			this.PageNow = 1;
-			this.SearchDisplayNum = Number(e.target.value);
-			//検索結果を出力する共通処理を入れる
-			this.MakeSearchParam();
-		},
-		SortAreaOpen(e:any){
-			e.target.classList.toggle("SortAreaisshow");
-			e.target.classList.toggle("SortAreaishidde");
-			if(!e.target.getElementsByClassName('sbwrapper') || !e.target.getElementsByClassName('sbwrapper')[0]){
-				return;
-			}
-
-			e.target.getElementsByClassName('sbwrapper')[0].classList.toggle("sbshow");
-			e.target.getElementsByClassName('sbwrapper')[0].classList.toggle("sbhidden");
-		},
-		ChangeOrderBy(e:any){
-			this.PageNow = 1;
-			this.SearchOrderBy = e.target.dataset.orderby;
-			e.target.parentNode.parentNode.classList.toggle("SortAreaisshow");
-			e.target.parentNode.parentNode.classList.toggle("SortAreaishidde");
-			e.target.parentNode.classList.toggle("sbshow");
-			e.target.parentNode.classList.toggle("sbhidden");
-			//検索結果を出力する共通処理を入れる
-			this.MakeSearchParam();
-		},
-
 		DetermineDate(){
 			if(location.search == ''){
 			this.date = new Date();
@@ -275,16 +264,9 @@ export default defineComponent({
 					this.loadstatus = 'op1';
 				}
 			);
-		},
-        PageMotion(e:any){
-			this.PageNow = Number(e.target.innerText);
-			this.MakeSearchParam();
-        }
+		}
 	},
 	mounted(){
-		//マウント時はパラメータの有無を確認。
-		//パラメータがある場合はパラメータの日付を取得する。
-		//ない場合は今日の日付を取得する。
 		if(768 < window.innerWidth){
 			this.WhichCstyle = "pc";
 		}
