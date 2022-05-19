@@ -26,6 +26,7 @@ export class GetData {
             console.log(error);
         });
     }
+
     async Postcommon(url:string, data:any, callback:any): Promise<any> {
         apiClient.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('access_token')!}`;
         return apiClient.post(

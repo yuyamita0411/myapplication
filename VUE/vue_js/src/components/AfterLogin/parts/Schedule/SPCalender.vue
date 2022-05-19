@@ -123,8 +123,7 @@ export default defineComponent({
 			ScheduleTagData:{},
 			modaltitle:"",
 			calculate:new Calculate(),
-			dformat:new Dataformat(),
-			modalstatus:false
+			dformat:new Dataformat()
         };
     },
     components: {
@@ -135,26 +134,8 @@ export default defineComponent({
         ModalMotion(e:any){
 
             this.modaltitle = e.target.dataset.tooltip;
-
-            interface STagFormat {
-                startdate: string;
-                userid: string;
-                mailaddress: string;
-                createdat: string;
-                scheduleid: string;
-                title: string;
-                description: string;
-                setscheduleinfo: string;
-                starttime: string;
-                sstime: string;
-                ssminute: string;
-                sendtime: string;
-                sendminute: string;
-                endtime: string;
-                taskid: string;
-                alreadyaddeduser: any;
-            }
-            const stag: STagFormat = {
+			var stag = this.dformat.Sformat();
+            stag = {
                 startdate: e.target.dataset.setscheduleinfo,
                 userid: e.target.dataset.buttonuserid,
                 mailaddress: e.target.dataset.mailaddress,
@@ -189,7 +170,6 @@ export default defineComponent({
                         stag.ssminute = res.data[0].starttime.split(" ")[1].split(":")[1];
                         stag.sendtime = res.data[0].endtime.split(" ")[1].split(":")[0];
                         stag.sendminute = res.data[0].endtime.split(" ")[1].split(":")[1];
-
                         this.ScheduleTagData = stag;
                     }
                 );

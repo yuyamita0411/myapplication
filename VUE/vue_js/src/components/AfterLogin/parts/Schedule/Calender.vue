@@ -82,9 +82,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, createApp } from 'vue';
+import { defineComponent } from 'vue';
 import {GetData} from "@/http";
 import {Calculate} from "@/calculate";
+import {Dataformat} from "@/dataformat";
 import LoginIconview from '@/components/common/LoadingIcon.vue';
 import ScheduleModal from '@/components/AfterLogin/parts/Schedule/modal/ScheduleModal.vue';
 
@@ -102,7 +103,8 @@ export default defineComponent({
         return {
             ScheduleTagData:{},
             modaltitle:"",
-            calculate:new Calculate()
+            calculate:new Calculate(),
+            dformat:new Dataformat()
         };
     },
     components: {
@@ -110,63 +112,45 @@ export default defineComponent({
 		ScheduleModal
     },
     methods:{
-        ModalMotion(e:any){
-            this.modaltitle = e.target.dataset.tooltip;
-
-            interface STagFormat {
-                startdate: string;
-                userid: string;
-                mailaddress: string;
-                createdat: string;
-                scheduleid: string;
-                title: string;
-                description: string;
-                setscheduleinfo: string;
-                starttime: string;
-                sstime: string;
-                ssminute: string;
-                sendtime: string;
-                sendminute: string;
-                endtime: string;
-                taskid: string;
-                alreadyaddeduser: any;
-            }
-            const stag: STagFormat = {
-                startdate: e.target.dataset.setscheduleinfo,
-                userid: e.target.dataset.buttonuserid,
-                mailaddress: e.target.dataset.mailaddress,
-                createdat: e.target.dataset.createdat,
-                scheduleid: e.target.dataset.scheduleid,
-                title: e.target.dataset.title,
-                description: e.target.dataset.description,
-                setscheduleinfo: e.target.dataset.setscheduleinfo,
-                starttime: e.target.dataset.starttime,
+        ModalMotion(e:Event):void{
+            var t = e.target as HTMLElement;
+            this.modaltitle = t.dataset.tooltip!;
+			var stag = this.dformat.Sformat();
+            stag = {
+                startdate: t.dataset.setscheduleinfo!,
+                userid: t.dataset.buttonuserid!,
+                mailaddress: t.dataset.mailaddress!,
+                createdat: t.dataset.createdat!,
+                scheduleid: t.dataset.scheduleid!,
+                title: t.dataset.title!,
+                description: t.dataset.description!,
+                setscheduleinfo: t.dataset.setscheduleinfo!,
+                starttime: t.dataset.starttime!,
                 sstime:"09",
                 ssminute:"00",
                 sendtime:"10",
                 sendminute:"00",
-                endtime: e.target.dataset.endtime,
-                taskid: e.target.dataset.taskid,
+                endtime: t.dataset.endtime!,
+                taskid: t.dataset.taskid!,
                 alreadyaddeduser: [],
             };
 
-            if(!e.target.dataset.scheduleid){
+            if(!t.dataset.scheduleid){
                 this.ScheduleTagData = stag;
             }
 
-            if(e.target.dataset.scheduleid){
+            if(t.dataset.scheduleid){
                 const http = new GetData();
 
                 http.common(
                     "/api/schedule/get/id",
-                    {"scheduleid":e.target.dataset.scheduleid},
+                    {"scheduleid":t.dataset.scheduleid!},
                     async (res:any) => {
                         stag.alreadyaddeduser = res.data;
                         stag.sstime = res.data[0].starttime.split(" ")[1].split(":")[0];
                         stag.ssminute = res.data[0].starttime.split(" ")[1].split(":")[1];
                         stag.sendtime = res.data[0].endtime.split(" ")[1].split(":")[0];
                         stag.sendminute = res.data[0].endtime.split(" ")[1].split(":")[1];
-
                         this.ScheduleTagData = stag;
                     }
                 );

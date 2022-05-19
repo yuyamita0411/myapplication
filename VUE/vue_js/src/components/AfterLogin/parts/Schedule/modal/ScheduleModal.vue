@@ -296,14 +296,14 @@ export default defineComponent({
             });
 		},
 
-		TmodalMotion(e:any){
+		TmodalMotion(e:Event){
 			var t = e.target as HTMLElement;
 			t.nextElementSibling!.classList.toggle("z1");
 			t.nextElementSibling!.classList.toggle("menushow");
 			t.nextElementSibling!.classList.toggle("zm1");
 			t.nextElementSibling!.classList.toggle("menuhide");
 		},
-		TmodalParentMotion(e:any){
+		TmodalParentMotion(e:Event){
 			var t = e.target as HTMLElement;
 			t.closest('.Scaccordion')!.classList.toggle('z1');
 			t.closest('.Scaccordion')!.classList.toggle('menushow');
@@ -329,40 +329,40 @@ export default defineComponent({
 			this.TmodalMotion(e);
 		},
 
-		GetSStartTime(e:any){
+		GetSStartTime(e:Event){
 			var t = e.target as HTMLElement;
             this.sstime = t.innerText;
 			this.ScheduleTagData!.sstime = t.innerText;
 			this.TmodalParentMotion(e);
 		},
-		GetSStartMinute(e:any){
+		GetSStartMinute(e:Event){
 			var t = e.target as HTMLElement;
 			this.ssminute = t.innerText;
 			this.ScheduleTagData!.ssminute = t.innerText;
 			this.TmodalParentMotion(e);
 		},
-		GetSendTime(e:any){
+		GetSendTime(e:Event){
 			var t = e.target as HTMLElement;
 			this.sendtime = t.innerText;
 			this.ScheduleTagData!.sendtime = t.innerText;
 			this.TmodalParentMotion(e);
 		},
-		GetSendMinute(e:any){
+		GetSendMinute(e:Event){
 			var t = e.target as HTMLElement;
 			this.sendminute = t.innerText;
 			this.ScheduleTagData!.sendminute = t.innerText;
 			this.TmodalParentMotion(e);
 		},
-		InputTitle(e:any){
+		InputTitle(e:Event){
 			var t = e.target as HTMLInputElement;
 			this.addscheduletitle = t.value;
 		},
-		InputDescription(e:any){
+		InputDescription(e:Event){
 			var t = e.target as HTMLInputElement;
 			this.addscheduledescription = t.value;
 		},
 
-		SearchMember(e:any){
+		SearchMember(e:Event){
 			var t = e.target as HTMLInputElement;
             const http = new GetData();
             this.loadingstatus = true;
@@ -386,10 +386,11 @@ export default defineComponent({
 		SearchResultBlur(){
 			this.searchareashow = "";
 		},
-        AddUserFromResult(e:any){
-			const id:string = e.target.dataset.id;
-			const name:string = e.target.dataset.name;
-			const mailaddress:string = e.target.dataset.mailaddress;
+        AddUserFromResult(e:Event){
+			var t = e.target as HTMLElement;
+			const id:string = t.dataset.id!;
+			const name:string = t.dataset.name!;
+			const mailaddress:string = t.dataset.mailaddress!;
             //既に追加されたユーザーは追加できないようにする処理
             if(this.addmemberid.indexOf(id) == -1){
 

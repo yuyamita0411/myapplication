@@ -1,5 +1,5 @@
 export class Dataformat{
-    schedulemodalformat(e:any){
+    Sformat(){
         interface STagFormat {
             startdate: string;
             userid: string;
@@ -10,23 +10,31 @@ export class Dataformat{
             description: string;
             setscheduleinfo: string;
             starttime: string;
+            sstime: string;
+            ssminute: string;
+            sendtime: string;
+            sendminute: string;
             endtime: string;
             taskid: string;
             alreadyaddeduser: any;
         }
         const stag: STagFormat = {
-            startdate: e.target.dataset.setscheduleinfo,
-            userid: e.target.dataset.buttonuserid,
-            mailaddress: e.target.dataset.mailaddress,
-            createdat: e.target.dataset.createdat,
-            scheduleid: e.target.dataset.scheduleid,
-            title: e.target.dataset.title,
-            description: e.target.dataset.description,
-            setscheduleinfo: e.target.dataset.setscheduleinfo,
-            starttime: e.target.dataset.starttime,
-            endtime: e.target.dataset.endtime,
-            taskid: e.target.dataset.taskid,
-            alreadyaddeduser: [],
+            startdate: "",
+            userid: "",
+            mailaddress: "",
+            createdat: "",
+            scheduleid: "",
+            title: "",
+            description: "",
+            setscheduleinfo: "",
+            starttime: "",
+            sstime: "",
+            ssminute: "",
+            sendtime: "",
+            sendminute: "",
+            endtime: "",
+            taskid: "",
+            alreadyaddeduser: []
         };
         return stag;
     }
