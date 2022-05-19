@@ -1,8 +1,13 @@
 <template>
     <div id="ScheduleModalcover" class="position-fixed cursor ScheduleModalcoverclose"
+	ref="modalcover"
 	@click="ModalMotion">
     </div>
-    <div id="ScheduleModal" class="position-fixed pr-0 mb-0 bg-white ScheduleModalclose">
+    <div
+	id="ScheduleModal"
+	class="position-fixed pr-0 mb-0 bg-white ScheduleModalclose"
+	ref="modal"
+	>
 		<div class="modalinnerwrapper overflow-hidden">
 			<div class="modalinnercover d-flex position-relative" id="">
 				<div class="Modal1 col-12 p-3 bg-white" id="">
@@ -22,13 +27,17 @@
 									src="@/assets/timeicon.png">
 									<div class="w-100 text-center pr-2 position-relative">
 										<div
-										@click="OpenScheduleStartTime"
+										@click="OpenSMenu"
 										class="starthour buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id="">
 											{{ScheduleTagData.sstime}}
 										</div>
-										<div class="Scaccordion position-absolute bg-white menuhide zm1 gridinside" id="">
+										<div
+										class="Scaccordion position-absolute bg-white menuhide zm1 gridinside"
+										id=""
+										el="Scaccordion"
+										>
 											<div
-											@click="GetSStartTime"
+											@click="EditTime(sstime, ScheduleTagData.sstime)"
 											v-for="i in 9" :key="i"
 											class="starthourmenubutton Sbutton w-100 d-inline-block cursor bb" data-makeour="0">{{ReturnDMFormat(i+8)}}</div>
 										</div>
@@ -38,13 +47,13 @@
 									</div>
 									<div class="w-100 text-center pr-2 position-relative">
 										<div
-										@click="OpenScheduleStartMinute"
+										@click="OpenSMenu"
 										class="startminute buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id="">
 											{{ScheduleTagData.ssminute}}
 										</div>
 										<div class="Scaccordion position-absolute bg-white menuhide zm1 gridinside" id="">
 											<div
-											@click="GetSStartMinute"
+											@click="EditTime(ssminute, ScheduleTagData.ssminute)"
 											v-for="i in 59" :key="i"
 											class="startminutemenubutton Sbutton w-100 d-inline-block cursor bb" data-makeour="0">{{ReturnDMFormat(i)}}</div>
 										</div>
@@ -54,13 +63,13 @@
 									</div>
 									<div class="w-100 text-center pl-2 position-relative">
 										<div
-										@click="OpenScheduleEndTime"
+										@click="OpenSMenu"
 										class="endhour buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id="">
 											{{ScheduleTagData.sendtime}}
 										</div>
 										<div class="Scaccordion position-absolute bg-white menuhide zm1 gridinside" id="">
 											<div
-											@click="GetSendTime"
+											@click="EditTime(sendtime, ScheduleTagData.sendtime)"
 											v-for="i in 9" :key="i"
 											class="starthourmenubutton Sbutton w-100 d-inline-block cursor bb" data-makeour="0">{{ReturnDMFormat(i+9)}}</div>
 										</div>
@@ -70,13 +79,13 @@
 									</div>
 									<div class="w-100 text-center pl-2 position-relative">
 										<div
-										@click="OpenScheduleEndMinute"
+										@click="OpenSMenu"
 										class="endminute buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id="">
 											{{ScheduleTagData.sendminute}}
 										</div>
 										<div class="Scaccordion position-absolute bg-white menuhide zm1 gridinside" id="">
 											<div
-											@click="GetSendMinute"
+											@click="EditTime(sendminute, ScheduleTagData.sendminute)"
 											v-for="i in 59" :key="i"
 											class="startminutemenubutton Sbutton w-100 d-inline-block cursor bb" data-makeour="0">{{ReturnDMFormat(i)}}</div>
 										</div>
@@ -93,7 +102,7 @@
 									placeholder="タイトルを入力してください"
 									type="text"
 									:value="addscheduletitle"
-									@input="InputTitle"
+									@input="InputTitle(addscheduletitle)"
 									>
 									<div class="d-inline-block w-100">
 										<small class="red" id=""></small>
@@ -102,7 +111,7 @@
 									name="scheduledisc"
 									placeholder="概要を入力してください"
 									:value="addscheduledescription"
-									@input="InputDescription"
+									@input="InputTitle(addscheduledescription)"
 									>
 									</textarea>
 								</div>
@@ -237,10 +246,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import router from '@/router'
 import {GetData} from "@/http";
 import {Calculate} from "@/calculate";
+import {SearchMFormat} from "@/dataformat";
 import LoginIconview from '@/components/common/LoadingIcon.vue';
 
 export default defineComponent({
@@ -252,10 +260,10 @@ export default defineComponent({
 
     data() {
         return {
-            sstime: this.ScheduleTagData!.sstime,
-			ssminute: this.ScheduleTagData!.ssminute,
-			sendtime: this.ScheduleTagData!.sendtime,
-			sendminute: this.ScheduleTagData!.sendminute,
+            sstime: this.ScheduleTagData ? this.ScheduleTagData.sstime : "09",
+			ssminute: this.ScheduleTagData ? this.ScheduleTagData.ssminute : "00",
+			sendtime: this.ScheduleTagData ? this.ScheduleTagData.sendtime : "10",
+			sendminute: this.ScheduleTagData ? this.ScheduleTagData.sendminute : "00",
 			addscheduletitle:"",
 			addscheduledescription:"",
 			searchuser:[],
@@ -266,7 +274,8 @@ export default defineComponent({
             addmember:[{}],
 			addmemberid:[""],
             searchuserval:"",
-			calculate:new Calculate()
+			calculate:new Calculate(),
+			sf:new SearchMFormat()
         };
     },
 	components:{
@@ -284,31 +293,37 @@ export default defineComponent({
 			this.addmemberid = [];
 			this.searchuser = [];
             this.searchuserval = "";
-            document.getElementById('ScheduleModalcover')!.classList.add('ScheduleModalcoverclose');
-            document.getElementById('ScheduleModalcover')!.classList.remove('ScheduleModalcoveropen');
-            document.getElementById('ScheduleModal')!.classList.add('ScheduleModalclose');
-            document.getElementById('ScheduleModal')!.classList.remove('ScheduleModalopen');
-            document.querySelectorAll('.Scaccordion').forEach((obj) => {
-                obj.classList.add('zm1');
-                obj.classList.remove('z1');
-                obj.classList.add('menuhide');
-                obj.classList.remove('menushow');
-            });
+
+			const modalcover = this.$refs.modalcover as HTMLElement;
+			const modal = this.$refs.modal as HTMLElement;
+
+			modalcover.classList.add('ScheduleModalcoverclose');
+			modalcover.classList.remove('ScheduleModalcoveropen');
+            modal.classList.add('ScheduleModalclose');
+            modal.classList.remove('ScheduleModalopen');
+
+			const Scaccordion = document.querySelectorAll<HTMLElement>(".Scaccordion");
+			Scaccordion.forEach((obj:HTMLElement) => {
+				obj.classList.add('zm1');
+				obj.classList.remove('z1');
+				obj.classList.add('menuhide');
+				obj.classList.remove('menushow');
+			});
 		},
 
-		TmodalMotion(e:Event){
-			var t = e.target as HTMLElement;
-			t.nextElementSibling!.classList.toggle("z1");
-			t.nextElementSibling!.classList.toggle("menushow");
-			t.nextElementSibling!.classList.toggle("zm1");
-			t.nextElementSibling!.classList.toggle("menuhide");
+		TmodalMotion(t:HTMLElement){
+			var Telem = t.nextElementSibling as HTMLElement;
+			Telem.classList.toggle("z1");
+			Telem.classList.toggle("menushow");
+			Telem.classList.toggle("zm1");
+			Telem.classList.toggle("menuhide");
 		},
-		TmodalParentMotion(e:Event){
-			var t = e.target as HTMLElement;
-			t.closest('.Scaccordion')!.classList.toggle('z1');
-			t.closest('.Scaccordion')!.classList.toggle('menushow');
-			t.closest('.Scaccordion')!.classList.toggle('zm1');
-			t.closest('.Scaccordion')!.classList.toggle('menuhide');
+		TmodalParentMotion(t:HTMLElement){
+			var Telem = t.closest('.Scaccordion') as HTMLElement;
+			Telem.classList.toggle('z1');
+			Telem.classList.toggle('menushow');
+			Telem.classList.toggle('zm1');
+			Telem.classList.toggle('menuhide');
 		},
         ReturnDMFormat(str:string){
             if (str.toString().length == 1) {
@@ -316,58 +331,29 @@ export default defineComponent({
             }
             return str;
         },
-		OpenScheduleStartTime(e:any){
-			this.TmodalMotion(e);
-		},
-		OpenScheduleStartMinute(e:any){
-			this.TmodalMotion(e);
-		},
-		OpenScheduleEndTime(e:any){
-			this.TmodalMotion(e);
-		},
-		OpenScheduleEndMinute(e:any){
-			this.TmodalMotion(e);
-		},
-
-		GetSStartTime(e:Event){
+		OpenSMenu(e:Event){
 			var t = e.target as HTMLElement;
-            this.sstime = t.innerText;
-			this.ScheduleTagData!.sstime = t.innerText;
-			this.TmodalParentMotion(e);
+			this.TmodalMotion(t);
 		},
-		GetSStartMinute(e:Event){
+		EditTime(e:Event, target1:string, target2:string){
 			var t = e.target as HTMLElement;
-			this.ssminute = t.innerText;
-			this.ScheduleTagData!.ssminute = t.innerText;
-			this.TmodalParentMotion(e);
+			target1 = t.innerText;
+			target2 = t.innerText;
+			this.TmodalParentMotion(t);
 		},
-		GetSendTime(e:Event){
-			var t = e.target as HTMLElement;
-			this.sendtime = t.innerText;
-			this.ScheduleTagData!.sendtime = t.innerText;
-			this.TmodalParentMotion(e);
-		},
-		GetSendMinute(e:Event){
-			var t = e.target as HTMLElement;
-			this.sendminute = t.innerText;
-			this.ScheduleTagData!.sendminute = t.innerText;
-			this.TmodalParentMotion(e);
-		},
-		InputTitle(e:Event){
+		InputTitle(e:Event, target:string){
 			var t = e.target as HTMLInputElement;
-			this.addscheduletitle = t.value;
-		},
-		InputDescription(e:Event){
-			var t = e.target as HTMLInputElement;
-			this.addscheduledescription = t.value;
+			target = t.value;
 		},
 
 		SearchMember(e:Event){
 			var t = e.target as HTMLInputElement;
             const http = new GetData();
+
             this.loadingstatus = true;
             this.loadstatus = 'op0';
             this.searchuserval = t.value;
+
             http.common(
                 "/api/schedule/search",
                 {"addgroupmember": t.value},
@@ -388,9 +374,10 @@ export default defineComponent({
 		},
         AddUserFromResult(e:Event){
 			var t = e.target as HTMLElement;
-			const id:string = t.dataset.id!;
-			const name:string = t.dataset.name!;
-			const mailaddress:string = t.dataset.mailaddress!;
+			const id:string = t.dataset.id ? t.dataset.id : "";
+			const name:string = t.dataset.name ? t.dataset.name : "";
+			const mailaddress:string = t.dataset.mailaddress ? t.dataset.mailaddress: "";
+
             //既に追加されたユーザーは追加できないようにする処理
             if(this.addmemberid.indexOf(id) == -1){
 
@@ -413,17 +400,18 @@ export default defineComponent({
 
             }
         },
-        DeleteUserFromResult(e:any){
+        DeleteUserFromResult(e:Event){
+			var t = e.target as HTMLElement;
 			var newarr:{id:string, name:string, mailaddress:string}[] = [];
 			var newarrforcheck:string[] = [];
-            this.addmember.forEach((ob:any) => {
-				var uid:number = e.target.dataset.addeduserid;
+
+            this.addmember.forEach((ob:any):void => {
+				var uid:number = t.dataset.addeduserid != undefined ? Number(t.dataset.addeduserid) : 0;
                 if(uid != ob.id){
                     newarr.push(ob);
                     newarrforcheck.push(ob.id);
                 }
             });
-			console.log(newarr);
             this.addmember = newarr;
             this.addmemberid = newarrforcheck;
         },
@@ -441,7 +429,8 @@ export default defineComponent({
 			}
 
 			//送信用にデータを整える
-			var vdatestr = this.ScheduleTagData!.startdate.split("/");
+			var rawstagdata = this.ScheduleTagData ? this.ScheduleTagData.startdate : "";
+			var vdatestr = rawstagdata.split("/");
 			var vdate = `${this.ReturnDMFormat(vdatestr[0])}-${this.ReturnDMFormat(vdatestr[1])}-${this.ReturnDMFormat(vdatestr[2])}`
 
 			var addmemberobj: ScheduleBackObj = {
@@ -464,17 +453,23 @@ export default defineComponent({
             );
 		},
 		EditScheduleTime(){
+			if(!this.ScheduleTagData){
+				return;
+			}
 			interface Data {
 				sstime: string;
 				ssminute: string;
 				sendtime: string;
 				sendminute: string;
 			}
-			if(this.ScheduleTagData!.starttime || this.ScheduleTagData!.endtime){
-				this.sstime = this.ScheduleTagData!.starttime.split(" ")[1].split(":")[0];
-				this.ssminute = this.ScheduleTagData!.starttime.split(" ")[1].split(":")[1];
-				this.sendtime = this.ScheduleTagData!.endtime.split(" ")[1].split(":")[0];
-				this.sendminute = this.ScheduleTagData!.endtime.split(" ")[1].split(":")[1];
+			var sstime = this.ScheduleTagData!.starttime;
+			var setime = this.ScheduleTagData!.endtime;
+
+			if(sstime || setime){
+				this.sstime = sstime.split(" ")[1].split(":")[0];
+				this.ssminute = sstime.split(" ")[1].split(":")[1];
+				this.sendtime = setime.split(" ")[1].split(":")[0];
+				this.sendminute = setime.split(" ")[1].split(":")[1];
 			}
 
 			const sdata: Data = {

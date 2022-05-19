@@ -39,3 +39,25 @@ export class Dataformat{
         return stag;
     }
 }
+
+export class SearchMFormat{
+    Format(){
+        interface Fm {
+            config: object;
+            data: object;
+            headers: object;
+            request: object;
+            status: number;
+            statusText: string;
+        }
+        const format: Fm = {
+            config: {},
+            data: {},
+            headers: {},
+            request: {},
+            status: 0,
+            statusText: ""
+        };
+        return format;
+    }
+}
