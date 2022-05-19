@@ -1,7 +1,8 @@
 <template>
     <div id="ScheduleModalcover" class="position-fixed cursor ScheduleModalcoverclose"
 	ref="modalcover"
-	@click="ModalMotion">
+	@click="ModalMotion"
+	>
     </div>
     <div
 	id="ScheduleModal"
@@ -146,10 +147,7 @@
 									name="schedulename"
 									placeholder="タイトルを入力してください"
 									type="text"
-									:value="addscheduletitle"
-									@input="
-									addscheduletitle = $event.currentTarget.value
-									"
+									:value="addscheduletitle != undefined ? addscheduletitle : ''"
 									>
 									<div class="d-inline-block w-100">
 										<small class="red" id=""></small>
@@ -157,10 +155,7 @@
 									<textarea class="w-100 searchbar bg-brightgray mb-3 border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none float-left pl-2"
 									name="scheduledisc"
 									placeholder="概要を入力してください"
-									:value="addscheduledescription"
-									@input="
-									addscheduledescription = $event.currentTarget.value
-									"
+									:value="addscheduledescription != undefined ? addscheduledescription : ''"
 									>
 									</textarea>
 								</div>
@@ -226,9 +221,11 @@
                                 id="" class="col-12 mb-0 d-inline-block">
                                     <h5 class="mainfontcolor w-100 pt-4 pb-1 mb-2">参加済み</h5>
                                     <div
-                                    v-for="eachuserinfo in ScheduleTagData.alreadyaddeduser" :key="eachuserinfo.id"
-                                    class="alreadyadded addeduserbuton d-inline-block float-left pt-1 pb-1 pr-2 pl-2 text-white mb-2 mr-2 cursor br5px" data-addeduserid="6">
-                                        {{eachuserinfo.name}}
+                                    @click="DeleteUserFromAuser"
+                                    v-for="eachadded in AppendAuser()" :key="eachadded.id"
+                                    :class="`${eachadded.id ? 'addeduserbuton d-inline-block float-left pt-1 pb-1 pr-2 pl-2 text-white mb-2 mr-2 cursor br5px' : 'd-none'}`"
+                                    :data-addeduserid="eachadded.id">
+                                        {{eachadded.name}}
                                     </div>
                                 </div>
 <!-- 条件分岐 -->
@@ -327,7 +324,7 @@ export default defineComponent({
 			loadingstatus:false,
 			MClass:'',
 			Modalcover:'',
-            alreadyaddedmember:[{}],
+            alreadyaddedmember: [{}],
             addmember:[{}],
 			addmemberid:[0],
             searchuserval:"",
@@ -340,6 +337,12 @@ export default defineComponent({
 		LoginIconview
 	},
 	methods:{
+		AppendAuser(){
+			this.alreadyaddedmember = this.ScheduleTagData != undefined ? this.ScheduleTagData.alreadyaddeduser : [{}];
+			this.addscheduletitle = this.ScheduleTagData != undefined ? this.ScheduleTagData.title : "";
+			this.addscheduledescription = this.ScheduleTagData != undefined ? this.ScheduleTagData.description : "";
+			return this.alreadyaddedmember;
+		},
 		ModalMotion(){
             this.sstime = "09";
 			this.ssminute = "00";
@@ -440,6 +443,17 @@ export default defineComponent({
             this.addmember = newarr;
             this.addmemberid = newarrforcheck;
         },
+		DeleteUserFromAuser(e:Event){//追加済みのユーザーを削除
+			var t = e.target as HTMLElement;
+			var newarrforcheck:number[] = [];
+			this.alreadyaddedmember.forEach((ob:any):void => {
+				var uid:number = t.dataset.addeduserid != undefined ? Number(t.dataset.addeduserid) : 0;
+                if(uid == ob.id){
+					var index = this.alreadyaddedmember.indexOf(ob.id);
+					this.alreadyaddedmember.splice(index, 1);
+                }
+			});
+		},
 		AddSchedule(){
             //バリデーションの処理
 			//バックエンドにデータを送る
@@ -486,9 +500,14 @@ export default defineComponent({
 				if(checkDobj.scheduleid){
 					endpoint = "/api/schedule/rebase";
 					addmemberobj.mainid = Number(this.ScheduleTagData ? this.ScheduleTagData.scheduleid : null);
-					addmemberobj.UserToAdd = this.addmemberid;
-				}
 
+					var arr:number[] = [];
+					this.alreadyaddedmember.forEach((o:any) => {
+						arr.push(o.id);
+					});
+					addmemberobj.UserToAdd = this.addmemberid.concat(arr);
+				}
+				
 				http.Postcommon(
 					endpoint,
 					addmemberobj,

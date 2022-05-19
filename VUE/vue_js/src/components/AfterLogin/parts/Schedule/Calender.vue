@@ -49,12 +49,13 @@
                             :data-tooltip="`${edata.title != null ? `${edata.title}` : 'タイトルがありません。'}`"
                             @click="ModalMotion"
                             >
-                            <span class="slengtharea float-right d-inline-block">
+                            
+                            <span class="slengtharea float-right d-inline-block position-relative overflow-hidden">
+                            <p class="position-absolute col-12 pr-0 pl-0" style="right:0;"><span class="w-100 text-left pr-0 pl-0">{{edata.title}}</span></p>
                                 <span v-for="(width, index) in calculate.GetScheduleMarkRange(edata.starttime, edata.endtime)" :key="width"
                                 :class="`slengtharea${index + 1} d-inline-block float-left`" :style="`width:${width}%;`">
                                 </span>
                             </span>
-
                         </small>
                         <div class="w-100 d-inline-block">
                             <button
