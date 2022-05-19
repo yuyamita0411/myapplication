@@ -27,9 +27,14 @@
 									src="@/assets/timeicon.png">
 									<div class="w-100 text-center pr-2 position-relative">
 										<div
-										@click="OpenSMenu"
+										@click="EditTime($event),
+										$event.currentTarget.nextElementSibling.classList.toggle('z1'),
+										$event.currentTarget.nextElementSibling.classList.toggle('menushow'),
+										$event.currentTarget.nextElementSibling.classList.toggle('zm1'),
+										$event.currentTarget.nextElementSibling.classList.toggle('menuhide')
+										"
 										class="starthour buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id="">
-											{{ScheduleTagData.sstime}}
+											{{ScheduleTagData!.sstime}}
 										</div>
 										<div
 										class="Scaccordion position-absolute bg-white menuhide zm1 gridinside"
@@ -37,7 +42,13 @@
 										el="Scaccordion"
 										>
 											<div
-											@click="EditTime(sstime, ScheduleTagData.sstime)"
+											@click="
+											sstime,ScheduleTagData!.sstime = EditTime($event),
+											$event.currentTarget.closest('.Scaccordion').classList.toggle('z1'),
+											$event.currentTarget.closest('.Scaccordion').classList.toggle('menushow'),
+											$event.currentTarget.closest('.Scaccordion').classList.toggle('zm1'),
+											$event.currentTarget.closest('.Scaccordion').classList.toggle('menuhide')
+											"
 											v-for="i in 9" :key="i"
 											class="starthourmenubutton Sbutton w-100 d-inline-block cursor bb" data-makeour="0">{{ReturnDMFormat(i+8)}}</div>
 										</div>
@@ -47,13 +58,27 @@
 									</div>
 									<div class="w-100 text-center pr-2 position-relative">
 										<div
-										@click="OpenSMenu"
-										class="startminute buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id="">
+										@click="EditTime($event),
+										$event.currentTarget.nextElementSibling.classList.toggle('z1'),
+										$event.currentTarget.nextElementSibling.classList.toggle('menushow'),
+										$event.currentTarget.nextElementSibling.classList.toggle('zm1'),
+										$event.currentTarget.nextElementSibling.classList.toggle('menuhide')
+										"
+										class="
+										startminute buttonicon w-100 d-inline-block searchbar bg-brightgray
+										border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem
+										border-bottom-right-radius-1rem b-none cursor" id="">
 											{{ScheduleTagData.ssminute}}
 										</div>
 										<div class="Scaccordion position-absolute bg-white menuhide zm1 gridinside" id="">
 											<div
-											@click="EditTime(ssminute, ScheduleTagData.ssminute)"
+											@click="
+											ssminute,ScheduleTagData!.ssminute = EditTime($event),
+											$event.currentTarget.closest('.Scaccordion').classList.toggle('z1'),
+											$event.currentTarget.closest('.Scaccordion').classList.toggle('menushow'),
+											$event.currentTarget.closest('.Scaccordion').classList.toggle('zm1'),
+											$event.currentTarget.closest('.Scaccordion').classList.toggle('menuhide')
+											"
 											v-for="i in 59" :key="i"
 											class="startminutemenubutton Sbutton w-100 d-inline-block cursor bb" data-makeour="0">{{ReturnDMFormat(i)}}</div>
 										</div>
@@ -63,13 +88,23 @@
 									</div>
 									<div class="w-100 text-center pl-2 position-relative">
 										<div
-										@click="OpenSMenu"
+										@click="EditTime($event),
+										$event.currentTarget.nextElementSibling.classList.toggle('z1'),
+										$event.currentTarget.nextElementSibling.classList.toggle('menushow'),
+										$event.currentTarget.nextElementSibling.classList.toggle('zm1'),
+										$event.currentTarget.nextElementSibling.classList.toggle('menuhide')
+										"
 										class="endhour buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id="">
 											{{ScheduleTagData.sendtime}}
 										</div>
 										<div class="Scaccordion position-absolute bg-white menuhide zm1 gridinside" id="">
 											<div
-											@click="EditTime(sendtime, ScheduleTagData.sendtime)"
+											@click="sendtime,ScheduleTagData!.sendtime = EditTime($event),
+											$event.currentTarget.closest('.Scaccordion').classList.toggle('z1'),
+											$event.currentTarget.closest('.Scaccordion').classList.toggle('menushow'),
+											$event.currentTarget.closest('.Scaccordion').classList.toggle('zm1'),
+											$event.currentTarget.closest('.Scaccordion').classList.toggle('menuhide')
+											"
 											v-for="i in 9" :key="i"
 											class="starthourmenubutton Sbutton w-100 d-inline-block cursor bb" data-makeour="0">{{ReturnDMFormat(i+9)}}</div>
 										</div>
@@ -79,13 +114,23 @@
 									</div>
 									<div class="w-100 text-center pl-2 position-relative">
 										<div
-										@click="OpenSMenu"
+										@click="EditTime($event),
+										$event.currentTarget.nextElementSibling.classList.toggle('z1'),
+										$event.currentTarget.nextElementSibling.classList.toggle('menushow'),
+										$event.currentTarget.nextElementSibling.classList.toggle('zm1'),
+										$event.currentTarget.nextElementSibling.classList.toggle('menuhide')
+										"
 										class="endminute buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id="">
 											{{ScheduleTagData.sendminute}}
 										</div>
 										<div class="Scaccordion position-absolute bg-white menuhide zm1 gridinside" id="">
 											<div
-											@click="EditTime(sendminute, ScheduleTagData.sendminute)"
+											@click="sendminute,ScheduleTagData!.sendminute = EditTime($event),
+											$event.currentTarget.closest('.Scaccordion').classList.toggle('z1'),
+											$event.currentTarget.closest('.Scaccordion').classList.toggle('menushow'),
+											$event.currentTarget.closest('.Scaccordion').classList.toggle('zm1'),
+											$event.currentTarget.closest('.Scaccordion').classList.toggle('menuhide')
+											"
 											v-for="i in 59" :key="i"
 											class="startminutemenubutton Sbutton w-100 d-inline-block cursor bb" data-makeour="0">{{ReturnDMFormat(i)}}</div>
 										</div>
@@ -102,7 +147,9 @@
 									placeholder="タイトルを入力してください"
 									type="text"
 									:value="addscheduletitle"
-									@input="InputTitle(addscheduletitle)"
+									@input="
+									addscheduletitle = $event.currentTarget.value
+									"
 									>
 									<div class="d-inline-block w-100">
 										<small class="red" id=""></small>
@@ -111,7 +158,9 @@
 									name="scheduledisc"
 									placeholder="概要を入力してください"
 									:value="addscheduledescription"
-									@input="InputTitle(addscheduledescription)"
+									@input="
+									addscheduledescription = $event.currentTarget.value
+									"
 									>
 									</textarea>
 								</div>
@@ -137,9 +186,14 @@
 												<div class="d-inline-block w-100 mb-3 pl-0 pr-0">
 													<div class="searchbarwrapper d-inline-block w-100 mt-0">
 														<input
-														@input="SearchMember"
-														@focus="SearchResultFocus"
-														@blur="SearchResultBlur"
+														@input="
+														SearchMember,
+														loadingstatus = true,
+														loadstatus = 'op0',
+														searchuserval = $event.target.value
+														"
+														@focus="searchareashow = 'setSareaheight'"
+														@blur="searchareashow = ''"
 														class="w-100 searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none float-left pl-2"
 														:data-userid="ScheduleTagData.userid"
 														id=""
@@ -152,6 +206,7 @@
 												</div>
 											</div>
 											<div id="" :class="`searchresultarea ${searchareashow}`">
+											{{addmemberid}}
 												<LoginIconview v-if="loadingstatus == true" class="Scheduleloading" />
 												<div
                                                 @click="AddUserFromResult"
@@ -275,7 +330,8 @@ export default defineComponent({
 			addmemberid:[""],
             searchuserval:"",
 			calculate:new Calculate(),
-			sf:new SearchMFormat()
+			sf:new SearchMFormat(),
+			textsample:""
         };
     },
 	components:{
@@ -310,49 +366,20 @@ export default defineComponent({
 				obj.classList.remove('menushow');
 			});
 		},
-
-		TmodalMotion(t:HTMLElement){
-			var Telem = t.nextElementSibling as HTMLElement;
-			Telem.classList.toggle("z1");
-			Telem.classList.toggle("menushow");
-			Telem.classList.toggle("zm1");
-			Telem.classList.toggle("menuhide");
-		},
-		TmodalParentMotion(t:HTMLElement){
-			var Telem = t.closest('.Scaccordion') as HTMLElement;
-			Telem.classList.toggle('z1');
-			Telem.classList.toggle('menushow');
-			Telem.classList.toggle('zm1');
-			Telem.classList.toggle('menuhide');
-		},
         ReturnDMFormat(str:string){
             if (str.toString().length == 1) {
                 str = "0" + str;
             }
             return str;
         },
-		OpenSMenu(e:Event){
-			var t = e.target as HTMLElement;
-			this.TmodalMotion(t);
-		},
-		EditTime(e:Event, target1:string, target2:string){
-			var t = e.target as HTMLElement;
-			target1 = t.innerText;
-			target2 = t.innerText;
-			this.TmodalParentMotion(t);
-		},
-		InputTitle(e:Event, target:string){
-			var t = e.target as HTMLInputElement;
-			target = t.value;
+		EditTime(event:Event){
+			var t = event.currentTarget as HTMLElement;
+			return t.innerText;
 		},
 
 		SearchMember(e:Event){
 			var t = e.target as HTMLInputElement;
             const http = new GetData();
-
-            this.loadingstatus = true;
-            this.loadstatus = 'op0';
-            this.searchuserval = t.value;
 
             http.common(
                 "/api/schedule/search",
@@ -366,12 +393,6 @@ export default defineComponent({
                 }
             );
 		},
-		SearchResultFocus(){
-			this.searchareashow = "setSareaheight";
-		},
-		SearchResultBlur(){
-			this.searchareashow = "";
-		},
         AddUserFromResult(e:Event){
 			var t = e.target as HTMLElement;
 			const id:string = t.dataset.id ? t.dataset.id : "";
@@ -381,13 +402,12 @@ export default defineComponent({
             //既に追加されたユーザーは追加できないようにする処理
             if(this.addmemberid.indexOf(id) == -1){
 
-				interface MemberDataObj {
-					id: string;
-					name: string;
-					mailaddress: string;
-				}
-
 				if(name){
+					interface MemberDataObj {
+						id: string;
+						name: string;
+						mailaddress: string;
+					}
 					const addmemberobj: MemberDataObj = {
 						id: id,
 						name: name,
@@ -418,6 +438,12 @@ export default defineComponent({
 		AddSchedule(){
             //バリデーションの処理
 			//バックエンドにデータを送る
+
+			//送信用にデータを整える
+			var rawstagdata = this.ScheduleTagData ? this.ScheduleTagData.startdate : "";
+			var vdatestr = rawstagdata.split("/");
+			var vdate = `${this.ReturnDMFormat(vdatestr[0])}-${this.ReturnDMFormat(vdatestr[1])}-${this.ReturnDMFormat(vdatestr[2])}`
+
 			interface ScheduleBackObj {
 				schedulename: string;
 				scheduledisc: string;
@@ -427,12 +453,6 @@ export default defineComponent({
 				mainid: number;
 				UserToAdd: string[];
 			}
-
-			//送信用にデータを整える
-			var rawstagdata = this.ScheduleTagData ? this.ScheduleTagData.startdate : "";
-			var vdatestr = rawstagdata.split("/");
-			var vdate = `${this.ReturnDMFormat(vdatestr[0])}-${this.ReturnDMFormat(vdatestr[1])}-${this.ReturnDMFormat(vdatestr[2])}`
-
 			var addmemberobj: ScheduleBackObj = {
 				schedulename: this.addscheduletitle,
 				scheduledisc: this.addscheduledescription,
@@ -456,14 +476,9 @@ export default defineComponent({
 			if(!this.ScheduleTagData){
 				return;
 			}
-			interface Data {
-				sstime: string;
-				ssminute: string;
-				sendtime: string;
-				sendminute: string;
-			}
-			var sstime = this.ScheduleTagData!.starttime;
-			var setime = this.ScheduleTagData!.endtime;
+
+			var sstime = this.ScheduleTagData ? this.ScheduleTagData.starttime : "";
+			var setime = this.ScheduleTagData ? this.ScheduleTagData.endtime : "";
 
 			if(sstime || setime){
 				this.sstime = sstime.split(" ")[1].split(":")[0];
@@ -472,6 +487,12 @@ export default defineComponent({
 				this.sendminute = setime.split(" ")[1].split(":")[1];
 			}
 
+			interface Data {
+				sstime: string;
+				ssminute: string;
+				sendtime: string;
+				sendminute: string;
+			}
 			const sdata: Data = {
 				sstime: this.sstime,
 				ssminute: this.ssminute,
