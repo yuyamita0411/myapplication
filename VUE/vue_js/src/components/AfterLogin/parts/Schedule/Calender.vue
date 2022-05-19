@@ -39,7 +39,7 @@
                             :data-mailaddress="`${edata.mail_address}`"
                             :data-createdat="`${edata.created_at}`"
                             :data-scheduleid="`${edata.scheduleid}`"
-                            :data-title="`${edata.title != null ? edata.title : 'タイトルがありません。'}`"
+                            :data-title="edata.title"
                             :data-description="`${edata.description}`"
                             :data-setscheduleinfo="`${new Date(calculate.MDFI(date, i-1)).getFullYear()}/${new Date(calculate.MDFI(date, i-1)).getMonth()+1}/${new Date(calculate.MDFI(date, i-1)).getDate()}`"
                             :data-starttime="`${edata.starttime}`"
@@ -62,6 +62,7 @@
                             :id="`ScheduleId-${sdata[0].id}`"
                             :data-setscheduleinfo="`${new Date(calculate.MDFI(date, i-1)).getFullYear()}/${new Date(calculate.MDFI(date, i-1)).getMonth()+1}/${new Date(calculate.MDFI(date, i-1)).getDate()}`"
                             :data-buttonuserid="`${sdata[0].id}`"
+                            data-title="スケジュールを追加する"
                             data-tooltip="スケジュールを追加する"
                             class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0"
                             @click="ModalMotion"
@@ -116,7 +117,7 @@ export default defineComponent({
     methods:{
         ModalMotion(e:Event):void{
             var t = e.target as HTMLElement;
-            this.modaltitle = t.dataset.tooltip!;
+            this.modaltitle = t.dataset.title!;
 			var stag = this.dformat.Sformat();
             stag = {
                 startdate: t.dataset.setscheduleinfo!,

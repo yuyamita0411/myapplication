@@ -297,8 +297,15 @@ class ScheduleController extends Controller
             $ScheduleRelation->scheduleid = $sid;
             $ScheduleRelation->save();
         }
-
-        return redirect(url()->previous());
+        return response()->json((object)[
+            "schedulename" => $request->schedulename,
+            "scheduledisc" => $request->scheduledisc,
+            "starttime" => $request->starttime.' '.$request->Sstarttime,
+            "endtime" => $request->starttime.' '.$request->Sendtime,
+//            "scheduleid" => $latestid,
+            "userid" => $request->mainid,
+            "usertoadd" => $request->UserToAdd
+        ]);
     }
 
     public function search(Request $request){

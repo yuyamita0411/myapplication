@@ -69,67 +69,70 @@
                                                 @click="
 												$event.target.classList.toggle('SortAreaisshow'),
 												$event.target.classList.toggle('SortAreaishidde'),
-												$event.target.getElementsByClassName('sbwrapper')[0].classList.toggle('sbshow'),
-												$event.target.getElementsByClassName('sbwrapper')[0].classList.toggle('sbhidden')
+												this.$refs.sortmenu.classList.toggle('sbshow'),
+												this.$refs.sortmenu.classList.toggle('sbhidden')
 												"
                                                 id="SortArea">
                                                 <img class="sccheduleplusbutton" src="@/assets/accountarrow.png">
-                                                <div class="position-absolute sbwrapper b-gray sbhidden bg-white" id="sortmenu">
-                                                    <div
-                                                    class="sortelem p-2"
-                                                    data-orderby="asc"
-                                                    @click="
-													PageNow = 1,
-													SearchOrderBy = $event.target.dataset.orderby,
-													$event.target.parentNode.parentNode.classList.toggle('SortAreaisshow'),
-													$event.target.parentNode.parentNode.classList.toggle('SortAreaishidde'),
-													$event.target.parentNode.classList.toggle('sbshow'),
-													$event.target.parentNode.classList.toggle('sbhidden'),
-													MakeSearchParam()
-													"
-                                                    >
-                                                    昇順
-                                                    </div>
-                                                    <div
-                                                    class="sortelem p-2"
-                                                    data-orderby="desc"
-                                                    @click="
-													PageNow = 1,
-													SearchOrderBy = $event.target.dataset.orderby,
-													$event.target.parentNode.parentNode.classList.toggle('SortAreaisshow'),
-													$event.target.parentNode.parentNode.classList.toggle('SortAreaishidde'),
-													$event.target.parentNode.classList.toggle('sbshow'),
-													$event.target.parentNode.classList.toggle('sbhidden'),
-													MakeSearchParam()
-													"
-                                                    >
-                                                    降順
-                                                    </div>
-                                                    <input name="clorderby" type="hidden" :value="`${SearchOrderBy}`">
-                                                </div>
-                                            </div>
+												</div>
+												<div class="d-md-flex position-absolute" id="sortmenuwrapper">
+													<div class="position-absolute sbwrapper b-gray sbhidden bg-white" id="sortmenu" ref="sortmenu">
+														<div
+														class="sortelem p-2 cursor"
+														data-orderby="asc"
+														@click="
+														PageNow = 1,
+														SearchOrderBy = $event.target.dataset.orderby,
+														$event.target.parentNode.parentNode.classList.toggle('SortAreaisshow'),
+														$event.target.parentNode.parentNode.classList.toggle('SortAreaishidde'),
+														this.$refs.sortmenu.classList.toggle('sbshow'),
+														this.$refs.sortmenu.classList.toggle('sbhidden'),
+														MakeSearchParam()
+														"
+														>
+														昇順
+														</div>
+														<div
+														class="sortelem p-2 cursor"
+														data-orderby="desc"
+														@click="
+														PageNow = 1,
+														SearchOrderBy = $event.target.dataset.orderby,
+														$event.target.parentNode.parentNode.classList.toggle('SortAreaisshow'),
+														$event.target.parentNode.parentNode.classList.toggle('SortAreaishidde'),
+														$event.target.parentNode.classList.toggle('sbshow'),
+														$event.target.parentNode.classList.toggle('sbhidden'),
+														MakeSearchParam()
+														"
+														>
+														降順
+														</div>
+														<input name="clorderby" type="hidden" :value="`${SearchOrderBy}`">
+													</div>
+												</div>
 
-                                            <div
-                                            class="w-100"
-                                            v-for="i in 7" :key="i">
-                                                <div
-                                                v-if="i == 1" id="CFirstDate"
-                                                :data-forcommondate="`${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`"
-                                                :data-cstartdate="`${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`"
-                                                :class="`${Daycolor[DweekArr[date.getDay()]]} w-100 h-100 text-center pt-2 pb-2 font12`"
-                                                >{{date.getDate()}}({{DweekArr[date.getDay()]}})
-                                                </div>
-                                                <div
-                                                v-else
-                                                :data-forcommondate="`${new Date(calculate.MDFI(date, i-1)).getFullYear()}/${new Date(calculate.MDFI(date, i-1)).getMonth()+1}/${new Date(calculate.MDFI(date, i-1)).getDate()}`"
-                                                :class="`${Daycolor[DweekArr[new Date(calculate.MDFI(date, i-1)).getDay()]]} w-100 h-100 text-center pt-2 pb-2 font12`"
-                                                >
-                                                {{new Date(calculate.MDFI(date, i-1)).getDate()}}
-                                                ({{DweekArr[new Date(calculate.MDFI(date, i-1)).getDay()]}})
-                                                </div>
-                                            </div>
-
-                                            <div :data-cenddate="`${new Date(calculate.MDFI(date, 6)).getFullYear()}/${new Date(calculate.MDFI(date, 6)).getMonth()+1}/${new Date(calculate.MDFI(date, 6)).getDate()}`" id="getCalenderRange"></div>
+												<div
+												class="w-100"
+												v-for="i in 7" :key="i">
+													<div
+													v-if="i == 1" id="CFirstDate"
+													:data-forcommondate="`${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`"
+													:data-cstartdate="`${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`"
+													:class="`${Daycolor[DweekArr[date.getDay()]]} w-100 h-100 text-center pt-2 pb-2 font12`"
+													>{{date.getDate()}}({{DweekArr[date.getDay()]}})
+													</div>
+													<div
+													v-else
+													:data-forcommondate="`${new Date(calculate.MDFI(date, i-1)).getFullYear()}/${new Date(calculate.MDFI(date, i-1)).getMonth()+1}/${new Date(calculate.MDFI(date, i-1)).getDate()}`"
+													:class="`${Daycolor[DweekArr[new Date(calculate.MDFI(date, i-1)).getDay()]]} w-100 h-100 text-center pt-2 pb-2 font12`"
+													>
+													{{new Date(calculate.MDFI(date, i-1)).getDate()}}
+													({{DweekArr[new Date(calculate.MDFI(date, i-1)).getDay()]}})
+													</div>
+												</div>
+												
+												<div :data-cenddate="`${new Date(calculate.MDFI(date, 6)).getFullYear()}/${new Date(calculate.MDFI(date, 6)).getMonth()+1}/${new Date(calculate.MDFI(date, 6)).getDate()}`" id="getCalenderRange">
+												</div>
                                             </div>
                                         </div>
 									</div>

@@ -215,7 +215,6 @@
 												:data-mailaddress="EUobj.mail_address"
 												:class="`${addmemberid.indexOf(EUobj.id.toString()) != -1 ? 'inportbutton' : 'adduserbuton'} d-inline-block float-left pt-1 pb-1 pr-2 pl-2 text-white mb-2 mr-2 cursor br5px`">
 												{{EUobj.name}}
-												{{typeof EUobj.id}}
 												</div>
 											</div>
 										</div>
@@ -223,9 +222,9 @@
 								</div>
 <!-- 条件分岐 -->
                                 <div
-                                v-if="ScheduleTagData.alreadyaddeduser"
+                                v-if="ScheduleTagData.alreadyaddeduser && 0 < ScheduleTagData.alreadyaddeduser.length"
                                 id="" class="col-12 mb-0 d-inline-block">
-                                    <h5 class="mainfontcolor w-100 pt-4 pb-1 mb-2">既に追加されたメンバー</h5>
+                                    <h5 class="mainfontcolor w-100 pt-4 pb-1 mb-2">参加済み</h5>
                                     <div
                                     v-for="eachuserinfo in ScheduleTagData.alreadyaddeduser" :key="eachuserinfo.id"
                                     class="alreadyadded addeduserbuton d-inline-block float-left pt-1 pb-1 pr-2 pl-2 text-white mb-2 mr-2 cursor br5px" data-addeduserid="6">
@@ -465,18 +464,39 @@ export default defineComponent({
 				starttime: vdate,
 				Sstarttime: `${this.ReturnDMFormat(this.sstime)}:${this.ReturnDMFormat(this.ssminute)}`,
 				Sendtime: `${this.ReturnDMFormat(this.sendtime)}:${this.ReturnDMFormat(this.sendminute)}`,
-				mainid: Number(this.ScheduleTagData ? this.ScheduleTagData.userid : null),
-				UserToAdd: this.addmemberid
+				mainid:0,
+				UserToAdd: []
 			};
+			console.log("addmemberobj");
+			console.log(addmemberobj);
 
+			//addmemberid {0: 16, 1: 26, 2: 36, 3: 54}
+			//既に存在するユーザーに関してはモーダルが開いた瞬間に変数に格納しておいてコンポーネント内で追加削除ができるようにする。
+			//修正のタイミングでaddmemberidとマージしてエンドポイントに渡す。
+			//ScheduleTagData = {alreadyaddeduser: [{id:6, username, ...}, Object, Object, ...] (1)...}
 			const http = new GetData();
-            http.Postcommon(
-                "/api/schedule/add",
-				addmemberobj,
-                (res:any) => {
-                    console.log(res);
-                }
-            );
+			//オブジェクトに scheduleid がある場合とない場合でエンドポイントを分ける
+			var checkDobj = this.ScheduleTagData != undefined ? this.ScheduleTagData : null;
+			if(checkDobj != undefined){
+				var endpoint = "/api/schedule/add";
+				if(!checkDobj.scheduleid){
+					addmemberobj.mainid = Number(this.ScheduleTagData ? this.ScheduleTagData.userid : null);
+					addmemberobj.UserToAdd = this.addmemberid;
+				}
+				if(checkDobj.scheduleid){
+					endpoint = "/api/schedule/rebase";
+					addmemberobj.mainid = Number(this.ScheduleTagData ? this.ScheduleTagData.scheduleid : null);
+					addmemberobj.UserToAdd = this.addmemberid;
+				}
+
+				http.Postcommon(
+					endpoint,
+					addmemberobj,
+					(res:any) => {
+						console.log(res);
+					}
+				);
+			}
 		},
 		EditScheduleTime(){
 			if(!this.ScheduleTagData){

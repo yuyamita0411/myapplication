@@ -35,8 +35,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import router from '@/router'
 import {apiClient} from "@/http";
 
 export default defineComponent({
@@ -46,7 +44,7 @@ export default defineComponent({
         return apiClient.post(
         "/api/logout"
         )
-        .then(response => {
+        .then(() => {
             localStorage.setItem('access_token',"");
             this.$router.push('/login');
         })
