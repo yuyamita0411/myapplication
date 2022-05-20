@@ -36,7 +36,7 @@
 										"
 										class="starthour buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id=""
 										ref="sstime">
-											{{ScheduleTagDatas.sstime}}
+											{{ScheduleTagData.sstime}}
 										</div>
 										<div
 										class="Scaccordion position-absolute bg-white menuhide zm1 gridinside"
@@ -131,6 +131,7 @@
 										<div class="Scaccordion position-absolute bg-white menuhide zm1 gridinside" id="">
 											<div
 											@click="
+											this.$refs.sendminute = $event.target.innerText,
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('z1'),
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('menushow'),
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('zm1'),
@@ -152,7 +153,7 @@
 									name="schedulename"
 									placeholder="タイトルを入力してください"
 									type="text"
-									:value="ScheduleTagData.title"
+									:value="ScheduleTagData.title != 'スケジュールを追加する' ? ScheduleTagData.title : ''"
 									ref="schedulename"
 									>
 									<div class="d-inline-block w-100">
@@ -175,7 +176,7 @@
                                     <div
                                     @click="DeleteUserFromResult"
                                     v-for="eachadded in addmember" :key="eachadded.id"
-                                    :class="`${eachadded.id ? 'addeduserbuton d-inline-block float-left pt-1 pb-1 pr-2 pl-2 text-white mb-2 mr-2 cursor br5px' : 'd-none'}`"
+                                    :class="`${eachadded != {} && eachadded.id ? 'addeduserbuton d-inline-block float-left pt-1 pb-1 pr-2 pl-2 text-white mb-2 mr-2 cursor br5px' : 'd-none'}`"
                                     :data-addeduserid="eachadded.id">
                                         {{eachadded.name}}
                                     </div>
@@ -316,13 +317,16 @@ export default defineComponent({
 		modalcoverclass:String
 	},
     data() {
+		const adm:object[] = [],
+		su:object[] = [],
+		aa:object[] = [];
         return {
-			searchuser:[{}],
+			searchuser:su,
 			loadstatus:"op0",
 			searchareashow:"",
 			loadingstatus:false,
-            alreadyaddedmember: [{}],
-            addmember:[{}],
+            alreadyaddedmember: aa,
+            addmember:adm,
 			addmemberid:[0],
             searchuserval:""
         };
@@ -331,6 +335,10 @@ export default defineComponent({
 		LoginIconview
 	},
 	methods:{
+		Timeevent(event:Event, changeval:HTMLElement): void{
+			var t = event.target as HTMLInputElement;
+			changeval.innerText = t.innerText;
+		},
 		AppendAuser(){
 			this.alreadyaddedmember = this.ScheduleTagData != undefined ? this.ScheduleTagData.alreadyaddeduser : [{}];
 			return this.alreadyaddedmember;
