@@ -34,7 +34,8 @@
 										$event.currentTarget.nextElementSibling.classList.toggle('zm1'),
 										$event.currentTarget.nextElementSibling.classList.toggle('menuhide')
 										"
-										class="starthour buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id="">
+										class="starthour buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id=""
+										ref="sstime">
 											{{ScheduleTagData!.sstime}}
 										</div>
 										<div
@@ -51,7 +52,8 @@
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('menuhide')
 											"
 											v-for="i in 9" :key="i"
-											class="starthourmenubutton Sbutton w-100 d-inline-block cursor bb" data-makeour="0">{{ReturnDMFormat(i+8)}}</div>
+											class="starthourmenubutton Sbutton w-100 d-inline-block cursor bb" data-makeour="0"
+											>{{ReturnDMFormat(i+8)}}</div>
 										</div>
 									</div>
 									<div class="buttonicon text-center pr-2">
@@ -68,7 +70,8 @@
 										class="
 										startminute buttonicon w-100 d-inline-block searchbar bg-brightgray
 										border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem
-										border-bottom-right-radius-1rem b-none cursor" id="">
+										border-bottom-right-radius-1rem b-none cursor" id=""
+										ref="ssminute">
 											{{ScheduleTagData.ssminute}}
 										</div>
 										<div class="Scaccordion position-absolute bg-white menuhide zm1 gridinside" id="">
@@ -81,7 +84,8 @@
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('menuhide')
 											"
 											v-for="i in 59" :key="i"
-											class="startminutemenubutton Sbutton w-100 d-inline-block cursor bb" data-makeour="0">{{ReturnDMFormat(i)}}</div>
+											class="startminutemenubutton Sbutton w-100 d-inline-block cursor bb" data-makeour="0"
+											>{{ReturnDMFormat(i)}}</div>
 										</div>
 									</div>
 									<div class="buttonicon text-center">
@@ -95,7 +99,8 @@
 										$event.currentTarget.nextElementSibling.classList.toggle('zm1'),
 										$event.currentTarget.nextElementSibling.classList.toggle('menuhide')
 										"
-										class="endhour buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id="">
+										class="endhour buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id=""
+										ref="sendtime">
 											{{ScheduleTagData.sendtime}}
 										</div>
 										<div class="Scaccordion position-absolute bg-white menuhide zm1 gridinside" id="">
@@ -121,7 +126,8 @@
 										$event.currentTarget.nextElementSibling.classList.toggle('zm1'),
 										$event.currentTarget.nextElementSibling.classList.toggle('menuhide')
 										"
-										class="endminute buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id="">
+										class="endminute buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id=""
+										ref="sendminute">
 											{{ScheduleTagData.sendminute}}
 										</div>
 										<div class="Scaccordion position-absolute bg-white menuhide zm1 gridinside" id="">
@@ -133,7 +139,8 @@
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('menuhide')
 											"
 											v-for="i in 59" :key="i"
-											class="startminutemenubutton Sbutton w-100 d-inline-block cursor bb" data-makeour="0">{{ReturnDMFormat(i)}}</div>
+											class="startminutemenubutton Sbutton w-100 d-inline-block cursor bb" data-makeour="0"
+											>{{ReturnDMFormat(i)}}</div>
 										</div>
 									</div>
 								</div>
@@ -148,6 +155,7 @@
 									placeholder="タイトルを入力してください"
 									type="text"
 									:value="addscheduletitle == undefined ? '' : addscheduletitle"
+									ref="schedulename"
 									>
 									<div class="d-inline-block w-100">
 										<small class="red" id=""></small>
@@ -156,6 +164,7 @@
 									name="scheduledisc"
 									placeholder="概要を入力してください"
 									:value="addscheduledescription == undefined ? '' : addscheduledescription"
+									ref="scheduledisc"
 									>
 									</textarea>
 								</div>
@@ -318,7 +327,7 @@ export default defineComponent({
 			sendminute: "00",
 			addscheduletitle:"",
 			addscheduledescription:"",
-			searchuser:[],
+			searchuser:[{}],
 			loadstatus:"op0",
 			searchareashow:"",
 			loadingstatus:false,
@@ -392,7 +401,13 @@ export default defineComponent({
                 "/api/schedule/search",
                 {"addgroupmember": t.value},
                 (res:any) => {
-					this.searchuser = res.data;
+					var sres:object[] = [];
+					res.data.forEach((ob:any) => {
+						if(ob.id != t.dataset.userid){
+							sres.push(ob);
+						}
+					});
+					this.searchuser = sres;
 
                     //読み込みが完全に終わってからカバーを外す
                     this.loadingstatus = false;
@@ -461,6 +476,13 @@ export default defineComponent({
 			var rawstagdata = this.ScheduleTagData ? this.ScheduleTagData.startdate : "";
 			var vdatestr = rawstagdata.split("/");
 			var vdate = `${this.ReturnDMFormat(vdatestr[0])}-${this.ReturnDMFormat(vdatestr[1])}-${this.ReturnDMFormat(vdatestr[2])}`;
+			
+			const schedulename = this.$refs.schedulename as HTMLInputElement;
+			const scheduledisc = this.$refs.scheduledisc as HTMLInputElement;
+			const sstime = this.$refs.sstime as HTMLElement;
+			const ssminute = this.$refs.ssminute as HTMLElement;
+			const sendtime = this.$refs.sendtime as HTMLElement;
+			const sendminute = this.$refs.sendminute as HTMLElement;
 
 			interface ScheduleBackObj {
 				schedulename: string;
@@ -472,11 +494,11 @@ export default defineComponent({
 				UserToAdd: number[];
 			}
 			var addmemberobj: ScheduleBackObj = {
-				schedulename: this.addscheduletitle,
-				scheduledisc: this.addscheduledescription,
+				schedulename: schedulename.value,
+				scheduledisc: scheduledisc.value,
 				starttime: vdate,
-				Sstarttime: `${this.ReturnDMFormat(this.sstime)}:${this.ReturnDMFormat(this.ssminute)}`,
-				Sendtime: `${this.ReturnDMFormat(this.sendtime)}:${this.ReturnDMFormat(this.sendminute)}`,
+				Sstarttime: `${this.ReturnDMFormat(sstime.innerText)}:${this.ReturnDMFormat(ssminute.innerText)}`,
+				Sendtime: `${this.ReturnDMFormat(sendtime.innerText)}:${this.ReturnDMFormat(sstime.innerText)}`,
 				mainid:0,
 				UserToAdd: []
 			};
