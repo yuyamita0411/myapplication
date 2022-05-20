@@ -75,7 +75,20 @@ class TaskInfoController extends Controller
         }
         $taskcount = count($Alltaskobj->get());
 
-        $taskobj = $Alltaskobj->paginate($this->Values->pagenationNum);//初期状態で表示しておくデータ
+//        $taskobj = $Alltaskobj->paginate($this->Values->pagenationNum);//初期状態で表示しておくデータ
+
+        //ページネーション関係の処理
+        $PerPage = $this->Values->pagenationNum;//何もない時はデフォルト値
+        if(!empty($request->PerPage)){
+            $PerPage = $request->PerPage;
+        }
+        $PageNow = 1;
+        if(!empty($request->PageNow)){
+            $PageNow = (($request->PageNow - 1) * $PerPage);
+        }
+        $taskobj = $Alltaskobj->limit($PerPage)->offset($PageNow)->get();
+        //var_dump($taskob);
+        //ページネーション関係の処理
 
         $taskdata = [];
         $YourGroupUser = [

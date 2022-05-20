@@ -39,23 +39,23 @@
                             </router-link>
                         </article>
                     </div>
-                    <div id="PagenationArea" class="w-100 text-center d-flex">
-                        <div
-                        :class="`paginationarea d-flex pt-4 col-12 col-lg-4 m-auto float-left ${this.loadpn}`"
-                        >
-                            <p
-                            v-for="obj in calculate.MakePagenation(Pjson, PageAmount, PageNow)" :key="obj"
-                            :id="obj.PId"
-                            :class="obj.PClass"
-                            @click="PageMotion">
-                            {{obj.PTxt}}
-                            </p>
-                            <input type="text" name="PageNationInput" :value="PageNow" id="PageNationInput" @input="PageNationInput" class="mt-0 mb-0 col-2">
-                        </div>
-                    </div>
-
                 </div>
             </div>
+			<div id="PagenationArea" class="text-center d-flex position-fixed bg-white z1">
+				<div
+				class="paginationarea d-flex pt-4 col-12 col-lg-4 m-auto float-left"
+				>
+					<p
+					v-for="obj in calculate.MakePagenation(Pjson, PageAmount, PageNow)" :key="obj"
+					:id="obj.PId"
+					:class="obj.PClass"
+					@click="PageMotion">
+					{{obj.PTxt}}
+					</p>
+                    <input type="text" name="PageNationInput" :value="PageNow" id="PageNationInput" @input="PageNationInput" class="mt-0 mb-0 col-2">
+				</div>
+			</div>
+
         </div>
     </div>
 </template>
@@ -169,5 +169,20 @@ export default defineComponent({
     position:absolute;
     top:0;
     transform:scale(0.7);
+}
+
+#PagenationArea{
+	bottom:2rem;
+	right:0;
+}
+@media (min-width: 768px){
+	#PagenationArea{
+		width: calc(100% - 11rem);
+	}
+}
+@media (max-width: 768px){
+	#PagenationArea{
+		width: 100%;
+	}
 }
 </style>

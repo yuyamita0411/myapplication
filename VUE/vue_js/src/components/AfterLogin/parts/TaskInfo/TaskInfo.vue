@@ -1,6 +1,7 @@
 <template>
     <div class="">
-        <div class="w-100 d-inline-block mt-3" id="TaskDisplayArea">
+    <LoginIconview class="calenderloading w-100 d-inline-block text-center position-relative" v-if="loadingstatus == true" />
+        <div :class="`w-100 d-inline-block mt-3 ${modalstatus}`" id="TaskDisplayArea">
             <div
             v-for="eachtask in taskdata.taskdata" :key="eachtask"
             class="gridinside d-inline-block w-100 mb-3 bg-white position-relative">
@@ -44,11 +45,17 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import {GetData} from "@/http";
+import LoginIconview from '@/components/common/LoadingIcon.vue';
 
 export default defineComponent({
     name: 'TaskInfoInnerView',
     props: {
         taskdata: Object,
+        modalstatus:String,
+        loadingstatus:Boolean
+    },
+    components: {
+        LoginIconview
     },
     data() {
         return {
@@ -57,3 +64,13 @@ export default defineComponent({
     }
 });
 </script>
+<style lang="scss" scoped>
+.calenderloading{
+    top:0;
+    left:0;
+}
+.calenderloading {
+	position: absolute;
+	transform: scale(0.7);
+}
+</style>

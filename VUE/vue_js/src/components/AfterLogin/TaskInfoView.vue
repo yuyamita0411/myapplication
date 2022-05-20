@@ -1,8 +1,8 @@
 <template>
 	<div class="shadowwrapper m-auto pl-2 pr-2 pl-lg-0 pr-lg-0">
-		<div class="contentwraper w-100 d-inline-block pt-3 pb-4 pl-0 pr-0 mt-3">
+		<div class="contentwraper w-100 d-inline-block pt-3 pb-5 pl-0 pr-0 mt-3">
 			<h5 class="mainfontcolor mb-3 w-100 d-inline-block">タスクを検索</h5>
-			<form action="https://localhost:8081/taskinfo" class="d-inline-block w-100 overflow-hidden" method="get">
+			<div class="d-inline-block w-100 overflow-hidden" method="get">
 				<div class="mb-3 w-100 d-inline-block">
 					<div class="tablediv tabledivleft col-6 col-md-6 float-left pl-2">
 						担当者名
@@ -116,10 +116,12 @@
 					</div>
 					<img class="searchicon cursor" src="@/assets/SearchGlassIcon.png">
 				</div>
-			</form>
+			</div>
 			
 			<TaskInfoInnerView
 			:taskdata="taskdata"
+			:modalstatus="modalstatus"
+			:loadingstatus="loadingstatus"
 			/>
 			<div id="PagenationArea" class="text-center d-flex position-fixed bg-white z1">
 				<div
@@ -130,7 +132,7 @@
 					:id="obj.PId"
 					:class="obj.PClass"
 					@click="
-					PageNow = $event.target.innerText
+					PageNow = Number($event.target.innerText), SearchTask()
 					">
 					{{obj.PTxt}}
 					</p>
@@ -160,7 +162,9 @@ export default defineComponent({
 			selectwhich:"",
 			Pjson:[{}],
 			calculate:new Calculate(),
-			http:new GetData()
+			http:new GetData(),
+			modalstatus:"op0",
+			loadingstatus:true
         }
     },
 	methods:{
@@ -174,6 +178,7 @@ export default defineComponent({
 				deadlineendmonth: string;
 				deadlineenddate: string;
 				selectincharge: string;//ng
+				PageNow:number;
 			}
 
 			const searchTaskTitle = this.$refs.searchTaskTitle as HTMLInputElement;
@@ -192,8 +197,11 @@ export default defineComponent({
 				deadlineendyear: deadlineendyear.value,
 				deadlineendmonth: deadlineendmonth.value,
 				deadlineenddate: deadlineenddate.value,
-				selectincharge: ''
+				selectincharge: '',
+				PageNow:this.PageNow
 			};
+			this.modalstatus = "op0";
+			this.loadingstatus = true;
 			console.log(searchtaskparam);
 
 			this.http.common(
@@ -202,6 +210,8 @@ export default defineComponent({
 				(res:any) => {
 					this.taskdata = res.data.taskdata;
 					this.PageAmount = res.data.taskdata.Pagecount;
+					this.modalstatus = "op1";
+					this.loadingstatus = false;
 					console.log(res);
 				}
 			);
@@ -216,6 +226,8 @@ export default defineComponent({
 				this.companydata = res.data.companydata;
                 this.taskdata = res.data.taskdata;
 				this.PageAmount = res.data.taskdata.Pagecount;
+				this.modalstatus = "op1";
+				this.loadingstatus = false;
             }
         );
     }
