@@ -63,7 +63,6 @@
                             :id="`ScheduleId-${sdata[0].id}`"
                             :data-setscheduleinfo="`${new Date(calculate.MDFI(date, i-1)).getFullYear()}/${new Date(calculate.MDFI(date, i-1)).getMonth()+1}/${new Date(calculate.MDFI(date, i-1)).getDate()}`"
                             :data-buttonuserid="`${sdata[0].id}`"
-                            data-title="スケジュールを追加する"
                             data-tooltip="スケジュールを追加する"
                             class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0"
                             @click="ModalMotion"
@@ -118,7 +117,7 @@ export default defineComponent({
     methods:{
         ModalMotion(e:Event):void{
             var t = e.target as HTMLElement;
-            this.modaltitle = t.dataset.title!;
+            this.modaltitle = t.dataset.title != undefined ? t.dataset.title : 'スケジュールを追加する';
 			var stag = this.dformat.Sformat();
             stag = {
                 startdate: t.dataset.setscheduleinfo!,

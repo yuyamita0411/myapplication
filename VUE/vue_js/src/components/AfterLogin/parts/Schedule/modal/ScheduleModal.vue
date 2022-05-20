@@ -11,7 +11,7 @@
 	>
 		<div class="modalinnerwrapper overflow-hidden">
 			<div class="modalinnercover d-flex position-relative" id="">
-				<div class="Modal1 col-12 p-3 bg-white" id="">
+				<div class="Modal1 col-12 p-3 bg-white" id="" :style="mfstyle">
 					<div class="w-100 d-inline-block pt-3 pb-3 pl-0 pr-0 bg-white pb-3">
 						<div class="col-12 pr-0 pl-0 bg-white" id="">
 							<div class="">
@@ -156,7 +156,7 @@
 									name="schedulename"
 									placeholder="タイトルを入力してください"
 									type="text"
-									:value="titleval = ScheduleTagData.title"
+									:value="ScheduleTagData.title"
 									ref="schedulename"
 									@input="Inputtitle($event)"
 									>
@@ -166,7 +166,7 @@
 									<textarea class="w-100 searchbar bg-brightgray mb-3 border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none float-left pl-2"
 									name="scheduledisc"
 									placeholder="概要を入力してください"
-									:value="descriptionval = ScheduleTagData.description"
+									:value="ScheduleTagData.description"
 									ref="scheduledisc"
 									@input="Inputdescription($event)"
 									>
@@ -246,7 +246,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="Modal2 col-12 pl-0 pr-0 position-relative bg-white" id="">
+				<div class="Modal2 col-12 pl-0 pr-0 position-relative bg-white" id="" :style="mfstyle">
 					<div class="m-auto h-100 bg-white">
 						<div class="">
 							<div class="w-100 d-inline-block text-center">
@@ -266,7 +266,7 @@
         <!--モーダルのメニューは固定する-->
         <div id="modalmenuwapper" class="modalinnerwrapper overflow-hidden">
             <div id="" class="modalinnercover d-flex position-relative">
-                <div class=" modalfinishbuttonwrapper col-12 mb-0 pt-0 pb-0 pl-0 pr-0 bg-white">
+                <div class=" modalfinishbuttonwrapper col-12 mb-0 pt-0 pb-0 pl-0 pr-0 bg-white" :style="mfstyle">
                     <div class="bgstripe45deg  col-12 m-auto pt-0 pb-0 pt-md-3 pb-md-3 pl-0 pr-0">
                         <div class="buttonarea d-flex m-auto">
                             <div id="ScheduleModalclosebutton" class="buttonicon margin-right-two p-2">
@@ -292,12 +292,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="modalfinishbuttonwrapper col-12 mb-0 pt-0 pb-0 pl-0 pr-0 bg-white">
+                <div class="modalfinishbuttonwrapper col-12 mb-0 pt-0 pb-0 pl-0 pr-0 bg-white" :style="mfstyle">
                     <div class="bgstripe45deg  col-12 m-auto pt-0 pb-0 pt-md-3 pb-md-3 pl-0 pr-0">
                         <div class="">
                             <div id="" class="buttonicon p-2 m-auto">
                                 <div class="w-100 d-inline-block text-center text-white font-weight-bold cursor br-50 bordergray bg-white">
-                                    <img src="" class="d-inline-block w-100 p-2">
+                                    <img src="@/assets/modalclosebutton.png" class="d-inline-block w-100 p-2">
                                 </div>
                             </div>
                         </div>
@@ -326,12 +326,6 @@ export default defineComponent({
 		su:object[] = [],
 		aa:object[] = [];
         return {
-			sstime:"09",
-			ssminute:"00",
-			sendtime:"10",
-			sendminute:"00",
-			titleval:"",
-			descriptionval:"",
 			searchuser:su,
 			loadstatus:"op0",
 			searchareashow:"",
@@ -339,7 +333,8 @@ export default defineComponent({
             alreadyaddedmember: aa,
             addmember:adm,
 			addmemberid:[0],
-            searchuserval:""
+            searchuserval:"",
+			mfstyle:"left: 0%; transition:all 0.25s;"
         };
     },
 	components:{
@@ -352,12 +347,10 @@ export default defineComponent({
 		},	
 		Inputtitle(event:Event):void{
 			var t = event.target as HTMLInputElement;
-			this.titleval = t.value;
 			this.ScheduleTagData!.title = t.value;
 		},
 		Inputdescription(event:Event):void{
 			var t = event.target as HTMLInputElement;
-			this.descriptionval = t.value;
 			this.ScheduleTagData!.description = t.value;
 		},
 		AppendAuser(){
@@ -539,6 +532,15 @@ export default defineComponent({
 					addmemberobj,
 					(res:any) => {
 						console.log(res);
+						this.mfstyle = 'left: -100%; transition:all 0.25s;';
+						setTimeout(() => {
+							this.ModalMotion();
+							this.mfstyle = 'left: 0%; transition:all 0.25s;';
+							this.$router.push('/schedule');
+						}, 1000);
+						/*setTimeout(() => {
+							location.pathname = '/schedule';
+						}, 1200);*/
 					}
 				);
 			}
@@ -648,6 +650,14 @@ export default defineComponent({
 }
 .menuhide, .menushow {
 	transition: opacity 0.5s;
+}
+.Modal2 > div > div:nth-child(1){
+	position: sticky;
+	top: 0;
+}
+.Modal2 > div > div:nth-child(2){
+	position: sticky;
+	top: 7rem;
 }
 @media (min-width: 768px){
     .ScheduleModalopen,
