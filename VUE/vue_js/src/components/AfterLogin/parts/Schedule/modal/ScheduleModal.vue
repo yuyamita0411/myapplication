@@ -36,7 +36,7 @@
 										"
 										class="starthour buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id=""
 										ref="sstime">
-											{{ScheduleTagData!.sstime}}
+											{{ScheduleTagDatas.sstime}}
 										</div>
 										<div
 										class="Scaccordion position-absolute bg-white menuhide zm1 gridinside"
@@ -45,7 +45,6 @@
 										>
 											<div
 											@click="
-											sstime,ScheduleTagData!.sstime = EditTime($event),
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('z1'),
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('menushow'),
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('zm1'),
@@ -77,7 +76,6 @@
 										<div class="Scaccordion position-absolute bg-white menuhide zm1 gridinside" id="">
 											<div
 											@click="
-											ssminute,ScheduleTagData!.ssminute = EditTime($event),
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('z1'),
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('menushow'),
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('zm1'),
@@ -105,7 +103,7 @@
 										</div>
 										<div class="Scaccordion position-absolute bg-white menuhide zm1 gridinside" id="">
 											<div
-											@click="sendtime,ScheduleTagData!.sendtime = EditTime($event),
+											@click="
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('z1'),
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('menushow'),
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('zm1'),
@@ -132,7 +130,7 @@
 										</div>
 										<div class="Scaccordion position-absolute bg-white menuhide zm1 gridinside" id="">
 											<div
-											@click="sendminute,ScheduleTagData!.sendminute = EditTime($event),
+											@click="
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('z1'),
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('menushow'),
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('zm1'),
@@ -154,7 +152,7 @@
 									name="schedulename"
 									placeholder="タイトルを入力してください"
 									type="text"
-									:value="addscheduletitle == undefined ? '' : addscheduletitle"
+									:value="ScheduleTagData.title"
 									ref="schedulename"
 									>
 									<div class="d-inline-block w-100">
@@ -163,7 +161,7 @@
 									<textarea class="w-100 searchbar bg-brightgray mb-3 border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none float-left pl-2"
 									name="scheduledisc"
 									placeholder="概要を入力してください"
-									:value="addscheduledescription == undefined ? '' : addscheduledescription"
+									:value="ScheduleTagData.description"
 									ref="scheduledisc"
 									>
 									</textarea>
@@ -307,8 +305,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import {GetData} from "@/http";
-import {Calculate} from "@/calculate";
-import {SearchMFormat} from "@/dataformat";
 import LoginIconview from '@/components/common/LoadingIcon.vue';
 
 export default defineComponent({
@@ -321,25 +317,14 @@ export default defineComponent({
 	},
     data() {
         return {
-            sstime: "09",
-			ssminute: "00",
-			sendtime: "10",
-			sendminute: "00",
-			addscheduletitle:"",
-			addscheduledescription:"",
 			searchuser:[{}],
 			loadstatus:"op0",
 			searchareashow:"",
 			loadingstatus:false,
-			MClass:'',
-			Modalcover:'',
             alreadyaddedmember: [{}],
             addmember:[{}],
 			addmemberid:[0],
-            searchuserval:"",
-			calculate:new Calculate(),
-			sf:new SearchMFormat(),
-			textsample:""
+            searchuserval:""
         };
     },
 	components:{
@@ -348,15 +333,9 @@ export default defineComponent({
 	methods:{
 		AppendAuser(){
 			this.alreadyaddedmember = this.ScheduleTagData != undefined ? this.ScheduleTagData.alreadyaddeduser : [{}];
-			this.addscheduletitle = this.ScheduleTagData != undefined ? this.ScheduleTagData.title : "";
-			this.addscheduledescription = this.ScheduleTagData != undefined ? this.ScheduleTagData.description : "";
 			return this.alreadyaddedmember;
 		},
 		ModalMotion(){
-            this.sstime = "09";
-			this.ssminute = "00";
-			this.sendtime = "10";
-			this.sendminute = "00";
 
 			this.addmember = [];
 			this.addmemberid = [];
@@ -535,36 +514,6 @@ export default defineComponent({
 					}
 				);
 			}
-		},
-		EditScheduleTime(){
-			if(!this.ScheduleTagData){
-				return;
-			}
-
-			var sstime = this.ScheduleTagData ? this.ScheduleTagData.starttime : "";
-			var setime = this.ScheduleTagData ? this.ScheduleTagData.endtime : "";
-
-			if(sstime || setime){
-				this.sstime = sstime.split(" ")[1].split(":")[0];
-				this.ssminute = sstime.split(" ")[1].split(":")[1];
-				this.sendtime = setime.split(" ")[1].split(":")[0];
-				this.sendminute = setime.split(" ")[1].split(":")[1];
-			}
-
-			interface Data {
-				sstime: string;
-				ssminute: string;
-				sendtime: string;
-				sendminute: string;
-			}
-			const sdata: Data = {
-				sstime: this.sstime,
-				ssminute: this.ssminute,
-				sendtime: this.sendtime,
-				sendminute: this.sendminute
-			};
-
-			return sdata;
 		}
 	}
 });
