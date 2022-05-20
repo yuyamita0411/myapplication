@@ -267,23 +267,6 @@ export default defineComponent({
 					this.loadstatus = 'op1';
 				}
 			);
-
-			/*await http.common(
-				"/schedule/me/get",
-				this.searchparam,
-				(res:any) => {
-					console.log("my.schedule.vue");
-					console.log(res.data);
-					this.ScheduleData = res.data;
-					this.PageAmount = res.data.PageAmount[0];
-
-					//読み込みが完全に終わってからカバーを外す
-					this.loadingstatus = false;
-					this.scheduleborder = 'scheduleborder';
-					this.loadstatus = 'op1';
-				}
-			);*/
-
 		}
 	},
 	mounted(){

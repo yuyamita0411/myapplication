@@ -45,6 +45,7 @@
 										>
 											<div
 											@click="
+											this.$refs.sstime.innerText = $event.target.innerText,
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('z1'),
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('menushow'),
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('zm1'),
@@ -76,6 +77,7 @@
 										<div class="Scaccordion position-absolute bg-white menuhide zm1 gridinside" id="">
 											<div
 											@click="
+											this.$refs.ssminute.innerText = $event.target.innerText,
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('z1'),
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('menushow'),
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('zm1'),
@@ -104,6 +106,7 @@
 										<div class="Scaccordion position-absolute bg-white menuhide zm1 gridinside" id="">
 											<div
 											@click="
+											this.$refs.sendtime.innerText = $event.target.innerText,
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('z1'),
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('menushow'),
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('zm1'),
@@ -131,7 +134,7 @@
 										<div class="Scaccordion position-absolute bg-white menuhide zm1 gridinside" id="">
 											<div
 											@click="
-											this.$refs.sendminute = $event.target.innerText,
+											this.$refs.sendminute.innerText = $event.target.innerText,
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('z1'),
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('menushow'),
 											$event.currentTarget.closest('.Scaccordion').classList.toggle('zm1'),
@@ -153,8 +156,9 @@
 									name="schedulename"
 									placeholder="タイトルを入力してください"
 									type="text"
-									:value="ScheduleTagData.title != 'スケジュールを追加する' ? ScheduleTagData.title : ''"
+									:value="titleval = ScheduleTagData.title"
 									ref="schedulename"
+									@input="Inputtitle($event)"
 									>
 									<div class="d-inline-block w-100">
 										<small class="red" id=""></small>
@@ -162,8 +166,9 @@
 									<textarea class="w-100 searchbar bg-brightgray mb-3 border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none float-left pl-2"
 									name="scheduledisc"
 									placeholder="概要を入力してください"
-									:value="ScheduleTagData.description"
+									:value="descriptionval = ScheduleTagData.description"
 									ref="scheduledisc"
+									@input="Inputdescription($event)"
 									>
 									</textarea>
 								</div>
@@ -315,12 +320,18 @@ export default defineComponent({
 		modaltitle:String,
 		modalclass:String,
 		modalcoverclass:String
-	},
+	},	
     data() {
 		const adm:object[] = [],
 		su:object[] = [],
 		aa:object[] = [];
         return {
+			sstime:"09",
+			ssminute:"00",
+			sendtime:"10",
+			sendminute:"00",
+			titleval:"",
+			descriptionval:"",
 			searchuser:su,
 			loadstatus:"op0",
 			searchareashow:"",
@@ -338,13 +349,22 @@ export default defineComponent({
 		Timeevent(event:Event, changeval:HTMLElement): void{
 			var t = event.target as HTMLInputElement;
 			changeval.innerText = t.innerText;
+		},	
+		Inputtitle(event:Event):void{
+			var t = event.target as HTMLInputElement;
+			this.titleval = t.value;
+			this.ScheduleTagData!.title = t.value;
+		},
+		Inputdescription(event:Event):void{
+			var t = event.target as HTMLInputElement;
+			this.descriptionval = t.value;
+			this.ScheduleTagData!.description = t.value;
 		},
 		AppendAuser(){
 			this.alreadyaddedmember = this.ScheduleTagData != undefined ? this.ScheduleTagData.alreadyaddeduser : [{}];
 			return this.alreadyaddedmember;
 		},
 		ModalMotion(){
-
 			this.addmember = [];
 			this.addmemberid = [];
 			this.searchuser = [];
