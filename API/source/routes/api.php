@@ -27,9 +27,13 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/schedule/search', [App\Http\Controllers\API\General\ScheduleController::class, 'search'])->name('schedule.schedule.search');//ok
     Route::post('/schedule/rebase', [App\Http\Controllers\API\General\ScheduleController::class, 'RebaseSchedule'])->name('schedule.schedule.rebase');//ok
     Route::get('/schedule/get/id', [App\Http\Controllers\API\General\ScheduleController::class, 'GetScheduleFromId'])->name('schedule.schedule.fromid');//ok
-});
 
-/*
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});*/
+    Route::get('/taskinfo', [App\Http\Controllers\API\Common\TaskInfoController::class, 'index'])->name('taskinfo');//ok
+    Route::post('/taskinfo', [App\Http\Controllers\API\Common\TaskInfoController::class, 'SendTaskMsg'])->name('taskinfo.send');//ok
+    Route::post('/taskinfo/assign', [App\Http\Controllers\API\Common\TaskInfoController::class, 'AssignTask'])->name('taskinfo.assign');//ok
+    Route::post('/taskinfo/search', [App\Http\Controllers\API\Common\TaskInfoController::class, 'TaskInfoSearch'])->name('taskinfo.search');//ok
+
+    Route::get('/taskdetail/{id}', [App\Http\Controllers\API\Common\TaskInfoController::class, 'TaskDetail'])->name('taskdetail');//ok
+    Route::post('/taskdetail/addcomments/{id}', [App\Http\Controllers\API\Common\TaskInfoController::class, 'TaskDetailAddComments'])->name('taskdetail.addcomments');//ok
+    Route::post('/taskdetail/addcomments/{id}/search', [App\Http\Controllers\API\Common\TaskInfoController::class, 'TaskDetailSearchComment'])->name('taskdetail.searchcomments');//ok
+});
