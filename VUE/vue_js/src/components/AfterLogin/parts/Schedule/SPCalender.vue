@@ -41,7 +41,7 @@
 									==
 									`${calculate.MDFI(date, i-1).getFullYear()}-${calculate.ReturnDMFormat(new Date(calculate.MDFI(date, i-1)).getMonth()+1)}-${calculate.ReturnDMFormat(new Date(calculate.MDFI(date, i-1)).getDate())}`
 									?
-									'editsceduleicon cursor d-inline-block w-100 position-relative float-left z1'
+									'editsceduleicon cursor d-inline-block w-100 position-relative float-left '
 									:
 									'd-none'
 								}
@@ -73,7 +73,7 @@
 											:class="`slengtharea${index + 1} d-inline-block float-left`" :style="`width:${width}%;`"></span>
 									</span>
 								</small>
-								<div class="calenderBtnWrapper d-inline-block w-100 z1 bg-white">
+								<div class="calenderBtnWrapper d-inline-block w-100 bg-white">
 									<button
 									type="button"
 									:id="`ScheduleId-${sdata[0].id}`"

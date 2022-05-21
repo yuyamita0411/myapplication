@@ -1,5 +1,5 @@
 <template>
-    <div class="">
+    <div>
     <LoginIconview class="calenderloading w-100 d-inline-block text-center position-relative" v-if="loadingstatus == true" />
         <div :class="`w-100 d-inline-block mt-3 ${modalstatus}`" id="TaskDisplayArea">
             <div
@@ -26,12 +26,21 @@
                 <div class="d-inline-block w-100 p2px">
                     <div class="d-inline-block w-100 position-relative p-2 bg-white">
                         <div class="col-12 col-md-6 col-lg-2 float-left pl-0 pr-0">
-                            <a class="BgAccentColor text-white cursor p-2 p-lg-1 d-inline-block text-center mb-0 float-left w-100"
-                            :data-taskid="eachtask[5].value" href="">詳細ページへ</a>
+                            <a
+                            class="BgAccentColor text-white cursor p-2 p-lg-1 d-inline-block text-center mb-0 float-left w-100"
+                            :data-taskid="eachtask[5].value"
+                            :href="`/taskdetail/${eachtask[5].value}`"
+                            >詳細ページへ</a>
+                            <!--router-link
+                            class="BgAccentColor text-white cursor p-2 p-lg-1 d-inline-block text-center mb-0 float-left w-100"
+                            :data-taskid="eachtask[5].value"
+                            :to="`/taskdetail/${eachtask[5].value}`"
+                            @click="GoDetailPage"
+                            >詳細ページへ</router-link-->
                         </div>
                         <div class="d-inline-block col-12 float-left pl-0 pr-0 mt-2">
                             <div class="searchicon tooptip-top float-right cursor" data-tooltip="担当者にメッセージを送る">
-                            <img class="d-inline-block w-100" :id="`SendMsgUserButton-${eachtask[6].value}`" src="">
+                                <img class="d-inline-block w-100" :id="`SendMsgUserButton-${eachtask[6].value}`" src="">
                             </div>
                             <span class="font-lg-12 d-inline-block pt-2 pb-2 text-right loat-left">依頼日: <span class="FontAccent">{{eachtask[7].value}}</span></span>
                         </div>
@@ -59,16 +68,17 @@ export default defineComponent({
     },
     data() {
         return {
-            test:{}
+            urlnow:location.pathname
+        }
+    },
+    methods:{
+        GoDetailPage(){
+            this.$emit('to-after-login-page', "/taskdetail/2");
         }
     }
 });
 </script>
 <style lang="scss" scoped>
-.calenderloading{
-    top:0;
-    left:0;
-}
 .calenderloading {
 	position: absolute;
 	transform: scale(0.7);

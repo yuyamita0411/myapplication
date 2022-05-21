@@ -10,6 +10,7 @@
                         <span class="mr-2">
                             <img src="@/assets/logo.png" class="accounticon">
                         </span>
+                        
                         <div @click="dashboard" to="dashboard" class="logoinnertxt d-none d-md-inline-block cursor">gware</div>
                     </div>
                     <div
@@ -53,21 +54,21 @@
                     <div
                         class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-2 text-md-center"
                         data-tooltip="スケジュール"
-                        @click="movepage('schedule')"
+                        @click="movepage('/schedule')"
                     >
                         <img src="@/assets/Schedule.png" class="sidebaricon p-2">
                     </div>
                     <div
                         class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-2 text-md-center"
                         data-tooltip="グループ"
-                        @click="movepage('groupinfo')"
+                        @click="movepage('/groupinfo')"
                     >
                         <img src="@/assets/groupicon.png" class="sidebaricon p-2">
                     </div>
                     <div
                         class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-md-2 text-md-center"
                         data-tooltip="タスク進捗"
-                        @click="movepage('taskinfo')"
+                        @click="movepage('/taskinfo')"
                     >
                         <img src="@/assets/taskicon.png" class="sidebaricon p-2">
                     </div>
@@ -77,6 +78,26 @@
                     <ScheduleView v-if="urlnow == '/schedule'" />
                     <GroupInfoView v-if="urlnow == '/groupinfo'" />
                     <TaskInfoView v-if="urlnow == '/taskinfo'" />
+                    <TaskDetailView v-if="urlnow.indexOf('taskdetail') != -1" />
+                    <!--TaskInfoView
+                    @from-taskinfo-vue="FromTaskInfoVue"
+                    v-if="urlnow == '/taskinfo' &&
+                    param_from_taskinfo.indexOf('taskdetail') == -1
+                    " />
+                    <TaskDetailView v-if="
+                    param_from_taskinfo.indexOf('taskdetail') != -1 &&
+                    urlnow.indexOf('taskdetail') != -1
+                    " /-->
+
+                    <!--TaskInfoView
+                    @from-taskinfo-vue="FromTaskInfoVue"
+                    v-if="urlnow == '/taskinfo' && 
+                    urlnow.indexOf('taskdetail') == -1" />
+                    <TaskDetailView v-if="
+                    param_from_taskinfo.indexOf('taskdetail') != -1 
+                    " /-->
+
+
                 </div>
                 <div class="maincolumn bottom0 right0 BottomMshadow position-fixed bg-white d-flex z3">
                     <div id="SendTaskButton" class="w-100 float-left BgAccentMain">
@@ -107,6 +128,7 @@ import DashboardView from '@/components/AfterLogin/Dashboard.vue';
 import ScheduleView from '@/components/AfterLogin/SchedulePage.vue';
 import GroupInfoView from '@/components/AfterLogin/GroupInfo.vue';
 import TaskInfoView from '@/components/AfterLogin/TaskInfoView.vue';
+import TaskDetailView from '@/components/AfterLogin/TaskDetail.vue';
 import AccountModal from '@/components/AfterLogin/parts/common/modal/AccountModal.vue';
 
 export default defineComponent({
@@ -119,7 +141,8 @@ export default defineComponent({
             urlnow:location.pathname,
             Amodalclass:"logoutmodalcover position-fixed cursor modalcover_close",
             addfriends_modal_wrapper_class:"logoutmodal position-fixed modal_close",
-            message:'logoutmodal position-fixed modal_close'
+            message:'logoutmodal position-fixed modal_close',
+            param_from_taskinfo:""
         };
     },
     components: {
@@ -127,6 +150,7 @@ export default defineComponent({
         ScheduleView,
         GroupInfoView,
         TaskInfoView,
+        TaskDetailView,
         AccountModal,
         LoginIconview
     },
@@ -142,6 +166,11 @@ export default defineComponent({
                 this.loadstatus = 'op1';
             }
         );
+
+        /*if(this.urlnow.indexOf('taskdetail') == -1){
+            this.param_from_taskinfo = "";
+        }*/
+        
     },
     methods: {
         movepage(where:string){
@@ -166,6 +195,9 @@ export default defineComponent({
                 });
                 document.getElementById('sidebar')!.classList.toggle("sidebaropen");
             }
+        },
+        FromTaskInfoVue(value:string) {
+            this.param_from_taskinfo = value;
         }
     }
 });

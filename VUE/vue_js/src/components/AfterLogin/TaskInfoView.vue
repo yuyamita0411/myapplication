@@ -19,28 +19,33 @@
 						</div>
 						<div class="inchargemenu w-100 d-inline-block position-absolute inchargemenuclose"
 						ref="chooseincharge">
-							<div class="w-100 d-inline-block cursor pl-2 inchargeinner"
+							<div
 							data-incharge=""
 							@click="
 							this.$refs.chooseincharge.classList.toggle('inchargemenuclose'),
 							this.$refs.chooseincharge.classList.toggle('inchargemenuopen'),
 							selectwhich = $event.target.innerText,
+							incharge = '',
 							SearchTask()
 							"
+							class="w-100 d-inline-block cursor pl-2 inchargeinner"
+							ref="incharge"
 							>
 								すべて
 							</div>
-
 							<div
 							v-for="eachcdata in companydata" :key="eachcdata"
+							:data-incharge="`${eachcdata.id}:${eachcdata.name}`"
 							@click="
 							this.$refs.chooseincharge.classList.toggle('inchargemenuclose'),
 							this.$refs.chooseincharge.classList.toggle('inchargemenuopen'),
 							selectwhich = $event.target.innerText,
+							incharge = `${eachcdata.id}:${eachcdata.name}`,
 							SearchTask()
 							"
 							class="w-100 d-inline-block cursor pl-2 inchargeinner"
-							:data-incharge="`${eachcdata.id}:${eachcdata.name}`">
+							ref="incharge"
+							>
 								{{eachcdata.name}}
 							</div>
 						</div>
@@ -122,6 +127,7 @@
 			:taskdata="taskdata"
 			:modalstatus="modalstatus"
 			:loadingstatus="loadingstatus"
+			@to-after-login-page="ToAfterLogin"
 			/>
 			<div id="PagenationArea" class="text-center d-flex position-fixed bg-white z1">
 				<div
@@ -160,11 +166,13 @@ export default defineComponent({
 			PageAmount:0,
 			PageNow:1,
 			selectwhich:"",
+			incharge:"",
 			Pjson:[{}],
 			calculate:new Calculate(),
 			http:new GetData(),
 			modalstatus:"op0",
-			loadingstatus:true
+			loadingstatus:true,
+			nexturlstr:""
         }
     },
 	methods:{
@@ -197,7 +205,7 @@ export default defineComponent({
 				deadlineendyear: deadlineendyear.value,
 				deadlineendmonth: deadlineendmonth.value,
 				deadlineenddate: deadlineenddate.value,
-				selectincharge: '',
+				selectincharge: this.incharge,
 				PageNow:this.PageNow
 			};
 			this.modalstatus = "op0";
@@ -215,7 +223,11 @@ export default defineComponent({
 					console.log(res);
 				}
 			);
-		}
+		},
+        ToAfterLogin(value:string) {
+            this.nexturlstr = value;
+			this.$emit('from-taskinfo-vue', this.nexturlstr);
+        }
 	},
     mounted(){
         this.http.common(
