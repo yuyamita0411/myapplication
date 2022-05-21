@@ -52,11 +52,11 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Schedule',
         component: ScheduleView,
       },
-      {
+      /*{
         path: '/groupinfo',
         name: 'Groupinfo',
         component: GroupInfoView,
-      },
+      },*/
       {
         path: '/taskinfo',
         name: 'Taskinfo',

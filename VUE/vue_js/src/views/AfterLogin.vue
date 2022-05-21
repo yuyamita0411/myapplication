@@ -44,71 +44,49 @@
                 id="sidebar" class="sidecolor sidebar shadowgrid col-12 col-md-3 float-md-left"
                 @click="SidebarOpen"
                 >
-                    <div
-                        class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-2 text-md-center"
-                        data-tooltip="ダッシュボード"
-                        @click="movepage('/dashboard')"
+                    <router-link
+                    data-tooltip="ダッシュボード"
+                    class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-md-2 text-md-center"
+                    to="/dashboard"
                     >
                         <img src="@/assets/homeicon.png" class="sidebaricon p-2">
-                    </div>
-                    <div
-                        class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-2 text-md-center"
-                        data-tooltip="スケジュール"
-                        @click="movepage('/schedule')"
+                    </router-link>
+                    <router-link
+                    data-tooltip="スケジュール"
+                    class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-md-2 text-md-center"
+                    to="/schedule"
                     >
                         <img src="@/assets/Schedule.png" class="sidebaricon p-2">
-                    </div>
-                    <div
-                        class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-2 text-md-center"
-                        data-tooltip="グループ"
-                        @click="movepage('/groupinfo')"
+                    </router-link>
+                    <!--router-link
+                    data-tooltip="グループ"
+                    class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-md-2 text-md-center"
+                    to="/groupinfo"
                     >
                         <img src="@/assets/groupicon.png" class="sidebaricon p-2">
-                    </div>
-                    <div
-                        class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-md-2 text-md-center"
-                        data-tooltip="タスク進捗"
-                        @click="movepage('/taskinfo')"
+                    </router-link-->
+                    <router-link
+                    data-tooltip="タスク進捗"
+                    class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-md-2 text-md-center"
+                    to="/taskinfo"
                     >
                         <img src="@/assets/taskicon.png" class="sidebaricon p-2">
-                    </div>
+                    </router-link>
                 </div>
                 <div id="maincolumn" class="maincolumn position-relative float-md-right mb-3 pb-5">
-                    <DashboardView v-if="urlnow == '/dashboard'" />
-                    <ScheduleView v-if="urlnow == '/schedule'" />
-                    <GroupInfoView v-if="urlnow == '/groupinfo'" />
-                    <TaskInfoView v-if="urlnow == '/taskinfo'" />
-                    <TaskDetailView v-if="urlnow.indexOf('taskdetail') != -1" />
-                    <!--TaskInfoView
-                    @from-taskinfo-vue="FromTaskInfoVue"
-                    v-if="urlnow == '/taskinfo' &&
-                    param_from_taskinfo.indexOf('taskdetail') == -1
-                    " />
-                    <TaskDetailView v-if="
-                    param_from_taskinfo.indexOf('taskdetail') != -1 &&
-                    urlnow.indexOf('taskdetail') != -1
-                    " /-->
-
-                    <!--TaskInfoView
-                    @from-taskinfo-vue="FromTaskInfoVue"
-                    v-if="urlnow == '/taskinfo' && 
-                    urlnow.indexOf('taskdetail') == -1" />
-                    <TaskDetailView v-if="
-                    param_from_taskinfo.indexOf('taskdetail') != -1 
-                    " /-->
-
-
+                    <!--ここだけがコロコロ変わる-->
+                    <router-view/>
                 </div>
                 <div class="maincolumn bottom0 right0 BottomMshadow position-fixed bg-white d-flex z3">
                     <div id="SendTaskButton" class="w-100 float-left BgAccentMain">
                         <div class="cursor p-1 d-inline-block text-center mb-0 float-left w-100">タスク依頼</div>
                     </div>
-                    <div id="AddButton" class="w-100 float-left BgAccentMain">
+                    <!--div id="AddButton" class="w-100 float-left BgAccentMain">
                         <div class="cursor p-1 d-inline-block text-center mb-0 float-left w-100">グループ作成</div>
                     </div>
                     <div class="w-100 float-left BgAccentMain">
                         <div class="cursor p-1 d-inline-block text-center mb-0 float-left w-100">メッセージ</div>
-                    </div>
+                    </div-->
                 </div>
             </div>
         </div>
@@ -141,16 +119,10 @@ export default defineComponent({
             urlnow:location.pathname,
             Amodalclass:"logoutmodalcover position-fixed cursor modalcover_close",
             addfriends_modal_wrapper_class:"logoutmodal position-fixed modal_close",
-            message:'logoutmodal position-fixed modal_close',
-            param_from_taskinfo:""
+            message:'logoutmodal position-fixed modal_close'
         };
     },
     components: {
-        DashboardView,
-        ScheduleView,
-        GroupInfoView,
-        TaskInfoView,
-        TaskDetailView,
         AccountModal,
         LoginIconview
     },
@@ -166,17 +138,8 @@ export default defineComponent({
                 this.loadstatus = 'op1';
             }
         );
-
-        /*if(this.urlnow.indexOf('taskdetail') == -1){
-            this.param_from_taskinfo = "";
-        }*/
-        
     },
     methods: {
-        movepage(where:string){
-            this.$router.push(where);
-            setTimeout(() => {this.urlnow = location.pathname;});
-        },
         AmodalOpen(){
             this.Amodalclass = "logoutmodalcover position-fixed cursor modalcover_open";
             document.getElementById('logoutmodal')!.classList.toggle("modal_close");
@@ -195,9 +158,6 @@ export default defineComponent({
                 });
                 document.getElementById('sidebar')!.classList.toggle("sidebaropen");
             }
-        },
-        FromTaskInfoVue(value:string) {
-            this.param_from_taskinfo = value;
         }
     }
 });

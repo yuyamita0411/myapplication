@@ -257,7 +257,7 @@ class TaskInfoController extends Controller
                 ]
             );
         }
-        return response()->json($TaskInfo);
+        return response()->json($TaskMessage);
     }
 
     public function TaskDetailSearchComment(Request $request, $id){
