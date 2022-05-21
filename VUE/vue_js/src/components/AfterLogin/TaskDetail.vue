@@ -60,11 +60,15 @@
                                     <p>{{eachmsg.commentpassage}}</p>
                                     <small class="d-inline-block w-100 text-right">
                                         <span class="font-weight-bold">送信日:</span>
-                                        <span class="FontAccent">{{eachmsg.created_at}}</span>
+                                        <span class="FontAccent">
+                                        {{`${new Date(eachmsg.created_at).getFullYear()}/${new Date(eachmsg.created_at).getMonth()}/${new Date(eachmsg.created_at).getDate()}`}}
+                                        </span>
                                     </small>
                                     <small class="d-inline-block w-100 text-right">
                                         <span class="font-weight-bold">更新日:</span>
-                                        <span class="FontAccent">{{eachmsg.updated_at}}</span>
+                                        <span class="FontAccent">
+                                        {{`${new Date(eachmsg.updated_at).getFullYear()}/${new Date(eachmsg.updated_at).getMonth()}/${new Date(eachmsg.updated_at).getDate()}`}}
+                                        </span>
                                     </small>
                                 </div>
                             </div>

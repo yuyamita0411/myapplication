@@ -17,8 +17,6 @@
 		<div class="modalinnerwrapper overflow-hidden">
 			<div class="modalinnercover d-flex position-relative" id="">
 				<div class="Modal1 col-12 p-3 bg-white" id="" :style="mfstyle">
-
-
                     <div class=" w-100 d-inline-block pt-3 pb-3 pl-0 pr-0 bg-white pb-3">
                         <div id="" class="col-12 pr-0 pl-0 bg-white">
                             <div class="">
@@ -36,18 +34,16 @@
                                         ref="sendCommentTitle"
                                         name="sendCommentTitle" type="text" class="w-100 d-inline-block mb-4">
                                         <div class="w-100 d-inline-block mb-2">メッセージ 
-                                            <small id="sendCommentMsgAlert" class="red"></small>
+                                            <small id="sendCommentMsgAlert" class="red">{{descalert}}</small>
                                         </div>
                                         <textarea
                                         ref="sendCommentMsg"
-                                        name="sendCommentMsg" class="w-100 d-inline-block mb-4">{{descalert}}</textarea>
+                                        name="sendCommentMsg" class="w-100 d-inline-block mb-4"></textarea>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
 				</div>
 				<div class="Modal2 col-12 pl-0 pr-0 position-relative bg-white" id="" :style="mfstyle">
 					<div class="m-auto h-100 bg-white">
