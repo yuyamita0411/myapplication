@@ -180,7 +180,8 @@ export default defineComponent({
 
 <style lang="scss" scoped>
     #AddressArea{
-        border: double 3px #0069d9;
+        //border: double 3px #0069d9;
+        border: solid 10px rgb(0, 0, 0, 0.05);
     }
     .commenttag{
         position: relative;

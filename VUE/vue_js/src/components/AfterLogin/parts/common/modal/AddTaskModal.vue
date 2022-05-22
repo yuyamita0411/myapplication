@@ -24,28 +24,45 @@
                                     <h3 id="FirstTitle" class="notificationtitle font-weight-bold pt-4 pb-2 mb-0 m-auto">タスクを依頼する</h3>
                                 </div>
                             </div>
-
                             <div id="FirstHTML" class="m-auto">
                                 <div class=" col-md-12 m-auto pl-0 pr-0">
                                     <div class="col-12 pt-1 pb-1 m-auto">
                                         <div class="w-100 d-inline-block mb-2">担当者</div>
-                                        <select name="selectincharge" class="br5px w-100 fileinput b-none mb-4">
-                                            <option value="4:名前4">名前4</option>
-                                            <option value="4:名前4">名前4</option>
-                                            <option value="4:名前4">名前4</option>
+                                        <select
+                                        name="selectincharge"
+                                        ref="selectincharge"
+                                        class="br5px w-100 fileinput b-none mb-4">
+                                            <option
+                                            v-for="eachcdata in companydata" :key="eachcdata"
+                                            :value="`${eachcdata.id}:${eachcdata.name}`">{{eachcdata.name}}</option>
                                         </select>
                                         <div class="w-100 d-inline-block mb-2">タイトル <small id="sendTaskTitleAlert" class="red"></small></div>
-                                        <input name="sendTaskTitle" type="text" class="w-100 d-inline-block mb-4">
+                                        <input
+                                        name="sendTaskTitle"
+                                        ref="sendTaskTitle"
+                                        type="text" class="w-100 d-inline-block mb-4">
                                         <div class="w-100 d-inline-block mb-2">メッセージ <small id="sendTaskMsgAlert" class="red"></small></div>
-                                        <textarea name="sendTaskMsg" class="w-100 d-inline-block mb-4"></textarea>
+                                        <textarea
+                                        ref="sendTaskMsg"
+                                        name="sendTaskMsg"
+                                        class="w-100 d-inline-block mb-4"></textarea>
 
                                         <div class="w-100 d-inline-block mb-2">期日 <small id="DateAlert" class="red"></small></div>
                                         <div class="d-flex mb-4">
-                                            <input name="deadlineyear" type="text" class="w-100 d-inline-block">
+                                            <input
+                                            name="deadlineyear"
+                                            ref="deadlineyear"
+                                            type="text" class="w-100 d-inline-block">
                                             <div class="w-100 d-inline-block text-center">年</div>
-                                            <input name="deadlinemonth" type="text" class="w-100 d-inline-block">
+                                            <input
+                                            name="deadlinemonth"
+                                            ref="deadlinemonth"
+                                            type="text" class="w-100 d-inline-block">
                                             <div class="w-100 d-inline-block text-center">月</div>
-                                            <input name="deadlinedate" type="text" class="w-100 d-inline-block">
+                                            <input
+                                            name="deadlinedate"
+                                            ref="deadlinedate"
+                                            type="text" class="w-100 d-inline-block">
                                             <div class="w-100 d-inline-block text-center">日</div>
                                         </div>
                                     </div>
@@ -125,14 +142,63 @@ export default defineComponent({
     name: 'AddTaskModal',
     data() {
         return {
+            companydata:[{}],
             http:new GetData(),
             mfstyle:"left: 0%; transition:all 0.25s;"
         }
     },
     methods:{
-        test(){
-            console.log('test');
+        AddAddTask(){
+            const sendTaskTitle = this.$refs.sendTaskTitle as HTMLInputElement;
+            const selectincharge = this.$refs.selectincharge as HTMLInputElement;
+            const sendTaskMsg = this.$refs.sendTaskMsg as HTMLInputElement;
+            const deadlineyear = this.$refs.deadlineyear as HTMLInputElement;
+            const deadlinemonth = this.$refs.deadlinemonth as HTMLInputElement;
+            const deadlinedate = this.$refs.deadlinedate as HTMLInputElement;
+
+            console.log(sendTaskTitle.value);
+            console.log(selectincharge.value);
+            console.log(sendTaskMsg.value);
+            console.log(deadlineyear.value);
+            console.log(deadlinemonth.value);
+            console.log(deadlinedate.value);
+
+            this.http.Postcommon(
+                "/api/taskinfo/assign",
+                {
+                    "sendTaskTitle":sendTaskTitle.value,
+                    "selectincharge":selectincharge.value,
+                    "sendTaskMsg":sendTaskMsg.value,
+                    "deadlineyear":deadlineyear.value,
+                    "deadlinemonth":deadlinemonth.value,
+                    "deadlinedate":deadlinedate.value
+                },
+                (res:any) => {
+                    this.mfstyle = 'left: -100%; transition:all 0.25s;';
+                    setTimeout(() => {
+                        const modalcover = this.$refs.modalcover as HTMLInputElement;
+                        const modal = this.$refs.modal as HTMLInputElement;
+                        
+                        modalcover.classList.add('AddTaskModalcoverclose');
+                        modalcover.classList.remove('AddTaskModalcoveropen');
+                        modal.classList.add('AddTaskModalclose');
+                        modal.classList.remove('AddTaskModalopen');
+
+                        this.mfstyle = 'left: 0%; transition:all 0.25s;';
+                    }, 1000);
+                }
+            );
         }
+    },
+    mounted(){
+        this.http.common(
+            "/api/taskinfo",
+            {"searchTaskTitle":""},
+            (res:any) => {
+				console.log(res);
+				this.companydata = res.data.companydata;
+            }
+        );
     }
 });
 </script>

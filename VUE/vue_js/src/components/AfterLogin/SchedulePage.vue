@@ -6,7 +6,7 @@
 					<div class="col-md-12 m-auto pl-0 pr-0 position-relative">
 						<div class="w-100 d-inline-block pl-3 pr-3">
 							<div class="w-100 d-inline-block position-relative">
-								<div class="YearAreaWrapper mycolor d-flex mb-0 p-2">
+								<div class="YearAreaWrapper d-flex mb-0 p-2">
 									<div class="font1-3 d-inline-block mr-3 cursor" id="YearArea">{{date.getFullYear()}}</div>
                                     <input
                                     @input="PageNow = 1,SearchKeyword = $event.target.value, MakeSearchParam()
@@ -310,6 +310,9 @@ export default defineComponent({
 .SundayColor {
 	background: rgb(255, 183, 90, 0.1);
 	color: rgb(255, 183, 90, 1);
+}
+.YearAreaWrapper{
+	background: rgb(0, 0, 0, 0.05);
 }
 .montharea {
 	margin-bottom: 5px;

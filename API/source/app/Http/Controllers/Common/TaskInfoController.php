@@ -149,7 +149,6 @@ class TaskInfoController extends Controller
         }
         return redirect()->route('taskinfo');
     }
-
     public function AssignTask(Request $request){
         $TaskInfo = new TaskInfo;
         
@@ -167,7 +166,7 @@ class TaskInfoController extends Controller
 
         $TaskInfo->companyid = Auth::user()->companyid;
         $TaskInfo->save();
-        return redirect(url()->previous());
+        return response()->json($TaskInfo);
     }
 
     public function TaskInfoSearch(Request $request){
