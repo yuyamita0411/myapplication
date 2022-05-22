@@ -154,10 +154,13 @@ export default defineComponent({
                 (res:any) => {
                     this.mfstyle = 'left: -100%; transition:all 0.25s;';
                     setTimeout(() => {
-                        this.$refs.modalcover.classList.add('ScheduleModalcoverclose');
-                        this.$refs.modalcover.classList.remove('ScheduleModalcoveropen');
-                        this.$refs.modal.classList.add('ScheduleModalclose');
-                        this.$refs.modal.classList.remove('ScheduleModalopen');
+                        const modalcover = this.$refs.modalcover as HTMLInputElement;
+                        const modal = this.$refs.modal as HTMLInputElement;
+                        
+                        modalcover.classList.add('ScheduleModalcoverclose');
+                        modalcover.classList.remove('ScheduleModalcoveropen');
+                        modal.classList.add('ScheduleModalclose');
+                        modal.classList.remove('ScheduleModalopen');
 
                         this.mfstyle = 'left: 0%; transition:all 0.25s;';
                     }, 1000);

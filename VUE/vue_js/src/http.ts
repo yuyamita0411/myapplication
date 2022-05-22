@@ -23,7 +23,10 @@ export class GetData {
             callback(response);
         })
         .catch(error => {
-            console.log(error);
+            if(error.response.status == 401){
+                localStorage.setItem('access_token',"");
+                location.pathname = '/login';
+            }
         });
     }
 

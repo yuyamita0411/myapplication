@@ -538,9 +538,6 @@ export default defineComponent({
 							this.mfstyle = 'left: 0%; transition:all 0.25s;';
 							this.$router.push('/schedule');
 						}, 1000);
-						/*setTimeout(() => {
-							location.pathname = '/schedule';
-						}, 1200);*/
 					}
 				);
 			}
