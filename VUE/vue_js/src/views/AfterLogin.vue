@@ -58,13 +58,6 @@
                     >
                         <img src="@/assets/Schedule.png" class="sidebaricon p-2">
                     </router-link>
-                    <!--router-link
-                    data-tooltip="グループ"
-                    class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-md-2 text-md-center"
-                    to="/groupinfo"
-                    >
-                        <img src="@/assets/groupicon.png" class="sidebaricon p-2">
-                    </router-link-->
                     <router-link
                     data-tooltip="タスク進捗"
                     class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-md-2 text-md-center"
@@ -72,21 +65,22 @@
                     >
                         <img src="@/assets/taskicon.png" class="sidebaricon p-2">
                     </router-link>
+
+
+                    <div
+                    id="SendTaskButton"
+                    class="cursor d-flex w-100 mt-4 pt-2 pb-2 text-left"
+                    to="/taskinfo"
+                    @click="TaskModalOpen"
+                    >
+                        <span class="taskstrarea w-100 ml-1">タスク依頼</span>
+                        <img src="@/assets/PlusButtonGray.png" class="TaskPlusIcon mr-1">
+                    </div>
+
                 </div>
                 <div id="maincolumn" class="maincolumn position-relative float-md-right mb-3 pb-5">
                     <!--ここだけがコロコロ変わる-->
                     <router-view/>
-                </div>
-                <div class="maincolumn bottom0 right0 BottomMshadow position-fixed bg-white d-flex z3">
-                    <div id="SendTaskButton" class="w-100 float-left BgAccentMain">
-                        <div class="cursor p-1 d-inline-block text-center mb-0 float-left w-100">タスク依頼</div>
-                    </div>
-                    <!--div id="AddButton" class="w-100 float-left BgAccentMain">
-                        <div class="cursor p-1 d-inline-block text-center mb-0 float-left w-100">グループ作成</div>
-                    </div>
-                    <div class="w-100 float-left BgAccentMain">
-                        <div class="cursor p-1 d-inline-block text-center mb-0 float-left w-100">メッセージ</div>
-                    </div-->
                 </div>
             </div>
         </div>
@@ -95,19 +89,15 @@
     <div id="logoutmodalcover" :class="Amodalclass" @click="AmodalClose"></div>
 
     <AccountModal></AccountModal>
+    <AddTaskModal></AddTaskModal>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import {GetData} from "@/http";
 import LoginIconview from '@/components/common/LoadingIcon.vue';
-
-import DashboardView from '@/components/AfterLogin/Dashboard.vue';
-import ScheduleView from '@/components/AfterLogin/SchedulePage.vue';
-import GroupInfoView from '@/components/AfterLogin/GroupInfo.vue';
-import TaskInfoView from '@/components/AfterLogin/TaskInfoView.vue';
-import TaskDetailView from '@/components/AfterLogin/TaskDetail.vue';
 import AccountModal from '@/components/AfterLogin/parts/common/modal/AccountModal.vue';
+import AddTaskModal from '@/components/AfterLogin/parts/common/modal/AddTaskModal.vue';
 
 export default defineComponent({
     name: 'AfterLoginView',
@@ -124,7 +114,8 @@ export default defineComponent({
     },
     components: {
         AccountModal,
-        LoginIconview
+        LoginIconview,
+        AddTaskModal
     },
     mounted(){
         this.loadingstatus = true;
@@ -158,12 +149,28 @@ export default defineComponent({
                 });
                 document.getElementById('sidebar')!.classList.toggle("sidebaropen");
             }
+        },
+        TaskModalOpen(){
+            const modalcover = document.getElementById('AddTaskModalcover') as HTMLElement;
+            const modal = document.getElementById('AddTaskModal') as HTMLElement;
+
+            modalcover.classList.remove('AddTaskModalcoverclose');
+            modalcover.classList.add('AddTaskModalcoveropen');
+            modal.classList.remove('AddTaskModalclose');
+            modal.classList.add('AddTaskModalopen');
         }
     }
 });
 </script>
 
 <style lang="scss">
+#PagenationArea{
+	bottom:0rem;
+	right:0;
+}
+#PagenationArea{
+    border-top:solid 1px rgb(0, 0, 0, 0.1);
+}
 .logoutmodal{
     overflow:scroll;
 }
@@ -177,12 +184,30 @@ export default defineComponent({
 #MainColumLoadArea{
     left:50%;
 }
+#SendTaskButton,
+#SendTaskButton:hover{
+    transition:all 0.5s;
+}
+.TaskPlusIcon {
+    width: 24px;
+    height: 24px;
+    padding: 3px;
+}
+#SendTaskButton{
+    background:white;
+}
 @media (min-width: 768px){
+	#PagenationArea{
+		width: calc(100% - 10rem);
+	}
     .logoutmodal{
         margin: 30vh calc((100vw - 30rem) / 2);
     }
 }
 @media (max-width: 768px){
+	#PagenationArea{
+		width: 100%;
+	}
     .logoutmodal,
     .logoutmodalinner{
         height: 80vh;

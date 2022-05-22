@@ -291,10 +291,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-#PagenationArea{
-	bottom:2rem;
-	right:0;
-}
 .Carea {
 	box-shadow: 0px 0px 3px 0px rgb(0, 0, 0, 0.1);
 }
@@ -323,9 +319,6 @@ export default defineComponent({
 	.montharea>.cbutton:not(:nth-child(5)) {
 		border-right: solid 0.5px rgb(0, 0, 0, 0.1);
 	}
-	#PagenationArea{
-		width: calc(100% - 11rem);
-	}
 	#MyScheduleArea>div>div>div:not(:nth-child(8)) {
 		border-right: solid 0.5px #ffff;
 	}
@@ -339,9 +332,6 @@ export default defineComponent({
 @media (max-width: 768px){
 	#MonthArea{
 		border-bottom:solid 0.5px rgb(0, 0, 0, 0.1);
-	}
-	#PagenationArea{
-		width: 100%;
 	}
 	.montharea>.cbutton:not(:nth-child(1)) {
 		border-right: solid 0.5px rgb(0, 0, 0, 0.1);

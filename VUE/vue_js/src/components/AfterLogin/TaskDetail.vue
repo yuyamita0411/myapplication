@@ -32,8 +32,20 @@
 							</div><span class="d-inline-block float-left w-100" style="margin-top:4px;">{{taskobj.status}}</span>
 						</div>
 						<div class="col-12 float-left p-2">
-							<p class="mb-1"><small>依頼者: <span class="FontAccent">{{taskobj.fromusername}}</span></small></p>
-							<p class="mb-1"><small>依頼日: <span class="FontAccent">{{taskobj.startdate}}</span></small></p>
+							<p class="mb-1">
+                                <small>依頼者: 
+                                    <span class="FontAccent">
+                                    {{taskobj.fromusername}}
+                                    </span>
+                                </small>
+                            </p>
+							<p class="mb-1">
+                                <small>依頼日: 
+                                    <span class="FontAccent">
+                                    {{taskobj.startdate}}
+                                    </span>
+                                </small>
+                            </p>
 						</div>
 					</div>
 				</div>
@@ -61,13 +73,13 @@
                                     <small class="d-inline-block w-100 text-right">
                                         <span class="font-weight-bold">送信日:</span>
                                         <span class="FontAccent">
-                                        {{`${new Date(eachmsg.created_at).getFullYear()}/${new Date(eachmsg.created_at).getMonth()}/${new Date(eachmsg.created_at).getDate()}`}}
+                                        {{RFdate(eachmsg.created_at.split(' ')[0])}}
                                         </span>
                                     </small>
                                     <small class="d-inline-block w-100 text-right">
                                         <span class="font-weight-bold">更新日:</span>
                                         <span class="FontAccent">
-                                        {{`${new Date(eachmsg.updated_at).getFullYear()}/${new Date(eachmsg.updated_at).getMonth()}/${new Date(eachmsg.updated_at).getDate()}`}}
+                                        {{RFdate(eachmsg.updated_at.split(' ')[0])}}
                                         </span>
                                     </small>
                                 </div>
@@ -155,6 +167,9 @@ export default defineComponent({
                 }
 			);
 
+        },
+        RFdate(str:string){
+            return `${new Date(str).getFullYear()}/${new Date(str).getMonth()}/${new Date(str).getDate()}`;
         }
     },
     mounted(){
@@ -200,31 +215,4 @@ export default defineComponent({
         border-right: 0px solid transparent;
         border-left: 23px solid transparent;
     }
-/*.taskdetailpart{
-    min-height:100vh;
-}
-.taskdetailpart{
-    right:0;
-}
-.calenderloading {
-	position: absolute;
-	transform: scale(0.7);
-}
-
-@media (min-width: 768px){
-    .taskdetailpart{
-        top:5.5rem;
-    }
-    .taskdetailpart{
-        width: calc(100% - 10rem);
-    }
-}
-@media (max-width: 768){
-    .taskdetailpart{
-        top:4rem;
-    }
-    .taskdetailpart{
-        width:100%;
-    }
-}*/
 </style>

@@ -247,18 +247,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-#PagenationArea{
-	bottom:2rem;
-	right:0;
-}
-@media (min-width: 768px){
-	#PagenationArea{
-		width: calc(100% - 11rem);
-	}
-}
-@media (max-width: 768px){
-	#PagenationArea{
-		width: 100%;
-	}
-}
+
 </style>

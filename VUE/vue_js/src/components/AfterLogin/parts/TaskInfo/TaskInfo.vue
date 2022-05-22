@@ -19,8 +19,11 @@
                             <img v-if="eachlabel.key == 'status'" class="searchicon d-inline-block" src="@/assets/statusicon.png">
                         </div>
                         <span class="d-inline-block position-absolute font-lg-12 col-10"
-                        v-if="eachlabel.key != 'id' && eachlabel.key != 'userid' && eachlabel.key != 'startdate'"
+                        v-if="eachlabel.key != 'id' && eachlabel.key != 'userid' && eachlabel.key != 'startdate' && eachlabel.key != 'deadline'"
                         >{{eachlabel.value}}</span>
+                        <span class="d-inline-block position-absolute font-lg-12 col-10"
+                        v-if="eachlabel.key == 'deadline'"
+                        >{{RFdate(eachlabel.value.split(' ')[0])}}</span>
                     </div>
                 </div>
                 <div class="d-inline-block w-100 p2px">
@@ -36,7 +39,8 @@
                             <div class="searchicon tooptip-top float-right cursor" data-tooltip="担当者にメッセージを送る">
                                 <img class="d-inline-block w-100" :id="`SendMsgUserButton-${eachtask[6].value}`" src="">
                             </div>
-                            <span class="font-lg-12 d-inline-block pt-2 pb-2 text-right loat-left">依頼日: <span class="FontAccent">{{eachtask[7].value}}</span></span>
+                            <span class="font-lg-12 d-inline-block pt-2 pb-2 text-right loat-left">
+                            依頼日: <span class="FontAccent">{{RFdate(eachtask[7].value.split(' ')[0])}}</span></span>
                         </div>
                     </div>
                 </div>
@@ -63,6 +67,11 @@ export default defineComponent({
     data() {
         return {
             urlnow:location.pathname
+        }
+    },
+    methods:{
+        RFdate(str:string){
+            return `${new Date(str).getFullYear()}/${new Date(str).getMonth()}/${new Date(str).getDate()}`;
         }
     }
 });
