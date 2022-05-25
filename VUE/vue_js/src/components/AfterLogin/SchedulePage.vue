@@ -167,7 +167,7 @@
 		</div>
 		<div id="PagenationArea" class="text-center d-flex position-fixed bg-white z1">
 			<div
-			class="paginationarea d-flex pt-4 col-12 col-lg-4 m-auto float-left"
+			class="paginationarea d-flex pt-2 pb-5 col-12 col-lg-4 m-auto float-left"
 			>
 				<p
 				v-for="obj in calculate.MakePagenation(Pjson, PageAmount, PageNow)" :key="obj"
@@ -178,6 +178,9 @@
 				">
 				{{obj.PTxt}}
 				</p>
+			</div>
+			<div class="PNwrapper d-inline-block w-100 text-center position-absolute">
+				<input type="text" name="PageNationInput" :value="PageNow" id="PageNationInput" @input="PageNationInput" class="mt-0 mb-0 col-2">
 			</div>
 		</div>
 	</div>
@@ -210,6 +213,7 @@ export default defineComponent({
 			ScheduleData:{},
 			PageNow:1,
 			PageAmount:0,
+			onlyint:/^[0-9]*$/,
 			pagenation:'',
 			Pjson:[{}],
 			calculate:new Calculate()
@@ -267,7 +271,19 @@ export default defineComponent({
 					this.loadstatus = 'op1';
 				}
 			);
-		}
+		},
+        PageNationInput(e:any){
+            var t = e.target as HTMLInputElement;
+            if(!this.onlyint.test(t!.innerText.toString())){
+                return;
+            }
+            setTimeout(() => {
+                if(t!.value != ''){
+                    this.PageNow = Number(t!.value);
+                    this.MakeSearchParam();
+                }
+            }, 500);
+        }
 	},
 	mounted(){
 		if(768 < window.innerWidth){

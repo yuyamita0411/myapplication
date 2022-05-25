@@ -49,7 +49,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="m-auto">
+				<div class="m-auto pt-3">
 					<div class="gridinside col-md-12 m-auto pt-3 pb-5 pl-0 pr-0 bg-white">
 						<div class="col-12 pb-1 pr-2 pl-2 m-auto">
                             <h5 class="mainfontcolor w-100 mb-3">コメントを検索</h5>

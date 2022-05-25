@@ -15,13 +15,13 @@
                     </div>
                     <div
                     id="AccountArea"
-                    class="AccountArea cursor d-inline-block float-right font-weight-bold pt-1 pb-1 pl-3 pr-3 text-white"
+                    class="AccountArea cursor d-inline-block float-right font-weight-bold pt-1 pb-1 pl-3 pr-3"
                     @click="AmodalOpen"
                     >
                         <span class="mr-2">
                             <img src="@/assets/accounticon.png" class="accountpersonicon">
                         </span>
-                        <span id="greetingbar" class="greeting font-weight-normal text-white" data-idnow="">ようこそ{{username}}</span>様
+                        <span id="greetingbar" class="greeting font-weight-normal text-white" data-idnow="">{{username}} さん</span>
                         <span class="ml-2">
                             <img src="@/assets/accountarrow.png" id="accountrotateicon" class="accounticon">
                         </span>
@@ -195,6 +195,15 @@ export default defineComponent({
 }
 #SendTaskButton{
     background:white;
+}
+#PagenationArea{
+    height: 5.5rem;
+}
+.PNwrapper{
+	bottom:0.5rem;
+}
+#PageNationInput{
+    width:3rem;
 }
 @media (min-width: 768px){
 	#PagenationArea{

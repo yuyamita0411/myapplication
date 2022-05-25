@@ -64,7 +64,7 @@
                             :data-setscheduleinfo="`${new Date(calculate.MDFI(date, i-1)).getFullYear()}/${new Date(calculate.MDFI(date, i-1)).getMonth()+1}/${new Date(calculate.MDFI(date, i-1)).getDate()}`"
                             :data-buttonuserid="`${sdata[0].id}`"
                             data-tooltip="スケジュールを追加する"
-                            class="calenderBtn tooltip-left bg-white cursor position-absolute b-none p-0"
+                            class="calenderBtn tooltip-left cursor position-absolute"
                             @click="ModalMotion"
                             >
                             </button>
@@ -204,6 +204,9 @@ export default defineComponent({
 }
 #UserScheduleArea>div:nth-child(2n+1)>div:not(.mycolor) {
 	background: #ffff;
+}
+.calenderBtn{
+    padding:1px;
 }
 @media (min-width: 768px) {
 	.scheduleborder {

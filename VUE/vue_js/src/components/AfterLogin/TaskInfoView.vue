@@ -131,7 +131,7 @@
 			/>
 			<div id="PagenationArea" class="text-center d-flex position-fixed bg-white z1">
 				<div
-				class="paginationarea d-flex pt-4 col-12 col-lg-4 m-auto float-left"
+				class="paginationarea d-flex pt-2 pb-5 col-12 col-lg-4 m-auto float-left"
 				>
 					<p
 					v-for="obj in calculate.MakePagenation(Pjson, PageAmount, PageNow)" :key="obj"
@@ -142,6 +142,9 @@
 					">
 					{{obj.PTxt}}
 					</p>
+				</div>
+				<div class="PNwrapper d-inline-block w-100 text-center position-absolute">
+					<input type="text" name="PageNationInput" :value="PageNow" id="PageNationInput" @input="PageNationInput" class="mt-0 mb-0 col-2">
 				</div>
 			</div>
 		</div>
@@ -171,6 +174,7 @@ export default defineComponent({
 			calculate:new Calculate(),
 			http:new GetData(),
 			modalstatus:"op0",
+			onlyint:/^[0-9]*$/,
 			loadingstatus:true,
 			nexturlstr:""
         }
@@ -224,6 +228,18 @@ export default defineComponent({
 				}
 			);
 		},
+        PageNationInput(e:any){
+            var t = e.target as HTMLInputElement;
+            if(!this.onlyint.test(t!.innerText.toString())){
+                return;
+            }
+            setTimeout(() => {
+                if(t!.value != ''){
+                    this.PageNow = Number(t!.value);
+                    this.SearchTask();
+                }
+            }, 500);
+        },
         ToAfterLogin(value:string) {
             this.nexturlstr = value;
 			this.$emit('from-taskinfo-vue', this.nexturlstr);

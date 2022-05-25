@@ -186,18 +186,30 @@ textarea::-webkit-scrollbar-thumb,
 
 .bgstripe45deg{
     background: rgba(0, 0, 0, 0.03);
-    /*background-image: linear-gradient(
-        -45deg, #fff 25%,
-        #0069d9 25%,
-        #0069d9 50%, 
-        #fff 50%, #fff 75%,
-        #0069d9 75%, 
-        #0069d9 );*/
 }
-/*
-.bgstripe45deg{
-    background-size: 3px 3px;
-}*/
+
+.calenderBtn{
+    background: url("@/assets/PlusButtonGray.png") no-repeat;
+    border: solid 0.5px #0069d9;
+    background-color: white;
+    transform: scale(1.0);
+}
+.calenderBtn:hover{
+    background: url("@/assets/PlusButtonWhite.png") no-repeat;
+    border: none;
+    background-color: #0069d9;
+    transform: scale(1.1);
+}
+.calenderBtn,
+.calenderBtn:hover{
+    background-size: 70% 70%;
+    background-position: 50% 50%;
+}
+
+.calenderBtn,
+.calenderBtn:hover{
+    transition: all 0.5s;
+}
 .bg-check{
     background-image: linear-gradient( 
         -90deg,
@@ -239,7 +251,7 @@ textarea::-webkit-scrollbar-track,
 }
 input[type="text"]:not(.searchbar),
 .b-gray{
-    border: solid 1px rgb(0, 0, 0, 0.2);
+    border: solid 0.5px rgb(0, 0, 0, 0.2);
 }
 textarea{
     border: solid 1px rgb(0, 0, 0, 0.3);
@@ -249,9 +261,6 @@ textarea{
 }
 .accountpersonicon{
     border: solid 1px #fff;
-}
-.calenderBtn{
-    border: solid 1px #0069d9;;
 }
 .loginborder{
     border: 1px solid rgba(29,28,29,.3);
@@ -276,6 +285,7 @@ textarea::-webkit-scrollbar-track,
 .modalinnercover > div[class^="modal"]::-webkit-scrollbar-track{
     border-radius: 5px;
 }
+.calenderBtn,
 .accountpersonicon,
 .br-50{
     border-radius: 50%;
@@ -720,6 +730,10 @@ body{
 }
 /*cursor*/
 
+.sccheduleplusbutton{
+    pointer-events: none;
+}
+
 /*content*/
 .p-news-list__item__data:before,
 .p-news-list__item__data:after{
@@ -965,7 +979,7 @@ input[name="newtore"]:checked + label{
     }
     /*background*/
     .AccountArea{
-        font-size: 1.15rem;
+        font-size: 0.65rem;
     }
     div[class*="CalBg"]{
         font-size: 1.5rem;

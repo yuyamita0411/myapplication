@@ -43,19 +43,22 @@
             </div>
 			<div id="PagenationArea" class="text-center d-flex position-fixed bg-white z1">
 				<div
-				class="paginationarea d-flex pt-4 col-12 col-lg-4 m-auto float-left"
+				class="paginationarea d-flex pt-2 pb-5 col-12 col-lg-4 m-auto float-left"
 				>
 					<p
 					v-for="obj in calculate.MakePagenation(Pjson, PageAmount, PageNow)" :key="obj"
 					:id="obj.PId"
 					:class="obj.PClass"
-					@click="PageMotion">
+					@click="
+					PageNow = PageMotion
+					">
 					{{obj.PTxt}}
 					</p>
-                    <input type="text" name="PageNationInput" :value="PageNow" id="PageNationInput" @input="PageNationInput" class="mt-0 mb-0 col-2">
+				</div>
+				<div class="PNwrapper d-inline-block w-100 text-center position-absolute">
+					<input type="text" name="PageNationInput" :value="PageNow" id="PageNationInput" @input="PageNationInput" class="mt-0 mb-0 col-2">
 				</div>
 			</div>
-
         </div>
     </div>
 </template>
