@@ -145,6 +145,34 @@
             <div class="d-inline-block w-100">
                 <router-link class="d-inline-block font-weight-bold" to="/login">もどる</router-link>
             </div>
+            <div class="col-12 m-auto pt-4">
+                <p class="red text-left mb-1">*こちらからはメールアドレスの入力のみでテストユーザーを作成いただけます。</p>
+                <input id="testusermail"
+                type="text"
+                class="loginborder br5px w-100 bg-white pl-2 fileinput"
+                name="testusermail"
+                ref="testusermail"
+                value=""
+                placeholder="メールアドレス"
+                >
+                <span class="red mb-2 d-inline-block w-100 text-left">{{MailAddressAlert}}</span>
+                <input id="testpassword"
+                type="password"
+                class="loginborder br5px w-100 bg-white pl-2 fileinput"
+                name="testpassword"
+                ref="testpassword"
+                value=""
+                placeholder="パスワード"
+                >
+                <span class="red mb-2 d-inline-block w-100 text-left">{{PasswordAlert}}</span>
+                <button
+                type="submit"
+                class="bgred w-100 d-inline-block b-none text-white text-center font-weight-bold p-2 cursor br5px"
+                @click="MakeTestuser"
+                >
+                    テストユーザーを作成する
+                </button>
+            </div>
         </div>
         <div :class="SModalClass" @click="SModalHide">
             <div class="col-11 col-md-6 m-auto bg-white pt-3 pb-3">
@@ -176,7 +204,11 @@ export default defineComponent({
             companymailalert: '',
             companyindustryalert: '',
 
-            completemsg: ''
+            completemsg: '',
+            MailAddressAlert:'',
+            PasswordAlert:'',
+
+            token:null
         };
     },
     methods: {
@@ -234,6 +266,42 @@ export default defineComponent({
                 console.log('error:', error);
             });
 
+        },
+        MakeTestuser(){
+            const testusermail = this.$refs.testusermail as HTMLInputElement
+            const testpassword = this.$refs.testpassword as HTMLInputElement
+
+            return apiClient.post(
+            "/api/register/testuser",
+            {
+                "testusermail":testusermail.value,
+                "testpassword":testpassword.value
+            })
+            .then(response => {
+                this.MailAddressAlert = response.data.EmptyCheck.mail_address;
+                this.PasswordAlert = response.data.EmptyCheck.password;
+                console.log("ee1");
+            })
+            .then(() => {
+                return apiClient.post(
+                "/api/login",
+                {
+                    "mail_address":testusermail.value,
+                    "password":testpassword.value
+                })
+                .then(response => {
+                    this.token = response.data.token;
+                    if(response.data.token != undefined && response.data.token != null && response.data.token != ""){
+                        localStorage.setItem('access_token', response.data.token);
+                        //ダッシュボードへ
+                        this.$router.push('/dashboard');
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+
+            });
         },
         SModalHide(){
             this.SModalClass = 'position-fixed w-100 h-100 smodalhide';

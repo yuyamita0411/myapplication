@@ -205,7 +205,7 @@ export default defineComponent({
 	bottom:0.5rem;
 }
 #PageNationInput{
-    width:3rem;
+    width:4rem;
 }
 @media (min-width: 768px){
 	#PagenationArea{
@@ -213,6 +213,9 @@ export default defineComponent({
 	}
     .logoutmodal{
         margin: 30vh calc((100vw - 30rem) / 2);
+    }
+    .pagenationnum{
+        max-width:3rem;
     }
 }
 @media (max-width: 768px){
@@ -224,7 +227,7 @@ export default defineComponent({
         height: 80vh;
     }
     .logoutmodal{
-        margin: 30vh calc((100vw - 90%) / 2);
+        margin: 10vh calc((100vw - 90%) / 2);
     }
 }
 </style>

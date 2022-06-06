@@ -1,10 +1,9 @@
 <template>
     <div id="ScheduleWrapper" :class="`position-relative ${scheduleborder} mb-1`">
     <LoginIconview class="calenderloading w-100 d-inline-block text-center" v-if="loadingstatus == true" />
-        <div class="myschedulearea" id="MyScheduleArea"></div>
-        <div id="UserScheduleArea" :class="`schedulearea ${loadstatus}`">
+        <div v-for="EachSData in [MyScheduleData, ScheduleData]" :key="EachSData" :class="`UserScheduleArea schedulearea ${loadstatus}`">
             <div
-            v-for="(sdata, skey) in ScheduleData" :key="skey"
+            v-for="(sdata, skey) in EachSData" :key="skey"
             >
                 <div
                 class="d-flex"
@@ -72,7 +71,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -98,6 +96,7 @@ export default defineComponent({
 		loadingstatus: Boolean,
 		loadstatus: String,
 		scheduleborder: String,
+        MyScheduleData: Object,
         ScheduleData: Object
 	},
     data() {
@@ -200,20 +199,24 @@ export default defineComponent({
 	position: absolute;
 	transform: scale(0.7);
 }
-#UserScheduleArea>div:nth-child(2n)>div:not(.mycolor) {
+#ScheduleWrapper > .UserScheduleArea:nth-child(2) > div:nth-child(2n) > div:not(.mycolor) {
 	background: rgb(0, 0, 0, 0.03);
 }
-#UserScheduleArea>div:nth-child(2n+1)>div:not(.mycolor) {
+#ScheduleWrapper > .UserScheduleArea:nth-child(2) > div:nth-child(2n+1) > div:not(.mycolor) {
 	background: #ffff;
 }
 .calenderBtn{
     padding:1px;
 }
+#ScheduleWrapper > .UserScheduleArea:nth-child(1){
+    background:rgba(24, 71, 182, 0.1);
+}
+
 @media (min-width: 768px) {
 	.scheduleborder {
 		box-shadow: 0px 0px 3px 0px rgb(0, 0, 0, 0.1);
 	}
-	#DayArea>div>div:not(:nth-child(8)), #UserScheduleArea > div > div > div:not(:nth-child(8)) {
+	#DayArea>div>div:not(:nth-child(8)), .UserScheduleArea > div > div > div:not(:nth-child(8)) {
 		border-right: solid 0.5px rgb(0, 0, 0, 0.1);
 	}
 }

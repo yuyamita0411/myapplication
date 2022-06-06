@@ -230,7 +230,7 @@ export default defineComponent({
             "/api/taskinfo",
             {"searchTaskTitle":""},
             (res:any) => {
-				console.log(res);
+				//console.log(res);
 				this.companydata = res.data.companydata;
             }
         );

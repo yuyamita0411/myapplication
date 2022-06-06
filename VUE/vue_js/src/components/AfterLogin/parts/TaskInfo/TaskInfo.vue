@@ -5,18 +5,18 @@
             <div
             v-for="eachtask in taskdata.taskdata" :key="eachtask"
             class="gridinside d-inline-block w-100 mb-3 bg-white position-relative">
-                <div class="d-inline-block w-100 pt-3 pb-3 pr-2 pl-2 overflow-hidden">
+                <div :class="`d-inline-block w-100 pt-3 pb-3 pr-2 pl-2 ${taskwrapperclass}`">
 
                     <div class="col-12 col-md-4 float-left p-2"
                     v-for="eachlabel in eachtask" :key="eachlabel"
                     >
                         <div class="tooltip-top float-left cursor" :data-tooltip="eachlabel.labelname"
                         v-if="eachlabel.key != 'id' && eachlabel.key != 'userid' && eachlabel.key != 'startdate'">
-                            <img v-if="eachlabel.key == 'taskname'" class="searchicon d-inline-block" src="@/assets/taskicon.png">
-                            <img v-if="eachlabel.key == 'username'" class="searchicon d-inline-block" src="@/assets/personicon.png">
-                            <img v-if="eachlabel.key == 'groupname'" class="searchicon d-inline-block" src="@/assets/groupicon.png">
-                            <img v-if="eachlabel.key == 'deadline'" class="searchicon d-inline-block" src="@/assets/deadlineicon.png">
-                            <img v-if="eachlabel.key == 'status'" class="searchicon d-inline-block" src="@/assets/statusicon.png">
+                            <img @mouseover="taskwrapperclass = ''" @mouseleave="taskwrapperclass = 'overflow-hidden'" v-if="eachlabel.key == 'taskname'" class="searchicon d-inline-block" src="@/assets/taskicon.png">
+                            <img @mouseover="taskwrapperclass = ''" @mouseleave="taskwrapperclass = 'overflow-hidden'" v-if="eachlabel.key == 'username'" class="searchicon d-inline-block" src="@/assets/personicon.png">
+                            <img @mouseover="taskwrapperclass = ''" @mouseleave="taskwrapperclass = 'overflow-hidden'" v-if="eachlabel.key == 'groupname'" class="searchicon d-inline-block" src="@/assets/groupicon.png">
+                            <img @mouseover="taskwrapperclass = ''" @mouseleave="taskwrapperclass = 'overflow-hidden'" v-if="eachlabel.key == 'deadline'" class="searchicon d-inline-block" src="@/assets/deadlineicon.png">
+                            <img @mouseover="taskwrapperclass = ''" @mouseleave="taskwrapperclass = 'overflow-hidden'" v-if="eachlabel.key == 'status'" class="searchicon d-inline-block" src="@/assets/statusicon.png">
                         </div>
                         <span class="d-inline-block position-absolute font-lg-12 col-10"
                         v-if="eachlabel.key != 'id' && eachlabel.key != 'userid' && eachlabel.key != 'startdate' && eachlabel.key != 'deadline'"
@@ -66,7 +66,8 @@ export default defineComponent({
     },
     data() {
         return {
-            urlnow:location.pathname
+            urlnow:location.pathname,
+            taskwrapperclass:'overflow-hidden'
         }
     },
     methods:{

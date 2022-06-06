@@ -13,6 +13,10 @@ Route::post('/register', [App\Http\Controllers\API\Auth\RegisterController::clas
 Route::post('/login', [App\Http\Controllers\API\Auth\LoginController::class, 'login']);// ログイン
 Route::post('/logout', [App\Http\Controllers\API\Auth\LoginController::class, 'logout']);// ログアウト
 
+//テストユーザー用
+Route::post('/login/testuser', [App\Http\Controllers\API\Auth\LoginController::class, 'LoginTestUser']);// ログイン
+Route::post('/register/testuser', [App\Http\Controllers\API\Auth\RegisterController::class, 'RegisterTestUser']);// ユーザー登録
+
 Route::middleware('auth:sanctum')->group(function(){
     Route::get('/user/check', [App\Http\Controllers\API\Auth\AccessTokenController::class, 'UserCheck']);// ログアウト
 

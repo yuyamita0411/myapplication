@@ -1,11 +1,9 @@
 <template>
 	<LoginIconview class="calenderloading w-100 d-inline-block text-center position-absolute" v-if="loadingstatus == true" />
 	<div id="ScheduleWrapper" class="position-relative">
-		<div class="myschedulearea" id="MyScheduleArea"></div>
-		<div id="UserScheduleArea" :class="`schedulearea ${loadstatus}`">
-
+		<div v-for="EachSData in [MyScheduleData, ScheduleData]" :key="EachSData" :class="`UserScheduleArea schedulearea ${loadstatus}`">
 			<div
-			v-for="(sdata, skey) in ScheduleData" :key="skey"
+			v-for="(sdata, skey) in EachSData" :key="skey"
 			:class="`${sdata[0].name ? 'scheduleborder d-inline-block w-100 mb-3' : 'd-none'}`"
 			>
 				<div
@@ -24,10 +22,20 @@
 
 						<div
 						:class="`${Daycolor[DweekArr[new Date(calculate.MDFI(date, i-1)).getDay()]]} 
-						SPdatearea col-2 d-inline-block text-center float-left pt-1 pb-1 cursor`"
+						SPdatearea col-2 d-inline-block text-center float-left pt-1 pb-1 pr-1 pl-1 cursor`"
 						>
 						{{new Date(calculate.MDFI(date, i-1)).getDate()}}
 						({{DweekArr[new Date(calculate.MDFI(date, i-1)).getDay()]}})
+							<button
+							type="button"
+							:id="`ScheduleId-${sdata[0].id}`"
+							:data-setscheduleinfo="`${calculate.MDFI(date, i-1).getFullYear()}/${calculate.ReturnDMFormat(new Date(calculate.MDFI(date, i-1)).getMonth()+1)}/${calculate.ReturnDMFormat(new Date(calculate.MDFI(date, i-1)).getDate())}`"
+							:data-buttonuserid="`${sdata[0].id}`"
+							data-tooltip="スケジュールを追加する"
+							class="calenderBtn tooltip-left cursor p-0 float-right"
+							@click="ModalMotion"
+							>
+							</button>
 						</div>
 
 						<div class="schedulespdic col-10 d-inline-block text-left float-right p-0 position-relative">
@@ -73,7 +81,7 @@
 											:class="`slengtharea${index + 1} d-inline-block float-left`" :style="`width:${width}%;`"></span>
 									</span>
 								</small>
-								<div class="calenderBtnWrapper d-inline-block w-100 bg-white">
+								<!--div class="calenderBtnWrapper d-inline-block w-100 bg-white">
 									<button
 									type="button"
 									:id="`ScheduleId-${sdata[0].id}`"
@@ -84,12 +92,11 @@
 									@click="ModalMotion"
 									>
 									</button>
-								</div>
+								</div-->
 						</div>
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</div>
 
@@ -114,6 +121,7 @@ export default defineComponent({
 		searchparam: Object,
 		loadingstatus: Boolean,
 		loadstatus: String,
+		MyScheduleData: Object,
 		ScheduleData: Object,
 		DweekArr: Object,
 		Daycolor: Object
@@ -194,7 +202,7 @@ export default defineComponent({
 	right:0;
 }
 .calenderBtn{
-	right:1rem;
+	right:0;
 	top:4.5px;
 }
 .calenderBtn{
@@ -258,12 +266,18 @@ export default defineComponent({
 .Carea {
 	box-shadow: 0px 0px 3px 0px rgb(0, 0, 0, 0.1);
 }
+.Carea{
+	border-bottom: solid 0.5px rgba(0, 0, 0, 0.1);
+}
+/*
 .timerangecover,
-.sleft,
+.sleft,*/
 .userssp{
 	border-bottom: solid 0.5px rgba(0, 0, 0, 0.1);
 }
-
+#ScheduleWrapper > .UserScheduleArea:nth-child(1) > div > div > .Carea{
+	background: rgba(24, 71, 182, 0.1);
+}
 /*.scheduleborder > div > div:not(:first-child){
 	border-bottom: solid 2px rgba(0, 0, 0, 0.1);
 }*/
@@ -279,9 +293,12 @@ export default defineComponent({
 }
 .calenderBtnWrapper{
 	height:1.5rem;
-	border-top: solid 1px rgba(0, 0, 0, 0.1);
+	//border-top: solid 1px rgba(0, 0, 0, 0.1);
 }
 .SPdatearea{
 	border-right: solid 0.5px rgba(0, 0, 0, 0.1);
+}
+.SPdatearea{
+	font-size:12px;
 }
 </style>

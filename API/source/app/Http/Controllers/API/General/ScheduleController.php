@@ -135,21 +135,32 @@ class ScheduleController extends Controller
     }
 
     public function GetMySchedule(Request $request){
-        $me = DB::table('appli_users')
-        ->join('schedule_relations', 'appli_users.id', '=', 'schedule_relations.userid')
-        ->join('schedules', 'schedule_relations.scheduleid', '=', 'schedules.id')
+        $purifyquery = DB::table('appli_users')
         ->Where('appli_users.id', '=', Auth::user()->id)
         ->Where('appli_users.companyid', Auth::user()->companyid);
 
-        if(!empty($request["starttime"])){
+        $me = DB::table('appli_users')
+        ->leftJoin('schedule_relations', 'appli_users.id', '=', 'schedule_relations.userid')
+        ->leftJoin('schedules', 'schedule_relations.scheduleid', '=', 'schedules.id')
+        ->Where('appli_users.id', '=', Auth::user()->id)
+        ->Where('appli_users.companyid', Auth::user()->companyid);
+
+        $firststep = $me->get();
+
+        /*if(!empty($request["starttime"])){
             $me
             ->whereDate('schedules.starttime', '>', date('Y-m-d',strtotime($request["starttime"].'-1 day')))
             ->whereDate('schedules.starttime', '<', date('Y-m-d',strtotime($request["starttime"].'+7 day')));
-        }
+        }*/
+        $secondstep = $me->get();
+
         if(empty($request["keyword"])){
             $me->orwhere('name', '=', "NULL");
         }
+        $thirdstep = $me->get();
+
         $me->orderBy('starttime', 'asc');
+        $forthstep = $me->get();
 
         $Scheduleinfo = $me->select(
             'appli_users.id',
@@ -171,10 +182,16 @@ class ScheduleController extends Controller
         $Mschedulearr = [];
         $usercheck = [];
 
+        /*$Mschedulearr["first"] = $firststep;
+        $Mschedulearr["second"] = $secondstep;
+        $Mschedulearr["third"] = $thirdstep;
+        $Mschedulearr["forth"] = $forthstep;
+        $Mschedulearr["empty"] = $purifyquery->first();*/
+
         foreach($Myinfo as $key => $val){
             $eacharr = [
                 "id" => $val->id,
-                "name" => $val->name,
+                "name" => $val->name.'(自分)',
                 "mail_address" => $val->mail_address,
                 "created_at" => $val->created_at,
                 "updated_at" => $val->updated_at,

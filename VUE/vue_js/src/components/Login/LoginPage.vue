@@ -56,6 +56,16 @@
                 <div class="d-inline-block w-100">
                     <router-link class="d-inline-block font-weight-bold" to="/register">サインインする</router-link>
                 </div>
+
+                <div class="col-12 col-lg-10 m-auto pt-4">
+                    <button
+                    type="submit"
+                    class="bgred w-100 d-inline-block b-none text-white text-center font-weight-bold p-2 cursor br5px"
+                    @click="LoginTestUser">
+                        テストユーザーでログインする
+                    </button>
+                    <p class="red text-left">*メールアドレス、パスワードなしでテスト用アカウントにログインいただけます。</p>
+                </div>
             </div>
         </div>
     </div>
@@ -103,7 +113,21 @@ export default defineComponent({
             })
             .catch(error => {
                 console.log(error);
-                this.mailorpasswrong = error.data.WrongMsg;
+                this.mailorpasswrong = error.data!.WrongMsg;
+            });
+        },
+
+        //テストユーザー用
+        LoginTestUser(){
+            return apiClient.post(
+            "/api/login/testuser",
+            {})
+            .then(response => {
+                this.token = response.data.token;
+                if(response.data.token != undefined && response.data.token != null && response.data.token != ""){
+                    localStorage.setItem('access_token', response.data.token);
+                    this.$router.push('/dashboard');
+                }
             });
         }
     },
@@ -112,4 +136,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+.bgred{
+    background:red;
+}
 </style>

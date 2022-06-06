@@ -55,6 +55,15 @@ class LoginController extends Controller
 
     }
 
+    public function LoginTestUser(){
+        $user = AppliUser::whereMailAddress("kwansei0411")->first(); //トークンの作成と取得
+
+        $user->tokens()->delete();
+        $token = $user->createToken("login:user{$user->id}")->plainTextToken;
+
+        return response()->json(['token' => $token], Response::HTTP_OK);
+    }
+
     public function logout(){
         Auth::logout();
         return response()->json(['message' => 'Logged out'], 200);

@@ -169,4 +169,78 @@ class RegisterController extends Controller
         $returnarr['companydata'] = $company;
         return response()->json( $returnarr, Response::HTTP_OK);
     }
+
+    public function RegisterTestUser(Request $request){
+        $returnarr = [
+            'userdata' => '',
+            'companydata' => '',
+            'message' => '登録が完了しました。',
+            'error' => '',
+            'EmptyCheck' => '',
+            'RegisterStatus' => 'success'
+        ];
+
+        $validateflag = true;
+        $emptyinfoarr = [
+            "mail_address" => "",
+            "password" => ""
+        ];
+
+        $DublicateObj = AppliUser::where('mail_address', '=', $request->testusermail);
+
+        if($DublicateObj->exists()){
+            $emptyinfoarr["mail_address"] = '既に存在するユーザーです。';
+            $validateflag = false;
+        }
+
+        if(empty($request->testusermail)){
+            $emptyinfoarr["mail_address"] = Values::$MailRequired;
+            $validateflag = false;
+        }
+
+        if(empty($request->testpassword)){
+            $emptyinfoarr["password"] = Values::$PasswordRequired;
+            $validateflag = false;
+        }
+
+        if($validateflag == false){
+            $returnarr['message'] = '登録に失敗しました。';
+            $returnarr['EmptyCheck'] = $emptyinfoarr;
+            return response()->json($returnarr, Response::HTTP_OK);
+        }
+
+        $newestTuser = AppliUser::where('name', 'LIKE', '%テストユーザー%')->orderBy('name', 'desc')->first();
+        $newestTcompany = CompanyInfo::where('name', 'LIKE', '%社名テスト%')->orderBy('name', 'desc')->first();
+        $ntname = 'テストユーザー1';
+        $ntcompany = '社名テスト1';
+
+        if(!empty($newestTuser)){
+            $ntname = 'テストユーザー'.$newestTuser->id;
+        }
+        if(!empty($newestTcompany)){
+            $ntcompany = '社名テスト'.$newestTcompany->id;
+        }
+
+        //バリエーションで問題がなかった場合にはユーザを作成する。
+        $user = AppliUser::create([
+            'type' => '管理者',
+            'name' => $ntname,
+            'mail_address' => $request->testusermail,
+            'password' => Hash::make($request->testpassword),
+            'companyid' => CompanyInfo::max('id')
+        ]);
+        $company = CompanyInfo::create([
+            'name' => $ntcompany,
+            'address' => NULL,
+            'telnum' => NULL,
+            'mail' => NULL,
+            'industry' => NULL
+        ]);
+
+        $returnarr['userdata'] = $user;
+        $returnarr['companydata'] = $company;
+        $returnarr['EmptyCheck'] = $emptyinfoarr;
+
+        return response()->json($returnarr, Response::HTTP_OK);
+    }
 }

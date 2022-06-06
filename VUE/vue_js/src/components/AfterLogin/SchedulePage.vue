@@ -147,6 +147,7 @@
                                 :loadstatus = "loadstatus"
                                 :scheduleborder = "scheduleborder"
 								:ScheduleData="ScheduleData"
+								:MyScheduleData="MyScheduleData"
                                 />
 
                                 <SPCalenderView
@@ -158,6 +159,7 @@
 								:ScheduleData="ScheduleData"
 								:DweekArr="DweekArr"
 								:Daycolor="Daycolor"
+								:MyScheduleData="MyScheduleData"
                                 />
 							</div>
 						</div>
@@ -210,6 +212,7 @@ export default defineComponent({
 			loadingstatus:true,
 			loadstatus:'op0',
 			scheduleborder:'',
+			MyScheduleData:{},
 			ScheduleData:{},
 			PageNow:1,
 			PageAmount:0,
@@ -259,9 +262,19 @@ export default defineComponent({
 			this.scheduleborder = '';
 
 			await http.common(
+				"/api/schedule/me/get",
+				this.searchparam,
+				(res:any) => {
+					console.log(res);
+					this.MyScheduleData = res.data;
+				}
+			);
+
+			await http.common(
 				"/api/schedule",
 				this.searchparam,
 				(res:any) => {
+					//console.log(res);
 					this.ScheduleData = res.data;
 					this.PageAmount = res.data.PageAmount[0];
 
@@ -341,7 +354,7 @@ export default defineComponent({
 	#MyScheduleArea>div>div>div:not(:nth-child(8)) {
 		border-right: solid 0.5px #ffff;
 	}
-	#DayArea>div>div:not(:nth-child(7)), #UserScheduleArea > div > div > div:not(:nth-child(8)) {
+	#DayArea>div>div:not(:nth-child(7)), .UserScheduleArea > div > div > div:not(:nth-child(8)) {
 		border-right: solid 0.5px rgb(0, 0, 0, 0.1);
 	}
 	.montharea>.cbutton:nth-child(2) {
