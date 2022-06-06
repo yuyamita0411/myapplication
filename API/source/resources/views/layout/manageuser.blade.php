@@ -160,8 +160,10 @@
         for (i = 0, f = files[i]; i != files.length; ++i) {
             var er = new ExcelJs.Reader(f, function (e, xlsx) {
                 jsonsendarr = DevideExcelRow(xlsx.toJson(), 20);
+                console.log("jsonsendarr");
+                console.log(jsonsendarr);
                 
-                for(var key in jsonsendarr){
+                /*for(var key in jsonsendarr){
                     for(var key2 in jsonsendarr[key]){
                         ajax.method1(
                             "{{route('manageuser.post')}}",
@@ -180,7 +182,7 @@
                         );
                     }
 
-                }
+                }*/
             });
         }
     });

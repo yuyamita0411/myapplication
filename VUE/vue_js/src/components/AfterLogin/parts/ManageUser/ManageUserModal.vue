@@ -160,25 +160,33 @@ export default defineComponent({
             const http = new GetData();
             this.loadingstatus = true;
             this.loadingtxt = '';
+            const sleep = (msec:any) => {new Promise(resolve => setTimeout(resolve, msec))};
 
-            this.parseSheet(this.uploadFile, this.TSheet, (result:any) => {
-                for(var er in result){
-                    http.Postcommon(
-                        '/api/manageuser/import',
-                        {
-                            "name":result[er][0],
-                            "mail_address":result[er][1],
-                        },
-                        (res:any) => {
-                            console.log(res);
-                            this.loadingstatus = false;
-                            this.loadingtxt = '取り込みが完了しました。';
-                        },
-                        (res:any) => {
-                            this.loadingstatus = false;
-                            this.loadingtxt = '取り込みに失敗しました。';
-                        }
-                    );
+            this.parseSheet(this.uploadFile, this.TSheet, async (result:any) => {
+                var devidedata = this.DevideData(result);
+                var roupcount = 0;
+                for(var key in devidedata){
+                    roupcount += 1;
+                    for(var key2 in devidedata[key]){
+                        http.Postcommon(
+                            '/api/manageuser/import',
+                            {
+                                "name":devidedata[key][key2][0],
+                                "mail_address":devidedata[key][key2][1],
+                            },
+                            (res:any) => {
+                                console.log(res);
+                                this.loadingstatus = false;
+                                //this.loadingtxt = '取り込みが完了しました。';
+                                this.loadingtxt = `${roupcount}`;
+                            },
+                            (res:any) => {
+                                this.loadingstatus = false;
+                                this.loadingtxt = '取り込みに失敗しました。';
+                            }
+                        );
+                    }
+                    await sleep(1000);
                 }
             });
         },
@@ -204,6 +212,22 @@ export default defineComponent({
                 callback(result);
             };
             reader.readAsArrayBuffer(blob);
+        },
+        DevideData(result:any){
+            var divcount = 0;
+            var divgroup = 0;
+            var jsonsendarr:any = [];
+            var jsonsend:any = [];
+            result.forEach((each:any) => {
+                divcount += 1;
+                if(divcount % 20 == 0){
+                    divgroup += 1;
+                    jsonsend = [];
+                }
+                jsonsend[divcount] = each;
+                jsonsendarr[divgroup] = jsonsend;
+            });
+            return jsonsendarr;
         }
     }
 });
