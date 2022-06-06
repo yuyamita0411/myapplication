@@ -341,7 +341,7 @@ export default defineComponent({
 	#MyScheduleArea>div>div>div:not(:nth-child(8)) {
 		border-right: solid 0.5px #ffff;
 	}
-	#DayArea>div>div:not(:nth-child(8)), #UserScheduleArea > div > div > div:not(:nth-child(8)) {
+	#DayArea>div>div:not(:nth-child(7)), #UserScheduleArea > div > div > div:not(:nth-child(8)) {
 		border-right: solid 0.5px rgb(0, 0, 0, 0.1);
 	}
 	.montharea>.cbutton:nth-child(2) {

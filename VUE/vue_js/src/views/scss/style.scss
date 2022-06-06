@@ -188,6 +188,11 @@ textarea::-webkit-scrollbar-thumb,
     background: rgba(0, 0, 0, 0.03);
 }
 
+.csvmodalcoveropen,
+.csvmodalcoverclose{
+    background:rgb(0, 0, 0, 0.5);
+}
+
 .calenderBtn{
     background: url("@/assets/PlusButtonGray.png") no-repeat;
     border: solid 0.5px #0069d9;
@@ -398,6 +403,8 @@ input.fileinput,
     height: 3.5rem;
 }
 
+.csvmodalcoveropen,
+.csvmodalcoverclose,
 .logoutmodalcover,
 #sidebar{
     height: 100%;
@@ -405,6 +412,9 @@ input.fileinput,
 /*.schedulearea,*/
 .schedulespdic{
     min-height:2rem;
+}
+.csvmodalclose{
+    height: 100vh;
 }
 .schedulespdic,
 .inchargemenu{
@@ -483,7 +493,9 @@ textarea::-webkit-scrollbar,
 .p-news-list__item__data:after,
 .LoginmodalOutside,
 .logoutmodalcover,
-.logoutmodal{
+.logoutmodal,
+.csvmodalcoveropen,
+.csvmodalcoverclose{
     width: 100%;
 }
 
@@ -516,7 +528,10 @@ textarea{
 .sbhidden,
 .wrapperop0,
 .AlertShowHide,
-.op0{
+.op0,
+.csvmodalclose,
+.csvmodalcoveropen,
+.csvmodalcoverclose{
     opacity: 0;
 }
 .op02{
@@ -535,12 +550,19 @@ textarea{
 .sbshow,
 .wrapperop1,
 .AlertShow,
+.csvmodalcoveropen,
 .op1{
     opacity: 1;
 }
 /*opacity*/
 
 /*z-index*/
+.csvmodalclose,
+.csvmodalcoveropen,
+.csvmodalcoverclose{
+    z-index: 0;
+}
+
 .zm1,
 .logoutmodalcover,
 .logoutmodal,
@@ -575,6 +597,12 @@ textarea{
 .modal_open{
     z-index:5;
 }
+.csvmodalcoveropen{
+    z-index: 6;
+}
+.csvmodalopen{
+    z-index: 7;
+}
 /*z-index*/
 
 /*overflow*/
@@ -583,6 +611,7 @@ textarea{
 .p-news-list__item__title{
     overflow: hidden;
 }
+#csvmodal,
 textarea,
 .schedulespdic,
 .inchargemenu{
@@ -633,11 +662,19 @@ body{
     box-shadow: 0 0 0.1rem 0 rgb(0, 0, 0, 0.13), 0 0.1rem 0.1rem 0 rgb(0, 0, 0, 0.11);
 }
 .gridinside{
-    box-shadow: 0 0 0.1rem 0 rgb(0, 0, 0, 0.13), 0 0.16rem 0.1rem 0 rgb(0, 0, 0, 0.11);
+//    box-shadow: 0 0 0.1rem 0 rgba(0, 0, 0, 0.13), 0 0.05rem 0.2rem 0 rgba(0, 0, 0, 0.11);
+    box-shadow: 0 0 0.1rem 0 rgba(0, 0, 0, 0.13), 0 0rem 0.3rem 0 rgba(0, 0, 0, 0.11);
 }
 .BottomMshadow{
     box-shadow: 1.5px 0px 1.5px 1.5px rgb(0, 0, 0, 0.1);
 }
+#PagenationArea{
+    box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.1) inset;
+}
+/*
+#maincolumn{
+    box-shadow: 0px 0px 10px 0.05px rgba(0, 0, 0, 0.1) inset;
+}*/
 /*box-shadow*/
 
 /*text-shadow*/
@@ -653,7 +690,8 @@ body{
 }
 .hbwrapper,
 .logoutmodalcover,
-.logoutmodal{
+.logoutmodal,
+.csvmodalcoveropen{
     top:0;
 }
 #BacktoPrevButton{
@@ -669,8 +707,13 @@ body{
 .sbshow{
     top:2.5rem;
 }
+.csvmodalclose,
+.csvmodalcoverclose{
+    top: 100%;
+}
 .right0,
-.hbwrapper{
+.hbwrapper,
+#PagenationArea{
     right: 0;
 }
 .clipicon{
@@ -679,12 +722,12 @@ body{
 .calenderBtn{
     right:5px;
 }
-
 .left0,
 .modalinnercover,
 .p-news-list__item__data:before,
 .p-news-list__item__data:after,
-.sbwrapper{
+.sbwrapper,
+#csvmodalcover{
     left: 0;
 }
 .scheduleinnerselector{
@@ -693,7 +736,8 @@ body{
 .bottom0,
 .p-news-list__item__data:after,
 .p-news-list__item__data:before,
-.modalfinishbuttonwrapper{
+.modalfinishbuttonwrapper,
+#PagenationArea{
     bottom: 0;
 }
 .calenderBtn{
@@ -706,7 +750,7 @@ body{
 .p-news-list__item__data:after{
     position: absolute;
 }
-
+.csvmodalcoveropen,
 .csvmodalcoverclose{
     position: fixed;
 }
@@ -729,6 +773,10 @@ body{
     cursor: pointer;
 }
 /*cursor*/
+
+.pointernone{
+    pointer-events: none;
+}
 
 .sccheduleplusbutton{
     pointer-events: none;
@@ -809,6 +857,8 @@ body{
 #AccountArea,
 #AccountArea:hover,
 .csvmodalopen,
+.csvmodalclose,
+.csvmodalcoveropen,
 .csvmodalcoverclose,
 .modalinnercover,
 .BgAccentColor:hover,
@@ -951,6 +1001,11 @@ input[name="newtore"]:checked + label{
 }
 /*チェックボックス関連*/
 @media (min-width: 768px){
+    .csvmodalopen,
+    .csvmodalclose{
+        left: calc((100% - 45rem) / 2);
+        width: 45rem;
+    }
     .BacktoPrevButtonMoveRight{
         left: 9.5rem;
     }
@@ -1054,6 +1109,9 @@ input[name="newtore"]:checked + label{
     }
     .sbhidden{
         top:1rem;
+    }
+    .csvmodalopen{
+        top: 2rem;
     }
 }
 
@@ -1173,6 +1231,9 @@ input[name="newtore"]:checked + label{
     .hbwrapper > .barrotate:nth-child(3){
         top: 1.25rem;
     }
+    .csvmodalopen{
+        top: 2rem;
+    }
     .sidebar{
         left: -100%;
     }
@@ -1212,6 +1273,11 @@ input[name="newtore"]:checked + label{
     }
     .maincolumn{
         width:100%;
+    }
+    .csvmodalopen,
+    .csvmodalclose{
+        width: 90%;
+        left: 5%;
     }
     .p-news-list__item__data__date{
         font-size:0.7rem;

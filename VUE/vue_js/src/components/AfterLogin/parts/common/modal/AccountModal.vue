@@ -10,13 +10,13 @@
         </div>
         <div class="pt-5 pb-5 w-100 p-3 m-auto">
           <div class="col-md-12 m-auto pt-3 pb-3 pl-0 pr-0 bg-white">
-            <div class="col-12 pt-1 pb-1 m-auto">
+            <!--div class="col-12 pt-1 pb-1 m-auto">
               <div>
                 <div class="w-100 d-inline-block b-none text-white text-center font-weight-bold p-2 cursor bgmain">
                 アカウント情報
                 </div>
               </div>
-            </div><!--ログアウトのモーダル-->
+            </div--><!--ログアウトのモーダル-->
             <div class="col-12 pt-1 pb-1 m-auto">
                 <div
                 class="w-100 d-inline-block b-none text-white text-center font-weight-bold p-2 cursor BgAccentColor"

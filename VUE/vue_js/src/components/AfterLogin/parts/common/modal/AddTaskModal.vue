@@ -36,18 +36,18 @@
                                             v-for="eachcdata in companydata" :key="eachcdata"
                                             :value="`${eachcdata.id}:${eachcdata.name}`">{{eachcdata.name}}</option>
                                         </select>
-                                        <div class="w-100 d-inline-block mb-2">タイトル <small id="sendTaskTitleAlert" class="red"></small></div>
+                                        <div class="w-100 d-inline-block mb-2">タイトル <small id="sendTaskTitleAlert" class="red" ref="sendTaskTitleAlert"></small></div>
                                         <input
                                         name="sendTaskTitle"
                                         ref="sendTaskTitle"
                                         type="text" class="w-100 d-inline-block mb-4">
-                                        <div class="w-100 d-inline-block mb-2">メッセージ <small id="sendTaskMsgAlert" class="red"></small></div>
+                                        <div class="w-100 d-inline-block mb-2">メッセージ <small id="sendTaskMsgAlert" class="red" ref="sendTaskMsgAlert"></small></div>
                                         <textarea
                                         ref="sendTaskMsg"
                                         name="sendTaskMsg"
                                         class="w-100 d-inline-block mb-4"></textarea>
 
-                                        <div class="w-100 d-inline-block mb-2">期日 <small id="DateAlert" class="red"></small></div>
+                                        <div class="w-100 d-inline-block mb-2">期日 <small id="DateAlert" class="red" ref="DateAlert"></small></div>
                                         <div class="d-flex mb-4">
                                             <input
                                             name="deadlineyear"
@@ -156,12 +156,46 @@ export default defineComponent({
             const deadlinemonth = this.$refs.deadlinemonth as HTMLInputElement;
             const deadlinedate = this.$refs.deadlinedate as HTMLInputElement;
 
-            console.log(sendTaskTitle.value);
-            console.log(selectincharge.value);
-            console.log(sendTaskMsg.value);
-            console.log(deadlineyear.value);
-            console.log(deadlinemonth.value);
-            console.log(deadlinedate.value);
+            const sendTaskTitleAlert = this.$refs.sendTaskTitleAlert as HTMLInputElement;
+            const sendTaskMsgAlert = this.$refs.sendTaskMsgAlert as HTMLInputElement;
+            const DateAlert = this.$refs.DateAlert as HTMLInputElement;
+
+            sendTaskTitleAlert.innerText = '';
+            sendTaskMsgAlert.innerText = '';
+            DateAlert.innerText = '';
+
+            var flag = true;
+            if(255 < sendTaskTitle.value.length){
+                sendTaskTitleAlert.innerText = '255文字以内でお願いします。';
+                flag = false;
+            }
+            if(sendTaskTitle.value == ''){
+                sendTaskTitleAlert.innerText = '必須項目です。';
+                flag = false;
+            }
+
+            if(255 < sendTaskMsg.value.length){
+                sendTaskMsgAlert.innerText = '255文字以内でお願いします。';
+                flag = false;
+            }
+            if(sendTaskMsg.value == ''){
+                sendTaskMsgAlert.innerText = '必須項目です。';
+                flag = false;
+            }
+
+            var checkobj = new Date(`${deadlineyear.value}/${deadlinemonth.value}/${deadlinedate.value}`);
+            if(isNaN(checkobj.getFullYear())){
+                DateAlert.innerText = '日付の形式が正しくありません。';
+                flag = false;
+            }
+            if(deadlineyear.value == '' || deadlinemonth.value == '' || deadlinedate.value == ''){
+                DateAlert.innerText = '必須項目です。';
+                flag = false;
+            }
+
+            if(flag == false){
+                return;
+            }
 
             this.http.Postcommon(
                 "/api/taskinfo/assign",
@@ -188,6 +222,7 @@ export default defineComponent({
                     }, 1000);
                 }
             );
+
         }
     },
     mounted(){

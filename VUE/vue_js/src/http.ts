@@ -30,7 +30,7 @@ export class GetData {
         });
     }
 
-    async Postcommon(url:string, data:any, callback:any): Promise<any> {
+    async Postcommon(url:string, data:any, callback:any, callback2:any=null): Promise<any> {
         apiClient.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('access_token')!}`;
         return apiClient.post(
             url,
@@ -40,7 +40,7 @@ export class GetData {
             callback(response);
         })
         .catch(error => {
-            console.log(error);
+            callback2(error);
         });
     }
 }

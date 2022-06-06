@@ -196,6 +196,7 @@ export default defineComponent({
     background: rgba(24, 71, 182, 0.3);
 }
 .calenderloading {
+    top:10vh;
 	position: absolute;
 	transform: scale(0.7);
 }

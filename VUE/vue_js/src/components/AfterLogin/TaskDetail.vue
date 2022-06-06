@@ -71,13 +71,13 @@
                                     <h4>{{eachmsg.commenttitle}}</h4>
                                     <p>{{eachmsg.commentpassage}}</p>
                                     <small class="d-inline-block w-100 text-right">
-                                        <span class="font-weight-bold">送信日:</span>
+                                        <span class="font-weight-bold pr-2">送信日:</span>
                                         <span class="FontAccent">
                                         {{RFdate(eachmsg.created_at.split(' ')[0])}}
                                         </span>
                                     </small>
                                     <small class="d-inline-block w-100 text-right">
-                                        <span class="font-weight-bold">更新日:</span>
+                                        <span class="font-weight-bold pr-2">更新日:</span>
                                         <span class="FontAccent">
                                         {{RFdate(eachmsg.updated_at.split(' ')[0])}}
                                         </span>

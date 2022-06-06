@@ -1,7 +1,5 @@
 <template>
-    <div id="MainColumLoadArea" v-if="loadingstatus == true" class="position-absolute">
-        <LoginIconview />
-    </div>
+    <LoginIconview id="MainColumLoadArea" v-if="loadingstatus == true" class="position-relative" />
     <div :class="`home ${loadstatus}`">
         <div class="dashbordwrapper d-inline-block w-100">
             <div id="dashboardnemue" class="dashboardnemue d-inline-block position-fixed w-100 p-0 bg-white">
@@ -66,6 +64,14 @@
                         <img src="@/assets/taskicon.png" class="sidebaricon p-2">
                     </router-link>
 
+                    <router-link
+                    v-if="usertype == '管理者'"
+                    data-tooltip="アカウント管理"
+                    class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-md-2 text-md-center"
+                    to="/manageuser"
+                    >
+                        <img src="@/assets/manageicon.png" class="sidebaricon p-2">
+                    </router-link>
 
                     <div
                     id="SendTaskButton"
@@ -104,6 +110,7 @@ export default defineComponent({
     data() {
         return {
             username:"",
+            usertype:"",
             loadstatus:'op0',
             loadingstatus:true,
             urlnow:location.pathname,
@@ -126,6 +133,7 @@ export default defineComponent({
             (res:any) => {
                 this.loadingstatus = false;
                 this.username = res.data.userinfo.name;
+                this.usertype = res.data.userinfo.type;
                 this.loadstatus = 'op1';
             }
         );
@@ -164,12 +172,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-#PagenationArea{
-	bottom:0rem;
-	right:0;
-}
-#PagenationArea{
-    border-top:solid 1px rgb(0, 0, 0, 0.1);
+.wholeloader {
+    top:10vh;
+    left:0;
 }
 .logoutmodal{
     overflow:scroll;
@@ -180,9 +185,6 @@ export default defineComponent({
 }
 #MainColumLoadArea{
     top:30vh;
-}
-#MainColumLoadArea{
-    left:50%;
 }
 #SendTaskButton,
 #SendTaskButton:hover{

@@ -52,6 +52,7 @@
 					</div>
 				</div>
 				<div class="mb-3 w-100 d-inline-block">
+
 					<div class="d-flex tablediv bg-white col-12 col-md-5 float-md-left mb-4 pl-0">
 						<input class="w-100 d-inline-block" name="deadlinebeginyear" type="text" value=""
 						ref="deadlinebeginyear"
@@ -170,6 +171,7 @@ export default defineComponent({
 			PageNow:1,
 			selectwhich:"",
 			incharge:"",
+			inputdaynow:"",
 			Pjson:[{}],
 			calculate:new Calculate(),
 			http:new GetData(),

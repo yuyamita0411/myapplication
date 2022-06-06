@@ -1,6 +1,6 @@
 <template>
     <div class="loadingcover w-100 pr-0 pl-0 pl-lg-1 float-lg-left d-inline-block text-center h-100">
-        <div class="sk-chase position-absolute">
+        <div class="sk-chase">
             <div class="sk-chase-dot"></div>
             <div class="sk-chase-dot"></div>
             <div class="sk-chase-dot"></div>
@@ -8,7 +8,7 @@
             <div class="sk-chase-dot"></div>
             <div class="sk-chase-dot"></div>
         </div>
-        <h4 id="LoadingStr" class="loading text-center position-absolute d-flex w-100">
+        <h4 id="LoadingStr" class="loading text-center d-inline-block w-100 mt-3">
             <span :class="ll1">L</span>
             <span :class="ll2">o</span>
             <span :class="ll3">a</span>
@@ -17,7 +17,7 @@
             <span :class="ll6">n</span>
             <span :class="ll7">g</span>
         </h4>
-        <h5 class="loadingwait w-100 d-flex position-absolute text-left">
+        <h5 class="loadingwait w-100 d-inline-block text-center">
             <span :class="`d-inline-block text-center ${loadingwait1}`">●</span>
             <span :class="`d-inline-block text-center ${loadingwait2}`">●</span>
             <span :class="`d-inline-block text-center ${loadingwait3}`">●</span>
@@ -122,12 +122,12 @@ export default defineComponent({
 
 <style lang="scss">
 #LoadingStr{
-    top:12rem;
+    top:13rem;
     left:calc((100% - 4rem) / 2);
     color:rgb(255, 183, 90);
 }
 .loadingwait{
-    top:15rem;
+    top:16rem;
     left:calc((100% - 4rem) / 2);
 }
 .loadingwait{
@@ -147,8 +147,8 @@ export default defineComponent({
 }
 /* ローディング関連 */
 .sk-chase {
-    top:5rem;
-    left:50%;
+    top:0;
+    left:calc(50% - 35px);;
     width: 70px;
     height: 70px;
     position: relative;
@@ -188,7 +188,7 @@ export default defineComponent({
 .sk-chase-dot:nth-child(6):before { animation-delay: -0.6s; }
 
 .loadingcover{
-    position:absolute;
+//    position:absolute;
     top:0;
     left:0;
 }

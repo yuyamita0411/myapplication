@@ -11,6 +11,7 @@ import ScheduleView from '@/components/AfterLogin/SchedulePage.vue';
 import GroupInfoView from '@/components/AfterLogin/GroupInfo.vue';
 import TaskInfoView from '@/components/AfterLogin/TaskInfoView.vue';
 import TaskDetailView from '@/components/AfterLogin/TaskDetail.vue';
+import ManageUserView from '@/components/AfterLogin/ManageUser.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -66,6 +67,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/taskdetail/:id',
         name: 'TaskDetail',
         component: TaskDetailView,
+      },
+      {
+        path: '/manageuser',
+        name: 'ManageUser',
+        component: ManageUserView,
       }
     ],
     meta: {

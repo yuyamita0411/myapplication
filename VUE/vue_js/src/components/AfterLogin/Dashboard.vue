@@ -49,9 +49,7 @@
 					v-for="obj in calculate.MakePagenation(Pjson, PageAmount, PageNow)" :key="obj"
 					:id="obj.PId"
 					:class="obj.PClass"
-					@click="
-					PageNow = PageMotion
-					">
+					@click="PageMotion">
 					{{obj.PTxt}}
 					</p>
 				</div>
@@ -170,7 +168,7 @@ export default defineComponent({
 }
 .dashboardloading{
     position:absolute;
-    top:0;
+    top:10vh;
     transform:scale(0.7);
 }
 </style>

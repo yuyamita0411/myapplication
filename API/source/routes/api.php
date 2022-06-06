@@ -36,4 +36,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/taskdetail/{id}', [App\Http\Controllers\API\Common\TaskInfoController::class, 'TaskDetail'])->name('taskdetail');//ok
     Route::post('/taskdetail/addcomments/{id}', [App\Http\Controllers\API\Common\TaskInfoController::class, 'TaskDetailAddComments'])->name('taskdetail.addcomments');//ok
     Route::post('/taskdetail/addcomments/{id}/search', [App\Http\Controllers\API\Common\TaskInfoController::class, 'TaskDetailSearchComment'])->name('taskdetail.searchcomments');//ok
+
+    Route::get('manageuser', [App\Http\Controllers\API\Admin\ManageUserController::class, 'index'])->name('manageuser');//ok
+    Route::post('manageuser', [App\Http\Controllers\API\Admin\ManageUserController::class, 'index'])->name('manageuser');//ok
+    Route::post('manageuser/import', [App\Http\Controllers\API\Admin\ManageUserController::class, 'InportCompanyUser'])->name('manageuser.post');//ok
 });
