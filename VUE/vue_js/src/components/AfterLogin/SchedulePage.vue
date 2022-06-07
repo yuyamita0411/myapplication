@@ -83,8 +83,8 @@
 														@click="
 														PageNow = 1,
 														SearchOrderBy = $event.target.dataset.orderby,
-														$event.target.parentNode.parentNode.classList.toggle('SortAreaisshow'),
-														$event.target.parentNode.parentNode.classList.toggle('SortAreaishidde'),
+														$event.target.parentNode.parentNode.previousElementSibling.classList.toggle('SortAreaisshow'),
+														$event.target.parentNode.parentNode.previousElementSibling.classList.toggle('SortAreaishidde'),
 														this.$refs.sortmenu.classList.toggle('sbshow'),
 														this.$refs.sortmenu.classList.toggle('sbhidden'),
 														MakeSearchParam()
@@ -98,8 +98,8 @@
 														@click="
 														PageNow = 1,
 														SearchOrderBy = $event.target.dataset.orderby,
-														$event.target.parentNode.parentNode.classList.toggle('SortAreaisshow'),
-														$event.target.parentNode.parentNode.classList.toggle('SortAreaishidde'),
+														$event.target.parentNode.parentNode.previousElementSibling.classList.toggle('SortAreaisshow'),
+														$event.target.parentNode.parentNode.previousElementSibling.classList.toggle('SortAreaishidde'),
 														$event.target.parentNode.classList.toggle('sbshow'),
 														$event.target.parentNode.classList.toggle('sbhidden'),
 														MakeSearchParam()
