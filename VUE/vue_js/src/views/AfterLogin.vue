@@ -86,7 +86,7 @@
                 </div>
                 <div id="maincolumn" class="maincolumn position-relative float-md-right mb-3 pb-5">
                     <!--ここだけがコロコロ変わる-->
-                    <router-view/>
+                    <router-view v-if="showChild" @ReRender="toggle" />
                 </div>
             </div>
         </div>
@@ -95,11 +95,11 @@
     <div id="logoutmodalcover" :class="Amodalclass" @click="AmodalClose"></div>
 
     <AccountModal></AccountModal>
-    <AddTaskModal></AddTaskModal>
+    <AddTaskModal v-if="showChild" @ReRender="toggle"></AddTaskModal>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent} from 'vue';
 import {GetData} from "@/http";
 import LoginIconview from '@/components/common/LoadingIcon.vue';
 import AccountModal from '@/components/AfterLogin/parts/common/modal/AccountModal.vue';
@@ -107,6 +107,9 @@ import AddTaskModal from '@/components/AfterLogin/parts/common/modal/AddTaskModa
 
 export default defineComponent({
     name: 'AfterLoginView',
+    setup(){
+        console.log("setup!!");
+    },
     data() {
         return {
             username:"",
@@ -116,7 +119,8 @@ export default defineComponent({
             urlnow:location.pathname,
             Amodalclass:"logoutmodalcover position-fixed cursor modalcover_close",
             addfriends_modal_wrapper_class:"logoutmodal position-fixed modal_close",
-            message:'logoutmodal position-fixed modal_close'
+            message:'logoutmodal position-fixed modal_close',
+            showChild: true
         };
     },
     components: {
@@ -139,6 +143,10 @@ export default defineComponent({
         );
     },
     methods: {
+        toggle() {
+            this.showChild = false;
+            this.$nextTick(() => (this.showChild = true));
+        },
         AmodalOpen(){
             this.Amodalclass = "logoutmodalcover position-fixed cursor modalcover_open";
             document.getElementById('logoutmodal')!.classList.toggle("modal_close");

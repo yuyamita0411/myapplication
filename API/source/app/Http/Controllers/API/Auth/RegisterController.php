@@ -153,7 +153,7 @@ class RegisterController extends Controller
             'name' => $request->name,
             'mail_address' => $request->email,
             'password' => Hash::make($request->password),
-            'companyid' => CompanyInfo::max('id')
+            'companyid' => CompanyInfo::max('id')+1
         ]);
 
         $company = CompanyInfo::create([
@@ -227,7 +227,7 @@ class RegisterController extends Controller
             'name' => $ntname,
             'mail_address' => $request->testusermail,
             'password' => Hash::make($request->testpassword),
-            'companyid' => CompanyInfo::max('id')
+            'companyid' => CompanyInfo::max('id')+1
         ]);
         $company = CompanyInfo::create([
             'name' => $ntcompany,

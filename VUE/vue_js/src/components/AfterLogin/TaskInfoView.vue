@@ -103,7 +103,9 @@
 						</div>
 					</div>
 					<div class="float-right float-lg-left d-inline-block pl-2">
-						<img class="searchicon cursor mt-1 p-1 tooltip-top"
+						<img
+						@click="DeleteSsetting"
+						class="searchicon cursor mt-1 p-1 tooltip-top"
 						data-tooltip="入力を取り消す"
 						id="delete_date_area" src="@/assets/modalclosebutton.png">
 					</div>
@@ -125,6 +127,7 @@
 			</div>
 			
 			<TaskInfoInnerView
+			:taskstatus="taskstatus"
 			:taskdata="taskdata"
 			:modalstatus="modalstatus"
 			:loadingstatus="loadingstatus"
@@ -153,7 +156,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import TaskInfoInnerView from '@/components/AfterLogin/parts/TaskInfo/TaskInfo.vue';
 import {GetData} from "@/http";
 import {Calculate} from "@/calculate";
@@ -163,13 +166,16 @@ export default defineComponent({
 	components: {
 		TaskInfoInnerView
 	},
+	props:{
+		taskstatus:Number
+	},
     data() {
         return {
             taskdata:{},
 			companydata:[{}],
 			PageAmount:0,
 			PageNow:1,
-			selectwhich:"",
+			selectwhich:"すべて",
 			incharge:"",
 			inputdaynow:"",
 			Pjson:[{}],
@@ -216,43 +222,55 @@ export default defineComponent({
 			};
 			this.modalstatus = "op0";
 			this.loadingstatus = true;
-			console.log(searchtaskparam);
 
 			this.http.common(
 				"/api/taskinfo",
 				searchtaskparam,
 				(res:any) => {
+					console.log(res);
 					this.taskdata = res.data.taskdata;
 					this.PageAmount = res.data.taskdata.Pagecount;
 					this.modalstatus = "op1";
 					this.loadingstatus = false;
-					console.log(res);
 				}
 			);
+
 		},
         PageNationInput(e:any){
             var t = e.target as HTMLInputElement;
             if(!this.onlyint.test(t!.innerText.toString())){
                 return;
             }
-            setTimeout(() => {
-                if(t!.value != ''){
-                    this.PageNow = Number(t!.value);
-                    this.SearchTask();
-                }
-            }, 500);
+			if(t!.value != ''){
+				this.PageNow = Number(t!.value);
+				this.SearchTask();
+			}
         },
         ToAfterLogin(value:string) {
             this.nexturlstr = value;
 			this.$emit('from-taskinfo-vue', this.nexturlstr);
-        }
+        },
+		DeleteSsetting(){
+			const deadlinebeginyear = this.$refs.deadlinebeginyear as HTMLInputElement;
+			const deadlinebeginmonth = this.$refs.deadlinebeginmonth as HTMLInputElement;
+			const deadlinebegindate = this.$refs.deadlinebegindate as HTMLInputElement;
+			const deadlineendyear = this.$refs.deadlineendyear as HTMLInputElement;
+			const deadlineendmonth = this.$refs.deadlineendmonth as HTMLInputElement;
+			const deadlineenddate = this.$refs.deadlineenddate as HTMLInputElement;
+			deadlinebeginyear.value = "";
+			deadlinebeginmonth.value = "";
+			deadlinebegindate.value = "";
+			deadlineendyear.value = "";
+			deadlineendmonth.value = "";
+			deadlineenddate.value = "";
+			this.SearchTask();
+		}
 	},
     mounted(){
         this.http.common(
             "/api/taskinfo",
             {"searchTaskTitle":""},
             (res:any) => {
-				console.log(res);
 				this.companydata = res.data.companydata;
                 this.taskdata = res.data.taskdata;
 				this.PageAmount = res.data.taskdata.Pagecount;

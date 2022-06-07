@@ -39,7 +39,7 @@ class TaskInfoController extends Controller
         //検索条件を入れる
         $searchTaskTitle = "";
         if(!empty($request->searchTaskTitle)){
-            $Alltaskobj = $Alltaskobj->where(function($Alltaskobj) use ($request){
+            $Alltaskobj->where(function($Alltaskobj) use ($request){
                 $Alltaskobj
                 ->orwhere('taskname', 'LIKE', '%'.addcslashes($request->searchTaskTitle, '%_\\').'%')
                 ->orwhere('taskdescription', 'LIKE', '%'.addcslashes($request->searchTaskTitle, '%_\\').'%')
@@ -69,25 +69,23 @@ class TaskInfoController extends Controller
         $selectincharge = "";
         $selectinchargename = "";
         if(!empty($request->selectincharge)){
-            $Alltaskobj->where('username', '=', explode(':', $request->selectincharge)[0]);
             $selectincharge = explode(':', $request->selectincharge)[0];
             $selectinchargename = explode(':', $request->selectincharge)[1];
+            $Alltaskobj->where('username', '=', $selectinchargename);
         }
         $taskcount = count($Alltaskobj->get());
-
-//        $taskobj = $Alltaskobj->paginate($this->Values->pagenationNum);//初期状態で表示しておくデータ
 
         //ページネーション関係の処理
         $PerPage = $this->Values->pagenationNum;//何もない時はデフォルト値
         if(!empty($request->PerPage)){
             $PerPage = $request->PerPage;
         }
-        $PageNow = 1;
+        $PageNow = 0;
         if(!empty($request->PageNow)){
             $PageNow = (($request->PageNow - 1) * $PerPage);
         }
         $taskobj = $Alltaskobj->limit($PerPage)->offset($PageNow)->get();
-        //var_dump($taskob);
+
         //ページネーション関係の処理
 
         $taskdata = [];
@@ -101,7 +99,7 @@ class TaskInfoController extends Controller
             $taskdata[$value->id] = [
                 ['key' => 'taskname', 'labelname' => 'タスク名', 'value' => $value->taskname],
                 ['key' => 'username', 'labelname' => '担当者', 'value' => $value->username],
-                ['key' => 'groupname', 'labelname' => 'グループ', 'value' => $value->groupname],
+                //['key' => 'groupname', 'labelname' => 'グループ', 'value' => $value->groupname],
                 ['key' => 'deadline', 'labelname' => '期日', 'value' => $value->deadline],
                 ['key' => 'status', 'labelname' => 'ステータス', 'value' => $value->status],
                 ['key' => 'id', 'labelname' => 'ID', 'value' => $value->id],

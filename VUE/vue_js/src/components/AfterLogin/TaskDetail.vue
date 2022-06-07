@@ -16,11 +16,11 @@
 								<img class="d-inline-block searchicon" src="@/assets/personicon.png"> 担当者
 							</div><span class="d-inline-block float-left w-100" style="margin-top:4px;">{{taskobj.username}}</span>
 						</div>
-						<div class="col-12 col-md-6 float-left p-2">
+						<!--div class="col-12 col-md-6 float-left p-2">
 							<div class="float-left cursor">
 								<img class="d-inline-block searchicon" src="@/assets/groupicon.png"> グループ名
 							</div><span class="d-inline-block float-left w-100" style="margin-top:4px;">{{taskobj.groupname}}</span>
-						</div>
+						</div-->
 						<div class="col-12 col-md-6 float-left p-2">
 							<div class="float-left cursor">
 								<img class="d-inline-block searchicon" src="@/assets/deadlineicon.png"> 締切

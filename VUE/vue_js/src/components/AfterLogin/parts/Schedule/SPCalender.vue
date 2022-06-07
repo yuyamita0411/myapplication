@@ -232,7 +232,7 @@ export default defineComponent({
 	height:2rem;
 }
 .sleft{
-	width:40%;
+	width:41%;
 }
 .sright{
 	width:59%;

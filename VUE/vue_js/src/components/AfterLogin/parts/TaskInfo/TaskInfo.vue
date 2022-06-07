@@ -7,21 +7,21 @@
             class="gridinside d-inline-block w-100 mb-3 bg-white position-relative">
                 <div :class="`d-inline-block w-100 pt-3 pb-3 pr-2 pl-2 ${taskwrapperclass}`">
 
-                    <div class="col-12 col-md-4 float-left p-2"
+                    <div class="col-12 col-md-4 float-left"
                     v-for="eachlabel in eachtask" :key="eachlabel"
                     >
-                        <div class="tooltip-top float-left cursor" :data-tooltip="eachlabel.labelname"
+                        <div class="tooltip-top float-left cursor mb-3" :data-tooltip="eachlabel.labelname"
                         v-if="eachlabel.key != 'id' && eachlabel.key != 'userid' && eachlabel.key != 'startdate'">
                             <img @mouseover="taskwrapperclass = ''" @mouseleave="taskwrapperclass = 'overflow-hidden'" v-if="eachlabel.key == 'taskname'" class="searchicon d-inline-block" src="@/assets/taskicon.png">
                             <img @mouseover="taskwrapperclass = ''" @mouseleave="taskwrapperclass = 'overflow-hidden'" v-if="eachlabel.key == 'username'" class="searchicon d-inline-block" src="@/assets/personicon.png">
-                            <img @mouseover="taskwrapperclass = ''" @mouseleave="taskwrapperclass = 'overflow-hidden'" v-if="eachlabel.key == 'groupname'" class="searchicon d-inline-block" src="@/assets/groupicon.png">
+                            <!--img @mouseover="taskwrapperclass = ''" @mouseleave="taskwrapperclass = 'overflow-hidden'" v-if="eachlabel.key == 'groupname'" class="searchicon d-inline-block" src="@/assets/groupicon.png"-->
                             <img @mouseover="taskwrapperclass = ''" @mouseleave="taskwrapperclass = 'overflow-hidden'" v-if="eachlabel.key == 'deadline'" class="searchicon d-inline-block" src="@/assets/deadlineicon.png">
                             <img @mouseover="taskwrapperclass = ''" @mouseleave="taskwrapperclass = 'overflow-hidden'" v-if="eachlabel.key == 'status'" class="searchicon d-inline-block" src="@/assets/statusicon.png">
                         </div>
-                        <span class="d-inline-block position-absolute font-lg-12 col-10"
+                        <span class="twrapper d-inline-block position-absolute font-lg-12 col-10 pl-1"
                         v-if="eachlabel.key != 'id' && eachlabel.key != 'userid' && eachlabel.key != 'startdate' && eachlabel.key != 'deadline'"
                         >{{eachlabel.value}}</span>
-                        <span class="d-inline-block position-absolute font-lg-12 col-10"
+                        <span class="twrapper d-inline-block position-absolute font-lg-12 col-10 pl-1"
                         v-if="eachlabel.key == 'deadline'"
                         >{{RFdate(eachlabel.value.split(' ')[0])}}</span>
                     </div>
@@ -31,8 +31,8 @@
                         <div class="col-12 col-md-6 col-lg-2 float-left pl-0 pr-0">
                             <router-link
                             class="BgAccentColor text-white cursor p-2 p-lg-1 d-inline-block text-center mb-0 float-left w-100"
-                            :data-taskid="eachtask[5].value"
-                            :to="`/taskdetail/${eachtask[5].value}`"
+                            :data-taskid="eachtask[4].value"
+                            :to="`/taskdetail/${eachtask[4].value}`"
                             >詳細ページへ</router-link>
                         </div>
                         <div class="d-inline-block col-12 float-left pl-0 pr-0 mt-2">
@@ -40,7 +40,7 @@
                                 <img class="d-inline-block w-100" :id="`SendMsgUserButton-${eachtask[6].value}`" src="">
                             </div>
                             <span class="font-lg-12 d-inline-block pt-2 pb-2 text-right loat-left">
-                            依頼日: <span class="FontAccent">{{RFdate(eachtask[7].value.split(' ')[0])}}</span></span>
+                            依頼日: <span class="FontAccent">{{RFdate(eachtask[6].value.split(' ')[0])}}</span></span>
                         </div>
                     </div>
                 </div>
@@ -59,7 +59,8 @@ export default defineComponent({
     props: {
         taskdata: Object,
         modalstatus:String,
-        loadingstatus:Boolean
+        loadingstatus:Boolean/*,
+        taskstatus:Boolean*/
     },
     components: {
         LoginIconview
@@ -70,9 +71,14 @@ export default defineComponent({
             taskwrapperclass:'overflow-hidden'
         }
     },
+    /*updated(){
+        if(this.taskstatus == true){
+            console.log("task added!!");
+        }
+    },*/
     methods:{
         RFdate(str:string){
-            return `${new Date(str).getFullYear()}/${new Date(str).getMonth()}/${new Date(str).getDate()}`;
+            return `${new Date(str).getFullYear()}/${new Date(str).getMonth()+1}/${new Date(str).getDate()}`;
         }
     }
 });
@@ -81,5 +87,9 @@ export default defineComponent({
 .calenderloading {
 	position: absolute;
 	transform: scale(0.7);
+}
+.twrapper{
+    height:2rem;
+    line-height:2rem;
 }
 </style>

@@ -41,7 +41,7 @@
                                         name="sendTaskTitle"
                                         ref="sendTaskTitle"
                                         type="text" class="w-100 d-inline-block mb-4">
-                                        <div class="w-100 d-inline-block mb-2">メッセージ <small id="sendTaskMsgAlert" class="red" ref="sendTaskMsgAlert"></small></div>
+                                        <div class="w-100 d-inline-block mb-2">概要 <small id="sendTaskMsgAlert" class="red" ref="sendTaskMsgAlert"></small></div>
                                         <textarea
                                         ref="sendTaskMsg"
                                         name="sendTaskMsg"
@@ -219,6 +219,22 @@ export default defineComponent({
                         modal.classList.remove('AddTaskModalopen');
 
                         this.mfstyle = 'left: 0%; transition:all 0.25s;';
+
+                        //同じページを開いている時だけ再レンダリング
+                        if(this.$route.path == '/taskinfo'){
+                            this.$emit('ReRender', true);
+                        }
+
+                        sendTaskTitle.value = '';
+                        selectincharge.value = '';
+                        sendTaskMsg.value = '';
+                        deadlineyear.value = '';
+                        deadlinemonth.value = '';
+                        deadlinedate.value = '';
+                        sendTaskTitleAlert.innerText = '';
+                        sendTaskMsgAlert.innerText = '';
+                        DateAlert.innerText = '';
+
                     }, 1000);
                 }
             );
