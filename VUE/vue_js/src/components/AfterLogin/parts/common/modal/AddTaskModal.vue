@@ -147,6 +147,7 @@ export default defineComponent({
             mfstyle:"left: 0%; transition:all 0.25s;"
         }
     },
+    emits: ['ReRender'],
     methods:{
         AddAddTask(){
             const sendTaskTitle = this.$refs.sendTaskTitle as HTMLInputElement;
