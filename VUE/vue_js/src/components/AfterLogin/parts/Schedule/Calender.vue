@@ -75,6 +75,7 @@
     </div>
 
     <ScheduleModal
+    @ReRender="toggle"
     :ScheduleTagData="ScheduleTagData"
     :modaltitle="modaltitle"
     />
@@ -99,6 +100,7 @@ export default defineComponent({
         MyScheduleData: Object,
         ScheduleData: Object
 	},
+    emits: ['ReRender'],
     data() {
         return {
             ScheduleTagData:{},
@@ -106,7 +108,8 @@ export default defineComponent({
             modalclass:"ScheduleModalclose",
             modalcoverclass:"ScheduleModalcoveropen",
             calculate:new Calculate(),
-            dformat:new Dataformat()
+            dformat:new Dataformat(),
+            showChild: true
         };
     },
     components: {
@@ -162,6 +165,9 @@ export default defineComponent({
             document.getElementById('ScheduleModal')!.classList.remove('ScheduleModalclose');
             document.getElementById('ScheduleModal')!.classList.add('ScheduleModalopen');
 
+        },
+        toggle(value:boolean) {
+            this.$emit('ReRender', value);
         }
     }
 });

@@ -101,6 +101,7 @@
 	</div>
 
     <ScheduleModal
+	@ReRender="toggle"
     :ScheduleTagData="ScheduleTagData"
     :modaltitle="modaltitle"
     />
@@ -126,6 +127,7 @@ export default defineComponent({
 		DweekArr: Object,
 		Daycolor: Object
 	},
+	emits: ['ReRender'],
     data() {
         return {
 			ScheduleTagData:{},
@@ -188,6 +190,9 @@ export default defineComponent({
             document.getElementById('ScheduleModal')!.classList.remove('ScheduleModalclose');
             document.getElementById('ScheduleModal')!.classList.add('ScheduleModalopen');
 
+        },
+        toggle(value:boolean) {
+            this.$emit('ReRender', value);
         }
     }
 });

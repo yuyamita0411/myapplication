@@ -117,6 +117,7 @@ export default defineComponent({
         cMclass:String,
         cMCoverclass:String
     },
+    emits: ['ReRender'],
     data() {
         return {
             http:new GetData(),
@@ -163,6 +164,8 @@ export default defineComponent({
                         modal.classList.remove('ScheduleModalopen');
 
                         this.mfstyle = 'left: 0%; transition:all 0.25s;';
+
+                        this.$emit('ReRender', true);
                     }, 1000);
                 }
             );

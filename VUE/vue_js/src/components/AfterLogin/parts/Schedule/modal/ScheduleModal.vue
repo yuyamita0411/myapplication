@@ -320,7 +320,8 @@ export default defineComponent({
 		modaltitle:String,
 		modalclass:String,
 		modalcoverclass:String
-	},	
+	},
+	emits: ['ReRender'],
     data() {
 		const adm:object[] = [],
 		su:object[] = [],
@@ -469,7 +470,7 @@ export default defineComponent({
 			});
 		},
 		AddSchedule(){
-            //バリデーションの処理
+			//バリデーションの処理
 			//バックエンドにデータを送る
 
 			//送信用にデータを整える
@@ -531,12 +532,15 @@ export default defineComponent({
 					endpoint,
 					addmemberobj,
 					(res:any) => {
-						console.log(res);
 						this.mfstyle = 'left: -100%; transition:all 0.25s;';
 						setTimeout(() => {
 							this.ModalMotion();
 							this.mfstyle = 'left: 0%; transition:all 0.25s;';
+							
 							this.$router.push('/schedule');
+
+							this.$emit('ReRender', false);
+
 						}, 1000);
 					}
 				);

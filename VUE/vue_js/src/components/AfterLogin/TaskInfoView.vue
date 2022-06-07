@@ -227,7 +227,6 @@ export default defineComponent({
 				"/api/taskinfo",
 				searchtaskparam,
 				(res:any) => {
-					console.log(res);
 					this.taskdata = res.data.taskdata;
 					this.PageAmount = res.data.taskdata.Pagecount;
 					this.modalstatus = "op1";

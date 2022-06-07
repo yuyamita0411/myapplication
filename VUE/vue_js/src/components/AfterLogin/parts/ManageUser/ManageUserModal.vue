@@ -175,9 +175,7 @@ export default defineComponent({
                                 "mail_address":devidedata[key][key2][1],
                             },
                             (res:any) => {
-                                console.log(res);
                                 this.loadingstatus = false;
-                                //this.loadingtxt = '取り込みが完了しました。';
                                 this.loadingtxt = `${roupcount}`;
                             },
                             (res:any) => {

@@ -141,6 +141,7 @@
                                 <!-- コンポーネント化 -->
                                 <CalenderView
                                 v-if="WhichCstyle == 'pc'"
+								@ReRender="toggle"
                                 :date = "date"
                                 :searchparam = "searchparam"
                                 :loadingstatus = "loadingstatus"
@@ -152,6 +153,7 @@
 
                                 <SPCalenderView
                                 v-if = "WhichCstyle == 'sp'"
+								@ReRender="toggle"
                                 :date = "date"
                                 :searchparam = "searchparam"
                                 :loadingstatus = "loadingstatus"
@@ -197,6 +199,7 @@ import {Calculate} from "@/calculate";
 
 export default defineComponent({
 	name: 'ScheduleView',
+	emits: ['ReRender'],
 	data() {
 		return {
 			AddedUserList:{},
@@ -219,7 +222,8 @@ export default defineComponent({
 			onlyint:/^[0-9]*$/,
 			pagenation:'',
 			Pjson:[{}],
-			calculate:new Calculate()
+			calculate:new Calculate(),
+			showChild: true
 		};
 	},
 	components: {
@@ -265,7 +269,6 @@ export default defineComponent({
 				"/api/schedule/me/get",
 				this.searchparam,
 				(res:any) => {
-					console.log(res);
 					this.MyScheduleData = res.data;
 				}
 			);
@@ -274,7 +277,6 @@ export default defineComponent({
 				"/api/schedule",
 				this.searchparam,
 				(res:any) => {
-					//console.log(res);
 					this.ScheduleData = res.data;
 					this.PageAmount = res.data.PageAmount[0];
 
@@ -296,6 +298,9 @@ export default defineComponent({
                     this.MakeSearchParam();
                 }
             }, 500);
+        },
+        toggle(value:boolean) {
+            this.$emit('ReRender', value);
         }
 	},
 	mounted(){

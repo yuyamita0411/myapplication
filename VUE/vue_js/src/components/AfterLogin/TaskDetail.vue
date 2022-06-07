@@ -96,7 +96,7 @@
 			</div>
 		</div>
 	</div>
-    <TaskDetailModal />
+    <TaskDetailModal @ReRender="toggle" />
 </template>
 
 <script lang="ts">
@@ -107,6 +107,7 @@ import TaskDetailModal from '@/components/AfterLogin/parts/TaskDetail/modal/Task
 
 export default defineComponent({
 	name: 'TaskDetailView',
+    emits: ['ReRender'],
     data() {
         return {
             http:new GetData(),
@@ -116,7 +117,8 @@ export default defineComponent({
             commentloadingstatus:false,
             loadstatus:'op0',
             commentloadstatus:'op1',
-            taskidsend:''
+            taskidsend:'',
+            showChild: true
         }
     },
     components: {
@@ -131,8 +133,6 @@ export default defineComponent({
                 `/api/taskdetail/${paramval}`,
                 {},
                 (res:any) => {
-                    console.log(res.data.taskobj);
-                    console.log(res.data.taskmsgobj);
                     this.taskobj = res.data.taskobj[0];
                     this.taskmsgobj = res.data.taskmsgobj;
 
@@ -170,6 +170,9 @@ export default defineComponent({
         },
         RFdate(str:string){
             return `${new Date(str).getFullYear()}/${new Date(str).getMonth()}/${new Date(str).getDate()}`;
+        },
+        toggle(value:boolean) {
+            this.$emit('ReRender', value);
         }
     },
     mounted(){

@@ -71,11 +71,6 @@ export default defineComponent({
             taskwrapperclass:'overflow-hidden'
         }
     },
-    /*updated(){
-        if(this.taskstatus == true){
-            console.log("task added!!");
-        }
-    },*/
     methods:{
         RFdate(str:string){
             return `${new Date(str).getFullYear()}/${new Date(str).getMonth()+1}/${new Date(str).getDate()}`;

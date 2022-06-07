@@ -107,9 +107,6 @@ import AddTaskModal from '@/components/AfterLogin/parts/common/modal/AddTaskModa
 
 export default defineComponent({
     name: 'AfterLoginView',
-    setup(){
-        console.log("setup!!");
-    },
     data() {
         return {
             username:"",

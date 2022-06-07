@@ -239,7 +239,6 @@ export default defineComponent({
                 'companyindustry':CINDElement.value
             })
             .then(response => {
-                console.log(response);
                 this.nonamealert = response.data.EmptyCheck.name;
                 this.noemailalert = response.data.EmptyCheck.email;
                 this.nopasswordalert = response.data.EmptyCheck.password;
@@ -280,7 +279,6 @@ export default defineComponent({
             .then(response => {
                 this.MailAddressAlert = response.data.EmptyCheck.mail_address;
                 this.PasswordAlert = response.data.EmptyCheck.password;
-                console.log("ee1");
             })
             .then(() => {
                 return apiClient.post(

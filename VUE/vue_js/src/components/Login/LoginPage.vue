@@ -112,7 +112,6 @@ export default defineComponent({
                 this.AlertshowClass = 'AlertShow';
             })
             .catch(error => {
-                console.log(error);
                 this.mailorpasswrong = error.data!.WrongMsg;
             });
         },

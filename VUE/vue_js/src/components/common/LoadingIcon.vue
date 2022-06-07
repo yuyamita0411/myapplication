@@ -111,11 +111,6 @@ export default defineComponent({
             }
         }, 100);
         
-    },
-    methods: {
-        LoadingMotion(){
-            console.log("loaded!!");
-        }
     }
 });
 </script>
