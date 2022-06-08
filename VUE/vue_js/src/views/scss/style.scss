@@ -386,7 +386,7 @@ div[class^="Modal"]{
     height:15px;
 }
 .p-news-list__item__data__line{
-    height: 14px;
+    height: 24px;
 }
 
 .iconimg{
@@ -1089,9 +1089,9 @@ input[name="newtore"]:checked + label{
     .maincolumn{
         width: calc(100% - 10rem);
     }
-    .p-news-list__item__data{
+    /*.p-news-list__item__data{
         height: 30px;
-    }
+    }*/
     .accountpersonicon{
         height: 2rem;
     }

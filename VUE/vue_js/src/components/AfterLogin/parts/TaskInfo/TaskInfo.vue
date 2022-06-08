@@ -1,50 +1,45 @@
 <template>
     <div>
     <LoginIconview class="calenderloading w-100 d-inline-block text-center position-relative" v-if="loadingstatus == true" />
-        <div :class="`w-100 d-inline-block ${modalstatus}`" id="TaskDisplayArea">
-            <router-link
-            v-for="eachtask in taskdata.taskdata" :key="eachtask"
-            class="tasklink d-inline-block w-100 tseparate float-left text-decoration-none"
-            :to="`/taskdetail/${eachtask[4].value}`">
-                <div :class="`d-inline-block w-100 pt-2 pb-2 pl-1 pr-1 float-left ${taskwrapperclass}`">
-
-                    <div :class="`${eachlabel.key == 'taskname' ? 'float-left pr-0 pl-0 mb-2 mb-md-0' : 'd-none'}`"
-                    v-for="eachlabel in eachtask" :key="eachlabel"
-                    >
-                        <div v-if="eachlabel.key == 'taskname'" class="d-inline-block w-100"><span class="taskname">○</span> {{eachlabel.value}}</div>
-                    </div>
-
-                    <div class="float-right ml-2"
-                    v-for="eachlabel in eachtask" :key="eachlabel"
-                    >
-                        <div
-                        :class="`${eachlabel.key != 'id' && eachlabel.key != 'userid' && eachlabel.key != 'startdate' && eachlabel.key != 'taskname' ? 'tooltip-top float-left cursor' : 'd-none'}`"
-                        :data-tooltip="eachlabel.labelname"
-                        v-if="eachlabel.key != 'id' && eachlabel.key != 'userid' && eachlabel.key != 'startdate' && eachlabel.key != 'taskname'">
-                            <img
-                            @mouseover="taskwrapperclass = ''"
-                            @mouseleave="taskwrapperclass = 'overflow-hidden'"
-                            v-if="eachlabel.key == 'username'" class="searchicon d-inline-block"
-                            src="@/assets/personicon.png">
-                            <img
-                            @mouseover="taskwrapperclass = ''"
-                            @mouseleave="taskwrapperclass = 'overflow-hidden'"
-                            v-if="eachlabel.key == 'deadline'" class="searchicon d-inline-block"
-                            src="@/assets/deadlineicon.png">
-                            <img
-                            @mouseover="taskwrapperclass = ''"
-                            @mouseleave="taskwrapperclass = 'overflow-hidden'"
-                            v-if="eachlabel.key == 'status'" class="searchicon d-inline-block"
-                            src="@/assets/statusicon.png">
-                            <small
-                            @mouseover="taskwrapperclass = ''"
-                            @mouseleave="taskwrapperclass = 'overflow-hidden'"
-                            class="ml-1 font12"
-                            >{{`${eachlabel.key == 'deadline' ? RFdate(eachlabel.value.split(' ')[0]) : eachlabel.value}`}}</small>
+        <div :class="`taskinfowrapper gridinside w-100 bg-white pt-5 pr-3 pl-3 pb-3 position-relative text-center ${modalstatus}`">
+            <img class="clipicon position-absolute" src="@/assets/clipicon.png">
+            <div id="" :class="`bg-white`">
+                <article
+                v-for="eachtask in taskdata.taskdata" :key="eachtask"
+                class="p-news-list__item js-inter fadeInLeft is-invasion p-2 mb-3 position-relative text-left d-inline-block w-100">
+                    <div class="router-link-active router-link-exact-active d-md-flex cursor">
+                        <div class="p-news-list__item__data d-inline-block w-100 pb-0">
+                            <p class="mb-0 d-inline-block float-left tooltip-top mr-3"
+                            :data-tooltip="eachtask[2].labelname"
+                            >
+                                <img
+                                class="searchicon d-inline-block mr-1"
+                                src="@/assets/deadlineicon.png">
+                                <small>{{RFdate(eachtask[2].value.split(' ')[0])}}</small>
+                            </p>
+                            <div class="p-news-list__item__data__line d-inline-block float-left"></div>
+                            <p class="p-news-list__item__data__category mb-0 d-inline-block float-left">{{eachtask[0].value}}</p>
                         </div>
+                        <p class="mb-0 d-inline-block col-3 col-md-2 mr-0 pr-0 pl-0 float-left tooltip-top"
+                        :data-tooltip="eachtask[3].labelname"
+                        >
+                            <img
+                            class="searchicon d-inline-block"
+                            src="@/assets/personicon.png">
+                            <small>{{eachtask[3].value}}</small>
+                        </p>
+                        <p class="mb-0 mr-0 col-3 col-md-1 pr-0 pl-0 float-left tooltip-top"
+                        :data-tooltip="eachtask[1].labelname"
+                        >
+                            <img
+                            class="searchicon d-inline-block"
+                            src="@/assets/statusicon.png">
+                            <small>{{eachtask[1].value}}</small>
+                        </p>
+                        <router-link :to="`/taskdetail/${eachtask[4].value}`" class="BgAccentColor text-white text-center mb-0 mr-0 col-3 col-md-1 pr-0 pl-0 float-right"><small>詳細へ</small></router-link>
                     </div>
-                </div>
-            </router-link>
+                </article>
+            </div>
         </div>
     </div>
 </template>
@@ -101,5 +96,8 @@ export default defineComponent({
 }
 .taskname{
     color:#0069d9;
-}
+}/*
+.taskinfowrapper{
+    min-height:40vh;
+}*/
 </style>
