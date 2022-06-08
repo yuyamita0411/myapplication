@@ -3,7 +3,7 @@
 namespace App\module;
 
 class Values{
-    public $pagenationNum = 5;//タスクページ
+    public $pagenationNum = 10;//タスクページ
     public $GroupPageNum = 5;//グループページ
 
     static $MailEmpty = "メールアドレスを入力してください。";

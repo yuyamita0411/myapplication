@@ -98,10 +98,9 @@ class TaskInfoController extends Controller
         foreach ($taskobj as $key => $value) {
             $taskdata[$value->id] = [
                 ['key' => 'taskname', 'labelname' => 'タスク名', 'value' => $value->taskname],
-                ['key' => 'username', 'labelname' => '担当者', 'value' => $value->username],
-                //['key' => 'groupname', 'labelname' => 'グループ', 'value' => $value->groupname],
-                ['key' => 'deadline', 'labelname' => '期日', 'value' => $value->deadline],
                 ['key' => 'status', 'labelname' => 'ステータス', 'value' => $value->status],
+                ['key' => 'deadline', 'labelname' => '期日', 'value' => $value->deadline],
+                ['key' => 'username', 'labelname' => '担当者', 'value' => $value->username],
                 ['key' => 'id', 'labelname' => 'ID', 'value' => $value->id],
                 ['key' => 'userid', 'labelname' => 'USERID', 'value' => $value->userid],
                 ['key' => 'startdate', 'labelname' => '依頼日', 'value' => $value->startdate]

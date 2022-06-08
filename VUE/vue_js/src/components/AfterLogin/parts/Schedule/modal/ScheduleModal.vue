@@ -21,11 +21,13 @@
 							</div>
 							<div class="m-auto" id="">
 								<p class="col-12">{{ScheduleTagData.startdate}}</p>
-								<div class="col-12 d-flex">
-									<img
-									class="searchicon cursor p-1 mr-3 tooltip-top"
-									data-tooltip="時刻を設定する"
-									src="@/assets/timeicon.png">
+								<div class="col-12 d-flex"
+								>
+									<div class="tooltip-right" data-tooltip="時刻を設定する">
+										<img
+										class="l2rem cursor p-1 mr-3"
+										src="@/assets/timeicon.png">
+									</div>
 									<div class="w-100 text-center pr-2 position-relative">
 										<div
 										@click="EditTime($event),

@@ -3,43 +3,38 @@
     <LoginIconview class="dashboardloading w-100 d-inline-block text-center" v-if="loadingstatus == true" />
 		<div :class="`${loadstatus} contentwraper w-100 d-inline-block pt-3 pb-4 pl-0 pr-0 mt-3`">
 			<div class="pt-3 pb-3 w-100">
-				<div class="gridinside pt-3 pb-3 bg-white position-relative" id="AddressArea">
+				<div class="gridinside pt-3 bg-white position-relative" id="AddressArea">
 					<img class="clipicon position-absolute" src="@/assets/clipicon.png">
 					<div class="col-12 p-2">
                     
 						<h4 @click="SearchTask">{{taskobj.taskname}}</h4>
-						<p>{{taskobj.taskdescription}}</p>
+						<p class="mb-0">{{taskobj.taskdescription}}</p>
 					</div>
-					<div class="d-inline-block w-100 position-relative">
-						<div class="col-12 col-md-6 float-left p-2">
-							<div class="float-left cursor">
-								<img class="d-inline-block searchicon" src="@/assets/personicon.png"> 担当者
-							</div><span class="d-inline-block float-left w-100" style="margin-top:4px;">{{taskobj.username}}</span>
-						</div>
-						<!--div class="col-12 col-md-6 float-left p-2">
-							<div class="float-left cursor">
-								<img class="d-inline-block searchicon" src="@/assets/groupicon.png"> グループ名
-							</div><span class="d-inline-block float-left w-100" style="margin-top:4px;">{{taskobj.groupname}}</span>
-						</div-->
-						<div class="col-12 col-md-6 float-left p-2">
-							<div class="float-left cursor">
-								<img class="d-inline-block searchicon" src="@/assets/deadlineicon.png"> 締切
-							</div><span class="d-inline-block float-left w-100" style="margin-top:4px;">{{taskobj.deadline}}</span>
-						</div>
-						<div class="col-12 col-md-6 float-left p-2">
-							<div class="float-left cursor">
-								<img class="d-inline-block searchicon" src="@/assets/statusicon.png"> ステータス
-							</div><span class="d-inline-block float-left w-100" style="margin-top:4px;">{{taskobj.status}}</span>
+					<div class="cdbottom d-inline-block w-100">
+						<div class="col-12 float-left p-2">
+							<img class="d-inline-block searchicon float-left" src="@/assets/personicon.png">
+                            <span class="d-inline-block float-left font-weight-bold ml-1">担当者</span>
+							<span class="d-inline-block float-left ml-2">{{taskobj.username}}</span>
 						</div>
 						<div class="col-12 float-left p-2">
-							<p class="mb-1">
+							<img class="d-inline-block searchicon float-left" src="@/assets/deadlineicon.png">
+                            <span class="d-inline-block float-left font-weight-bold ml-1">締切</span>
+							<span class="d-inline-block float-left ml-2">{{taskobj.deadline}}</span>
+						</div>
+						<div class="col-12 col-md-6 float-left p-2">
+							<img class="d-inline-block searchicon float-left" src="@/assets/statusicon.png">
+                            <span class="d-inline-block float-left font-weight-bold ml-1">ステータス</span>
+							<span class="d-inline-block float-left ml-2">{{taskobj.status}}</span>
+						</div>
+						<div class="col-12 float-left pt-2 pl-2 pr-2">
+							<p class="mb-0">
                                 <small>依頼者: 
                                     <span class="FontAccent">
                                     {{taskobj.fromusername}}
                                     </span>
                                 </small>
                             </p>
-							<p class="mb-1">
+							<p class="mb-0">
                                 <small>依頼日: 
                                     <span class="FontAccent">
                                     {{taskobj.startdate}}
@@ -56,7 +51,11 @@
                             <div class="d-inline-block w-100 mb-3">
                                 <input
                                 @input="SearchComment($event)"
-                                :class="` w-100 searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none float-left pl-2`"
+                                :class="
+                                `w-100 searchbar bg-brightgray border-top-left-radius-1rem
+                                border-bottom-left-radius-1rem border-top-right-radius-1rem
+                                border-bottom-right-radius-1rem b-none float-left pl-2 pt-1 pb-1`
+                                "
                                 id="TaskCommentSearchArea"
                                 placeholder="キーワードを入力してください。"
                                 type="text">
@@ -133,6 +132,11 @@ export default defineComponent({
                 `/api/taskdetail/${paramval}`,
                 {},
                 (res:any) => {
+                    console.log("res.data.taskobj[0]");
+
+                    res.data.taskobj[0].startdate = res.data.taskobj[0].startdate.replace("-", "/").replace("-", "/").split(' ')[0];
+                    res.data.taskobj[0].deadline= res.data.taskobj[0].deadline.replace("-", "/").replace("-", "/").split(' ')[0];
+
                     this.taskobj = res.data.taskobj[0];
                     this.taskmsgobj = res.data.taskmsgobj;
 
@@ -182,41 +186,44 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-    #AddressArea{
-        //border: double 3px #0069d9;
-        border: solid 10px rgb(0, 0, 0, 0.05);
-    }
-    .commenttag{
-        position: relative;
-        padding: 20px;
-        background-color: #ffff;
-        border-radius: 10px;
-        border: solid 1px rgb(0, 0, 0, 0.11);
-    }
+#AddressArea{
+    //border: double 3px #0069d9;
+    border: solid 10px rgb(0, 0, 0, 0.05);
+}
+.commenttag{
+    position: relative;
+    padding: 20px;
+    background-color: #ffff;
+    border-radius: 10px;
+    border: solid 1px rgb(0, 0, 0, 0.11);
+}
 
-    .commenttag::before{
-        content: '';
-        position: absolute;
-        display: block;
-        width: 0;
-        height: 0;
-        left: 21.5px;
-        bottom: -20px;
-        border-top: 20px solid rgb(0, 0, 0, 0.11);
-        border-right: 0px solid transparent;
-        border-left: 26px solid transparent;
-    }
+.commenttag::before{
+    content: '';
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    left: 21.5px;
+    bottom: -20px;
+    border-top: 20px solid rgb(0, 0, 0, 0.11);
+    border-right: 0px solid transparent;
+    border-left: 26px solid transparent;
+}
 
-    .commenttag::after{
-        content: '';
-        position: absolute;
-        display: block;
-        width: 0;
-        height: 0;
-        left: 23.5px;
-        bottom: -18px;
-        border-top: 18px solid #fff;
-        border-right: 0px solid transparent;
-        border-left: 23px solid transparent;
-    }
+.commenttag::after{
+    content: '';
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    left: 23.5px;
+    bottom: -18px;
+    border-top: 18px solid #fff;
+    border-right: 0px solid transparent;
+    border-left: 23px solid transparent;
+}
+.cdbottom{
+    border-top:solid 1px rgba(0, 0, 0, 0.1);
+}
 </style>

@@ -1,131 +1,145 @@
 <template>
 	<div class="shadowwrapper m-auto pl-2 pr-2 pl-lg-0 pr-lg-0">
 		<div class="contentwraper w-100 d-inline-block pt-3 pb-5 pl-0 pr-0 mt-3">
-			<h5 class="mainfontcolor mb-3 w-100 d-inline-block">タスクを検索</h5>
-			<div class="d-inline-block w-100 overflow-hidden" method="get">
-				<div class="mb-3 w-100 d-inline-block">
-					<div class="tablediv tabledivleft col-6 col-md-6 float-left pl-2">
-						担当者名
+			<div class="TSwrapper d-inline-block w-100 mb-3 pt-2 pb-2 pl-1 pr-1">
+				<div class="sorttask col-12 col-md-auto float-left pl-0 pr-0 mb-2 mb-md-0" id="inchargewrapper">
+
+					<div class="d-inline-block cursor pl-1 pr-1 tooltip-top"
+					data-tooltip="担当者でフィルタリング"
+					id=""
+					@click="
+					this.$refs.chooseincharge.classList.toggle('inchargemenuclose'),
+					this.$refs.chooseincharge.classList.toggle('inchargemenuopen')
+					"
+					>
+						<img
+						class="searchicon d-inline-block"
+						src="@/assets/personicon.png"> <small class="" id="selectwhich">{{selectwhich}}</small>
 					</div>
-					<div class="tablediv bg-white col-6 col-md-6 float-right pl-0 pr-0" id="inchargewrapper">
-						<div class="w-100 d-inline-block cursor text-white pl-2"
-						id="selectincharge"
+					<div class="inchargemenu d-inline-block position-absolute inchargemenuclose"
+					ref="chooseincharge">
+						<div
+						data-incharge=""
 						@click="
 						this.$refs.chooseincharge.classList.toggle('inchargemenuclose'),
-						this.$refs.chooseincharge.classList.toggle('inchargemenuopen')
+						this.$refs.chooseincharge.classList.toggle('inchargemenuopen'),
+						selectwhich = $event.target.innerText,
+						incharge = '',
+						SearchTask()
 						"
+						class="w-100 d-inline-block cursor pl-2 inchargeinner"
+						ref="incharge"
 						>
-							担当者を選択する <small class="text-white" id="selectwhich">{{selectwhich}}</small>
+							すべて
 						</div>
-						<div class="inchargemenu w-100 d-inline-block position-absolute inchargemenuclose"
-						ref="chooseincharge">
-							<div
-							data-incharge=""
-							@click="
-							this.$refs.chooseincharge.classList.toggle('inchargemenuclose'),
-							this.$refs.chooseincharge.classList.toggle('inchargemenuopen'),
-							selectwhich = $event.target.innerText,
-							incharge = '',
-							SearchTask()
-							"
-							class="w-100 d-inline-block cursor pl-2 inchargeinner"
-							ref="incharge"
-							>
-								すべて
-							</div>
-							<div
-							v-for="eachcdata in companydata" :key="eachcdata"
-							:data-incharge="`${eachcdata.id}:${eachcdata.name}`"
-							@click="
-							this.$refs.chooseincharge.classList.toggle('inchargemenuclose'),
-							this.$refs.chooseincharge.classList.toggle('inchargemenuopen'),
-							selectwhich = $event.target.innerText,
-							incharge = `${eachcdata.id}:${eachcdata.name}`,
-							SearchTask()
-							"
-							class="w-100 d-inline-block cursor pl-2 inchargeinner"
-							ref="incharge"
-							>
-								{{eachcdata.name}}
-							</div>
+						<div
+						v-for="eachcdata in companydata" :key="eachcdata"
+						:data-incharge="`${eachcdata.id}:${eachcdata.name}`"
+						@click="
+						this.$refs.chooseincharge.classList.toggle('inchargemenuclose'),
+						this.$refs.chooseincharge.classList.toggle('inchargemenuopen'),
+						selectwhich = $event.target.innerText,
+						incharge = `${eachcdata.id}:${eachcdata.name}`,
+						SearchTask()
+						"
+						class="w-100 d-inline-block cursor pl-2 inchargeinner"
+						ref="incharge"
+						>
+							{{eachcdata.name}}
 						</div>
 					</div>
 				</div>
-				<div class="mb-3 w-100 d-inline-block">
 
-					<div class="d-flex tablediv bg-white col-12 col-md-5 float-md-left mb-4 pl-0">
-						<input class="w-100 d-inline-block" name="deadlinebeginyear" type="text" value=""
-						ref="deadlinebeginyear"
-						@input="SearchTask()"
-						>
-						<div class="text-center">
-							年
-						</div>
-						<input class="w-100 d-inline-block" name="deadlinebeginmonth" type="text" value=""
-						ref="deadlinebeginmonth"
-						@input="SearchTask()"
-						>
-						<div class="text-center">
-							月
-						</div>
-						<input class="w-100 d-inline-block" name="deadlinebegindate" type="text" value=""
-						ref="deadlinebegindate"
-						@input="SearchTask()"
-						>
-						<div class="text-center">
-							日
-						</div>
-					</div>
-					<div class="tablediv col-12 col-md-1 float-md-left d-inline-block pl-2">
-						〜
-					</div>
-					<div class="d-flex tablediv bg-white col-12 col-md-5 float-md-left mb-4 pl-0">
-						<input class="w-100 d-inline-block" name="deadlineendyear" type="text" value=""
-						ref="deadlineendyear"
-						@input="SearchTask()"
-						>
-						<div class="text-center">
-							年
-						</div>
-						<input class="w-100 d-inline-block" name="deadlineendmonth" type="text" value=""
-						ref="deadlineendmonth"
-						@input="SearchTask()"
-						>
-						<div class="text-center">
-							月
-						</div>
-						<input class="w-100 d-inline-block" name="deadlineenddate" type="text" value=""
-						ref="deadlineenddate"
-						@input="SearchTask()"
-						>
-						<div class="text-center">
-							日
-						</div>
-					</div>
-					<div class="float-right float-lg-left d-inline-block pl-2">
-						<img
-						@click="DeleteSsetting"
-						class="searchicon cursor mt-1 p-1 tooltip-top"
-						data-tooltip="入力を取り消す"
-						id="delete_date_area" src="@/assets/modalclosebutton.png">
-					</div>
-				</div>
-				<div class="mb-3 d-flex w-100">
-					<div class="pr-3 w-100">
+				<div class="d-flex col-12 col-md-3 float-left pr-0 pl-0 ml-0 ml-md-3 mb-2 mb-md-0 tooltip-top cursor"
+				data-tooltip="タスク名で検索"
+				>
+					<div class="w-100">
 						<div class="searchbarwrapper mt-0">
-							<input class="w-100 searchbar bg-brightgray border-top-left-radius-1rem
+							<input class="w-100 sorttask bg-white border-top-left-radius-1rem
 							border-bottom-left-radius-1rem border-top-right-radius-1rem
 							border-bottom-right-radius-1rem b-none float-left pl-2" name="searchTaskTitle"
-							placeholder="キーワードを入力してください。" type="text" value=""
+							placeholder="タスク名" type="text" value=""
 							ref="searchTaskTitle"
 							@input="SearchTask()"
 							>
 						</div>
 					</div>
-					<img class="searchicon cursor" src="@/assets/SearchGlassIcon.png">
+					<!--img class="l2rem cursor p-1" src="@/assets/SearchGlassIcon.png"-->
+				</div>
+
+				<div class="
+				sorttask col-12 col-md-6 float-left float-md-right pr-1 pl-1 bg-white
+				mb-1 mb-md-0
+				border-top-left-radius-1rem
+				border-bottom-left-radius-1rem
+				border-top-right-radius-1rem
+				border-bottom-right-radius-1rem
+				tooltip-top
+				"
+				data-tooltip="日付でフィルタリング"
+				>
+					<!--div class="d-flex tablediv bg-white col-12 col-md-5 float-md-left pl-0 b-gray"-->
+					<div class="datefilter d-flex sorttaskInput float-left pl-0 pr-0">
+						<input class="bgtrans w-100 d-inline-block b-none text-center" name="deadlinebeginyear" type="text" value=""
+						ref="deadlinebeginyear"
+						placeholder="2022"
+						@input="SearchTask()"
+						>
+						<div class="font-light-gray text-center">
+							/
+						</div>
+						<input class="bgtrans w-100 d-inline-block b-none text-center" name="deadlinebeginmonth" type="text" value=""
+						ref="deadlinebeginmonth"
+						placeholder="1"
+						@input="SearchTask()"
+						>
+						<div class="font-light-gray text-center">
+							/
+						</div>
+						<input class="bgtrans w-100 d-inline-block b-none text-center" name="deadlinebegindate" type="text" value=""
+						ref="deadlinebegindate"
+						placeholder="1"
+						@input="SearchTask()"
+						>
+					</div>
+					<!--div class="tablediv font-light-gray col-12 col-md-1 float-md-left d-inline-block pl-2"-->
+					<div class="sorttaskInput DeleteTfilter font-light-gray float-left d-inline-block pl-1 pr-1 text-center">
+						〜
+					</div>
+					<!--div class="d-flex tablediv bg-white col-12 col-md-5 float-md-left pl-0 b-gray"-->
+					<div class="datefilter d-flex sorttaskInput float-left pl-0 pr-0">
+						<input class="bgtrans w-100 d-inline-block b-none text-center" name="deadlineendyear" type="text" value=""
+						ref="deadlineendyear"
+						placeholder="2022"
+						@input="SearchTask()"
+						>
+						<div class="bgtrans font-light-gray text-center">
+							/
+						</div>
+						<input class="bgtrans w-100 d-inline-block b-none text-center" name="deadlineendmonth" type="text" value=""
+						ref="deadlineendmonth"
+						placeholder="1"
+						@input="SearchTask()"
+						>
+						<div class="bgtrans font-light-gray text-center">
+							/
+						</div>
+						<input class="bgtrans w-100 d-inline-block b-none text-center" name="deadlineenddate" type="text" value=""
+						ref="deadlineenddate"
+						placeholder="2"
+						@input="SearchTask()"
+						>
+					</div>
+					<div class="float-right float-lg-left d-inline-block pl-2 DeleteTfilter">
+						<img
+						@click="DeleteSsetting"
+						class="searchicon cursor p-2 tooltip-top sorttaskInput DeleteTfilter float-left"
+						data-tooltip="入力を取り消す"
+						id="delete_date_area" src="@/assets/modalclosebutton.png">
+					</div>
 				</div>
 			</div>
-			
+
 			<TaskInfoInnerView
 			:taskstatus="taskstatus"
 			:taskdata="taskdata"
@@ -282,5 +296,27 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-
+.sorttask{
+	height:2rem;
+	line-height:2rem;
+}
+.sorttaskInput{
+	height: calc(2rem - 1px);
+	line-height: calc(2rem - 1px);
+}
+.DeleteTfilter{
+	width:calc(2rem - 1px);
+}
+.datefilter{
+	width:calc((100% - 4rem + 2px) / 2);
+}
+.bgtrans{
+	background:transparent;
+}
+.TSwrapper{
+	background:rgba(0, 0, 0, 0.05);
+}
+.inchargemenu{
+	min-width:10rem;
+}
 </style>
