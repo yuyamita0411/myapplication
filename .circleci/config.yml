@@ -42,7 +42,6 @@ jobs:
             docker build -t ${ECR_DOMAIN}:myapp-php-fpm -f ./API/environment/aws/php/Dockerfile .
             docker build -t ${ECR_DOMAIN}:myapp-nginx -f ./API/environment/aws/nginx/Dockerfile .
             docker build -t ${ECR_DOMAIN}:myapp-vue -f ./VUE/environment/aws/server/nginx/Dockerfile .
-
       - run:
           name: push docker image
           command: |
