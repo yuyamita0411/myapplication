@@ -12,7 +12,7 @@
                     </article>
                 </div>
                 <div class="gridinside w-100 bg-white p-3 position-relative text-center">
-                    <LoginIconview class="dashboardloading w-100 d-inline-block text-center" v-if="loadingstatus == true" />
+                    <LoadingIconview class="dashboardloading w-100 d-inline-block text-center" v-if="loadingstatus == true" />
                     <img class="clipicon position-absolute" src="@/assets/clipicon.png">
                     <div id="notificationarea" :class="`${loadstatus}`">
                         <article class="p-news-list__item js-inter fadeInLeft is-invasion mb-3 p-2 position-relative text-left"
@@ -65,7 +65,7 @@
 import { defineComponent } from 'vue';
 import {GetData} from "@/http";
 import {Calculate} from "@/calculate";
-import LoginIconview from '@/components/common/LoadingIcon.vue';
+import LoadingIconview from '@/components/common/LoadingIcon.vue';
 
 export default defineComponent({
     name: 'DashboardView',
@@ -85,7 +85,7 @@ export default defineComponent({
         };
     },
     components: {
-        LoginIconview
+        LoadingIconview
     },
     methods:{
         rebaseNotification(pagenow:number): void{

@@ -1,5 +1,5 @@
 <template>
-	<LoginIconview class="calenderloading w-100 d-inline-block text-center position-absolute" v-if="loadingstatus == true" />
+	<LoadingIconview class="calenderloading w-100 d-inline-block text-center position-absolute" v-if="loadingstatus == true" />
 	<div id="ScheduleWrapper" class="position-relative">
 		<div v-for="EachSData in [MyScheduleData, ScheduleData]" :key="EachSData" :class="`UserScheduleArea schedulearea ${loadstatus}`">
 			<div
@@ -19,7 +19,6 @@
 					v-for="i in 7" :key="i"
 					class="userssp w-100 d-flex"
 					>
-
 						<div
 						:class="`${Daycolor[DweekArr[new Date(calculate.MDFI(date, i-1)).getDay()]]} 
 						SPdatearea col-2 d-inline-block text-center float-left pt-1 pb-1 pr-1 pl-1 cursor`"
@@ -32,74 +31,60 @@
 							:data-setscheduleinfo="`${calculate.MDFI(date, i-1).getFullYear()}/${calculate.ReturnDMFormat(new Date(calculate.MDFI(date, i-1)).getMonth()+1)}/${calculate.ReturnDMFormat(new Date(calculate.MDFI(date, i-1)).getDate())}`"
 							:data-buttonuserid="`${sdata[0].id}`"
 							data-tooltip="スケジュールを追加する"
-							class="calenderBtn tooltip-left cursor p-0 float-right"
+							class="calenderBtn tooltip-right cursor p-0 float-right"
 							@click="ModalMotion"
 							>
 							</button>
 						</div>
 
 						<div class="schedulespdic col-10 d-inline-block text-left float-right p-0 position-relative">
-
-								<small
-								v-for="edata in sdata" :key="edata"
-								:class="`
-								${
-									edata.starttime &&
-									edata.starttime.split(' ')[0]
-									==
-									`${calculate.MDFI(date, i-1).getFullYear()}-${calculate.ReturnDMFormat(new Date(calculate.MDFI(date, i-1)).getMonth()+1)}-${calculate.ReturnDMFormat(new Date(calculate.MDFI(date, i-1)).getDate())}`
-									?
-									'editsceduleicon cursor d-inline-block w-100 position-relative float-left '
-									:
-									'd-none'
-								}
-								`"
-								>
-									<span
-									class="sleft d-inline-block pt-2 pb-2 pl-1">
-										<img
-										src="@/assets/orangepenicon.png"
-										class="rebaseschedule orangepenicon"
-										:data-buttonuserid="`${edata.id}`"
-										:data-mailaddress="`${edata.mail_address}`"
-										:data-createdat="`${edata.created_at}`"
-										:data-scheduleid="`${edata.scheduleid}`"
-										:data-title="`${edata.title != null ? edata.title : 'タイトルがありません。'}`"
-										:data-description="`${edata.description}`"
-										:data-setscheduleinfo="`${new Date(calculate.MDFI(date, i-1)).getFullYear()}/${new Date(calculate.MDFI(date, i-1)).getMonth()+1}/${new Date(calculate.MDFI(date, i-1)).getDate()}`"
-										:data-starttime="`${edata.starttime}`"
-										:data-endtime="`${edata.endtime}`"
-										:data-taskid="`${edata.taskid}`"
-										data-groupid=""
-										:data-tooltip="`${edata.title != null ? edata.title : 'タイトルがありません。'}`"
-										@click="ModalMotion"
-										>
-										{{edata.title && calculate.CSNum(edata.title) < edata.title.length ? `${edata.title.slice(0, calculate.CSNum(edata.title))} ...` : edata.title}}
-									</span>
-									<span class="sright d-inline-block position-absolute timerangecover">
-											<span v-for="(width, index) in calculate.GetScheduleMarkRange(edata.starttime, edata.endtime)" :key="width"
-											:class="`slengtharea${index + 1} d-inline-block float-left`" :style="`width:${width}%;`"></span>
-									</span>
-								</small>
-								<!--div class="calenderBtnWrapper d-inline-block w-100 bg-white">
-									<button
-									type="button"
-									:id="`ScheduleId-${sdata[0].id}`"
-									:data-setscheduleinfo="`${calculate.MDFI(date, i-1).getFullYear()}/${calculate.ReturnDMFormat(new Date(calculate.MDFI(date, i-1)).getMonth()+1)}/${calculate.ReturnDMFormat(new Date(calculate.MDFI(date, i-1)).getDate())}`"
-									:data-buttonuserid="`${sdata[0].id}`"
-									data-tooltip="スケジュールを追加する"
-									class="calenderBtn tooltip-left cursor p-0 float-right"
+							<small
+							v-for="edata in sdata" :key="edata"
+							:class="`
+							${
+								edata.starttime &&
+								edata.starttime.split(' ')[0]
+								==
+								`${calculate.MDFI(date, i-1).getFullYear()}-${calculate.ReturnDMFormat(new Date(calculate.MDFI(date, i-1)).getMonth()+1)}-${calculate.ReturnDMFormat(new Date(calculate.MDFI(date, i-1)).getDate())}`
+								?
+								'editsceduleicon cursor d-inline-block w-100 position-relative float-left '
+								:
+								'd-none'
+							}
+							`"
+							>
+								<span
+								class="sleft d-inline-block pt-2 pb-2 pl-1">
+									<img
+									src="@/assets/orangepenicon.png"
+									class="rebaseschedule orangepenicon"
+									:data-buttonuserid="`${edata.id}`"
+									:data-mailaddress="`${edata.mail_address}`"
+									:data-createdat="`${edata.created_at}`"
+									:data-scheduleid="`${edata.scheduleid}`"
+									:data-title="`${edata.title != null ? edata.title : 'タイトルがありません。'}`"
+									:data-description="`${edata.description}`"
+									:data-setscheduleinfo="`${new Date(calculate.MDFI(date, i-1)).getFullYear()}/${new Date(calculate.MDFI(date, i-1)).getMonth()+1}/${new Date(calculate.MDFI(date, i-1)).getDate()}`"
+									:data-starttime="`${edata.starttime}`"
+									:data-endtime="`${edata.endtime}`"
+									:data-taskid="`${edata.taskid}`"
+									data-groupid=""
+									:data-tooltip="`${edata.title != null ? edata.title : 'タイトルがありません。'}`"
 									@click="ModalMotion"
 									>
-									</button>
-								</div-->
+									{{edata.title && calculate.CSNum(edata.title) < edata.title.length ? `${edata.title.slice(0, calculate.CSNum(edata.title))} ...` : edata.title}}
+								</span>
+								<span class="sright d-inline-block position-absolute timerangecover">
+										<span v-for="(width, index) in calculate.GetScheduleMarkRange(edata.starttime, edata.endtime)" :key="width"
+										:class="`slengtharea${index + 1} d-inline-block float-left`" :style="`width:${width}%;`"></span>
+								</span>
+							</small>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
     <ScheduleModal
 	@ReRender="toggle"
     :ScheduleTagData="ScheduleTagData"
@@ -112,7 +97,7 @@ import { defineComponent, createApp } from 'vue';
 import {GetData} from "@/http";
 import {Calculate} from "@/calculate";
 import {Dataformat} from "@/dataformat";
-import LoginIconview from '@/components/common/LoadingIcon.vue';
+import LoadingIconview from '@/components/common/LoadingIcon.vue';
 import ScheduleModal from '@/components/AfterLogin/parts/Schedule/modal/ScheduleModal.vue';
 
 export default defineComponent({
@@ -137,7 +122,7 @@ export default defineComponent({
         };
     },
     components: {
-        LoginIconview,
+        LoadingIconview,
 		ScheduleModal
     },
     methods:{
@@ -305,5 +290,8 @@ export default defineComponent({
 }
 .SPdatearea{
 	font-size:12px;
+}
+.SPdatearea{
+	line-height:1.5rem;
 }
 </style>

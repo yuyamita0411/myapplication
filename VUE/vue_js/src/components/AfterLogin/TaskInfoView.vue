@@ -50,30 +50,13 @@
 					</div>
 				</div>
 
-				<div class="d-flex col-12 col-md-3 float-left pr-0 pl-0 ml-0 ml-md-3 mb-2 mb-md-0 tooltip-top cursor"
-				data-tooltip="タスク名で検索"
-				>
-					<div class="w-100">
-						<div class="searchbarwrapper mt-0">
-							<input class="w-100 sorttask bg-white border-top-left-radius-1rem
-							border-bottom-left-radius-1rem border-top-right-radius-1rem
-							border-bottom-right-radius-1rem b-none float-left pl-2" name="searchTaskTitle"
-							placeholder="タスク名" type="text" value=""
-							ref="searchTaskTitle"
-							@input="SearchTask()"
-							>
-						</div>
-					</div>
-					<!--img class="l2rem cursor p-1" src="@/assets/SearchGlassIcon.png"-->
-				</div>
-
 				<div class="
 				sorttask col-12 col-md-6 float-left float-md-right pr-1 pl-1 bg-white
 				mb-1 mb-md-0
-				border-top-left-radius-1rem
-				border-bottom-left-radius-1rem
-				border-top-right-radius-1rem
-				border-bottom-right-radius-1rem
+				BTLR1
+				BBLR1
+				BTRR1
+				BBRR1
 				tooltip-top
 				"
 				data-tooltip="日付でフィルタリング"
@@ -138,6 +121,24 @@
 						id="delete_date_area" src="@/assets/modalclosebutton.png">
 					</div>
 				</div>
+
+				<div class="d-flex col-12 col-md-3 float-right pr-0 pl-0 ml-0 mr-0 mr-md-3 mb-2 mb-md-0 tooltip-top cursor"
+				data-tooltip="タスク名で検索"
+				>
+					<div class="w-100">
+						<div class="searchbarwrapper mt-0">
+							<input class="w-100 sorttask bg-white BTLR1
+							BBLR1 BTRR1
+							BBRR1 b-none float-left pl-2" name="searchTaskTitle"
+							placeholder="タスク名" type="text" value=""
+							ref="searchTaskTitle"
+							@input="SearchTask()"
+							>
+						</div>
+					</div>
+					<!--img class="l2rem cursor p-1" src="@/assets/SearchGlassIcon.png"-->
+				</div>
+
 			</div>
 
 			<TaskInfoInnerView

@@ -1,6 +1,6 @@
 <template>
 	<div class="shadowwrapper m-auto pl-2 pr-2 pl-lg-0 pr-lg-0">
-    <LoginIconview class="dashboardloading w-100 d-inline-block text-center" v-if="loadingstatus == true" />
+    <LoadingIconview class="dashboardloading w-100 d-inline-block text-center" v-if="loadingstatus == true" />
 		<div :class="`${loadstatus} contentwraper w-100 d-inline-block pt-3 pb-4 pl-0 pr-0 mt-3`">
 			<div class="pt-3 pb-3 w-100">
 				<div class="gridinside pt-3 bg-white position-relative" id="AddressArea">
@@ -52,15 +52,15 @@
                                 <input
                                 @input="SearchComment($event)"
                                 :class="
-                                `w-100 searchbar bg-brightgray border-top-left-radius-1rem
-                                border-bottom-left-radius-1rem border-top-right-radius-1rem
-                                border-bottom-right-radius-1rem b-none float-left pl-2 pt-1 pb-1`
+                                `w-100 searchbar bg-brightgray BTLR1
+                                BBLR1 BTRR1
+                                BBRR1 b-none float-left pl-2 pt-1 pb-1`
                                 "
                                 id="TaskCommentSearchArea"
                                 placeholder="キーワードを入力してください。"
                                 type="text">
                             </div>
-                            <LoginIconview class="dashboardloading w-100 d-inline-block text-center" v-if="commentloadingstatus == true" />
+                            <LoadingIconview class="dashboardloading w-100 d-inline-block text-center" v-if="commentloadingstatus == true" />
                             <div id="CommentDisplayArea"
                             :class="commentloadstatus"
                             >
@@ -101,7 +101,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import {GetData} from "@/http";
-import LoginIconview from '@/components/common/LoadingIcon.vue';
+import LoadingIconview from '@/components/common/LoadingIcon.vue';
 import TaskDetailModal from '@/components/AfterLogin/parts/TaskDetail/modal/TaskDetailModal.vue';
 
 export default defineComponent({
@@ -121,7 +121,7 @@ export default defineComponent({
         }
     },
     components: {
-        LoginIconview,
+        LoadingIconview,
         TaskDetailModal
     },
 	methods:{

@@ -1,6 +1,6 @@
 <template>
     <div id="ScheduleWrapper" :class="`position-relative ${scheduleborder} mb-1`">
-    <LoginIconview class="calenderloading w-100 d-inline-block text-center" v-if="loadingstatus == true" />
+    <LoadingIconview class="calenderloading w-100 d-inline-block text-center" v-if="loadingstatus == true" />
         <div v-for="EachSData in [MyScheduleData, ScheduleData]" :key="EachSData" :class="`UserScheduleArea schedulearea ${loadstatus}`">
             <div
             v-for="(sdata, skey) in EachSData" :key="skey"
@@ -86,7 +86,7 @@ import { defineComponent } from 'vue';
 import {GetData} from "@/http";
 import {Calculate} from "@/calculate";
 import {Dataformat} from "@/dataformat";
-import LoginIconview from '@/components/common/LoadingIcon.vue';
+import LoadingIconview from '@/components/common/LoadingIcon.vue';
 import ScheduleModal from '@/components/AfterLogin/parts/Schedule/modal/ScheduleModal.vue';
 
 export default defineComponent({
@@ -113,7 +113,7 @@ export default defineComponent({
         };
     },
     components: {
-        LoginIconview,
+        LoadingIconview,
 		ScheduleModal
     },
     methods:{

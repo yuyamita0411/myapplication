@@ -1,5 +1,5 @@
 output "ecs_instance_profile_name" {
-    value = aws_iam_instance_profile.ecs_instance_p.name
+    value = aws_iam_instance_profile.eip.name
 }
 
 output "ecs_task_role_arn" {

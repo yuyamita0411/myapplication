@@ -5,7 +5,11 @@
     this.$refs.modalcover.classList.add('AddTaskModalcoverclose'),
     this.$refs.modalcover.classList.remove('AddTaskModalcoveropen'),
     this.$refs.modal.classList.add('AddTaskModalclose'),
-    this.$refs.modal.classList.remove('AddTaskModalopen')
+    this.$refs.modal.classList.remove('AddTaskModalopen'),
+    this.$refs.sendTaskTitleAlert.innerText = '',
+    this.$refs.sendTaskMsgAlert.innerText = '',
+    this.$refs.DateAlert.innerText = '',
+    this.$refs.DateAlert.innerText == '' ? this.$refs.DateAlert.innerText = '' : this.$refs.DateAlert.innerText = ''
     "
 	>
     </div>
@@ -36,35 +40,53 @@
                                             v-for="eachcdata in companydata" :key="eachcdata"
                                             :value="`${eachcdata.id}:${eachcdata.name}`">{{eachcdata.name}}</option>
                                         </select>
-                                        <div class="w-100 d-inline-block mb-2">タイトル <small id="sendTaskTitleAlert" class="red" ref="sendTaskTitleAlert"></small></div>
-                                        <input
-                                        name="sendTaskTitle"
-                                        ref="sendTaskTitle"
-                                        type="text" class="w-100 d-inline-block mb-4">
-                                        <div class="w-100 d-inline-block mb-2">概要 <small id="sendTaskMsgAlert" class="red" ref="sendTaskMsgAlert"></small></div>
+                                        <div class="d-md-flex">
+                                            <div class="col-12 col-md-4 float-left pl-0 pr-0 pr-md-2 mb-2">
+                                                <div class="w-100 d-inline-block mb-0">
+                                                    <small id="sendTaskTitleAlert" class="red" ref="sendTaskTitleAlert"></small>
+                                                </div>
+                                                <input
+                                                name="sendTaskTitle"
+                                                ref="sendTaskTitle"
+                                                type="text"
+                                                class="w-100 bg-brightgray pt-1 pb-1 BTLR1 BBLR1 BTRR1 BBRR1 b-none"
+                                                placeholder="タイトル"
+                                                >
+                                            </div>
+                                            <div class="col-12 col-md-8 float-left pl-0 pr-0 mb-2 mb-md-0">
+                                                <div class="w-100 d-inline-block mb-0">
+                                                    <small id="DateAlert" class="red" ref="DateAlert"></small>
+                                                </div>
+                                                <div class="w-100 d-flex">
+                                                    <input
+                                                    name="deadlineyear"
+                                                    ref="deadlineyear"
+                                                    type="text"
+                                                    placeholder="2022"
+                                                    class="bg-brightgray w-100 d-inline-block text-center BTLR1 BBLR1 BTRR1 BBRR1 b-none pt-1 pb-1">
+                                                    <div class="l2rem d-inline-block text-center">/</div>
+                                                    <input
+                                                    name="deadlinemonth"
+                                                    ref="deadlinemonth"
+                                                    type="text"
+                                                    placeholder="1"
+                                                    class="bg-brightgray w-100 d-inline-block text-center BTLR1 BBLR1 BTRR1 BBRR1 b-none pt-1 pb-1">
+                                                    <div class="l2rem d-inline-block text-center">/</div>
+                                                    <input
+                                                    name="deadlinedate"
+                                                    ref="deadlinedate"
+                                                    type="text"
+                                                    placeholder="1"
+                                                    class="bg-brightgray w-100 d-inline-block text-center BTLR1 BBLR1 BTRR1 BBRR1 b-none pt-1 pb-1">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="w-100 d-inline-block mb-0"><small id="sendTaskMsgAlert" class="red" ref="sendTaskMsgAlert"></small></div>
                                         <textarea
                                         ref="sendTaskMsg"
                                         name="sendTaskMsg"
-                                        class="w-100 d-inline-block mb-4"></textarea>
-
-                                        <div class="w-100 d-inline-block mb-2">期日 <small id="DateAlert" class="red" ref="DateAlert"></small></div>
-                                        <div class="d-flex mb-4">
-                                            <input
-                                            name="deadlineyear"
-                                            ref="deadlineyear"
-                                            type="text" class="w-100 d-inline-block">
-                                            <div class="w-100 d-inline-block text-center">年</div>
-                                            <input
-                                            name="deadlinemonth"
-                                            ref="deadlinemonth"
-                                            type="text" class="w-100 d-inline-block">
-                                            <div class="w-100 d-inline-block text-center">月</div>
-                                            <input
-                                            name="deadlinedate"
-                                            ref="deadlinedate"
-                                            type="text" class="w-100 d-inline-block">
-                                            <div class="w-100 d-inline-block text-center">日</div>
-                                        </div>
+                                        placeholder="概要"
+                                        class="w-100 searchbar bg-brightgray mb-3 BTLR1 BBLR1 BTRR1 BBRR1 b-none float-left pl-2"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -98,7 +120,12 @@
                             <div id="AddTaskModalclosebutton" class="buttonicon margin-right-two p-2">
                                 <div class="w-100 d-inline-block text-center text-white font-weight-bold cursor br-50 bordergray bg-white">
                                     <img
-									@click="ModalMotion"
+									@click="
+                                    ModalMotion,
+                                    this.$refs.sendTaskTitleAlert.innerText = '',
+                                    this.$refs.sendTaskMsgAlert.innerText = '',
+                                    this.$refs.DateAlert.innerText = ''
+                                    "
 									id=""
 									src="@/assets/modalclosebutton.png" class="d-inline-block w-100 p-2">
                                 </div>
@@ -107,7 +134,27 @@
                                 <div class="inportbutton w-100 d-inline-block b-none text-white text-center font-weight-bold cursor br-50 line-3rem">
                                     <div class="w-100 d-inline-block text-center text-white font-weight-bold cursor br-50 bordergray bg-white">
                                         <div
-										@click="AddAddTask"
+										@click="
+                                        flag = true,
+                                        this.$refs.sendTaskTitleAlert.innerText = '',
+                                        this.$refs.sendTaskMsgAlert.innerText = '',
+                                        this.$refs.DateAlert.innerText = '',
+                                        this.$refs.sendTaskTitleAlert.innerText = lessthan255(this.$refs.sendTaskTitle.value.length, flag),
+                                        this.$refs.sendTaskTitleAlert.innerText = IfisEmpty(this.$refs.sendTaskTitle.value, flag),
+                                        this.$refs.sendTaskMsgAlert.innerText = lessthan255(this.$refs.sendTaskMsg.value.length, flag),
+                                        this.$refs.sendTaskMsgAlert.innerText = IfisEmpty(this.$refs.sendTaskMsg.value, flag),
+                                        this.$refs.DateAlert.innerText = IFisValidDate(`${this.$refs.deadlineyear.value}/${this.$refs.deadlinemonth.value}/${this.$refs.deadlinedate.value}`, flag),
+                                        this.$refs.deadlineyear.value == '' || this.$refs.deadlinemonth.value == '' || this.$refs.deadlinedate.value == '' ? (this.$refs.DateAlert.innerText = '必須項目です。', flag = false) : this.$refs.DateAlert.innerText = '',
+                                        sendobj = {
+                                            'sendTaskTitle':this.$refs.sendTaskTitle.value,
+                                            'selectincharge':this.$refs.selectincharge.value,
+                                            'sendTaskMsg':this.$refs.sendTaskMsg.value,
+                                            'deadlineyear':this.$refs.deadlineyear.value,
+                                            'deadlinemonth':this.$refs.deadlinemonth.value,
+                                            'deadlinedate':this.$refs.deadlinedate.value
+                                        },
+                                        AddAddTask()
+                                        "
 										id=""
 										class="inportbutton w-100 d-inline-block b-none text-white text-center font-weight-bold cursor br-50 line-3rem">
 										確認
@@ -144,70 +191,35 @@ export default defineComponent({
         return {
             companydata:[{}],
             http:new GetData(),
-            mfstyle:"left: 0%; transition:all 0.25s;"
+            mfstyle:"left: 0%; transition:all 0.25s;",
+            flag:true,
+            sendobj:{}
         }
     },
     emits: ['ReRender'],
     methods:{
+        lessthan255(value:number, flag:boolean){
+            var msg = '';
+            255 < value ? (msg = '255文字以内でお願いします。', flag = false) : msg = '';
+            return msg;
+        },
+        IfisEmpty(txt:string, flag:boolean){
+            var msg = '';
+            txt == '' ? (msg = '必須項目です。', flag = false) : msg = '';
+            return msg;
+        },
+        IFisValidDate(datestr:string, flag:boolean){
+            var msg = '', dobj = new Date(datestr);
+            isNaN(dobj.getFullYear()) ? (msg = '日付の形式が正しくありません。', flag = false) : msg = '';
+            return msg;
+        },
         AddAddTask(){
-            const sendTaskTitle = this.$refs.sendTaskTitle as HTMLInputElement;
-            const selectincharge = this.$refs.selectincharge as HTMLInputElement;
-            const sendTaskMsg = this.$refs.sendTaskMsg as HTMLInputElement;
-            const deadlineyear = this.$refs.deadlineyear as HTMLInputElement;
-            const deadlinemonth = this.$refs.deadlinemonth as HTMLInputElement;
-            const deadlinedate = this.$refs.deadlinedate as HTMLInputElement;
-
-            const sendTaskTitleAlert = this.$refs.sendTaskTitleAlert as HTMLInputElement;
-            const sendTaskMsgAlert = this.$refs.sendTaskMsgAlert as HTMLInputElement;
-            const DateAlert = this.$refs.DateAlert as HTMLInputElement;
-
-            sendTaskTitleAlert.innerText = '';
-            sendTaskMsgAlert.innerText = '';
-            DateAlert.innerText = '';
-
-            var flag = true;
-            if(255 < sendTaskTitle.value.length){
-                sendTaskTitleAlert.innerText = '255文字以内でお願いします。';
-                flag = false;
-            }
-            if(sendTaskTitle.value == ''){
-                sendTaskTitleAlert.innerText = '必須項目です。';
-                flag = false;
-            }
-
-            if(255 < sendTaskMsg.value.length){
-                sendTaskMsgAlert.innerText = '255文字以内でお願いします。';
-                flag = false;
-            }
-            if(sendTaskMsg.value == ''){
-                sendTaskMsgAlert.innerText = '必須項目です。';
-                flag = false;
-            }
-
-            var checkobj = new Date(`${deadlineyear.value}/${deadlinemonth.value}/${deadlinedate.value}`);
-            if(isNaN(checkobj.getFullYear())){
-                DateAlert.innerText = '日付の形式が正しくありません。';
-                flag = false;
-            }
-            if(deadlineyear.value == '' || deadlinemonth.value == '' || deadlinedate.value == ''){
-                DateAlert.innerText = '必須項目です。';
-                flag = false;
-            }
-
-            if(flag == false){
+            if(this.flag == false){
                 return;
             }
-
             this.http.Postcommon(
                 "/api/taskinfo/assign",
-                {
-                    "sendTaskTitle":sendTaskTitle.value,
-                    "selectincharge":selectincharge.value,
-                    "sendTaskMsg":sendTaskMsg.value,
-                    "deadlineyear":deadlineyear.value,
-                    "deadlinemonth":deadlinemonth.value,
-                    "deadlinedate":deadlinedate.value
-                },
+                this.sendobj,
                 (res:any) => {
                     this.mfstyle = 'left: -100%; transition:all 0.25s;';
                     setTimeout(() => {
@@ -225,16 +237,6 @@ export default defineComponent({
                         if(this.$route.path == '/taskinfo'){
                             this.$emit('ReRender', true);
                         }
-
-                        sendTaskTitle.value = '';
-                        selectincharge.value = '';
-                        sendTaskMsg.value = '';
-                        deadlineyear.value = '';
-                        deadlinemonth.value = '';
-                        deadlinedate.value = '';
-                        sendTaskTitleAlert.innerText = '';
-                        sendTaskMsgAlert.innerText = '';
-                        DateAlert.innerText = '';
 
                     }, 1000);
                 }

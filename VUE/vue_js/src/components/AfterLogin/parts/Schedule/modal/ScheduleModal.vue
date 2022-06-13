@@ -36,7 +36,7 @@
 										$event.currentTarget.nextElementSibling.classList.toggle('zm1'),
 										$event.currentTarget.nextElementSibling.classList.toggle('menuhide')
 										"
-										class="starthour buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id=""
+										class="starthour buttonicon w-100 d-inline-block searchbar bg-brightgray BTLR1 BBLR1 BTRR1 BBRR1 b-none cursor" id=""
 										ref="sstime">
 											{{ScheduleTagData.sstime}}
 										</div>
@@ -71,8 +71,8 @@
 										"
 										class="
 										startminute buttonicon w-100 d-inline-block searchbar bg-brightgray
-										border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem
-										border-bottom-right-radius-1rem b-none cursor" id=""
+										BTLR1 BBLR1 BTRR1
+										BBRR1 b-none cursor" id=""
 										ref="ssminute">
 											{{ScheduleTagData.ssminute}}
 										</div>
@@ -101,7 +101,7 @@
 										$event.currentTarget.nextElementSibling.classList.toggle('zm1'),
 										$event.currentTarget.nextElementSibling.classList.toggle('menuhide')
 										"
-										class="endhour buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id=""
+										class="endhour buttonicon w-100 d-inline-block searchbar bg-brightgray BTLR1 BBLR1 BTRR1 BBRR1 b-none cursor" id=""
 										ref="sendtime">
 											{{ScheduleTagData.sendtime}}
 										</div>
@@ -129,7 +129,7 @@
 										$event.currentTarget.nextElementSibling.classList.toggle('zm1'),
 										$event.currentTarget.nextElementSibling.classList.toggle('menuhide')
 										"
-										class="endminute buttonicon w-100 d-inline-block searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none cursor" id=""
+										class="endminute buttonicon w-100 d-inline-block searchbar bg-brightgray BTLR1 BBLR1 BTRR1 BBRR1 b-none cursor" id=""
 										ref="sendminute">
 											{{ScheduleTagData.sendminute}}
 										</div>
@@ -150,11 +150,11 @@
 								</div>
 								<span class="d-inline-block w-100 text-center red mt-3" id=""></span>
 								<div class="schedulemodal position-relative d-inline-block col-12">
-									<div class="d-inline-block mt-5 w-100">
+									<div class="d-inline-block w-100">
 										<small class="red" id=""></small>
 									</div>
 									<input
-									class="w-100 searchbar bg-brightgray mb-3 border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none float-left pl-2"
+									class="w-100 searchbar bg-brightgray mb-3 pt-1 pb-1 BTLR1 BBLR1 BTRR1 BBRR1 b-none float-left pl-2"
 									name="schedulename"
 									placeholder="タイトルを入力してください"
 									type="text"
@@ -165,7 +165,7 @@
 									<div class="d-inline-block w-100">
 										<small class="red" id=""></small>
 									</div>
-									<textarea class="w-100 searchbar bg-brightgray mb-3 border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none float-left pl-2"
+									<textarea class="w-100 searchbar bg-brightgray mb-3 BTLR1 BBLR1 BTRR1 BBRR1 b-none float-left pl-2"
 									name="scheduledisc"
 									placeholder="概要を入力してください"
 									:value="ScheduleTagData.description"
@@ -204,7 +204,7 @@
 														"
 														@focus="searchareashow = 'setSareaheight'"
 														@blur="searchareashow = ''"
-														class="w-100 searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none float-left pl-2"
+														class="w-100 pt-1 pb-1 searchbar bg-brightgray BTLR1 BBLR1 BTRR1 BBRR1 b-none float-left pl-2"
 														:data-userid="ScheduleTagData.userid"
 														id=""
 														name="addgroupmember"
@@ -216,7 +216,7 @@
 												</div>
 											</div>
 											<div id="" :class="`searchresultarea ${searchareashow}`">
-												<LoginIconview v-if="loadingstatus == true" class="Scheduleloading" />
+												<LoadingIconview v-if="loadingstatus == true" class="Scheduleloading" />
 												<div
                                                 @click="AddUserFromResult"
 												v-for="EUobj in searchuser" :key="EUobj.id"
@@ -313,7 +313,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import {GetData} from "@/http";
-import LoginIconview from '@/components/common/LoadingIcon.vue';
+import LoadingIconview from '@/components/common/LoadingIcon.vue';
 
 export default defineComponent({
     name: 'ScheduleModal',
@@ -341,7 +341,7 @@ export default defineComponent({
         };
     },
 	components:{
-		LoginIconview
+		LoadingIconview
 	},
 	methods:{
 		Timeevent(event:Event, changeval:HTMLElement): void{

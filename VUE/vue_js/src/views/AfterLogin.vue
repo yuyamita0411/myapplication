@@ -1,5 +1,5 @@
 <template>
-    <LoginIconview id="MainColumLoadArea" v-if="loadingstatus == true" class="position-relative" />
+    <LoadingIconview id="MainColumLoadArea" v-if="loadingstatus == true" class="position-relative" />
     <div :class="`home ${loadstatus}`">
         <div class="dashbordwrapper d-inline-block w-100">
             <div id="dashboardnemue" class="dashboardnemue d-inline-block position-fixed w-100 p-0 bg-white">
@@ -101,7 +101,7 @@
 <script lang="ts">
 import { defineComponent} from 'vue';
 import {GetData} from "@/http";
-import LoginIconview from '@/components/common/LoadingIcon.vue';
+import LoadingIconview from '@/components/common/LoadingIcon.vue';
 import AccountModal from '@/components/AfterLogin/parts/common/modal/AccountModal.vue';
 import AddTaskModal from '@/components/AfterLogin/parts/common/modal/AddTaskModal.vue';
 
@@ -122,7 +122,7 @@ export default defineComponent({
     },
     components: {
         AccountModal,
-        LoginIconview,
+        LoadingIconview,
         AddTaskModal
     },
     mounted(){

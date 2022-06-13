@@ -1,6 +1,6 @@
 <template>
     <div>
-    <LoginIconview class="calenderloading w-100 d-inline-block text-center position-relative" v-if="loadingstatus == true" />
+    <LoadingIconview class="calenderloading w-100 d-inline-block text-center position-relative" v-if="loadingstatus == true" />
         <div :class="`taskinfowrapper gridinside w-100 bg-white pt-5 pr-3 pl-3 pb-3 position-relative text-center ${modalstatus}`">
             <img class="clipicon position-absolute" src="@/assets/clipicon.png">
             <div id="" :class="`bg-white`">
@@ -47,7 +47,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import {GetData} from "@/http";
-import LoginIconview from '@/components/common/LoadingIcon.vue';
+import LoadingIconview from '@/components/common/LoadingIcon.vue';
 
 export default defineComponent({
     name: 'TaskInfoInnerView',
@@ -58,7 +58,7 @@ export default defineComponent({
         taskstatus:Boolean*/
     },
     components: {
-        LoginIconview
+        LoadingIconview
     },
     data() {
         return {

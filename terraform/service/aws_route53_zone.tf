@@ -1,10 +1,10 @@
-data "aws_route53_zone" "gwaretool" {
+data "aws_route53_zone" "gwt" {
     name = "gwaretool.com"
 }
 
-resource "aws_route53_record" "gwaretool" {
-    zone_id = data.aws_route53_zone.gwaretool.zone_id
-    name = data.aws_route53_zone.gwaretool.name
+resource "aws_route53_record" "gwt" {
+    zone_id = data.aws_route53_zone.gwt.zone_id
+    name = data.aws_route53_zone.gwt.name
     type = "A"
 
     alias{

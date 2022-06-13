@@ -14,8 +14,8 @@
                                     type="text"
                                     id="SearchCbyWord"
                                     name="SearchCbyWord"
-                                    class="searchbar border-top-left-radius-1rem border-bottom-left-radius-1rem
-                                    border-top-right-radius-1rem border-bottom-right-radius-1rem b-none float-left pl-2 mt-0"
+                                    class="searchbar BTLR1 BBLR1
+                                    BTRR1 BBRR1 b-none float-left pl-2 mt-0"
                                     placeholder="担当者名から検索"
                                     >
                                     <input
@@ -23,8 +23,8 @@
                                     type="text"
                                     id="PerPageArea"
                                     name="PerPage"
-                                    class="col-1 ml-2 searchbar border-top-left-radius-1rem border-bottom-left-radius-1rem
-                                    border-top-right-radius-1rem border-bottom-right-radius-1rem b-none float-left pl-2 mt-0"
+                                    class="col-1 ml-2 searchbar BTLR1 BBLR1
+                                    BTRR1 BBRR1 b-none float-left pl-2 mt-0"
                                     placeholder="表示件数"
                                     >
 								</div>

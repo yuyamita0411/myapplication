@@ -4,7 +4,7 @@
 			<h5 class="mainfontcolor w-100">グループを検索</h5>
 			<form action="" class="w-100 mb-3 d-inline-block" method="get">
 				<div class="searchbarwrapper w-100 mt-0 d-flex">
-					<input class="w-100 mr-3 searchbar bg-brightgray border-top-left-radius-1rem border-bottom-left-radius-1rem border-top-right-radius-1rem border-bottom-right-radius-1rem b-none float-left pl-2"
+					<input class="w-100 mr-3 searchbar bg-brightgray BTLR1 BBLR1 BTRR1 BBRR1 b-none float-left pl-2"
 					id="searchGroupInfo"
 					name="searchGroupInfo"
 					placeholder="キーワードを入力してください。"

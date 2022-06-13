@@ -60,7 +60,7 @@
                             </div>
                         </div>
                     </div>
-                    <LoginIconview v-if="loadingstatus == true" class="" />
+                    <LoadingIconview v-if="loadingstatus == true" class="" />
 				</div>
 			</div>
 		</div>
@@ -120,12 +120,12 @@
 import { defineComponent } from 'vue';
 import {GetData} from "@/http";
 import * as XLSX from 'ts-xlsx';
-import LoginIconview from '@/components/common/LoadingIcon.vue';
+import LoadingIconview from '@/components/common/LoadingIcon.vue';
 
 export default defineComponent({
     name: 'ManageUsermodal',
 	components:{
-		LoginIconview
+		LoadingIconview
 	},
     data() {
         return {
