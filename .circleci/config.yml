@@ -50,6 +50,7 @@ jobs:
             docker push ${ECR_DOMAIN}:myapp-php-fpm
             docker push ${ECR_DOMAIN}:myapp-nginx
             docker push ${ECR_DOMAIN}:myapp-vue
+
   #ECRにイメージをデプロイして起動させる
   deploy:
     docker:
