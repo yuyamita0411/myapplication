@@ -6,7 +6,6 @@ jobs:
       - image: circleci/php:8.0.2-fpm
     working_directory: ~/docker_environment/portfolio/gware
     resource_class: xlarge
-
     steps:
       - checkout:
       - setup_remote_docker
