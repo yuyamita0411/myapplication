@@ -6,6 +6,7 @@ RUN docker-php-ext-install pdo_mysql
 
 #composerインストール
 RUN curl -sS https://getcomposer.org/installer | php
+
 RUN mv composer.phar /usr/local/bin/composer
 
 RUN mkdir -p /var/www/html/gware
