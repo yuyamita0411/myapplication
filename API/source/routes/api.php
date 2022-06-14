@@ -5,7 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Models\AppliUser;
 use Illuminate\Support\Facades\Hash;
 
-
+Route::get('/', function(){
+    return 'API!!';
+});
 Route::get('/check/auth/failed', function(){
     return 'メールアドレス、またはパスワードが違います。';
 });
