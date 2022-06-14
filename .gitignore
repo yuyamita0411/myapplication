@@ -8,6 +8,7 @@ terraform/vpc/.terraform/providers/
 terraform/vpc/.terraform/providers/registry.terraform.io/hashicorp/aws/4.8.0/darwin_arm64/terraform-provider-aws_v4.8.0_x5
 API/source/.env
 source/.env
+source/aws.env
 API/log/access.log
 log/access.log
 API/log/error.log
