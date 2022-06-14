@@ -8,6 +8,8 @@ ADD ./API/source /var/www/html/gware
 
 RUN chmod -R 777 /var/www/html/gware
 
+RUN chmod -R 777 /var/www/html/gware/*
+
 EXPOSE 80
 
 EXPOSE 443
