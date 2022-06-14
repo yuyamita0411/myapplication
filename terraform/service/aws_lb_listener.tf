@@ -20,7 +20,6 @@ resource "aws_lb_listener" "http_vue" {
         type             = "forward"
     }
 }
-
 resource "aws_lb_listener" "https" {
     load_balancer_arn = aws_lb.gwlb.arn
     port              = "8081"
