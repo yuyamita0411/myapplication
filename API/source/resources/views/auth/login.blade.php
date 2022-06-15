@@ -50,6 +50,7 @@
             
         </div>
     </div>
+
     <div class="col-12 col-lg-10 m-auto pb-4">
         <button type="submit" class="inportbutton w-100 d-inline-block b-none text-white text-center font-weight-bold p-2 cursor br5px">
             {{ __('ログイン') }}
