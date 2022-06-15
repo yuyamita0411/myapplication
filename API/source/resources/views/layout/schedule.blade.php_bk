@@ -1,0 +1,254 @@
+@extends('layouts.app')
+@section('content')
+<div class="d-inline-block w-100 mb-3">
+    <div class="notificationarea pt-3 m-auto">
+        <div class="w-100 d-inline-block text-center">
+            <h3 class="notificationtitle font-weight-bold pt-4 pb-2 mb-0 m-auto"><img class="iconimg d-inline-block" src="{{ secure_asset('asset/makedocument.png') }}" onclick="clicktest()"> 予定一覧</h3>
+        </div>
+        <div class=" shadowgrid col-md-12 m-auto pl-0 pr-0 position-relative">
+            <div class="w-100 d-inline-block p-3">
+                <div class="articlewrapper w-100 p-3 d-inline-block">
+                    <!---カレンダー=-->
+                    <div class="LoginFormWrapper m-auto p-3 bg-white col-12 m-auto d-inline-block position-relative float-md-left" id="">
+                        <div class="bgbase col-12 float-md-right pr-0 pl-0" id="">
+                            <div class="d-inline-block w-100 text-center pr-3 pl-3">
+                                <div class="d-inline-block w-100 pt-2 pb-2">
+                                    <div id="prev" class="buttonicon cursor">
+                                        <div class="w-100 d-inline-block text-center text-white font-weight-bold cursor br-50 bg-white">
+                                            <img src="{{ secure_asset('asset/backtoprev.png') }}" class="d-inline-block w-100 p-2">
+                                        </div>
+                                    </div>
+                                    <h3 class="d-inline-block pt-2 pb-2 pr-2 pl-2 mb-0 bg-white">
+                                        直近の予定:
+                                        <span class="red font-weight-bold">会議</span>
+                                        <small class="d-inline-block w-100 font16">2022.02.02</small>
+                                    </h3>
+                                    <div id="next" class="buttonicon cursor">
+                                        <div class="w-100 d-inline-block text-center text-white font-weight-bold cursor br-50 bg-white">
+                                            <img src="{{ secure_asset('asset/gonext.png') }}" class="d-inline-block w-100 p-2">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="calendertop d-inline-block w-100 p-1">
+                                    <h4 id="header" class="d-inline-block mb-0 float-left bg-white pl-2 pr-2"></h4>
+                                </div>
+                            </div>
+                            <div class=" pt-0 pb-3 w-100 pr-3 pl-3 m-auto d-lg-flex">
+                                <div class="bg-white d-inline-block w-100">
+                                    <div id="calendar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="LoginFormWrapper m-auto p-3 bg-white col-12 m-auto d-inline-block position-relative float-md-right" id="">
+                        <div class="col-12 float-md-right pr-0 pl-0" id="">
+                            <div class=" pt-2 pb-2 w-100 p-3 m-auto">
+                                <div class="wrapper">
+                                    <div class="mb-3 font-weight-bold" id="scheduledetailtitle"></div>
+                                    <!--div class="" id="scheduledetailexp"></div-->
+                                </div>
+                            </div>
+                        </div>
+                    </div><!---カレンダー=-->
+                </div>
+                <div class="bgstripe45deg gridinside  col-md-12 m-auto pt-3 pb-3 pl-0 pr-0">
+                    <div class="buttonarea m-auto text-center">
+                        <div class="buttonicon p-2 d-inline-block">
+                            <a class="w-100 d-inline-block b-none text-white text-center font-weight-bold cursor br-50 bordergray bg-white" href="{{ route('dashboard') }}">
+                                <img class="d-inline-block w-100 p-2" src="{{ secure_asset('asset/homeicon.png') }}">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+<script type="module">
+const week = ["日", "月", "火", "水", "木", "金", "土"];
+const today = new Date();
+// 月末だとずれる可能性があるため、1日固定で取得
+var showDate = new Date(today.getFullYear(), today.getMonth(), 1);
+
+var yearfordata,
+monthfordata;
+
+// 初期表示
+window.onload = function () {
+    showProcess(today, calendar);
+};
+
+document.getElementById('prev').addEventListener('click', () => {
+    showDate.setMonth(showDate.getMonth() - 1);
+    showProcess(showDate);
+});
+document.getElementById('next').addEventListener('click', () => {
+    showDate.setMonth(showDate.getMonth() + 1);
+    showProcess(showDate);
+});
+
+// カレンダー表示
+function showProcess(date) {
+    var year = date.getFullYear();
+    var month = date.getMonth();
+    yearfordata = date.getFullYear();
+    monthfordata = date.getMonth();
+
+    document.querySelector('#header').innerHTML = year + "年 " + (month + 1) + "月";
+
+    var calendar = createProcess(year, month);
+    document.querySelector('#calendar').innerHTML = calendar;
+}
+
+// カレンダー作成
+function createProcess(year, month) {
+    // 曜日
+    var calendar = "<table><tr class='dayOfWeek'>";
+    for (var i = 0; i < week.length; i++) {
+        calendar += "<th>" + week[i] + "</th>";
+    }
+    calendar += "</tr>";
+
+    var count = 0;
+    var startDayOfWeek = new Date(year, month, 1).getDay();
+    var endDate = new Date(year, month + 1, 0).getDate();
+    var lastMonthEndDate = new Date(year, month, 0).getDate();
+    var row = Math.ceil((startDayOfWeek + endDate) / week.length);
+
+
+    // 1行ずつ設定
+    for (var i = 0; i < row; i++) {
+        calendar += "<tr>";
+        // 1colum単位で設定
+        for (var j = 0; j < week.length; j++) {
+            if (i == 0 && j < startDayOfWeek) {
+                // 1行目で1日まで先月の日付を設定
+                calendar += "<td class='disabled pt-0 pb-0 text-left pt-1 pl-1'>" + (lastMonthEndDate - startDayOfWeek + j + 1) + "</td>";
+            } else if (count >= endDate) {
+                // 最終行で最終日以降、翌月の日付を設定
+                count++;
+                calendar += "<td class='disabled pt-0 pb-0 text-left pt-1 pl-1'>" + (count - endDate) + "</td>";
+            } else {
+                // 当月の日付を曜日に照らし合わせて設定
+                count++;
+                if(year == today.getFullYear()
+                  && month == (today.getMonth())
+                  && count == today.getDate()){
+                    calendar += `
+                    <td
+                    class='today pt-0 pb-0 text-left pt-1 pl-1'
+                    data-dateforschedule='${yearfordata}-${`0${monthfordata+1}`.slice(-2)}-${`0${count}`.slice(-2)}'
+                    >
+                    ${count}
+                    <div class="schedulestatusNamearea"></div>
+                        <div class="float-right sccheduleplusbutton cursor mr-1 mb-1" id="">
+                            <div class="w-100 d-inline-block b-none text-white text-center font-weight-bold cursor br-50 line-3rem">
+                                <div class="w-100 d-inline-block text-center text-white font-weight-bold cursor br-50">
+                                    <div class="w-100 d-inline-block b-none text-white text-center font-weight-bold cursor br-50 line-3rem">
+                                        <img class="d-inline-block w-100" src="{{ secure_asset('asset/EditAreaShowIcon.png') }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>`;
+                } else {
+                    calendar += `
+                    <td
+                    class='pt-0 pb-0 text-left pt-1 pl-1'
+                    data-dateforschedule='${yearfordata}-${`0${monthfordata+1}`.slice(-2)}-${`0${count}`.slice(-2)}'
+                    >
+                    ${count}
+                    <div class="schedulestatusNamearea"></div>
+                        <div class="float-right sccheduleplusbutton cursor mr-1 mb-1" id="">
+                            <div class="w-100 d-inline-block b-none text-white text-center font-weight-bold cursor br-50 line-3rem">
+                                <div class="w-100 d-inline-block text-center text-white font-weight-bold cursor br-50">
+                                    <div class="w-100 d-inline-block b-none text-white text-center font-weight-bold cursor br-50 line-3rem">
+                                        <img class="d-inline-block w-100" src="{{ secure_asset('asset/EditAreaShowIcon.png') }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>`;
+                }
+            }
+        }
+        calendar += "</tr>";
+    }
+    return calendar;
+}
+</script>
+<style>
+.wrapper{
+    max-width: 600px;
+    margin: 0 auto;
+    color: #666;
+}
+
+/*カレンダー*/
+table {
+    outline: 0.5px solid #ddd;
+    border-collapse: collapse;
+    width: 100%;
+}
+th {
+    color: #000;
+}
+th, td {
+    outline: 0.5px solid #ddd;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+/*日曜日*/
+td:first-child {
+    color: red;
+}
+/*土曜日*/
+td:last-child {
+    color: blue;
+}
+/*前後月の日付*/
+td.disabled {
+    color: #ccc;
+}
+/*本日*/
+.SelectedDate {
+    background-color: #D65E72;
+    color: #fff;
+}
+
+/*ボタン*/
+#prev {
+    float: left;
+}
+#next {
+    float: right;
+}
+.holiday_blue{
+    background:#84b8da;
+}
+.holiday_red{
+    background:#fbccac;
+}
+.holiday_green{
+    background:#c1d6b1;
+}
+.couponcolor{
+    background:#f8f4dc;
+}
+.schedulebuttonarea{
+    z-index:1;
+}
+.calendertop{
+    background: linear-gradient(
+    -45deg,
+    #fff 25%, rgb(0, 0, 0, 0.5) 25%,
+    rgb(0, 0, 0, 0.5) 50%, #fff 50%,
+    #fff 75%, rgb(0, 0, 0, 0.5) 75%,
+    rgb(0, 0, 0, 0.5)
+  );
+  background-size: 2.5px 2.5px;
+}
+</style>

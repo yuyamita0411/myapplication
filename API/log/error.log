@@ -1,0 +1,1 @@
+2022/06/15 00:39:33 [error] 10#10: *58 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 188.39.0.1, server: , request: "GET /login/index.php HTTP/1.1", upstream: "fastcgi://188.39.0.3:9000", host: "localhost:8081"
