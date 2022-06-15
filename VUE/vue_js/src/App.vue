@@ -45,9 +45,11 @@ export default defineComponent({
         left: calc((100% - 45rem) / 2);
         width: 45rem;
     }
-    #maincolumn,
+    #maincolumn{
+        margin-top:4.5rem;
+    }
     #sidebar{
-        margin-top:2rem;
+        margin-top:3.5rem;
     }
     #hbwrapper{
         margin-top:2rem;
@@ -58,8 +60,8 @@ export default defineComponent({
         width: 90%;
         left: 5%;
     }
-    #maincolumn{
+    /*#maincolumn{
         margin-top:3rem;
-    }
+    }*/
 }
 </style>

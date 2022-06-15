@@ -1,6 +1,6 @@
 <template>
 <div class=" shadowwrapper  m-auto pl-2 pr-2 pl-lg-0 pr-lg-0">
-    <div class="contentwraper w-100 d-inline-block pt-3 pb-4 pl-0 pr-0 mt-3">
+    <div class="contentwraper w-100 d-inline-block pb-4 pl-0 pr-0">
         <h5 class="mainfontcolor mb-3 w-100 d-inline-block">フォーマット用csvをダウンロードする</h5>
         <div class="bgstripe45deg pt-3 pb-3 pr-2 pl-2 mb-5">
             <div class="d-inline-block w-100 mb-3">

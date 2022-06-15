@@ -1,6 +1,7 @@
 <template>
 	<div class="shadowwrapper m-auto pl-2 pr-2 pl-lg-0 pr-lg-0">
-		<div class="articlewrapper contentwraper w-100 d-inline-block p-3 pl-0 pr-0 mt-3 mb-5">
+		<!--div class="articlewrapper contentwraper w-100 d-inline-block p-3 pl-0 pr-0 mt-3 mb-5"-->
+		<div class="contentwraper articlewrapper w-100 d-inline-block pb-4 pl-0 pr-0">
 			<div class="d-inline-block w-100 mb-3 pt-2 pb-2 pl-1 pr-1">
 				<div class="sorttask col-12 col-md-auto float-left pl-0 pr-0 mb-2 mb-md-0" id="inchargewrapper">
 
@@ -147,6 +148,7 @@
 			:modalstatus="modalstatus"
 			:loadingstatus="loadingstatus"
 			@to-after-login-page="ToAfterLogin"
+			class="pl-1 pr-1"
 			/>
 			<div id="PagenationArea" class="text-center d-flex position-fixed bg-white z1">
 				<div

@@ -63,7 +63,7 @@
                 </div>
                 <div id="maincolumn" class="maincolumn position-relative float-md-right mb-3 pb-5">
                     <div class="@if(!Request::routeIs('schedule')) shadowwrapper @endif m-auto pl-2 pr-2 pl-lg-0 pr-lg-0">
-                        <div class="contentwraper w-100 d-inline-block pt-3 pb-4 pl-0 pr-0 mt-3">
+                        <div class="contentwraper w-100 d-inline-block pb-4 pl-0 pr-0">
                             @yield('content')
                         </div>
                     </div>

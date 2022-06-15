@@ -2,7 +2,7 @@
     <LoadingIconview id="MainColumLoadArea" v-if="loadingstatus == true" class="position-relative" />
     <div :class="`home ${loadstatus}`">
         <div class="dashbordwrapper d-inline-block w-100">
-            <div id="dashboardnemue" class="dashboardnemue d-inline-block position-fixed w-100 p-0 bg-white">
+            <div v-if="768 < windowwidth" id="dashboardnemue" class="dashboardnemue d-inline-block position-fixed w-100 p-0 bg-white">
                 <div class="d-inline-block w-100 pr-1 pl-1 pt-1 pb-1 pr-md-3 pl-md-3">
                     <div class="d-inline-block float-left font-weight-bold pt-1 pb-1 pl-4 pl-md-0">
                         <span class="mr-2">
@@ -27,38 +27,35 @@
                 </div>
             </div>
             <div class="dashbordcontent w-100 position-relative">
-                <div class="w-100 d-inline-block">
-                    <div id="hbwrapper" class="hbwrapper w-100 position-fixed">
-                        <div id="humburgerbutton" class="hbwrapper position-relative cursor float-right"
-                        @click="SidebarOpen"
-                        >
-                            <span class="hbar w-75 d-inline-block position-absolute"></span>
-                            <span class="hbar w-75 d-inline-block position-absolute"></span>
-                            <span class="hbar w-75 d-inline-block position-absolute"></span>
-                        </div>
-                    </div>
+                <!--img v-if="windowwidth <= 768" src="@/assets/logo.png" class="sidebaricon left0 position-fixed p-2"-->
+                <div v-if="windowwidth <= 768"
+                class="
+                BgAccentColor z4 right0 text-white text-center
+                mb-0 mr-0 p-2 position-fixed cursor"
+                @click="SidebarOpen">
+                    MENU
                 </div>
                 <div
-                id="sidebar" class="sidecolor sidebar shadowgrid col-12 col-md-3 float-md-left"
+                id="sidebar" class="sidecolor sidebar shadowgrid col-12 col-md-3 float-md-left pt-5 pt-md-0"
                 @click="SidebarOpen"
                 >
                     <router-link
                     data-tooltip="ダッシュボード"
-                    class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-md-2 text-md-center"
+                    class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-2 text-md-center"
                     to="/dashboard"
                     >
                         <img src="@/assets/homeicon.png" class="sidebaricon p-2">
                     </router-link>
                     <router-link
                     data-tooltip="スケジュール"
-                    class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-md-2 text-md-center"
+                    class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-2 text-md-center"
                     to="/schedule"
                     >
                         <img src="@/assets/Schedule.png" class="sidebaricon p-2">
                     </router-link>
                     <router-link
                     data-tooltip="タスク進捗"
-                    class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-md-2 text-md-center"
+                    class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-2 text-md-center"
                     to="/taskinfo"
                     >
                         <img src="@/assets/taskicon.png" class="sidebaricon p-2">
@@ -67,13 +64,14 @@
                     <router-link
                     v-if="usertype == '管理者'"
                     data-tooltip="アカウント管理"
-                    class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-md-2 text-md-center"
+                    class="sidemenu tooltip-bottom sidebar_menu cursor d-inline-block col-12 mt-md-2 mb-2 text-md-center"
                     to="/manageuser"
                     >
                         <img src="@/assets/manageicon.png" class="sidebaricon p-2">
                     </router-link>
 
                     <div
+                    v-if="768 < windowwidth"
                     id="SendTaskButton"
                     class="cursor d-flex w-100 mt-4 pt-2 pb-2 text-left"
                     to="/taskinfo"
@@ -117,7 +115,8 @@ export default defineComponent({
             Amodalclass:"logoutmodalcover position-fixed cursor modalcover_close",
             addfriends_modal_wrapper_class:"logoutmodal position-fixed modal_close",
             message:'logoutmodal position-fixed modal_close',
-            showChild: true
+            showChild: true,
+            windowwidth:0
         };
     },
     components: {
@@ -126,6 +125,7 @@ export default defineComponent({
         AddTaskModal
     },
     mounted(){
+        this.setGnav();
         this.loadingstatus = true;
         const http = new GetData();
         http.common(
@@ -144,6 +144,14 @@ export default defineComponent({
             this.showChild = false;
             this.$nextTick(() => (this.showChild = true));
         },
+        setGnav(){
+            window.addEventListener('load', () => {
+                this.windowwidth = window.innerWidth;
+            });
+            window.addEventListener('resize', () => {
+                this.windowwidth = window.innerWidth;
+            });
+        },
         AmodalOpen(){
             this.Amodalclass = "logoutmodalcover position-fixed cursor modalcover_open";
             document.getElementById('logoutmodal')!.classList.toggle("modal_close");
@@ -156,10 +164,10 @@ export default defineComponent({
         },
         SidebarOpen(){
             if(window.innerWidth < 768){
-                document.getElementById('humburgerbutton')!.classList.toggle("status_open");
+                /*document.getElementById('humburgerbutton')!.classList.toggle("status_open");
                 document.querySelectorAll('.hbar').forEach((ob) => {
                     ob.classList.toggle("barrotate");
-                });
+                });*/
                 document.getElementById('sidebar')!.classList.toggle("sidebaropen");
             }
         },

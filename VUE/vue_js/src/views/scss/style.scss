@@ -595,6 +595,7 @@ textarea{
 .inchargewrapperopen{
     z-index: 3;
 }
+.z4,
 .modalcover_open{
     z-index:4;
 }
@@ -1207,6 +1208,9 @@ input[name="newtore"]:checked + label{
     }
     #dashboardnemue{
         margin-top:2.5rem;
+    }
+    .contentwraper{
+        margin-top:3rem;
     }
     #sidebar > div:nth-child(1){
         margin-top:2rem;

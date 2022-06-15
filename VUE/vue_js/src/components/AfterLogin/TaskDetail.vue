@@ -1,7 +1,7 @@
 <template>
 	<div class="shadowwrapper m-auto pl-2 pr-2 pl-lg-0 pr-lg-0">
     <LoadingIconview class="dashboardloading w-100 d-inline-block text-center" v-if="loadingstatus == true" />
-		<div :class="`${loadstatus} contentwraper w-100 d-inline-block pt-3 pb-4 pl-0 pr-0 mt-3`">
+		<div :class="`${loadstatus} contentwraper w-100 d-inline-block pb-4 pl-0 pr-0`">
 			<div class="pt-3 pb-3 w-100">
 				<div class="gridinside pt-3 bg-white position-relative" id="AddressArea">
 					<img class="clipicon position-absolute" src="@/assets/clipicon.png">

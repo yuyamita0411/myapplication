@@ -1,12 +1,116 @@
 <template>
 	<div class="m-auto pl-2 pr-2 pl-lg-0 pr-lg-0">
-		<div class="contentwraper w-100 d-inline-block pt-3 pb-4 pl-0 pr-0 mt-3">
+		<div class="contentwraper w-100 d-inline-block pb-4 pl-0 pr-0">
 			<div class="d-inline-block w-100 mb-3">
 				<div class="m-auto">
 					<div class="col-md-12 m-auto pl-0 pr-0 position-relative">
-						<div class="w-100 d-inline-block pl-3 pr-3">
+						<div class="w-100 d-inline-block pl-md-3 pr-md-3">
 							<div class="w-100 d-inline-block position-relative">
-								<div class="YearAreaWrapper d-flex mb-0 p-2">
+<!-- sp pcでhtml変える -->
+<!-- sp -->
+						<div class="YearAreaWrapper w-100 d-inline-block p-1" v-if="WhichCstyle == 'sp'">
+							<div class="w-100">{{date.getFullYear()}}年{{date.getMonth()+1}}月</div>
+							<div class="d-flex w-100">
+								<div
+								:class="`schedule_datearea ${SortAreaClass} tooltip-right
+								d-inline-block text-center cursor position-relative pt-2 pb-2 mr-1`"
+								data-tooltip="並び変え"
+								@click="
+								$event.target.classList.toggle('SortAreaisshow'),
+								$event.target.classList.toggle('SortAreaishidde'),
+								this.$refs.sortmenu.classList.toggle('sbshow'),
+								this.$refs.sortmenu.classList.toggle('sbhidden')
+								"
+								id="SortArea">
+								<img class="sccheduleplusbutton" src="@/assets/accountarrow.png">
+								</div>
+								<div class="d-md-flex position-absolute" id="sortmenuwrapper">
+									<div class="position-absolute sbwrapper b-gray sbhidden bg-white" id="sortmenu" ref="sortmenu">
+										<div
+										class="sortelem p-2 cursor"
+										data-orderby="asc"
+										@click="
+										PageNow = 1,
+										SearchOrderBy = $event.target.dataset.orderby,
+										$event.target.parentNode.parentNode.previousElementSibling.classList.toggle('SortAreaisshow'),
+										$event.target.parentNode.parentNode.previousElementSibling.classList.toggle('SortAreaishidde'),
+										this.$refs.sortmenu.classList.toggle('sbshow'),
+										this.$refs.sortmenu.classList.toggle('sbhidden'),
+										MakeSearchParam()
+										"
+										>
+										昇順
+										</div>
+										<div
+										class="sortelem p-2 cursor"
+										data-orderby="desc"
+										@click="
+										PageNow = 1,
+										SearchOrderBy = $event.target.dataset.orderby,
+										$event.target.parentNode.parentNode.previousElementSibling.classList.toggle('SortAreaisshow'),
+										$event.target.parentNode.parentNode.previousElementSibling.classList.toggle('SortAreaishidde'),
+										$event.target.parentNode.classList.toggle('sbshow'),
+										$event.target.parentNode.classList.toggle('sbhidden'),
+										MakeSearchParam()
+										"
+										>
+										降順
+										</div>
+										<input name="clorderby" type="hidden" :value="`${SearchOrderBy}`">
+									</div>
+								</div>
+								<div class="montharea d-flex mr-1"
+								>
+									<div id="prev7"
+									@click="DaysShift(-7)"
+									class="cbutton tooltip-top d-inline-block text-center cursor col-auto pl-0 pr-0 font12"
+									data-tooltip="7日前"
+									:data-cldata="`${new Date(calculate.MDFI(date, -7)).getFullYear()}/${new Date(calculate.MDFI(date, -7)).getMonth()+1}/${new Date(calculate.MDFI(date, -7)).getDate()}`"
+									>◀︎◀︎</div>
+									<div id="prev"
+									@click="DaysShift(-1)"
+									class="cbutton tooltip-top d-inline-block text-center cursor col-auto pl-0 pr-0 font12"
+									data-tooltip="1日前"
+									:data-cldata="`${new Date(calculate.MDFI(date, -1)).getFullYear()}/${new Date(calculate.MDFI(date, -1)).getMonth()+1}/${new Date(calculate.MDFI(date, -1)).getDate()}`"
+									>◀︎</div>
+									<div id="next"
+									@click="DaysShift(1)"
+									class="cbutton tooltip-top d-inline-block text-center cursor col-auto pl-0 pr-0 font12"
+									data-tooltip="1日後"
+									:data-cldata="`${new Date(calculate.MDFI(date, +1)).getFullYear()}/${new Date(calculate.MDFI(date, +1)).getMonth()+1}/${new Date(calculate.MDFI(date, +1)).getDate()}`"
+									>▶︎</div>
+									<div id="next7"
+									@click="DaysShift(7)"
+									class="cbutton tooltip-top d-inline-block text-center cursor col-auto pl-0 pr-0 font12"
+									data-tooltip="7日後"
+									:data-cldata="`${new Date(calculate.MDFI(date, +7)).getFullYear()}/${new Date(calculate.MDFI(date, +7)).getMonth()+1}/${new Date(calculate.MDFI(date, +7)).getDate()}`"
+									>▶︎▶︎</div>
+								</div>
+								<input
+								@input="PageNow = 1,SearchKeyword = $event.target.value, MakeSearchParam()
+								"
+								type="text"
+								id="SearchCbyWord"
+								name="SearchCbyWord"
+								class="w-100 BTLR1 BBLR1
+								BTRR1 BBRR1 b-none float-left pl-2 mt-0 mr-1"
+								placeholder="担当者名から検索"
+								>
+								<input
+								@input="PageNow = 1, SearchDisplayNum = Number($event.target.value), MakeSearchParam()"
+								type="text"
+								id="PerPageArea"
+								name="PerPage"
+								class="buttonicon BTLR1 BBLR1
+								BTRR1 BBRR1 b-none float-left pl-2 mt-0"
+								placeholder="表示件数"
+								>
+							</div>
+						</div>
+
+<!-- sp -->
+<!-- pc -->
+								<div class="YearAreaWrapper d-flex mb-0 p-2" v-if="WhichCstyle == 'pc'">
 									<div class="font1-3 d-inline-block mr-3 cursor" id="YearArea">{{date.getFullYear()}}</div>
                                     <input
                                     @input="PageNow = 1,SearchKeyword = $event.target.value, MakeSearchParam()
@@ -28,10 +132,10 @@
                                     placeholder="表示件数"
                                     >
 								</div>
-								<div class="w-100 d-md-flex">
+								<div class="w-100 d-md-flex" v-if="WhichCstyle == 'pc'">
 									<div class="Carea d-inline-block w-100">
                                         <div class="montharea d-md-flex w-100 mb-0">
-                                            <div id="MonthArea" class="text-center w-100 d-flex pr-2">
+                                            <div id="MonthArea" class="text-center w-100 d-inline-block d-md-flex pr-2">
                                                 <div class="d-inline-block cursor pt-2 pb-2 text-left pl-2" :data-forcommondate="`${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`" id="MonthButton">
                                                 {{date.getMonth()+1}}月
                                                 </div>
@@ -137,7 +241,9 @@
                                         </div>
 									</div>
 								</div>
-                                
+<!-- pc -->
+<!-- sp pcでhtml変える -->
+
                                 <!-- コンポーネント化 -->
                                 <CalenderView
                                 v-if="WhichCstyle == 'pc'"
@@ -348,10 +454,6 @@ export default defineComponent({
 .YearAreaWrapper{
 	background: rgb(0, 0, 0, 0.05);
 }
-.montharea {
-	margin-bottom: 5px;
-	border-bottom: solid rgb(0, 0, 0, 0.1) 1px;
-}
 @media (min-width: 768px){
 	.montharea>.cbutton:not(:nth-child(5)) {
 		border-right: solid 0.5px rgb(0, 0, 0, 0.1);
@@ -365,12 +467,16 @@ export default defineComponent({
 	.montharea>.cbutton:nth-child(2) {
 		border-left: solid 0.5px rgb(0, 0, 0, 0.1);
 	}
+	.montharea {
+		margin-bottom: 5px;
+		border-bottom: solid rgb(0, 0, 0, 0.1) 1px;
+	}
 }
 @media (max-width: 768px){
 	#MonthArea{
 		border-bottom:solid 0.5px rgb(0, 0, 0, 0.1);
 	}
-	.montharea>.cbutton:not(:nth-child(1)) {
+	.montharea > .cbutton{
 		border-right: solid 0.5px rgb(0, 0, 0, 0.1);
 	}
 }

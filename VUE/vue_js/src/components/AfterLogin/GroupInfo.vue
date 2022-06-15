@@ -1,6 +1,6 @@
 <template>
 	<div class="shadowwrapper m-auto pl-2 pr-2 pl-lg-0 pr-lg-0">
-		<div class="contentwraper w-100 d-inline-block pt-3 pb-4 pl-0 pr-0 mt-3">
+		<div class="contentwraper w-100 d-inline-block pb-4 pl-0 pr-0">
 			<h5 class="mainfontcolor w-100">グループを検索</h5>
 			<form action="" class="w-100 mb-3 d-inline-block" method="get">
 				<div class="searchbarwrapper w-100 mt-0 d-flex">
