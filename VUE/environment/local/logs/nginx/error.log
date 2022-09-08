@@ -41,3 +41,4 @@
 2022/05/25 01:28:36 [error] 24#24: *1 directory index of "/var/www/" is forbidden, client: 188.39.0.1, server: localhost, request: "GET / HTTP/1.1", host: "localhost"
 2022/05/25 01:29:22 [error] 24#24: *2 directory index of "/var/www/" is forbidden, client: 188.39.0.1, server: localhost, request: "GET / HTTP/1.1", host: "localhost"
 2022/05/25 01:29:35 [error] 24#24: *2 directory index of "/var/www/" is forbidden, client: 188.39.0.1, server: localhost, request: "GET / HTTP/1.1", host: "localhost"
+2022/08/13 09:05:57 [error] 23#23: *2 rewrite or internal redirection cycle while internally redirecting to "/index.html", client: 188.39.0.1, server: localhost, request: "GET /login HTTP/1.1", host: "localhost"
